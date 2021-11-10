@@ -264,7 +264,7 @@ int main() {
     int frame = 0;
     float_type sphere_yvel = 0., sphere_xvel = -0.5;
 
-    vec3 camera({0.,0.,0.});
+    vec3 camera({0.,0.,30.});
 
     while(!fb_should_quit())
     {
@@ -278,6 +278,7 @@ int main() {
       if(underground < 0.)
       {
         sphere_xvel = sphere_xvel - 0.025;
+        camera.z = camera.z-underground*.075;
         vec3 coord = spheres[0].center - plane.center;
 #if 1
         if(spheres[0].radius + underground > 0.)
