@@ -1,19 +1,31 @@
 /*
-Original code: Dmitry V. Sokolov  https://github.com/ssloy/tinyraytracer
-Original license: WTFPL (http://www.wtfpl.net/)
-
 Copyright (C) 2021 Victor Suarez Rovere <suarezvictor@gmail.com>
+Inspired on tinyraytracer https://github.com/ssloy/tinyraytracer
 
 Build & run:
-$ clang++ -O3 -ffast-math tr.cpp -o tr -lSDL2 && ./tr
+$ clang++ -O3 -fopenmp=libiomp5 -ffast-math `sdl2-config --cflags --libs` tr.cpp -o tr  && ./tr
 
-TO PLAY: press the "UP" button when the ball is sinking
+HOW TO PLAY:
+ Press the left mouse button or the KEUYP to jump.
+ Score increases when you're on floor, you win when the bar is full.
 */
 
 #include <SDL2/SDL.h>
 
-#define FRAME_WIDTH 640
-#define FRAME_HEIGHT 480
+
+#define SCREEN_WIDTH 1366 //if defined goes fullscreen
+#define SCREEN_HEIGHT 768
+
+#define FRAME_WIDTH 480
+#define FRAME_HEIGHT 360
+
+#ifdef _DEBUG
+#define SPHERE_MAXRECURSIVITY 2
+#define PLANE_MAXRECURSIVITY 1
+#else
+#define SPHERE_MAXRECURSIVITY 2
+#define PLANE_MAXRECURSIVITY 2
+#endif
 
 #include <limits>
 #include <cmath>
@@ -21,135 +33,187 @@ TO PLAY: press the "UP" button when the ball is sinking
 #include "geometry.h"
 
 
-uint32_t knuth_hash(uint32_t v)
-{
-    return v * uint32_t(2654435761);
-}
+#define MAXSCORE 5000
+#define SPHERE_RADIUS 4.
 
-const float_type ambient_intensity = 0.5;
+const float_type ambient_intensity = 0.25;
+const float_type light_heigth = 16.;
 
-struct Light {
-    Light(const vec3 &p, const float_type &i) : position(p), intensity(i) {}
-    vec3 position;
-    float_type intensity;
-};
 
 struct Material {
-    Material(const vec3 &a, const vec3 &color, const float &spec) : albedo(a), diffuse_color(color), specular_exponent(spec) {}
-    Material() : albedo({1.,0.}), diffuse_color() {}
-    vec3 albedo; //[0]=opacity vs. reflection mix [1]=tinted vs. non tinted reflection [2]=specular reflection
+    Material(const vec3 &color, const vec3 &rcolor) : diffuse_color(color), reflect_color(rcolor), has_reflection(false) {}
+    Material() : has_reflection(false) {}
     vec3 diffuse_color;
-    float specular_exponent;
+    vec3 reflect_color;
+    bool has_reflection;
 };
 
 struct Sphere {
     vec3 center;
-    float_type radius;
     Material material;
 };
 
 struct Plane {
     vec3 center;
-    vec2 size;
     Material material;
     vec3 color1, color2;
+    vec3 border_color;
 };
 
-bool ray_sphere_intersect(const vec3 &orig, const vec3 &dir, const Sphere &s, float_type &t0) {
+bool ray_sphere_intersect(const vec3 &orig, const vec3 &dir, const Sphere &s, float_type &t0, vec3& hit, vec3& N) {
+
     vec3 L = s.center - orig;
     float_type tca = L*dir;
     float_type d2 = L*L - tca*tca;
-    if (d2 > s.radius*s.radius) return false;
-    float_type thc = sqrtf(s.radius*s.radius - d2);
+    float_type diff = float_type(SPHERE_RADIUS*SPHERE_RADIUS) - d2;
+    if (is_negative(diff))
+      return false;
+    float_type thc = SQRT(diff);
     t0       = tca - thc;
     float_type t1 = tca + thc;
-    if (t0 < 1e-3) t0 = t1;  // offset the original point to avoid occlusion by the object itself
-    if (t0 < 1e-3) return false;
+    if (t0 < 1e-3)
+      return false;
+
+    hit = orig + dir*t0;
+    N = (hit - s.center).normalize();
+
     return true;
 }
 
 
-vec3 reflect(const vec3 &I, const vec3 &N) {
-    return I - N*((I*N)*2.);
-}
+vec3 reflect(const vec3 &I, const vec3 &N) { return I - N*float_shift(I*N,1); }
 
-bool plane_has_hole(float_type x, float_type z)
+float_type plane_has_hole(float_type x, float_type z)
 {
- return ((knuth_hash((int(x)+255) >> 4) ^ knuth_hash(int(z) >> 5)) >> 29) < 2;
+  float_type ret = 1.; 
+  x=float_shift(x, -4);
+  z=float_shift(z, -5);
+  int ix = fround(x);
+
+
+  int iz = fround(z);
+  float_type fracx = float_type(ix)-x; //FIXME: do function returning both round and fractional part
+  float_type fracz = float_type(iz)-z;
+  uint16_t hx = knuth_hash(ix) >> 21;
+  uint16_t hz = knuth_hash(iz) >> 21;
+  if((hx ^ hz) < ix+600)
+  {
+    if(ix > 0x240) return 0.; //no hole
+
+    bool fx = hx & 1;
+    bool fz = (hz>>1) & 1;
+    bool hard = (ix & 0x200);
+    if((((ix & 0xC0) == 0xC0) && (fx ^ fz)))
+      ret = fracx*fracx + fracz*fracz - .3*.3; //circles
+    else
+    {
+      float_type ax = FABS(fracx);
+      float_type az = FABS(fracz);
+      ret = (hard ? float_type(std::max(az,ax) -.2) :  (ax + az) - .4); //rhombus or squares
+    }
+  }
+  return ret;
 }
 
-bool scene_intersect(const vec3 &orig, const vec3 &dir, const Plane& plane, const std::vector<Sphere> &spheres, vec3 &hit, vec3 &N, Material &material) {
-    float_type spheres_dist = std::numeric_limits<float_type>::max();
-    for (const Sphere &s : spheres) {
-        float_type dist_i;
-        if (ray_sphere_intersect(orig, dir, s, dist_i) && dist_i < spheres_dist) {
+bool ray_plane_intersect(const vec3 &orig, const vec3 &dir, const Plane& plane, float_type &t0, vec3 &hit, vec3 &N, float_type spheres_dist)
+{
+    if (float_31_0(dir.y) != 0) // avoid division by zero
+    { 
+        float_type d = -(orig.y-plane.center.y)/dir.y;
+        vec3 pt = orig + dir*d;
+        if (d>1e-3 && d<spheres_dist)
+        {
+            t0 = d;
+            hit = pt;
+            N = vec3({0.,1.,0.});
+            return true;
+        }
+    }
+    return false;
+}
+
+bool scene_intersect(const vec3 &orig, const vec3 &dir, const Plane& plane, const Sphere &s, vec3 &hit, vec3 &N, Material &material, int depth) {
+
+    float_type spheres_dist = std::numeric_limits<float>::max();
+    if(depth<PLANE_MAXRECURSIVITY)
+    {
+        float_type dist_i = 0.;
+        if (ray_sphere_intersect(orig, dir, s, dist_i, hit, N))
+        {
             spheres_dist = dist_i;
-            hit = orig + dir*dist_i;
-            N = (hit - s.center).normalize();
             material = s.material;
         }
     }
 
-    float_type checkerboard_dist = std::numeric_limits<float_type>::max();
-    if (FABS(dir.y)>1e-3) { // avoid division by zero
-        float_type d = -(orig.y-plane.center.y)/dir.y; // the checkerboard plane has equation y = -4
-        vec3 pt = orig + dir*d;
-        vec3 o = pt - plane.center;
-        //bool plane_presence = FABS(o.x)<plane.size[0] && FABS(o.z)<plane.size[1];
-        bool hole = plane_has_hole(o.x, o.z);
-        if (d>1e-3 && !hole && d<spheres_dist) {
-            checkerboard_dist = d;
-            hit = pt;
-            N = vec3{0.,1.,0.};
-            bool cx = (int(-o.x) >> 3) & 1;
-            bool cz = (int(o.z) >> 3) & 1;
-            material = plane.material;
-            material.diffuse_color = (cx == cz) ? plane.color1 : plane.color2;
+    float_type checkerboard_dist = std::numeric_limits<float>::max();
+    if(depth<SPHERE_MAXRECURSIVITY)
+    {
+        float_type dist_i = 0.;
+        if (ray_plane_intersect(orig, dir, plane, dist_i, hit, N, spheres_dist))
+        {
+            vec3 o = hit - plane.center;
+            float hole_margin = plane_has_hole(o.x, o.z);
+            if(!is_negative(hole_margin))
+            {
+              checkerboard_dist = dist_i;
+              material = plane.material;
+
+              int32_t ix = int(o.x)>>3;
+              int32_t iz = int(o.z)>>3;
+
+              bool cx = ix & 1;
+              bool cz = iz & 1;
+              const float_type bk = .3;
+              vec3 color2({ix & 0x400 ? bk : plane.color2.x, ix & 0x200 ? bk : plane.color2.y, ix & 0x100 ? bk : plane.color2.z});
+              material.diffuse_color = (cx == cz) ? plane.color1 : color2;
+              if(hole_margin < .1)
+                  material.diffuse_color = plane.border_color;
+           }
         }
     }
-    return std::min(spheres_dist, checkerboard_dist)<1000.0;
+
+    return spheres_dist < 400. || checkerboard_dist < 400.0;
 }
 
 
-vec3 cast_ray(const vec3 &orig, const vec3 &dir, const Plane& plane, const std::vector<Sphere> &spheres, const std::vector<Light> &lights, int depth = 0) {
+vec3 cast_ray(const vec3 &orig, const vec3 &dir, const Plane& plane, const Sphere &sphere, int depth = 0)
+{
+#ifdef _LOG
+    std::cout << "depth: " << depth << std::endl;
+#endif
     vec3 point, N;
     Material material;
 
-    float_type y = dir.y > 0. ? dir.y*dir.y*dir.y : float_type(0.);
-    //vec3 background = dir.y > 0 ? vec3({y, y, y}) : vec3({float_type(0.0), float_type(0.0), float_type(0.0)});
-    vec3 fog = vec3{.3*0.2,.3*0.2,.7*0.2};
-    vec3 background = (knuth_hash(float_31_0(dir.x)) & knuth_hash(float_31_0(dir.y))) < 0x40 ? vec3({.3,.3,.3}) : vec3({y,y,y});
+    float_type y = is_negative(dir.y) ? float_type(0.) : float_type(dir.y*dir.y);
+    bool has_star = (knuth_hash(float_31_0(dir.x)+1) & knuth_hash(float_31_0(dir.y)+1)) < FRAME_WIDTH;
+    vec3 background = depth == 0 && has_star ? vec3({.5,.5,.5}) : vec3({y,y,y});
 
     vec3 comb_color;
-    float_type ys = FABS(dir.y)*10.;
-    float_type mix = (ys<1. ? (ys-1.)*(dir.x*dir.x-1.): float_type(0.));
-    if (depth>1 || !scene_intersect(orig, dir, plane, spheres, point, N, material)) { // background color
+    float_type ys = float_shift(FABS(dir.y), 3);
+    float_type mix = ys<1. ? float_type(ys): float_type(1.); //max
+    if (depth>1 || !scene_intersect(orig, dir, plane, sphere, point, N, material, depth)) 
+    {
         comb_color = background;
     }
     else
     {
-        vec3 reflect_dir = reflect(dir, N).normalize();
-        vec3 reflect_orig = (reflect_dir*N < 0.) ? (point - N*1e-3) : (point + N*1e-3);
-        vec3 reflect_color = cast_ray(reflect_orig, reflect_dir, plane, spheres, lights, depth + 1);
+        float_type d = point.x*point.x + light_heigth*light_heigth + point.z*point.z;
+        float_type diffuse_light_intensity = ambient_intensity + std::max(float_type(0.), light_heigth*RSQRT(d));
+        vec3 diffuse_color = material.diffuse_color * diffuse_light_intensity;
 
-        float_type diffuse_light_intensity = 0., specular_light_intensity = 0.;
-        for (size_t i=0; i<lights.size(); i++) {
-            vec3 light_dir      = (lights[i].position - point).normalize();
-            diffuse_light_intensity = diffuse_light_intensity + lights[i].intensity * std::max(float_type(0.), light_dir*N);
-            specular_light_intensity = specular_light_intensity + (float_type)std::pow(std::max(float_type(0.), reflect(light_dir, N)*dir), material.specular_exponent)*lights[i].intensity;
-       }
+        if(!material.has_reflection)
+          comb_color = diffuse_color;
+        else
+        {
+          vec3 reflect_color = cast_ray(point, reflect(dir, N), plane, sphere, depth + 1);
+          comb_color = diffuse_color + vecmul(reflect_color, material.reflect_color);
+        }
 
-        vec3 diffuse_color = material.diffuse_color * (ambient_intensity+diffuse_light_intensity);
-        vec3 reflect_color_comb = reflect_color*material.albedo[2] - vecmul(reflect_color, diffuse_color*(material.albedo[2]-1.));
-        comb_color = diffuse_color*material.albedo[0] - reflect_color_comb*(material.albedo[0]-1.);
-        mix = float_type(10000.)/(point.z*point.z+10000.); //fog
-        mix = -(mix-1.);
+        mix = float_type(2000.)/(point.z*point.z+2000.); //fog. FIXME: use formula without division
     }
-/*
-        vec3 spec_color = vec3{specular_light_intensity, specular_light_intensity, specular_light_intensity} * material.albedo[1];
-        return comb_color+spec_color;
-*/
-    return fog*mix-comb_color*(mix-1.);
+
+    vec3 fog = vec3({.02,.02,.12});
+    return float_select(mix, comb_color, fog);
 
 }
 
@@ -162,150 +226,189 @@ pixel_t pixelbuf[FRAME_HEIGHT][FRAME_WIDTH];
 inline void fb_setpixel(pixel_t *p, uint8_t r, uint8_t g, uint8_t b) { p->a = 0xFF; p->b = b; p->g = g; p->r = r; }
 inline void fb_setpixel(unsigned x, unsigned y, uint8_t r, uint8_t g, uint8_t b) { fb_setpixel(&pixelbuf[y][x], r, g, b); }
 
-perfcount max;
+#ifdef _DEBUG
 perfcount currentperf;
 perfcount *fp32::perf = &currentperf;
+#endif
 
-void render(const vec3& start, const Plane& plane, const std::vector<Sphere> &spheres, const std::vector<Light> &lights) {
+#define SCORE_MARGINS 10
+
+void render(const vec3& start, const Plane& plane, const Sphere &sphere, uint32_t score) {
+    uint32_t scorebar = score*(FRAME_WIDTH-2*SCORE_MARGINS)/MAXSCORE;
+
+#ifndef _DEBUG
+#pragma omp parallel for
+#endif
     for (int j = 0; j<FRAME_HEIGHT; j++) {
         for (int i = 0; i<FRAME_WIDTH; i++) {
-            fp32::perf->clear();
-
-            float_type x = float_type((i<<1)-FRAME_WIDTH-1)*(.5 / FRAME_HEIGHT);
-            float_type y = float_type((j<<1)-FRAME_HEIGHT-1)*(-.5 / FRAME_HEIGHT);
-
-            vec3 dir = vec3({x, y, -1.}).normalize();
-            //std::cout << "dir: " << dir << std::endl;
-
-            vec3 pix = cast_ray(start, dir, plane, spheres, lights);
-            //std::cout << i << " " << j << " " << pix << std::endl;
-            int r = pix.x*255.;
-            int g = pix.y*255.;
-            int b = pix.z*255.;
-            fb_setpixel(i, j, r & ~0xFF ? 0xFF:r, g & ~0xFF ? 0xFF:g, b & ~0xFF ? 0xFF:b);
-
+#ifdef _DEBUG
+            static perfcount max;
             if(fp32::perf->mul > max.mul)
             {
               max = *fp32::perf;
+              std::cout << "Rendering resources" << std::endl;
               max.dump();
             }
+            fp32::perf->clear();
+#endif
+
+#ifdef SCREEN_WIDTH
+            float_type x = float_type((i<<1)-FRAME_WIDTH-1)*(.5 / FRAME_WIDTH * SCREEN_WIDTH/SCREEN_HEIGHT);
+#else
+            float_type x = float_type((i<<1)-FRAME_WIDTH-1)*(.5 / FRAME_HEIGHT);
+#endif
+            float_type y = float_type((j<<1)-FRAME_HEIGHT-1)*(-.5 / FRAME_HEIGHT);
+
+            vec3 dir = vec3({x, y, -1.}).normalize();
+
+            int r;
+            int g;
+            int b;
+
+            if(i >= SCORE_MARGINS && i < SCORE_MARGINS + scorebar && j > SCORE_MARGINS && j < 2*SCORE_MARGINS)
+            {
+              r = 0; g = 200; b = 0;
+            }
+            else
+            {
+              vec3 pix = cast_ray(start, dir, plane, sphere);
+              r = float_shift(pix.x, 8);
+              g = float_shift(pix.y, 8);
+              b = float_shift(pix.z, 8);
+            }
+            fb_setpixel(i, j, r & ~0xFF ? 0xFF:r, g & ~0xFF ? 0xFF:g, b & ~0xFF ? 0xFF:b);
 
         }
     }
 }
 
-#ifdef _DEBUG
-void test()
-{
-   vec3 v0({0.3, 0.1, 0.1});
-   vec3 v1({0.4, 0.5, 0.6});
-   vec3 v = cross(v0,v1);
-   std::cout << v << " " << v0 << " " << v1 << std::endl;
-   v = -v0;
-   std::cout << v << " " << v0 << " " << v1 << std::endl;
-   v.normalize();
-   std::cout << v << std::endl;
-   v[0] = v[1]+1.;
-   std::cout << v << std::endl;
-   v[1] = v[2]*2.;
-   std::cout << v << std::endl;
-   v[2] = v[1]/.1;
-   std::cout << v << std::endl;
-   v[0] = -v[2];
-   std::cout << v << std::endl;
-   v[2] = v[1]-v[0];
-   std::cout << v << std::endl;
-   v[1] = v[1] > 4. ? 1.:2.;
-   std::cout << v << std::endl;
-   v[0] = 3;
-   std::cout << v << std::endl;
-   v[2] = SQRT(v[1]);
-   std::cout << v << std::endl;
-   v[1] = FABS(v[0]);
-   std::cout << v << std::endl;
-   int x = v[2];
-   std::cout << x << std::endl;
-
-   fp32::perf->dump();
-}
-#endif
-
-
 bool button_pressed();
 
+#define PLANE_OFFSET 100.
 
-int main() {
-#ifdef _DEBUG
-    test();
-    return 1;
-#endif
-
-    if(!fb_init(FRAME_WIDTH, FRAME_HEIGHT))
-        return 1;
-
-    Material      gold(vec3({0.2, 0.5, 0.}), vec3({243/256.0,  201/256.0, 104/256.0}),   150.);
-    Material      rubber(vec3({1., 0., 0.}), vec3({.05, .05, .05}), 1.);
-
-    std::vector<Sphere> spheres;
-    spheres.push_back(Sphere{vec3({-20., 8., -50.}), 4., gold});
-
-    std::vector<Light>  lights;
-    lights.push_back(Light{vec3({-2., 1.5, -15.}), 1.5});
+int game(int startpos)
+{
+    vec3 gold_color({1.5*243/256.0,  1.5*201/256.0, 1.5*104/256.0});
+    vec3 lava_color({255/256.0*2.0,  100/256.0*1.5, 32/256.0*1.5});
 
     Plane plane;
-    plane.center = vec3({0., -12., 0.});
-    plane.material.albedo[0] = .5;
-    plane.material.albedo[1] = 0.;
-    plane.material.albedo[2] = .5;
-    plane.color1 = vec3({.9, .9, .9});
+    plane.center = vec3({0., 0., 0.});
+    plane.material.reflect_color = vec3({.5, .5, .5});
+    plane.color1 = vec3({.8, .8, .8});
     plane.color2 = vec3({0.15, 0., 0.});
-    plane.size = vec2({12., 12.});
+    plane.border_color = vec3({1.,1.,1.});
 
-    int frame = 0;
+    const float gold_albedo = .15;
+    Material gold(gold_color*gold_albedo, gold_color*(1.-gold_albedo));
+
+    Sphere sphere({vec3({-20., 20., -32.}), gold});
+
+    sphere.material.has_reflection = SPHERE_MAXRECURSIVITY > 1;
+    plane.material.has_reflection = PLANE_MAXRECURSIVITY > 1;
+
     float_type sphere_yvel = 0., sphere_xvel = -0.5;
 
-    vec3 camera({0.,0.,30.});
+    vec3 camera({0.,20.,30.});
+    uint32_t score = 0;
+    float_type heat = 0., temp = 0.;
+    plane.center.x = -(startpos + PLANE_OFFSET);
 
-    while(!fb_should_quit())
+    uint32_t frame = 0;
+    for(;;)
     {
+#ifdef _DEBUG
+      fp32::perf->clear();
+#endif
+
+      if(fb_should_quit())
+      {
+        std::cout << "score: " << score << std::endl;
+        return -1;
+      }
+
+      bool won = score >= MAXSCORE;
+
       plane.center.x = plane.center.x + sphere_xvel;
       plane.center.z = plane.center.x;
 
       sphere_yvel = sphere_yvel + 0.1;
-      spheres[0].center.y = spheres[0].center.y - sphere_yvel;
+      sphere.center.y =  (won ? float_type(SPHERE_RADIUS*.55) : float_type(sphere.center.y-sphere_yvel));
    
-      float_type underground = (spheres[0].center.y - spheres[0].radius) - plane.center.y;
-      if(underground < 0.)
+      float_type underground = (sphere.center.y - SPHERE_RADIUS) - plane.center.y;
+      if(is_negative(underground))
       {
-        sphere_xvel = sphere_xvel - 0.025;
-        camera.z = camera.z-underground*.075;
-        vec3 coord = spheres[0].center - plane.center;
-#if 1
-        if(spheres[0].radius + underground > 0.)
+
+        bool half_up = sphere.center.y > plane.center.y;
+        if(half_up)
         {
-          if(!plane_has_hole(coord.x, coord.z))
+          vec3 coord = sphere.center - plane.center;
+          sphere_xvel = sphere_xvel - 0.03;
+
+          if(!is_negative(sphere_yvel))
+            heat = heat + .05;
+
+          float_type hole = plane_has_hole(coord.x, coord.z);
+          if(!is_negative(hole))
           {
+            score = score + !won;
+
             bool press = button_pressed();
-            sphere_yvel = press ? -2. : 0.;
-            if(press) sphere_xvel = -0.5; //default speed
+            sphere_yvel = press ? -2. : -.03;
+            if(press && !won) sphere_xvel = -0.5; //default speed
           }
         }
-        //else sphere_xvel = sphere_xvel*.85; 
-#else
-        sphere_yvel = -2.;
-#endif
+        
+        if(!half_up || won)
+          camera.z = camera.z-float_shift(underground, -4); //lose or won, fadeout
       }
 
 
-      //float_type balleffect = underground*-0.1;
-      //spheres[0].material.albedo[0] = balleffect > 1. ? 1. : (balleffect < 0. ? 0. : balleffect);
+      sphere.material.diffuse_color = float_select(heat, lava_color, gold.diffuse_color);
+      sphere.material.reflect_color = gold.reflect_color*(float_type(1.)-heat);
+      heat = heat-float_shift(heat, -4);
 
+      camera.y = float_select_byshift(-5, sphere.center.y, camera.y);
 
-      camera.y = camera.y*.98 + spheres[0].center.y*.02;
-      render(camera, plane, spheres, lights);
+      if(exp_gt(underground, -2000.))
+        break;
+
+#ifdef _DEBUG
+      static perfcount max;
+      if(fp32::perf->mul > max.mul)
+      {
+         max = *fp32::perf;
+         std::cout << "Gameplay resources" << std::endl;
+         max.dump();
+      }
+      fp32::perf->clear();
+#endif
+
+      render(camera, plane, sphere, won ? 0 : score);
       fb_update();
-      //std::cout << "frame: " << frame << std::endl;
       ++frame;
+    }
+
+    std::cout << "score: " << score << std::endl;
+    return -(plane.center.x - PLANE_OFFSET);
+}
+
+int main() {
+#ifdef SCREEN_WIDTH
+    if(!fb_init(SCREEN_WIDTH, SCREEN_HEIGHT))
+#else
+    if(!fb_init(FRAME_WIDTH, FRAME_HEIGHT))
+#endif
+        return 1;
+
+    int pos = 0;
+    for(;;)
+    {
+      //printf("start pos %d\n", pos);
+      pos = game(pos);
+      if(pos < 0)
+        break;
+      //printf("end pos %d\n", pos);
+      pos = uint32_t(pos) & ~1023;
     }
 
     fb_deinit();
@@ -324,12 +427,15 @@ bool fb_init(unsigned width, unsigned height)
     win = SDL_CreateWindow("Raytracer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
     if (!win)
         return false;
-
+#ifdef SCREEN_WIDTH
+    SDL_SetWindowFullscreen(win, SDL_WINDOW_FULLSCREEN);
+#endif
+    SDL_ShowCursor(SDL_DISABLE);
     renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!renderer)
         return false;
 
-    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height);
+    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, FRAME_WIDTH, FRAME_HEIGHT);
     if (!texture)
         return false;
 
@@ -339,8 +445,14 @@ bool fb_init(unsigned width, unsigned height)
 bool fb_should_quit()
 {
     SDL_Event event;
-    if (SDL_PollEvent(&event)) {
-        if (event.type == SDL_QUIT) {
+    if (SDL_PollEvent(&event))
+    {
+        switch(event.type)
+        {
+          case SDL_KEYDOWN:
+            if(event.key.keysym.sym != SDLK_ESCAPE)
+             break;
+          case SDL_QUIT:
             return true;
         }
     }
@@ -357,6 +469,7 @@ void fb_update()
 
 void fb_deinit()
 {
+    SDL_SetWindowFullscreen(win, 0); //SDL_WINDOW_FULLSCREEN
     SDL_DestroyTexture(texture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(win);
@@ -365,6 +478,7 @@ void fb_deinit()
 
 bool button_pressed()
 {
-  return SDL_GetKeyboardState(NULL)[SDL_SCANCODE_UP];
+  int x, y;
+  return SDL_GetKeyboardState(NULL)[SDL_SCANCODE_UP] || (SDL_GetMouseState(&x, &y) & SDL_BUTTON_LMASK);
 }
 
