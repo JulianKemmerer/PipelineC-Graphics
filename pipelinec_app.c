@@ -4,11 +4,11 @@
 #include "uintN_t.h"
 #include "intN_t.h"
 //#include "float_e_m_t_helper.h" // Variable mantissa sizes
-#include "../arty/src/vga/vga_timing.h"
-#include "../arty/src/vga/pixel.h" // 24bpp color
+#include "../examples/arty/src/vga/vga_timing.h"
+#include "../examples/arty/src/vga/pixel.h" // 24bpp color
 // See top level IO wiring + DVI/VGA resolution timing logic in
 //#include "../arty/src/vga/vga_pmod.c"
-#include "../arty/src/dvi/dvi_pmod.c"
+#include "../examples/arty/src/dvi/dvi_pmod.c"
 // Set app to run at pixel clock
 MAIN_MHZ(app, PIXEL_CLK_MHZ)
 #endif

@@ -137,6 +137,7 @@ int main()
       #ifdef USE_VERILATOR
       if(g_top->dvi_x == 0 /*&& g_top->dvi_y == 0*/)
       {
+         if(fb_should_quit()) exit(1);
          printf("frame %d, y %d\n", frame, g_top->dvi_y);
 		 fb_update(); //once by line
       }
