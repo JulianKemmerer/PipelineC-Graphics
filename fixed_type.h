@@ -1,6 +1,7 @@
 // (C) 2021 Victor Suarez Rovere <suarezvictor@gmail.com>
 
-#define FIXED_FACTIONBITS 10
+#define FIXED_FRACTIONBITS 10
+
 #ifndef __PIPELINEC__
 #warning: precision of fixed should be correctly defined
 #endif
@@ -60,7 +61,7 @@ public:
 #endif
 };
 
-typedef fixed_t<FIXED_FACTIONBITS> fixed; //main type name
+typedef fixed_t<FIXED_FRACTIONBITS> fixed; //main fixed type name
 
 class fixed3
 {
@@ -70,11 +71,15 @@ public:
     fixed3(type a=0.) : x(a),y(a),z(a) {}
     fixed3(type a1, type a2, type a3) : x(a1),y(a2),z(a3) {}
     fixed3(const fixed3& o) : x(o.x),y(o.y),z(o.z) {}
+
+#if 1
     union {
       struct {type x, y, z; };
       struct {type r, g, b; };
     };
-
+#else
+	type x, y, z;
+#endif
     //FIXME: maybe implicit
     explicit operator float3() const { float3 r = { (float) x, (float) y, (float) z }; return r; }
     fixed3 operator * (double v) const { fixed3 r = { x*v, y*v, z*v }; return r;  }
@@ -87,7 +92,7 @@ public:
 
 float3 vec3convert(fixed3 a) { float3 r = { (float) a.x, (float) a.y, (float) a.z }; return r; }
 
-//inline int lround(fixed a) { return (a.f + (1 << (FIXED_FACTIONBITS-1))) >> FIXED_FACTIONBITS; }
+//inline int lround(fixed a) { return (a.f + (1 << (FIXED_FRACTIONBITS-1))) >> FIXED_FRACTIONBITS; }
 inline int lround(fixed a) { return int(a+.5); }
 
 inline fixed fixed_shift(fixed a, int shift) { return shift >= 0 ? a << shift : a >> -shift; }
@@ -115,30 +120,30 @@ typedef int fixed_basetype;
 #warning: base type of fixed should be correctly defined
 typedef struct fixed { fixed_basetype f; } fixed;
 
-inline constexpr fixed fixed_make_from_int(int a) { const fixed r = {a << FIXED_FACTIONBITS}; return r; }
-inline constexpr fixed fixed_make_from_short(short a) { const fixed r = {a << FIXED_FACTIONBITS}; return r; }
-inline constexpr fixed fixed_make_from_float(float a) { fixed r = {(fixed_basetype) (float(a)*(1<<FIXED_FACTIONBITS))}; return r; }
+inline constexpr fixed fixed_make_from_int(int a) { const fixed r = {a << FIXED_FRACTIONBITS}; return r; }
+inline constexpr fixed fixed_make_from_short(short a) { const fixed r = {a << FIXED_FRACTIONBITS}; return r; }
+inline constexpr fixed fixed_make_from_float(float a) { fixed r = {(fixed_basetype) (float(a)*(1<<FIXED_FRACTIONBITS))}; return r; }
 inline constexpr fixed fixed_make_from_double(double a) { return fixed_make_from_float(a); }
 
-inline float fixed_to_float(fixed a) { return (float) a.f / (1<<FIXED_FACTIONBITS); }
-inline int fixed_to_int(fixed a) { return a.f >> FIXED_FACTIONBITS; }
+inline float fixed_to_float(fixed a) { return (float) a.f / (1<<FIXED_FRACTIONBITS); }
+inline int fixed_to_int(fixed a) { return a.f >> FIXED_FRACTIONBITS; }
 #else
 #define fixed_basetype int32_t
 //#warning: base type of fixed should be correctly defined
 typedef struct fixed { fixed_basetype f; } fixed;
 
-inline constexpr fixed fixed_make_from_int(int32_t a) { const fixed r = {a << FIXED_FACTIONBITS}; return r; }
-inline constexpr fixed fixed_make_from_short(int16_t a) { const fixed r = {a << FIXED_FACTIONBITS}; return r; }
-inline constexpr fixed fixed_make_from_float(float a) { fixed r = {(fixed_basetype)float_shift(a, FIXED_FACTIONBITS)}; return r; }
-//inline constexpr fixed fixed_make_from_double(double a) { return fixed_make_from_float(a); }
-#define fixed_make_from_double fixed_make_from_float
+inline constexpr fixed fixed_make_from_int(int32_t a) { const fixed r = {a << FIXED_FRACTIONBITS}; return r; }
+inline constexpr fixed fixed_make_from_short(int16_t a) { const fixed r = {a << FIXED_FRACTIONBITS}; return r; }
+inline constexpr fixed fixed_make_from_float(float a) { fixed r = {(fixed_basetype)float_shift(a, FIXED_FRACTIONBITS)}; return r; }
+#define fixed_make_from_double(x) fixed_make_from_float(x)
 
-inline float fixed_to_float(fixed a) { return float_shift((float)a.f, -FIXED_FACTIONBITS); }
-inline int32_t fixed_to_int(fixed a) { return a.f >> FIXED_FACTIONBITS; }
+inline float fixed_to_float(fixed a) { return float_shift((float)a.f, -FIXED_FRACTIONBITS); }
+inline int32_t fixed_to_int(fixed a) { return a.f >> FIXED_FRACTIONBITS; }
+int fixed_asinteger(fixed a, int n) { return FIXED_FRACTIONBITS > n ? (a.f >> (FIXED_FRACTIONBITS-n)) : (a.f << (n-FIXED_FRACTIONBITS)) }
 
 #endif
 
-inline fixed fixed_mul(fixed left, fixed right) { fixed r = { (left.f * right.f)>>FIXED_FACTIONBITS }; return r; }
+inline fixed fixed_mul(fixed left, fixed right) { fixed r = { (left.f * right.f)>>FIXED_FRACTIONBITS }; return r; }
 inline fixed fixed_shl_int(fixed left, int32_t right) { fixed r = { left.f<<right }; return r; }
 inline fixed fixed_shr_int(fixed left, int32_t right) { fixed r = { left.f>>right }; return r; }
 
@@ -175,6 +180,24 @@ inline bool fixed_gte(fixed left, fixed right) { return left.f >= right.f; }
 
 typedef struct fixed3 { fixed x, y, z; } fixed3;
 inline constexpr fixed3 fixed3_make(fixed x, fixed y, fixed z) { fixed3 r = {x, y, z }; return r; } //constructor
+
+inline fixed3 fixed3_make_from_fixed(fixed left) { fixed3 r = { left, left, left }; return r; }
+
+inline fixed3 fixed3_add(fixed3 left, fixed3 right)
+  { fixed3 r = { fixed_add(left.x, right.x), fixed_add(left.y, right.y), fixed_add(left.z, right.z) }; return r; }
+
+inline fixed3 fixed3_sub(fixed3 left, fixed3 right)
+  { fixed3 r = { fixed_sub(left.x, right.x), fixed_sub(left.y, right.y), fixed_sub(left.z, right.z) }; return r; }
+
+inline fixed3 fixed3_mul(fixed3 left, fixed3 right)
+  { fixed3 r = { fixed_mul(left.x, right.x), fixed_mul(left.y, right.y), fixed_mul(left.z, right.z) }; return r; }
+
+inline fixed3 fixed3_mul_fixed(fixed3 left, fixed right)
+  { fixed3 r = { fixed_mul(left.x, right), fixed_mul(left.y, right), fixed_mul(left.z, right) }; return r; }
+
+inline fixed3 const_fixed3_mul_double(fixed3 left, double right)
+  { fixed3 r = { fixed_mul(left.x, fixed_make_from_double(right)), fixed_mul(left.y, fixed_make_from_double(right)), fixed_mul(left.z, fixed_make_from_double(right)) }; return r; }
+
 
 #endif //CCOMPILE
 

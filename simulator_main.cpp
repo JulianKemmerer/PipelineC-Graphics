@@ -26,7 +26,7 @@ There's no game nor render logic in this source, all that is defined by the HDL 
 #include "tr_pipelinec.cpp" //original source
 #else
 #include "c_compat.h"
-#include "tr_pipelinec.gen.cpp" //generated source
+#include "tr_pipelinec.gen.c" //generated source
 #endif
 
 #define WIRE_WRITE(a,b,c) memcpy((a*)&c, &b, sizeof(c));
