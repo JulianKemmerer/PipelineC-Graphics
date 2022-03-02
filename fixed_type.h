@@ -12,9 +12,10 @@
 #define CCOMPILE
 #endif
 
-typedef int fixed_basetype;
 #warning determine correct base type
+//typedef int32_t fixed_basetype;
 //typedef int16_t fixed_basetype;
+#define fixed_basetype int32_t
 
 #ifndef CCOMPILE
 
@@ -131,24 +132,24 @@ inline constexpr fixed fixed_make_from_double(double a) { return fixed_make_from
 
 inline float fixed_to_float(fixed a) { return (float) a.f / (1<<FIXED_FRACTIONBITS); }
 inline short fixed_to_short(fixed a) { return a.f >> FIXED_FRACTIONBITS; }
-#else
+#else // __PIPELINEC__ = true
 //#warning: base type of fixed should be correctly defined
 typedef struct fixed { fixed_basetype f; } fixed;
 
-inline constexpr fixed fixed_make_from_int(int32_t a) { const fixed r = {a << FIXED_FRACTIONBITS}; return r; }
-inline constexpr fixed fixed_make_from_short(int16_t a) { const fixed r = {a << FIXED_FRACTIONBITS}; return r; }
-inline constexpr fixed fixed_make_from_float(float a) { fixed r = {(fixed_basetype)float_shift(a, FIXED_FRACTIONBITS)}; return r; }
-#define fixed_make_from_double(x) fixed_make_from_float(x)
+fixed fixed_make_from_int(int32_t a) { const fixed r = {a << FIXED_FRACTIONBITS}; return r; }
+fixed fixed_make_from_short(int16_t a) { const fixed r = {a << FIXED_FRACTIONBITS}; return r; }
+fixed fixed_make_from_float(float a) { fixed r = {(fixed_basetype)float_shift(a, FIXED_FRACTIONBITS)}; return r; }
+#define fixed_make_from_double(x) fixed_make_from_float((float)x)
 
-inline float fixed_to_float(fixed a) { return float_shift((float)a.f, -FIXED_FRACTIONBITS); }
-inline short fixed_to_short(fixed a) { return a.f >> FIXED_FRACTIONBITS; }
+float fixed_to_float(fixed a) { return float_shift((float)a.f, -FIXED_FRACTIONBITS); }
+int16_t fixed_to_short(fixed a) { return (int16_t)(a.f >> FIXED_FRACTIONBITS); }
 //int fixed_asinteger(fixed a, int n) { return FIXED_FRACTIONBITS > n ? (a.f >> (FIXED_FRACTIONBITS-n)) : (a.f << (n-FIXED_FRACTIONBITS)) }
 
 #endif
 
-inline fixed fixed_mul(fixed left, fixed right) { fixed r = { fixed_basetype((left.f * right.f)>>FIXED_FRACTIONBITS) }; return r; }
-inline fixed fixed_shl_signed_char(fixed left, int6_t right) { fixed r = { fixed_basetype(left.f<<right) }; return r; }
-inline fixed fixed_shr_signed_char(fixed left, int6_t right) { fixed r = { fixed_basetype(left.f>>right) }; return r; }
+inline fixed fixed_mul(fixed left, fixed right) { fixed r = { (fixed_basetype)((left.f * right.f)>>FIXED_FRACTIONBITS) }; return r; }
+inline fixed fixed_shl_signed_char(fixed left, int6_t right) { fixed r = { (fixed_basetype)(left.f<<right) }; return r; }
+inline fixed fixed_shr_signed_char(fixed left, int6_t right) { fixed r = { (fixed_basetype)(left.f>>right) }; return r; }
 
 
 #else //FIXED_EMULATE_WITH_FLOAT = true
@@ -182,7 +183,7 @@ inline bool fixed_lte(fixed left, fixed right) { return left.f <= right.f; }
 inline bool fixed_gte(fixed left, fixed right) { return left.f >= right.f; }
 
 typedef struct fixed3 { fixed x, y, z; } fixed3;
-inline constexpr fixed3 fixed3_make(fixed x, fixed y, fixed z) { fixed3 r = {x, y, z }; return r; } //constructor
+inline fixed3 fixed3_make(fixed x, fixed y, fixed z) { fixed3 r = {x, y, z}; return r; } //constructor
 
 inline fixed3 fixed3_make_from_fixed(fixed left) { fixed3 r = { left, left, left }; return r; }
 
@@ -198,9 +199,14 @@ inline fixed3 fixed3_mul(fixed3 left, fixed3 right)
 inline fixed3 fixed3_mul_fixed(fixed3 left, fixed right)
   { fixed3 r = { fixed_mul(left.x, right), fixed_mul(left.y, right), fixed_mul(left.z, right) }; return r; }
 
+#ifndef __PIPELINEC__
 inline fixed3 const_fixed3_mul_double(fixed3 left, double right)
   { fixed3 r = { fixed_mul(left.x, fixed_make_from_double(right)), fixed_mul(left.y, fixed_make_from_double(right)), fixed_mul(left.z, fixed_make_from_double(right)) }; return r; }
-
+#else
+fixed3 const_fixed3_mul_float(fixed3 left, float right)
+  { fixed3 r = { fixed_mul(left.x, fixed_make_from_float(right)), fixed_mul(left.y, fixed_make_from_float(right)), fixed_mul(left.z, fixed_make_from_float(right)) }; return r; }
+#define const_fixed3_mul_double(left, right) const_fixed3_mul_float(left, (float)right)
+#endif
 
 #endif //CCOMPILE
 

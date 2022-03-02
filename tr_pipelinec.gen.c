@@ -9,8 +9,8 @@ typedef uint16_t uint12_t;
 typedef uint8_t uint6_t;
 typedef int8_t int6_t;
 typedef bool uint1_t;
-#define FRAME_WIDTH	512
-#define FRAME_HEIGHT	384
+//#define FRAME_WIDTH	512
+//#define FRAME_HEIGHT	384
 typedef struct pixel_t { uint8_t a; uint8_t b; uint8_t g; uint8_t r; } pixel_t;
 #define size_t unsigned long
 #define float_type float
@@ -19,25 +19,6 @@ float is_negative(float x)
   return x < 0.;
 }
 
-typedef union fp_tlayout { float f; uint32_t i; struct  { uint32_t mantissa; uint32_t exp; uint32_t sign; } ;} fp_tlayout;
-float float_shift(float x, int32_t shift)
-{
-  return shift > 0 ? x * (1 << shift) : x / ((1 << -shift));
-}
-
-uint32_t float_to_uint(float a)
-{
-  fp_tlayout conv;
-  conv.f = a;
-  return conv.i;
-}
-
-float uint_to_float(uint32_t a)
-{
-  fp_tlayout conv;
-  conv.i = a;
-  return conv.f;
-}
 
 float float_abs(float x)
 {
@@ -122,7 +103,6 @@ uint16_t CLOG2(uint16_t v)
   return r + 1;
 }
 
-#define fixed_basetype int32_t
 //CLASS fixed_t (classes not supported)
 //typedef does not support for template types: fixed_t<10>
 //CLASS fixed3 (classes not supported)
@@ -244,16 +224,18 @@ hole_t plane_has_hole(hole_t x, hole_t z)
   
   if((hx ^ hz) < ix + 600) {
     
-    if((((ix & 0x240) == 0x240)!=0) | ((((ix & ~0x7FF) != 0))!=0)) return fixed_make_from_double(0.);
-    bool fx = (hx & 1) != 0;
-    bool fz = ((hz >> 1) & 1) != 0;
-    bool hard = (ix & 0x200) != 0;
-    {
-      hole_t ax = fixed_abs(fracx);
-      hole_t az = fixed_abs(fracz);
-      
-      if(hard) ret = fixed_sub(fixed_max(ax, az), fixed_make_from_double(.3));
-      else ret = fixed_sub((fixed_add(ax, az)), fixed_make_from_double(.4));
+    if((((ix & 0x240) == 0x240)!=0) | ((((ix & ~0x7FF) != 0))!=0)) ret = fixed_make_from_double(0.);
+    else {
+      bool fx = (hx & 1) != 0;
+      bool fz = ((hz >> 1) & 1) != 0;
+      bool hard = (ix & 0x200) != 0;
+      {
+        hole_t ax = fixed_abs(fracx);
+        hole_t az = fixed_abs(fracz);
+        
+        if(hard) ret = fixed_sub(fixed_max(ax, az), fixed_make_from_double(.3));
+        else ret = fixed_sub((fixed_add(ax, az)), fixed_make_from_double(.4));
+      }
     }
   }
   return ret;
