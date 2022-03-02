@@ -1,7 +1,9 @@
 // (C) 2021 Victor Suarez Rovere <suarezvictor@gmail.com>
 
 #define FIXED_FACTIONBITS 10
-//#warning: precision of fixed should be correctly defined
+#ifndef __PIPELINEC__
+#warning: precision of fixed should be correctly defined
+#endif
 
 //#define FIXED_EMULATE_WITH_FLOAT
 
@@ -39,7 +41,8 @@ public:
     constexpr fixed_t(double a) : f(float_shift(a, Q))  { }
     fixed_t(const fixed_t& a) : f(a.f) {}
 
-    fixed_t operator * (fixed_t b) const { return int(f)*int(b.f)>>Q; }
+    fixed_t operator * (double b) const { fixed_t r; r.f = f * float(b); return r; }
+    fixed_t operator * (fixed_t b) const { fixed_t r; r.f = (f * b.f) >> Q; return r; }
     fixed_t operator + (fixed_t b) const { fixed_t r; r.f = f + b.f; return r; }
 
     fixed_t operator - (fixed_t b) const { fixed_t r; r.f = f - b.f; return r; }
@@ -66,11 +69,20 @@ public:
 
     fixed3(type a=0.) : x(a),y(a),z(a) {}
     fixed3(type a1, type a2, type a3) : x(a1),y(a2),z(a3) {}
-    //fixed3(const fixed& o) : x(o.x),y(o.y),z(o.z) {}
-    type x, y, z;
+    fixed3(const fixed3& o) : x(o.x),y(o.y),z(o.z) {}
+    union {
+      struct {type x, y, z; };
+      struct {type r, g, b; };
+    };
 
     //FIXME: maybe implicit
     explicit operator float3() const { float3 r = { (float) x, (float) y, (float) z }; return r; }
+    fixed3 operator * (double v) const { fixed3 r = { x*v, y*v, z*v }; return r;  }
+    fixed3 operator * (type v) const { fixed3 r = { x*v, y*v, z*v }; return r;  }
+    fixed3 operator * (fixed3 v) const { fixed3 r = { x*v.x, y*v.y, z*v.z }; return r;  }
+
+    fixed3 operator + (fixed3 v) const { fixed3 r = { x+v.x, y+v.y, z+v.z }; return r;  }
+    fixed3 operator - (fixed3 v) const { fixed3 r = { x-v.x, y-v.y, z-v.z }; return r;  }
 };
 
 float3 vec3convert(fixed3 a) { float3 r = { (float) a.x, (float) a.y, (float) a.z }; return r; }
@@ -96,7 +108,21 @@ inline fixed fixed_max(fixed a, fixed b) { return a<b?a:b; }
 
 
 #ifndef FIXED_EMULATE_WITH_FLOAT
-//typedef int fixed_basetype;
+#ifndef __PIPELINEC__
+#warning merge pipelineC implementation
+
+typedef int fixed_basetype;
+#warning: base type of fixed should be correctly defined
+typedef struct fixed { fixed_basetype f; } fixed;
+
+inline constexpr fixed fixed_make_from_int(int a) { const fixed r = {a << FIXED_FACTIONBITS}; return r; }
+inline constexpr fixed fixed_make_from_short(short a) { const fixed r = {a << FIXED_FACTIONBITS}; return r; }
+inline constexpr fixed fixed_make_from_float(float a) { fixed r = {(fixed_basetype) (float(a)*(1<<FIXED_FACTIONBITS))}; return r; }
+inline constexpr fixed fixed_make_from_double(double a) { return fixed_make_from_float(a); }
+
+inline float fixed_to_float(fixed a) { return (float) a.f / (1<<FIXED_FACTIONBITS); }
+inline int fixed_to_int(fixed a) { return a.f >> FIXED_FACTIONBITS; }
+#else
 #define fixed_basetype int32_t
 //#warning: base type of fixed should be correctly defined
 typedef struct fixed { fixed_basetype f; } fixed;
@@ -109,6 +135,8 @@ inline constexpr fixed fixed_make_from_float(float a) { fixed r = {(fixed_basety
 
 inline float fixed_to_float(fixed a) { return float_shift((float)a.f, -FIXED_FACTIONBITS); }
 inline int32_t fixed_to_int(fixed a) { return a.f >> FIXED_FACTIONBITS; }
+
+#endif
 
 inline fixed fixed_mul(fixed left, fixed right) { fixed r = { (left.f * right.f)>>FIXED_FACTIONBITS }; return r; }
 inline fixed fixed_shl_int(fixed left, int32_t right) { fixed r = { left.f<<right }; return r; }
@@ -130,8 +158,8 @@ inline int fixed_to_int(fixed a) { return (int) a.f; }
 
 inline fixed fixed_mul(fixed left, fixed right) { fixed r = { left.f * right.f}; return r; }
 //FIXME: shl/shr doesn't need type of 2nd operand in name (always integer)
-inline fixed fixed_shl_int(fixed left, int right) { fixed r = { left.f*((int32_t)1<<right) }; return r; }
-inline fixed fixed_shr_int(fixed left, int right) { fixed r = { left.f/((int32_t)1<<right) }; return r; }
+inline fixed fixed_shl_int(fixed left, int right) { fixed r = { left.f*((int)1<<right) }; return r; }
+inline fixed fixed_shr_int(fixed left, int right) { fixed r = { left.f/((int)1<<right) }; return r; }
 
 //FIXME: change name from lround to fixround
 //inline int lround(fixed x) { return int(x.f+.5); }
