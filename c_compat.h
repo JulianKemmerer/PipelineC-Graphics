@@ -7,6 +7,7 @@ typedef unsigned char bool;
 #define inline
 #endif
 
+typedef signed char int8_t;
 typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;
 typedef unsigned uint32_t;
@@ -41,6 +42,9 @@ inline float3 float3_mul_float(float3 left, float right) { float3 r = { left.x *
 #define sqrt _sqrt //avoid library conflict
 #define lround _lround //avoid library conflict
 
+typedef int8_t int6_t;
 #include "fixed_type.h"
 
 #endif //CCOMPILE
+
+

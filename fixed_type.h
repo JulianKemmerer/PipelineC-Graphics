@@ -12,9 +12,13 @@
 #define CCOMPILE
 #endif
 
+typedef int fixed_basetype;
+#warning determine correct base type
+//typedef int16_t fixed_basetype;
+
 #ifndef CCOMPILE
 
-template<unsigned Q/*, unsigned INT=32-Q-1, class U=int*/>
+template<fixed_basetype Q/*, unsigned INT=32-Q-1, class U=int*/>
 class fixed_t
 {
 #ifdef FIXED_EMULATE_WITH_FLOAT
@@ -24,14 +28,14 @@ public:
     fixed_t(short a) : f(a) {}
     fixed_t(float a) : f(a) { }
     constexpr fixed_t(double a) : f(a)  { }
-    operator float() const { return f; }
+    explicit operator float() const { return f; }
     fixed_t operator << (int a) const { return float_shift(f, a); }
     fixed_t operator >> (int a) const { return float_shift(f, -a); }
 #else //not FIXED_EMULATE_WITH_FLOAT
 
 #if 1//def NO_BIT_EXACT
   //U f;
-  int f;
+  fixed_basetype f;
 #else
   U f:Q+INT+1; //+1 for sign
 #endif
@@ -93,15 +97,16 @@ public:
 float3 vec3convert(fixed3 a) { float3 r = { (float) a.x, (float) a.y, (float) a.z }; return r; }
 
 //inline int lround(fixed a) { return (a.f + (1 << (FIXED_FRACTIONBITS-1))) >> FIXED_FRACTIONBITS; }
-inline int lround(fixed a) { return int(a+.5); }
+//inline int lround(fixed a) { return int(a+.5f); }
+inline int16_t round16(fixed a) { return int16_t(a+.5f); }
 
-inline fixed fixed_shift(fixed a, int shift) { return shift >= 0 ? a << shift : a >> -shift; }
+inline fixed fixed_shift(fixed a, int6_t shift) { return shift >= 0 ? (a << shift) : (a >> int6_t(-shift)); }
 
 
-inline bool fixed_is_negative(fixed x) { return x < 0; }
+inline bool fixed_is_negative(fixed x) { return x < 0.f; }
 //inline fixed fixed_abs(fixed x) { return fixed_is_negative(x) ? fixed(-x) : x; }
 #warning implement unary -
-inline fixed fixed_abs(fixed x) { return fixed_is_negative(x) ? fixed(0)-x : x; }
+inline fixed fixed_abs(fixed x) { return fixed_is_negative(x) ? fixed(0.f)-x : x; }
 
 inline fixed fixed_min(fixed a, fixed b) { return a>b?a:b; }
 inline fixed fixed_max(fixed a, fixed b) { return a<b?a:b; }
@@ -116,19 +121,17 @@ inline fixed fixed_max(fixed a, fixed b) { return a<b?a:b; }
 #ifndef __PIPELINEC__
 #warning merge pipelineC implementation
 
-typedef int fixed_basetype;
 #warning: base type of fixed should be correctly defined
 typedef struct fixed { fixed_basetype f; } fixed;
 
-inline constexpr fixed fixed_make_from_int(int a) { const fixed r = {a << FIXED_FRACTIONBITS}; return r; }
-inline constexpr fixed fixed_make_from_short(short a) { const fixed r = {a << FIXED_FRACTIONBITS}; return r; }
+inline constexpr fixed fixed_make_from_int(int a) { const fixed r = {fixed_basetype(a << FIXED_FRACTIONBITS)}; return r; }
+inline constexpr fixed fixed_make_from_short(short a) { const fixed r = {fixed_basetype(a << FIXED_FRACTIONBITS)}; return r; }
 inline constexpr fixed fixed_make_from_float(float a) { fixed r = {(fixed_basetype) (float(a)*(1<<FIXED_FRACTIONBITS))}; return r; }
 inline constexpr fixed fixed_make_from_double(double a) { return fixed_make_from_float(a); }
 
 inline float fixed_to_float(fixed a) { return (float) a.f / (1<<FIXED_FRACTIONBITS); }
-inline int fixed_to_int(fixed a) { return a.f >> FIXED_FRACTIONBITS; }
+inline short fixed_to_short(fixed a) { return a.f >> FIXED_FRACTIONBITS; }
 #else
-#define fixed_basetype int32_t
 //#warning: base type of fixed should be correctly defined
 typedef struct fixed { fixed_basetype f; } fixed;
 
@@ -138,14 +141,14 @@ inline constexpr fixed fixed_make_from_float(float a) { fixed r = {(fixed_basety
 #define fixed_make_from_double(x) fixed_make_from_float(x)
 
 inline float fixed_to_float(fixed a) { return float_shift((float)a.f, -FIXED_FRACTIONBITS); }
-inline int32_t fixed_to_int(fixed a) { return a.f >> FIXED_FRACTIONBITS; }
-int fixed_asinteger(fixed a, int n) { return FIXED_FRACTIONBITS > n ? (a.f >> (FIXED_FRACTIONBITS-n)) : (a.f << (n-FIXED_FRACTIONBITS)) }
+inline short fixed_to_short(fixed a) { return a.f >> FIXED_FRACTIONBITS; }
+//int fixed_asinteger(fixed a, int n) { return FIXED_FRACTIONBITS > n ? (a.f >> (FIXED_FRACTIONBITS-n)) : (a.f << (n-FIXED_FRACTIONBITS)) }
 
 #endif
 
-inline fixed fixed_mul(fixed left, fixed right) { fixed r = { (left.f * right.f)>>FIXED_FRACTIONBITS }; return r; }
-inline fixed fixed_shl_int(fixed left, int32_t right) { fixed r = { left.f<<right }; return r; }
-inline fixed fixed_shr_int(fixed left, int32_t right) { fixed r = { left.f>>right }; return r; }
+inline fixed fixed_mul(fixed left, fixed right) { fixed r = { fixed_basetype((left.f * right.f)>>FIXED_FRACTIONBITS) }; return r; }
+inline fixed fixed_shl_signed_char(fixed left, int6_t right) { fixed r = { fixed_basetype(left.f<<right) }; return r; }
+inline fixed fixed_shr_signed_char(fixed left, int6_t right) { fixed r = { fixed_basetype(left.f>>right) }; return r; }
 
 
 #else //FIXED_EMULATE_WITH_FLOAT = true
