@@ -9,8 +9,6 @@ typedef uint16_t uint12_t;
 typedef uint8_t uint6_t;
 typedef int8_t int6_t;
 typedef bool uint1_t;
-//#define FRAME_WIDTH	512
-//#define FRAME_HEIGHT	384
 typedef struct pixel_t { uint8_t a; uint8_t b; uint8_t g; uint8_t r; } pixel_t;
 #define size_t unsigned long
 #define float_type float
@@ -19,6 +17,29 @@ float is_negative(float x)
   return x < 0.;
 }
 
+#ifndef __PIPELINEC__
+#define FRAME_WIDTH	512
+#define FRAME_HEIGHT	384
+typedef union fp_tlayout { float f; uint32_t i; struct  { uint32_t mantissa; uint32_t exp; uint32_t sign; } ;} fp_tlayout;
+float float_shift(float x, int32_t shift)
+{
+  return shift > 0 ? x * (1 << shift) : x / ((1 << -shift));
+}
+
+uint32_t float_to_uint(float a)
+{
+  fp_tlayout conv;
+  conv.f = a;
+  return conv.i;
+}
+
+float uint_to_float(uint32_t a)
+{
+  fp_tlayout conv;
+  conv.i = a;
+  return conv.f;
+}
+#endif
 
 float float_abs(float x)
 {
