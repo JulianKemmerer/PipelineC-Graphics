@@ -41,7 +41,7 @@ pixel_t pixelbuf[FRAME_PITCH*FRAME_PITCH];
 #define FRAME_WIDTH FRAME_WIDTH
 #define FRAME_HEIGHT FRAME_HEIGHT
 #endif
-#include "vga_timing.h"
+#include "../PipelineC/vga/vga_timing.h"
 
 unsigned buttons_pressed();
 bool fb_init(unsigned hres, unsigned vres);
