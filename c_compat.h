@@ -1,10 +1,13 @@
 // (C) 2021 Victor Suarez Rovere <suarezvictor@gmail.com>
-
-#ifdef CCOMPILE
+#ifndef __C_COMPAT_H__
+#define __C_COMPAT_H__
 
 #ifndef __cplusplus
-typedef unsigned char bool;
 #define inline
+#define constexpr
+typedef unsigned char bool;
+#define true 1
+#define false 0
 #endif
 
 typedef signed char int8_t;
@@ -14,19 +17,10 @@ typedef unsigned uint32_t;
 typedef short int16_t;
 typedef int int32_t;
 
-#ifdef __PIPELINEC__
-#include "pipelinec_compat.h"
-#endif
-
-#define constexpr
-#define true 1
-#define false 0
-
+#ifdef CCOMPILE
 typedef struct { float x, y; } float2; //like extension vectors
 #ifndef __PIPELINEC__
 typedef union { struct { float x, y, z; }; struct { float r, g, b; }; } float3;
-#define sqrt _sqrt //avoid library conflict
-#define lround _lround //avoid library conflict
 #else
 typedef struct float3 { float x, y, z; } float3; //like extension vectors
 #endif
@@ -41,9 +35,19 @@ inline float3 float3_sub(float3 left, float3 right) { float3 r = { left.x - righ
 inline float3 float3_mul(float3 left, float3 right) { float3 r = { left.x * right.x, left.y * right.y, left.z * right.z }; return r; }
 inline float3 float3_mul_float(float3 left, float right) { float3 r = { left.x * right, left.y * right, left.z * right }; return r; }
 
-typedef int8_t int6_t;
-#include "fixed_type.h"
+#else
+
+//typedef float vec2 __attribute__((vector_size(2*4)));
+//typedef float vec3 __attribute__((vector_size(3*4)));
+//typedef float vec4 __attribute__((vector_size(4*4)));
+typedef float __attribute__((ext_vector_type(2))) float2;
+typedef float __attribute__((ext_vector_type(3))) float3;
+typedef float __attribute__((ext_vector_type(4))) float4;
 
 #endif //CCOMPILE
 
+#define shift_t int6_t
 
+#define IN(t) t
+
+#endif //__C_COMPAT_H__

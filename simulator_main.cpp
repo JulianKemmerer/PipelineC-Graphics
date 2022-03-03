@@ -18,16 +18,24 @@ There's no game nor render logic in this source, all that is defined by the HDL 
 */
 
 //#define GATEWARE_VGA
-
 #include <SDL2/SDL.h>
-#define lround _lround //avoid conflicts with std libs FIXME: use fix_round
-#define sqrt _sqrt
+
+#define sqrt _sqrt //avoid library conflict
+
+int FRAME_WIDTH = 512;
+int FRAME_HEIGHT = 384;
+
+#include "pipelinec_compat.h"
+#include "float_type.h"
+
 #ifndef CCOMPILE
 #include "tr_pipelinec.cpp" //original source
 #else
-#include "c_compat.h"
+#include "fixed_type.h"
 #include "tr_pipelinec.gen.c" //generated source
 #endif
+
+
 
 #define WIRE_WRITE(a,b,c) memcpy((a*)&c, &b, sizeof(c));
 
@@ -41,7 +49,7 @@ pixel_t pixelbuf[FRAME_PITCH*FRAME_PITCH];
 #define FRAME_WIDTH FRAME_WIDTH
 #define FRAME_HEIGHT FRAME_HEIGHT
 #endif
-#include "../PipelineC/vga/vga_timing.h"
+#include "vga/vga_timing.h"
 
 unsigned buttons_pressed();
 bool fb_init(unsigned hres, unsigned vres);

@@ -1,128 +1,25 @@
-typedef signed char int8_t;
-typedef unsigned char uint8_t;
-typedef unsigned short uint16_t;
-typedef unsigned int uint32_t;
-typedef short int16_t;
-typedef int int32_t;
-typedef uint16_t uint9_t;
-typedef uint16_t uint12_t;
-typedef uint8_t uint6_t;
-typedef int8_t int6_t;
-typedef bool uint1_t;
-typedef struct pixel_t { uint8_t a; uint8_t b; uint8_t g; uint8_t r; } pixel_t;
-#define size_t unsigned long
-#define float_type float
-float is_negative(float x)
-{
-  return x < 0.;
-}
 
-#ifndef __PIPELINEC__
-#define FRAME_WIDTH	512
-#define FRAME_HEIGHT	384
-typedef union fp_tlayout { float f; uint32_t i; struct  { uint32_t mantissa; uint32_t exp; uint32_t sign; } ;} fp_tlayout;
-float float_shift(float x, int32_t shift)
-{
-  return shift > 0 ? x * (1 << shift) : x / ((1 << -shift));
-}
 
-uint32_t float_to_uint(float a)
-{
-  fp_tlayout conv;
-  conv.f = a;
-  return conv.i;
-}
 
-float uint_to_float(uint32_t a)
-{
-  fp_tlayout conv;
-  conv.i = a;
-  return conv.f;
-}
-#endif
 
-float float_abs(float x)
-{
-  return uint_to_float(float_to_uint(x) & 0x7FFFFFFF);
-}
 
-float inversesqrt(float number)
-{
-  float_type x2 = float_shift(number, -1);
-  float_type conv_f = uint_to_float(0x5f3759df - (float_to_uint(number) >> 1));
-  return conv_f * (1.5 - conv_f * conv_f * x2);
-}
 
-float sqrt(float x)
-{
-  return 1. / inversesqrt(x);
-}
-
-float float_max(float a, float b)
-{
-  return a > b ? a : b;
-}
-
-float float_min(float a, float b)
-{
-  return a < b ? a : b;
-}
-
-#define BIG_FLOAT	1.0e23
 #define float2 float2
 #define float3 float3
 #define float4 float4
-#define vec2 float2
-#define vec3 float3
-#define vec4 float4
-float dot(vec3 a, vec3 b)
-{
-  return a.x * b.x + a.y * b.y + a.z * b.z;
-}
 
-vec3 reflect(vec3 I, vec3 N)
-{
-  return float3_sub(I, float3_mul_float(N, float_shift(dot(I, N), 1)));
-}
 
-vec3 normalize(vec3 v)
-{
-  return float3_mul_float(v, inversesqrt(dot(v, v)));
-}
 
-uint16_t hash16(uint16_t v)
-{
-  return v * 0x9E37u;
-}
 
-uint16_t hashf(float_type f)
-{
-  uint32_t u = float_to_uint(f);
-  return hash16(((u << 9) | (u >> 23)) ^ (u >> 7));
-}
 
-vec3 float_select(float x, vec3 a, vec3 b)
-{
-  return float3_add(b, float3_mul_float((float3_sub(a, b)), x));
-}
+//extern int FRAME_WIDTH;
+//extern int FRAME_HEIGHT;
+typedef struct pixel_t { uint8_t a; uint8_t b; uint8_t g; uint8_t r; } pixel_t;
+//float float_shift(float x, int shift);
 
-uint16_t CLOG2(uint16_t v)
-{
-  uint16_t r;
-  uint16_t shift;
-  r = 0;
-  shift = (v > 0xFF) ? 8 : 0;
-  v >>= shift;
-  r |= shift;
-  shift = (v > 0x0F) ? 4 : 0;
-  v >>= shift;
-  r |= shift;
-  shift = (v > 0x03) ? 2 : 0;
-  v >>= shift;
-  r |= shift;
-  r |= (v >> 1);
-  return r + 1;
-}
+//unsigned int float_to_uint(float a);
+
+//float uint_to_float(unsigned int a);
 
 //CLASS fixed_t (classes not supported)
 //typedef does not support for template types: fixed_t<10>
@@ -179,6 +76,92 @@ color_type color_max(color_type a, color_type b)
   return fixed_gt(a, b) ? a : b;
 }
 
+#define float_type float
+float is_negative(float x)
+{
+  return float_to_uint(x) & 0x80000000;
+}
+
+float float_abs(float x)
+{
+  return uint_to_float(float_to_uint(x) & 0x7FFFFFFF);
+}
+
+float inversesqrt(float number)
+{
+  float_type x2 = float_shift(number, -1);
+  float_type conv_f = uint_to_float(0x5f3759df - (float_to_uint(number) >> 1));
+  return conv_f * (1.5 - conv_f * conv_f * x2);
+}
+
+float sqrt(float x)
+{
+  return 1. / inversesqrt(x);
+}
+
+float float_max(float a, float b)
+{
+  return a > b ? a : b;
+}
+
+float float_min(float a, float b)
+{
+  return a < b ? a : b;
+}
+
+#define BIG_FLOAT	1.0e23
+#define vec2 float2
+#define vec3 float3
+#define vec4 float4
+float dot(vec3 a, vec3 b)
+{
+  return a.x * b.x + a.y * b.y + a.z * b.z;
+}
+
+vec3 reflect(vec3 I, vec3 N)
+{
+  return float3_sub(I, float3_mul_float(N, float_shift(dot(I, N), 1)));
+}
+
+vec3 normalize(vec3 v)
+{
+  return float3_mul_float(v, inversesqrt(dot(v, v)));
+}
+
+vec3 float_select(float x, vec3 a, vec3 b)
+{
+  return float3_add(b, float3_mul_float((float3_sub(a, b)), x));
+}
+
+uint16_t CLOG2(uint16_t v)
+{
+  uint16_t r;
+  uint16_t shift;
+  r = 0;
+  shift = (v > 0xFF) ? 8 : 0;
+  v >>= shift;
+  r |= shift;
+  shift = (v > 0x0F) ? 4 : 0;
+  v >>= shift;
+  r |= shift;
+  shift = (v > 0x03) ? 2 : 0;
+  v >>= shift;
+  r |= shift;
+  r |= (v >> 1);
+  return r + 1;
+}
+
+uint16_t hash16(uint16_t v)
+{
+  return v * 0x9E37u;
+}
+
+uint16_t hashf(float_type f)
+{
+  uint32_t u = float_to_uint(f);
+  return hash16(((u << 9) | (u >> 23)) ^ (u >> 7));
+}
+
 typedef struct material_t { color diffuse_color; color reflect_color; } material_t;
 typedef struct sphere_t { object_coord_t center; material_t material; color_type heat; float_type yvel; } sphere_t;
 typedef struct plane_t { object_coord_t center; material_t material; color color1; color color2; } plane_t;
@@ -187,7 +170,7 @@ typedef struct scene_colors_t { material_t sphere; material_t plane; color plane
 typedef struct hit_in { vec3 orig; vec3 dir; } hit_in;
 typedef struct hit_out { float_type dist; float_type borderdist; vec3 N; vec3 hit; material_t material; } hit_out;
 typedef struct game_state_in { coord_type plane_y; coord_type sphere_x; coord_type sphere_z; color gold_color; color gold_reflect_color; color lava_color; bool press; } game_state_in;
-typedef struct game_state_t { coord_type sphere_y; color_type heat; coord_type camera_y; coord_type camera_z; coord_type plane_x; coord_type sphere_xvel; coord_type sphere_yvel; int32_t score; bool won; } game_state_t;
+typedef struct game_state_t { coord_type sphere_y; color_type heat; coord_type camera_y; coord_type camera_z; coord_type plane_x; coord_type sphere_xvel; coord_type sphere_yvel; uint16_t score; bool won; } game_state_t;
 typedef struct game_state_out { color diffuse_color; color reflect_color; uint16_t scorebar; bool lose; } game_state_out;
 typedef struct game_state_out_t { game_state_out stout; game_state_t stinout; } game_state_out_t;
 typedef struct full_state_t { scene_t scene; game_state_in stin; game_state_t stinout; } full_state_t;
@@ -421,12 +404,12 @@ color render_pixel_internal(screen_coord_t x, screen_coord_t y, scene_t scene, s
 pixel_t render_pixel(uint16_t i, uint16_t j, scene_t scene)
 {
   int16_t cx = i << 1;
-  cx -= (FRAME_WIDTH + 1);
+  cx = cx - (FRAME_WIDTH + 1);
   int16_t cy = j << 1;
-  cy -= (FRAME_HEIGHT + 1);
-  cy = -cy;
-  screen_coord_t x = fixed_shift(fixed_make_from_short(cx), -CLOG2(FRAME_HEIGHT));
-  screen_coord_t y = fixed_shift(fixed_make_from_short(cy), -CLOG2(FRAME_HEIGHT));
+  cy = (FRAME_HEIGHT + 1) - cy;
+  #define cshift	-CLOG2(FRAME_HEIGHT)
+  screen_coord_t x = fixed_shift(fixed_make_from_short(cx), cshift);
+  screen_coord_t y = fixed_shift(fixed_make_from_short(cy), cshift);
   pixel_t pix;
   uint16_t scorebar = scene.scorebar * (FRAME_WIDTH - 2 * 10) / 15000;
   
@@ -493,7 +476,7 @@ game_state_out_t next_state_func(game_state_in stin, game_state_t stinout)
 
 full_state_t reset_state()
 {
-  int32_t startpos = 110;
+  uint16_t startpos = 110;
   material_t gold;
   gold.diffuse_color = const_fixed3_mul_double(K_gold_color, .15);
   gold.reflect_color = const_fixed3_mul_double(K_gold_color, (1. - .15));

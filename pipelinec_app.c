@@ -13,7 +13,7 @@
 MAIN_MHZ(app, PIXEL_CLK_MHZ)
 #endif //__PIPELINEC__
 
-#include "c_compat.h"
+#include "pipelinec_compat.h"
 #include "fixed_type.h"
 #include "tr_pipelinec.gen.c"
 
