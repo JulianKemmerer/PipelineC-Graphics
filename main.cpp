@@ -21,8 +21,10 @@ $ ./sim
 // VGA timing logic, frame size const, etc
 #include "wire.h"
 #include "uintN_t.h"
-#include "examples/arty/src/vga/pixel.h"
-#include "vga_timing.h"
+typedef struct pixel_t{
+ uint8_t a, b, g, r; 
+}pixel_t;
+#include "../PipelineC/vga/vga_timing.h"
 
 // Select verilator RTL based sim, or raw C?
 #define USE_VERILATOR
@@ -103,9 +105,9 @@ void fb_deinit()
 }
 
 // VGA outputs (pmod when on physical fpga, verilator in sim)
-//#include "../../arty/src/vga/vga_pmod.c"
+//#include "vga/vga_pmod.c"
 // DVI outputs
-#include "examples/arty/src/dvi/dvi_pmod.c"
+#include "dvi/dvi_pmod.c"
 
 // Application 'app()' func under test to run (instead of verilator model)
 #ifndef USE_VERILATOR
