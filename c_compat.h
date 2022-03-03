@@ -25,6 +25,8 @@ typedef int int32_t;
 typedef struct { float x, y; } float2; //like extension vectors
 #ifndef __PIPELINEC__
 typedef union { struct { float x, y, z; }; struct { float r, g, b; }; } float3;
+#define sqrt _sqrt //avoid library conflict
+#define lround _lround //avoid library conflict
 #else
 typedef struct float3 { float x, y, z; } float3; //like extension vectors
 #endif
@@ -38,9 +40,6 @@ inline float3 float3_add(float3 left, float3 right) { float3 r = { left.x + righ
 inline float3 float3_sub(float3 left, float3 right) { float3 r = { left.x - right.x, left.y - right.y, left.z - right.z }; return r; }
 inline float3 float3_mul(float3 left, float3 right) { float3 r = { left.x * right.x, left.y * right.y, left.z * right.z }; return r; }
 inline float3 float3_mul_float(float3 left, float right) { float3 r = { left.x * right, left.y * right, left.z * right }; return r; }
-
-#define sqrt _sqrt //avoid library conflict
-#define lround _lround //avoid library conflict
 
 typedef int8_t int6_t;
 #include "fixed_type.h"
