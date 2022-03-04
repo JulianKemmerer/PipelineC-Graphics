@@ -818,6 +818,8 @@ color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(s
 		scene.camera.y*coord_type(CAMERA_FACTOR),
 		scene.plane.center.z-scene.camera.z);
 
+    c = color_select(fixed_abs(y), c, scene.fog);
+
 	//draw sphere
 	const float SPHERE_R = (-.707)*SPHERE_Z/SPHERE_RADIUS; //FIXME: check if code generator parenthesizes it
     coord_type dz = coord_type(scene.camera.z-SPHERE_Z);
