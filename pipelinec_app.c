@@ -5,7 +5,7 @@
 #include "compiler.h"
 #include "uintN_t.h"
 #include "intN_t.h"
-//#include "float_e_m_t_helper.h" // Variable mantissa sizes
+#include "float_e_m_t_helper.h" // Variable mantissa sizes
 // See top level IO wiring + DVI/VGA resolution timing logic in
 //#include "vga/vga_pmod.c"
 #include "dvi/dvi_pmod.c"

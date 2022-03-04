@@ -8,7 +8,7 @@
 #define float_type float
 // Float is variable size
 #include "float_e_m_t_helper.h"
-//#define inversesqrt float_rsqrt
+#define inversesqrt float_rsqrt
 // Shift is built in
 #define float_shift(x,shift) ((x)<<(shift))
 
