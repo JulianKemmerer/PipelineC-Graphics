@@ -11,8 +11,10 @@
 #include "intN_t.h"
 #include "float_e_m_t_helper.h" // Variable mantissa sizes
 // See top level IO wiring + DVI/VGA resolution timing logic in
-//#include "vga/vga_pmod.c"
-#include "dvi/dvi_pmod.c"
+#include "vga/vga_pmod.c"
+//#include "dvi/dvi_pmod.c"
+// Reset state func needs special marker to not be synthesized alone
+#pragma FUNC_WIRES reset_state // ~sorta PipelineC constexpr/const marker
 // Set app to run at pixel clock
 MAIN_MHZ(app, PIXEL_CLK_MHZ)
 #endif //__PIPELINEC__

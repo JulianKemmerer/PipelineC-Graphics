@@ -36,11 +36,6 @@ typedef struct pixel_t{
 */
 #include "vga/vga_timing.h"
 
-// VGA outputs (pmod when on physical fpga, verilator in sim)
-//#include "vga/vga_pmod.c"
-// DVI outputs
-
-
 
 #ifdef USE_VERILATOR
 #include "pipelinec_verilator.h"
@@ -54,7 +49,9 @@ void fb_update();
 inline void fb_setpixel(unsigned x, unsigned y, uint8_t r, uint8_t g, uint8_t b);
 inline uint64_t higres_ticks();
 inline uint64_t higres_ticks_freq();
-#include "dvi/dvi_pmod.c"
+// VGA/DVI outputs (pmod when on physical fpga, verilator in sim)
+#include "vga/vga_pmod.c"
+//#include "dvi/dvi_pmod.c"
 
 // Code adapted from https://projectf.io/posts/verilog-sim-verilator-sdl/
 #ifdef USE_VERILATOR
@@ -151,10 +148,10 @@ int main()
     {
       // Verilator clock loop iter?
       #ifdef USE_VERILATOR
-      if(g_top->dvi_x == 0 /*&& g_top->dvi_y == 0*/)
+      if(g_top->vga_x == 0 /*&& g_top->vga_y == 0*/)
       {
          if(fb_should_quit()) exit(1);
-         printf("frame %d, y %d\n", frame, g_top->dvi_y);
+         //printf("frame %d, y %d\n", frame, g_top->vga_y);
 		 fb_update(); //once by line
       }
       verilator_output(g_top);
