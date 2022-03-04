@@ -377,9 +377,14 @@ color shade(scene_t scene, scene_colors_t colors, color background, vec3 dir, hi
   return rcolor;
 }
 
+bool is_star(float_type x, float_type y)
+{
+  return ((hashf(x) >> 2) & (hashf(y) >> 2)) > 0x3E00;
+}
+
 color cast_ray(scene_t scene, scene_colors_t colors, hit_in hitin)
 {
-  bool has_star = ((hashf(hitin.dir.x) >> 2) & (hashf(hitin.dir.y) >> 2)) > 0x3E00;
+  bool has_star = is_star(hitin.dir.x, hitin.dir.y);
   color sky = has_star ? fixed3_make_from_fixed(fixed_make_from_double(.5)) : background_color(hitin.dir.y);
   float_type ys = float_abs(float_shift(hitin.dir.y, 1));
   color_type mix = ys < 1. ? fixed_sub(fixed_make_from_double(1.), fixed_make_from_float(ys)) : fixed_make_from_double(0.);
@@ -403,7 +408,7 @@ color render_pixel_internal(screen_coord_t x, screen_coord_t y, scene_t scene, s
 
 color render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, scene_t scene, scene_colors_t colors)
 {
-  color c = fixed3_make(fixed_make_from_double(0.), fixed_make_from_double(0.), fixed_make_from_double(0.));
+  color c = background_color(fixed_to_float(fixed_mul(x, y)));
   coord_type dz = fixed_sub(scene.camera.z, fixed_make_from_double((-32.)));
   coord_type dx = fixed_sub(fixed_mul(x, dz), (fixed_sub(scene.sphere.center.x, scene.camera.x)));
   coord_type dy = fixed_sub(fixed_mul(y, dz), (fixed_sub(scene.sphere.center.y, scene.camera.y)));

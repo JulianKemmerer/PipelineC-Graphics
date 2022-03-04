@@ -1,7 +1,11 @@
 #define CCOMPILE
 
 #ifdef __PIPELINEC__
-#pragma PART "LFE5U-85F-6BG381C" // An ECP5U 85F part
+//#pragma PART "LFE5U-85F-6BG381C" // An ECP5U 85F part
+#pragma PART "xc7a35ticsg324-1l" // Arty
+
+#include "pipelinec_app_vgaconfig.h"
+
 #include "compiler.h"
 #include "uintN_t.h"
 #include "intN_t.h"

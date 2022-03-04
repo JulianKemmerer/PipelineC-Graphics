@@ -13,10 +13,15 @@ $ ./src/pipelinec ./examples/arty/src/vga/test_pattern_modular.c --sim_comb --ve
 # From current dir with main.cpp go C++ compile:
 #   Use include path of verilator install (might not be required if installed to system include dir)
 $ clang++ -DCCOMPILE -O3 -I. -I/media/1TB/Programs/Linux/oss-cad-suite/share/verilator/include -I$HOME/pipelinec_output/verilator main.cpp -o sim `sdl2-config --cflags --libs` && ./sim 
-
 # Run
 $ ./sim
 */
+
+#if !defined(FRAME_WIDTH) || !defined(FRAME_HEIGHT) 
+#error FRAME_WIDTH and FRAME_HEIGHT should be set (defaults are not recommended)
+#endif
+
+#warning this verilator simulator should be unified with the one for the compiler
 
 #include <stdio.h>
 #include <unistd.h>
@@ -36,8 +41,6 @@ typedef struct pixel_t{
 // DVI outputs
 
 
-// Select verilator RTL based sim, or raw C?
-#define USE_VERILATOR
 
 #ifdef USE_VERILATOR
 #include "pipelinec_verilator.h"

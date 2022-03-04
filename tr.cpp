@@ -677,9 +677,14 @@ color_basic_t shade(IN(scene_t) scene, IN(scene_colors_t) colors, IN(color_basic
   return rcolor;
 }
 
+bool is_star(float_type x, float_type y)
+{
+  return ((hashf(x)>>2) & (hashf(y)>>2)) > 0x3E00;
+}
+
 color_basic_t cast_ray(IN(scene_t) scene, IN(scene_colors_t) colors, IN(hit_in) hitin)
 {
-   bool has_star = ((hashf(hitin.dir.x)>>2) & (hashf(hitin.dir.y)>>2)) > 0x3E00;
+   bool has_star = is_star(hitin.dir.x, hitin.dir.y);
    color_basic_t sky = has_star ? color_basic_t(STAR_INTENSITY) : background_color(hitin.dir.y);
    float_type ys = float_abs(float_shift(hitin.dir.y, 1));
    color_type mix = ys<1. ? color_type(color_type(1.)-color_type(ys)): color_type(0.);
@@ -767,7 +772,8 @@ color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y, IN(scene
 color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(scene_t) scene, IN(scene_colors_t) colors)
 {
 #define SPHERE_R (-SPHERE_Z*.707/SPHERE_RADIUS)
-	color_basic_t c = {0., 0., 0.};
+	color_basic_t c = background_color(float_type(x*y));
+
     coord_type dz = coord_type(scene.camera.z-SPHERE_Z);
 	coord_type dx = coord_type(x*dz - (scene.sphere.center.x-scene.camera.x));
 	coord_type dy = coord_type(y*dz - (scene.sphere.center.y-scene.camera.y));

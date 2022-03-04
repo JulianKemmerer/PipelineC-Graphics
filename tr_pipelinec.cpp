@@ -18,7 +18,7 @@ inline color_type color_max(color_type a, color_type b) { return a>b?a:b; }
 
 typedef float float_type;
 #define assert(x)
-#ifndef __PIPELINEC__
+
 inline float is_negative(float x) { return float_to_uint(x)&0x80000000; }
 inline float float_abs(float x) { return uint_to_float(float_to_uint(x)&0x7FFFFFFF); }
 inline float inversesqrt( float number ) //should one more newton iteration
@@ -28,7 +28,7 @@ inline float inversesqrt( float number ) //should one more newton iteration
   float_type conv_f = uint_to_float(0x5f3759df - (float_to_uint(number) >> 1));
   return conv_f*(float_type(1.5) - conv_f*conv_f*x2);
 }
-#endif
+
 inline float sqrt(float x) {return 1./inversesqrt(x); }
 inline float float_max(float a, float b) { return a>b?a:b; }
 inline float float_min(float a, float b) { return a<b?a:b; }

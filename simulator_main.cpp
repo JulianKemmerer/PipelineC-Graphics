@@ -22,8 +22,13 @@ There's no game nor render logic in this source, all that is defined by the HDL 
 
 #define sqrt _sqrt //avoid library conflict
 
-int FRAME_WIDTH = 512;
-int FRAME_HEIGHT = 384;
+#ifndef _FRAME_WIDTH
+#define FRAME_WIDTH 400
+#define FRAME_HEIGHT 300
+#endif
+
+int FRAME_WIDTH = _FRAME_WIDTH;
+int FRAME_HEIGHT = _FRAME_HEIGHT;
 
 #include "pipelinec_compat.h"
 #include "float_type.h"
@@ -50,6 +55,8 @@ pixel_t pixelbuf[FRAME_PITCH*FRAME_PITCH];
 #define FRAME_HEIGHT FRAME_HEIGHT
 #endif
 #include "vga/vga_timing.h"
+
+#warning integrate with crflexhdl graphics functions
 
 unsigned buttons_pressed();
 bool fb_init(unsigned hres, unsigned vres);
