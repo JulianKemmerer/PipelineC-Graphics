@@ -245,7 +245,7 @@ hole_t plane_has_hole(hole_t x, hole_t z)
   return ret;
 }
 
-#define K_gold_color	fixed3_make(fixed_make_from_double(1.5 * 243. / 256.), fixed_make_from_double(1.5 * 201. / 256.), fixed_make_from_double(1.5 * 104. / 256.))
+#define K_gold_color	fixed3_make(fixed_make_from_double(243. / 256.), fixed_make_from_double(201. / 256.), fixed_make_from_double(104. / 256.))
 #define K_lava_color	fixed3_make(fixed_make_from_double(255. / 256. * 2.0), fixed_make_from_double(70. / 256. * 1.5), fixed_make_from_double(32. / 256. * 1.5))
 #define K_plane_color1	fixed3_make(fixed_make_from_double(.8), fixed_make_from_double(.8), fixed_make_from_double(.8))
 #define K_plane_color2	fixed3_make(fixed_make_from_double(.1), fixed_make_from_double(.0), fixed_make_from_double(.0))
@@ -299,8 +299,8 @@ color plane_effect(uint16_t frame, scene_colors_t colors, plane_t plane, hit_out
   vec3 plane_center = vec3convert(plane.center);
   float_type hitx = hit.hit.x - plane_center.x;
   float_type hitz = hit.hit.z - plane_center.z;
-  float_type ox = float_shift(hitx, -3);
-  float_type oz = float_shift(hitz, -3);
+  float_type ox = float_shift(hitx, (-3));
+  float_type oz = float_shift(hitz, (-3));
   int16_t ix = round16(fixed_make_from_float(ox));
   int16_t iz = round16(fixed_make_from_float(oz));
   bool cx = (ix & 1) != 0;
@@ -406,17 +406,35 @@ color render_pixel_internal(screen_coord_t x, screen_coord_t y, scene_t scene, s
   return c;
 }
 
-color render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, scene_t scene, scene_colors_t colors)
+color render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px, coord_type pz)
 {
   color c = background_color(fixed_to_float(fixed_mul(x, y)));
+  coord_type ox = fixed_shift(px, (-3));
+  coord_type oz = fixed_shift(pz, (-3));
+  coord_type inv_y = fixed_make_from_double(0.);
+  uint16_t u;
+  uint16_t v;
+  
+  if(fixed_lt(y, fixed_make_from_double(0.))) {
+    inv_y = fixed_make_from_float(-1. / fixed_to_float(y));
+    u = round16(fixed_sub(fixed_mul(inv_y, x), ox));
+    v = round16(fixed_add(inv_y, oz));
+    c = ((u ^ v) & 1) ? K_plane_color1 : K_plane_color2;
+  }
+  return c;
+}
+
+color render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, scene_t scene, scene_colors_t colors)
+{
+  color c = render_floor_alt(x, y, fixed_sub(scene.plane.center.x, scene.camera.x), fixed_sub(scene.plane.center.z, scene.camera.z));
+  #define SPHERE_R	(-.707) * (-32.) / 4.5
   coord_type dz = fixed_sub(scene.camera.z, fixed_make_from_double((-32.)));
   coord_type dx = fixed_sub(fixed_mul(x, dz), (fixed_sub(scene.sphere.center.x, scene.camera.x)));
   coord_type dy = fixed_sub(fixed_mul(y, dz), (fixed_sub(scene.sphere.center.y, scene.camera.y)));
   
-  if((((((((fixed_gt(dx, fixed_make_from_double(-(-(-32.) * .707 / 4.5)))))!=0) & (((fixed_lt(dx, fixed_make_from_double((-(-32.) * .707 / 4.5)))))!=0))!=0) & (((fixed_gt(dy, fixed_make_from_double(-(-(-32.) * .707 / 4.5)))))!=0))!=0) & (((fixed_lt(dy, fixed_make_from_double((-(-32.) * .707 / 4.5)))))!=0)) {
-    c.z = fixed_make_from_double(1.);
+  if((((((((fixed_gt(dx, fixed_make_from_float(-SPHERE_R))))!=0) & (((fixed_lt(dx, fixed_make_from_float(SPHERE_R))))!=0))!=0) & (((fixed_gt(dy, fixed_make_from_float(-SPHERE_R))))!=0))!=0) & (((fixed_lt(dy, fixed_make_from_float(SPHERE_R))))!=0)) {
     
-    if(fixed_lt(fixed_add(fixed_mul(dx, dx), fixed_mul(dy, dy)), fixed_make_from_double((-(-32.) * .707 / 4.5) * (-(-32.) * .707 / 4.5)))) c.x = fixed_make_from_double(1.);
+    if(fixed_lt(fixed_add(fixed_mul(dx, dx), fixed_mul(dy, dy)), fixed_make_from_float(SPHERE_R * SPHERE_R))) c = K_gold_color;
   }
   return c;
 }
@@ -498,8 +516,8 @@ full_state_t reset_state()
 {
   uint16_t startpos = 110;
   material_t gold;
-  gold.diffuse_color = const_fixed3_mul_double(K_gold_color, .15);
-  gold.reflect_color = const_fixed3_mul_double(K_gold_color, (1. - .15));
+  gold.diffuse_color = const_fixed3_mul_double(K_gold_color, (1.5 * .15));
+  gold.reflect_color = const_fixed3_mul_double(K_gold_color, (1.5 * (1. - .15)));
   material_t floor_material;
   floor_material.diffuse_color = K_floor_difusse;
   floor_material.reflect_color = K_floor_reflect;

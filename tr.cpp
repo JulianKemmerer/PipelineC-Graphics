@@ -14,7 +14,7 @@ For GPU (software renderer):
 $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 
 */
-#define ATERNATE_UI
+#define ALTERNATE_UI
 
 #define GAME_MODE
 
@@ -59,6 +59,7 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 #define CAMERA_Z 30. //start pos
 #define PLANE_OFFSET 110 //startig at coordinate 0 doesn't draw a good looking scene
 #define SCORE_MARGINS 10
+#define FLOOR_SHIFT (-3)
 
 #ifdef GAME_MODE
 //#define CIRCLE_SIZE .3
@@ -429,7 +430,7 @@ hole_t plane_has_hole(hole_t x, hole_t z)
   return ret;
 }
 
-static const color K_gold_color = {1.5*243./256., 1.5*201./256., 1.5*104./256.};
+static const color K_gold_color = {243./256., 201./256., 104./256.};
 static const color K_lava_color = {255./256.*2.0, 70./256.*1.5, 32./256.*1.5};
 static const color K_plane_color1 = {.8, .8, .8};
 static const color K_plane_color2 = {.1, .0, .0};
@@ -524,8 +525,8 @@ color_basic_t plane_effect(uint16_t frame, IN(scene_colors_t) colors, IN(plane_t
 
   float_type hitx = hit.hit.x - plane_center.x;
   float_type hitz = hit.hit.z - plane_center.z;
-  float_type ox = float_shift(hitx, -3); //FIXME: same coordinates in this game
-  float_type oz = float_shift(hitz, -3);
+  float_type ox = float_shift(hitx, FLOOR_SHIFT); //FIXME: same coordinates in this game
+  float_type oz = float_shift(hitz, FLOOR_SHIFT);
   
   int16_t ix = round16(ox);
   int16_t iz = round16(oz);
@@ -768,20 +769,48 @@ color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y, IN(scene
   return c;
 }
 
-#ifdef ATERNATE_UI
+#ifdef ALTERNATE_UI
+
+color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px, coord_type pz)
+{
+  color_basic_t c = background_color(float_type(x*y));
+
+  coord_type ox = fixed_shift(px, FLOOR_SHIFT);
+  coord_type oz = fixed_shift(pz, FLOOR_SHIFT);
+#warning check why fixed types can't be left uninitialized
+  coord_type inv_y = 0.;
+  
+  uint16_t u;
+  uint16_t v;
+
+  if (y < 0.)
+  {
+    inv_y = coord_type(float_type(-1.) / float_type(y));
+
+    u = round16(inv_y*coord_type(x) - ox);
+    v = round16(inv_y + oz);
+
+    c = ((u ^ v) & 1) ? K_plane_color1 : K_plane_color2;
+  }
+
+  return c;
+}
+
 color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(scene_t) scene, IN(scene_colors_t) colors)
 {
-#define SPHERE_R (-SPHERE_Z*.707/SPHERE_RADIUS)
-	color_basic_t c = background_color(float_type(x*y));
+	color_basic_t c = render_floor_alt(x, y, scene.plane.center.x-scene.camera.x, scene.plane.center.z-scene.camera.z);
 
+	//draw sphere
+	const float SPHERE_R = (-.707)*SPHERE_Z/SPHERE_RADIUS; //#define SPHERE_R (-SPHERE_Z*.707/SPHERE_RADIUS)
     coord_type dz = coord_type(scene.camera.z-SPHERE_Z);
 	coord_type dx = coord_type(x*dz - (scene.sphere.center.x-scene.camera.x));
 	coord_type dy = coord_type(y*dz - (scene.sphere.center.y-scene.camera.y));
-	if((dx > -SPHERE_R) && (dx < SPHERE_R) && (dy > -SPHERE_R) && (dy < SPHERE_R))
+	if((dx > -SPHERE_R) && (dx < SPHERE_R) && (dy > -SPHERE_R) && (dy < SPHERE_R)) //FIXME: use >=, <=
     {
-		c.b = 1.;
+		//inside bounding box
 		if(dx*dx + dy*dy < SPHERE_R*SPHERE_R)
-			c.r = 1.;
+			c = K_gold_color;
+		//else c.b = 1.; //uncomment to display bounding box
     }
 	return c;
 }
@@ -822,7 +851,7 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(scene_t) scene
   else
   {
 #ifndef COLOR_DECOMP
-#ifdef ATERNATE_UI
+#ifdef ALTERNATE_UI
 	color c = render_pixel_internal_alt(x, y, scene, scene_colors(scene));
 	 //if((i ^ j) & 0x10) c = render_pixel_internal(x, y, scene, scene_colors(scene)); //uncomment for checkerboard
 #else
@@ -930,8 +959,8 @@ full_state_t reset_state(void)
     uint16_t startpos = PLANE_OFFSET; //FIXME: seems redundant
 
     material_t gold;
-    gold.diffuse_color = K_gold_color*.15;
-    gold.reflect_color = K_gold_color*(1.-.15);
+    gold.diffuse_color = K_gold_color*(1.5*.15);
+    gold.reflect_color = K_gold_color*(1.5*(1.-.15));
     material_t floor_material;
     floor_material.diffuse_color = K_floor_difusse;
     floor_material.reflect_color = K_floor_reflect;
