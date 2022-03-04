@@ -14,6 +14,7 @@ For GPU (software renderer):
 $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 
 */
+#define ATERNATE_UI
 
 #define GAME_MODE
 
@@ -54,7 +55,7 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 #define light_z (-10.)
 #define DIST_SHIFT (9) //for fog calculations
 #define SPHERE_RADIUS 4.5
-#define SPHERE_Z -32.
+#define SPHERE_Z (-32.)
 #define CAMERA_Z 30. //start pos
 #define PLANE_OFFSET 110 //startig at coordinate 0 doesn't draw a good looking scene
 #define SCORE_MARGINS 10
@@ -433,17 +434,17 @@ static const color K_lava_color = {255./256.*2.0, 70./256.*1.5, 32./256.*1.5};
 static const color K_plane_color1 = {.8, .8, .8};
 static const color K_plane_color2 = {.1, .0, .0};
 //TODO: add K_ to rest of constants
-static const color floor_difusse = {1.,1.,1.};
-static const color floor_reflect = {.5, .5, .5};
+static const color K_floor_difusse = {1.,1.,1.};
+static const color K_floor_reflect = {.5, .5, .5};
 #ifdef GAME_MODE
-static const color fog_color = {.01,.01,.1};
+static const color K_fog_color = {.01,.01,.1};
 #else
-static const color fog_color = {.02,.02,.12};
+static const color K_fog_color = {.02,.02,.12};
 #endif
-static const object_coord_t plane_center_start = {0., 0., 0.};
-static const object_coord_t sphere_center_start = {-20., 40., SPHERE_Z};
-static const object_coord_t camera_pos_start = {0.,30.,CAMERA_Z};
-static const vec3 NORMAL_UP = {0.,1.,0.};
+static const object_coord_t K_plane_center_start = {0., 0., 0.};
+static const object_coord_t K_sphere_center_start = {-20., 40., SPHERE_Z};
+static const object_coord_t K_camera_pos_start = {0.,30.,CAMERA_Z};
+static const vec3 VECTOR_NURMAL_UPWARDS = {0.,1.,0.};
 
 
 hit_out ray_plane_intersect(IN(plane_t) plane, IN(hit_in) hitin)
@@ -472,7 +473,7 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(hit_in) hitin)
           hitout.accdist = calc_accdist(hitin, hitout);
 #endif
           hitout.hit = pt;
-          vec3 N = NORMAL_UP;
+          vec3 N = VECTOR_NURMAL_UPWARDS;
           hitout.N = N; //points upwards
       }
       hitout.borderdist = float_type(hole_margin);
@@ -762,6 +763,24 @@ color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y, IN(scene
   return c;
 }
 
+#ifdef ATERNATE_UI
+color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(scene_t) scene, IN(scene_colors_t) colors)
+{
+#define SPHERE_R (-SPHERE_Z*.707/SPHERE_RADIUS)
+	color_basic_t c = {0., 0., 0.};
+    coord_type dz = coord_type(scene.camera.z-SPHERE_Z);
+	coord_type dx = coord_type(x*dz - (scene.sphere.center.x-scene.camera.x));
+	coord_type dy = coord_type(y*dz - (scene.sphere.center.y-scene.camera.y));
+	if((dx > -SPHERE_R) && (dx < SPHERE_R) && (dy > -SPHERE_R) && (dy < SPHERE_R))
+    {
+		c.b = 1.;
+		if(dx*dx + dy*dy < SPHERE_R*SPHERE_R)
+			c.r = 1.;
+    }
+	return c;
+}
+#endif
+
 #ifndef SHADER
 inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(scene_t) scene
 #ifdef COLOR_DECOMP
@@ -797,7 +816,12 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(scene_t) scene
   else
   {
 #ifndef COLOR_DECOMP
-    color c = render_pixel_internal(x, y, scene, scene_colors(scene));
+#ifdef ATERNATE_UI
+	color c = render_pixel_internal_alt(x, y, scene, scene_colors(scene));
+	 //if((i ^ j) & 0x10) c = render_pixel_internal(x, y, scene, scene_colors(scene)); //uncomment for checkerboard
+#else
+	color c = render_pixel_internal(x, y, scene, scene_colors(scene));
+#endif
     uint9_t r = fixed_asshort(c.r, 8);
     uint9_t g = fixed_asshort(c.g, 8);
     uint9_t b = fixed_asshort(c.b, 8);
@@ -817,6 +841,7 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(scene_t) scene
       pix.b = c8;
 #endif
   }
+
 #ifdef _DEBUG
   perf_render_dump();
 #endif
@@ -902,24 +927,24 @@ full_state_t reset_state(void)
     gold.diffuse_color = K_gold_color*.15;
     gold.reflect_color = K_gold_color*(1.-.15);
     material_t floor_material;
-    floor_material.diffuse_color = floor_difusse;
-    floor_material.reflect_color = floor_reflect;
+    floor_material.diffuse_color = K_floor_difusse;
+    floor_material.reflect_color = K_floor_reflect;
 
     scene_t scene;
 
 
-    scene.plane.center = plane_center_start;
+    scene.plane.center = K_plane_center_start;
     scene.plane.material = floor_material;
     scene.plane.color1 = K_plane_color1;
     scene.plane.color2 = K_plane_color2;
 
-    scene.sphere.center = sphere_center_start;
+    scene.sphere.center = K_sphere_center_start;
     scene.sphere.material = gold;
     scene.sphere.heat = 0.;
-    scene.camera = camera_pos_start;
+    scene.camera = K_camera_pos_start;
     scene.frame = 0;
     scene.scorebar = 0;
-    scene.fog = fog_color;
+    scene.fog = K_fog_color;
 
     game_state_in stin;
     stin.plane_y    = (coord_type) scene.plane.center.y;

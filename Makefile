@@ -32,9 +32,9 @@ verilator: obj_dir/Vtop
 	./obj_dir/Vtop
 
 obj_dir/Vtop: ./main.cpp compile
-	/usr/bin/verilator -Mdir ./obj_dir -Wno-UNOPTFLAT --top-module top -cc ./build/top/top.v -O3 --exe main.cpp -I./build/verilator -LDFLAGS $(sdl2-config --libs)
+	/usr/bin/verilator -Mdir ./obj_dir -Wno-UNOPTFLAT --top-module top -cc ./build/top/top.v -O3 --exe main.cpp -I./build/verilator -CFLAGS -DUSE_VERILATOR -LDFLAGS $(shell sdl2-config --libs)
 	cp ./main.cpp ./obj_dir
-	make CXXFLAGS=$(INCLUDE)" -I../build/verilator -I.." -C ./obj_dir -f Vtop.mk
+	make CXXFLAGS="-DUSE_VERILATOR -I../../PipelineC/ -I../build/verilator -I.." -C ./obj_dir -f Vtop.mk
 
 clean:
 	rm -Rf *.o tr_sim tr_gen ./build ./obj_dir tr_pipelinec.gen.c tr_pipelinec.E.cpp

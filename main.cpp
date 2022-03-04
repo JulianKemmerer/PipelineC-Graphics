@@ -18,13 +18,23 @@ $ clang++ -DCCOMPILE -O3 -I. -I/media/1TB/Programs/Linux/oss-cad-suite/share/ver
 $ ./sim
 */
 
+#include <stdio.h>
+#include <unistd.h>
+
 // VGA timing logic, frame size const, etc
 #include "wire.h"
 #include "uintN_t.h"
+/*
 typedef struct pixel_t{
  uint8_t a, b, g, r; 
 }pixel_t;
-#include "../PipelineC/vga/vga_timing.h"
+*/
+#include "vga/vga_timing.h"
+
+// VGA outputs (pmod when on physical fpga, verilator in sim)
+//#include "vga/vga_pmod.c"
+// DVI outputs
+
 
 // Select verilator RTL based sim, or raw C?
 #define USE_VERILATOR
@@ -33,6 +43,15 @@ typedef struct pixel_t{
 #include "pipelinec_verilator.h"
 #include "Vtop.h"
 #endif
+
+bool fb_should_quit();
+void fb_update();
+//struct pixel_t;
+//void fb_setpixel(pixel_t *p, uint8_t r, uint8_t g, uint8_t b);
+inline void fb_setpixel(unsigned x, unsigned y, uint8_t r, uint8_t g, uint8_t b);
+inline uint64_t higres_ticks();
+inline uint64_t higres_ticks_freq();
+#include "dvi/dvi_pmod.c"
 
 // Code adapted from https://projectf.io/posts/verilog-sim-verilator-sdl/
 #ifdef USE_VERILATOR
@@ -104,15 +123,7 @@ void fb_deinit()
     SDL_Quit();
 }
 
-// VGA outputs (pmod when on physical fpga, verilator in sim)
-//#include "vga/vga_pmod.c"
-// DVI outputs
-#include "dvi/dvi_pmod.c"
-
 // Application 'app()' func under test to run (instead of verilator model)
-#ifndef USE_VERILATOR
-#include "examples/arty/src/vga/mandelbrot.c"
-#endif
 
 // Main loop doing per clock:
 //  Verilated clk+eval loop of hardware sim
