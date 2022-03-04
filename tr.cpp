@@ -771,9 +771,17 @@ color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y, IN(scene
 
 #ifdef ALTERNATE_UI
 
-color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px, coord_type pz)
+color_basic_t background_color2(fixed_type dir_y)
 {
-  color_basic_t c = background_color(float_type(x*y));
+  return color_basic_t(dir_y < 0 ? color_type(0.) : color_type(dir_y*dir_y));
+}
+
+color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px, coord_type py, coord_type pz)
+{
+  color_basic_t c = background_color2((y-.5)*fixed_abs(x*x-1.));
+
+  if(is_star(float_type(x), float_type(y)))
+   c = color_basic_t(STAR_INTENSITY);
 
   coord_type ox = fixed_shift(px, FLOOR_SHIFT);
   coord_type oz = fixed_shift(pz, FLOOR_SHIFT);
@@ -783,14 +791,15 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
   uint16_t u;
   uint16_t v;
 
-  if (y < 0.)
+#warning implement equal operat
+  if ((y < 0. && py < 0.) || !(y < 0. || py < 0.))
   {
-    inv_y = coord_type(float_type(-1.) / float_type(y));
+    inv_y = coord_type(float_type(py) / float_type(y));
 
     u = round16(inv_y*coord_type(x) - ox);
     v = round16(inv_y + oz);
 
-    c = ((u ^ v) & 1) ? K_plane_color1 : K_plane_color2;
+    c = ((u ^ v) & 1) ? K_plane_color2 : K_plane_color1;
   }
 
   return c;
@@ -798,10 +807,19 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
 
 color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(scene_t) scene, IN(scene_colors_t) colors)
 {
-	color_basic_t c = render_floor_alt(x, y, scene.plane.center.x-scene.camera.x, scene.plane.center.z-scene.camera.z);
+#ifdef PIPELINEC_SUGAR
+	float FRAME_HEIGHT_FLOAT = FRAME_HEIGHT;
+	const float CAMERA_FACTOR = -2.*CAMERA_Z/FRAME_HEIGHT_FLOAT;
+#else
+	const float CAMERA_FACTOR = -2.*CAMERA_Z/FRAME_HEIGHT;
+#endif
+	color_basic_t c = render_floor_alt(x, y,
+		scene.plane.center.x/*-scene.camera.x*/,
+		scene.camera.y*coord_type(CAMERA_FACTOR),
+		scene.plane.center.z-scene.camera.z);
 
 	//draw sphere
-	const float SPHERE_R = (-.707)*SPHERE_Z/SPHERE_RADIUS; //#define SPHERE_R (-SPHERE_Z*.707/SPHERE_RADIUS)
+	const float SPHERE_R = (-.707)*SPHERE_Z/SPHERE_RADIUS; //FIXME: check if code generator parenthesizes it
     coord_type dz = coord_type(scene.camera.z-SPHERE_Z);
 	coord_type dx = coord_type(x*dz - (scene.sphere.center.x-scene.camera.x));
 	coord_type dy = coord_type(y*dz - (scene.sphere.center.y-scene.camera.y));
@@ -809,7 +827,7 @@ color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(s
     {
 		//inside bounding box
 		if(dx*dx + dy*dy < SPHERE_R*SPHERE_R)
-			c = K_gold_color;
+			c = /*K_gold_color*/scene.sphere.material.diffuse_color;
 		//else c.b = 1.; //uncomment to display bounding box
     }
 	return c;
@@ -853,7 +871,7 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(scene_t) scene
 #ifndef COLOR_DECOMP
 #ifdef ALTERNATE_UI
 	color c = render_pixel_internal_alt(x, y, scene, scene_colors(scene));
-	 //if((i ^ j) & 0x10) c = render_pixel_internal(x, y, scene, scene_colors(scene)); //uncomment for checkerboard
+	//if((i ^ j) & (1<<7)) c = render_pixel_internal(x, y, scene, scene_colors(scene)); //uncomment for checkerboard
 #else
 	color c = render_pixel_internal(x, y, scene, scene_colors(scene));
 #endif
@@ -911,9 +929,12 @@ game_state_out_t next_state_func(IN(game_state_in) stin, IN(game_state_t) stinou
 #ifdef HEAT_CONSTANT
       if(n.stinout.sphere_yvel>0.)
         n.stinout.heat = fixed_type(0)-fixed_convert(color_type, n.stinout.sphere_xvel, -HEAT_CONSTANT);
-#warning solve unary -
+#warning implement unary -
 #endif
+
+#ifndef ALTERNATE_UI
       if(plane_has_hole(coord_x, coord_z) > -HOLE_GUARD_MARGIN) // > about -.1 gives margin for the ball size
+#endif
       {
         n.stinout.score = n.stinout.score+1;
         if(n.stinout.score >= MAXSCORE && !n.stinout.won)
