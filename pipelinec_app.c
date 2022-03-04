@@ -1,14 +1,15 @@
 #define CCOMPILE
 
 #ifdef __PIPELINEC__
-#pragma PART "LFE5U-85F-6BG381C" // An ECP5U 85F part
+//#pragma PART "LFE5U-85F-6BG381C" // An ECP5U 85F part
+#pragma PART "xc7a35ticsg324-1l" // Arty
 #include "compiler.h"
 #include "uintN_t.h"
 #include "intN_t.h"
 #include "float_e_m_t_helper.h" // Variable mantissa sizes
 // See top level IO wiring + DVI/VGA resolution timing logic in
-//#include "vga/vga_pmod.c"
-#include "dvi/dvi_pmod.c"
+#include "vga/vga_pmod.c"
+//#include "dvi/dvi_pmod.c"
 // Set app to run at pixel clock
 MAIN_MHZ(app, PIXEL_CLK_MHZ)
 #endif //__PIPELINEC__
