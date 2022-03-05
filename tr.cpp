@@ -56,6 +56,7 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 #define DIST_SHIFT (9) //for fog calculations
 #define SPHERE_RADIUS 4.5
 #define SPHERE_Z (-32.)
+#define SPHERE_X (-20.)
 #define CAMERA_Z 30. //start pos
 #define PLANE_OFFSET 110 //startig at coordinate 0 doesn't draw a good looking scene
 #define SCORE_MARGINS 10
@@ -783,23 +784,42 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
   if(is_star(float_type(x), float_type(y)))
    c = color_basic_t(STAR_INTENSITY);
 
-  coord_type ox = fixed_shift(px, FLOOR_SHIFT);
-  coord_type oz = fixed_shift(pz, FLOOR_SHIFT);
 #warning check why fixed types can't be left uninitialized
   coord_type inv_y = 0.;
   
   uint16_t u;
   uint16_t v;
 
-#warning implement equal operat
+#warning implement equal operator
   if ((y < 0. && py < 0.) || !(y < 0. || py < 0.))
   {
+#if 0
     inv_y = coord_type(float_type(py) / float_type(y));
 
-    u = round16(inv_y*coord_type(x) - ox);
-    v = round16(inv_y + oz);
+    coord_type ix = inv_y*coord_type(x) - fixed_shift(px, FLOOR_SHIFT);
+    coord_type iz = inv_y + fixed_shift(pz, FLOOR_SHIFT);
 
-    c = ((u ^ v) & 1) ? K_plane_color2 : K_plane_color1;
+    u = round16(ix);
+    v = round16(iz);
+
+    hole_t hole_d = plane_has_hole((ix)*8., (iz)*(-8.));
+#else
+    inv_y = fixed_shift(coord_type(float_type(py) / float_type(y)), -FLOOR_SHIFT);
+
+    coord_type ix = inv_y*x-px;
+    coord_type iz = inv_y + pz;
+
+    u = fixed_asshort(ix, FLOOR_SHIFT); //TODO: this is just for testing an internal bit, can access it directly
+    v = fixed_asshort(iz, FLOOR_SHIFT);
+
+    hole_t hole_d = plane_has_hole(ix, coord_type(0)-iz);
+#endif
+	if(!(hole_d < 0)) //internal area
+    {
+      c = ((u ^ v) & 1) ? K_plane_color2 : K_plane_color1;
+      if(hole_d < HOLE_BORDER)
+		c = K_floor_difusse;
+    }
   }
 
   return c;
@@ -873,7 +893,7 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(scene_t) scene
 #ifndef COLOR_DECOMP
 #ifdef ALTERNATE_UI
 	color c = render_pixel_internal_alt(x, y, scene, scene_colors(scene));
-	//if((i ^ j) & (1<<7)) c = render_pixel_internal(x, y, scene, scene_colors(scene)); //uncomment for checkerboard
+	///*if((i ^ j) & (1<<7))*/ if(cx>0) c = render_pixel_internal(x, y, scene, scene_colors(scene)); //uncomment for checkerboard
 #else
 	color c = render_pixel_internal(x, y, scene, scene_colors(scene));
 #endif
@@ -934,9 +954,7 @@ game_state_out_t next_state_func(IN(game_state_in) stin, IN(game_state_t) stinou
 #warning implement unary -
 #endif
 
-#ifndef ALTERNATE_UI
       if(plane_has_hole(coord_x, coord_z) > -HOLE_GUARD_MARGIN) // > about -.1 gives margin for the ball size
-#endif
       {
         n.stinout.score = n.stinout.score+1;
         if(n.stinout.score >= MAXSCORE && !n.stinout.won)

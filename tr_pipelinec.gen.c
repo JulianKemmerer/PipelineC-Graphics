@@ -416,17 +416,23 @@ color render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px, coord_
   color c = background_color2(fixed_mul((fixed_sub(y, fixed_make_from_double(.5))), fixed_abs(fixed_sub(fixed_mul(x, x), fixed_make_from_double(1.)))));
   
   if(is_star(fixed_to_float(x), fixed_to_float(y))) c = fixed3_make_from_fixed(fixed_make_from_double(.5));
-  coord_type ox = fixed_shift(px, (-3));
-  coord_type oz = fixed_shift(pz, (-3));
   coord_type inv_y = fixed_make_from_double(0.);
   uint16_t u;
   uint16_t v;
   
   if((((((fixed_lt(y, fixed_make_from_double(0.)))!=0) & ((fixed_lt(py, fixed_make_from_double(0.)))!=0)))!=0) | ((!(((fixed_lt(y, fixed_make_from_double(0.)))!=0) | ((fixed_lt(py, fixed_make_from_double(0.)))!=0)))!=0)) {
-    inv_y = fixed_make_from_float(fixed_to_float(py) / fixed_to_float(y));
-    u = round16(fixed_sub(fixed_mul(inv_y, x), ox));
-    v = round16(fixed_add(inv_y, oz));
-    c = ((u ^ v) & 1) ? K_plane_color2 : K_plane_color1;
+    inv_y = fixed_shift(fixed_make_from_float(fixed_to_float(py) / fixed_to_float(y)), -(-3));
+    coord_type ix = fixed_sub(fixed_mul(inv_y, x), px);
+    coord_type iz = fixed_add(inv_y, pz);
+    u = fixed_to_short(fixed_shift(ix, (-3)));
+    v = fixed_to_short(fixed_shift(iz, (-3)));
+    hole_t hole_d = plane_has_hole(ix, fixed_sub(fixed_make_from_int(0), iz));
+    
+    if(!(fixed_lt(hole_d, fixed_make_from_int(0)))) {
+      c = ((u ^ v) & 1) ? K_plane_color2 : K_plane_color1;
+      
+      if(fixed_lt(hole_d, fixed_make_from_double(.1))) c = K_floor_difusse;
+    }
   }
   return c;
 }
@@ -436,6 +442,7 @@ color render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, scene_t scen
   float FRAME_HEIGHT_FLOAT = FRAME_HEIGHT;
   #define CAMERA_FACTOR	(-2. * 30. / FRAME_HEIGHT_FLOAT)
   color c = render_floor_alt(x, y, scene.plane.center.x, fixed_mul(scene.camera.y, fixed_make_from_float(CAMERA_FACTOR)), fixed_sub(scene.plane.center.z, scene.camera.z));
+  c = color_select(fixed_abs(y), c, scene.fog);
   #define SPHERE_R	((-.707) * (-32.) / 4.5)
   coord_type dz = fixed_sub(scene.camera.z, fixed_make_from_double((-32.)));
   coord_type dx = fixed_sub(fixed_mul(x, dz), (fixed_sub(scene.sphere.center.x, scene.camera.x)));
@@ -496,7 +503,8 @@ game_state_out_t next_state_func(game_state_in stin, game_state_t stinout)
     if(half_up) {
       
       if(fixed_gt(n.stinout.sphere_yvel, fixed_make_from_double(0.))) n.stinout.heat = fixed_sub(fixed_make_from_int(0), fixed_shift(n.stinout.sphere_xvel, -1));
-      {
+      
+      if(fixed_gt(plane_has_hole(coord_x, coord_z), fixed_make_from_double(-.05))) {
         n.stinout.score = n.stinout.score + 1;
         
         if(((n.stinout.score >= 15000)!=0) & ((!n.stinout.won)!=0)) n.stinout.won = true;
