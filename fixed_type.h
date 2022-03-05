@@ -66,6 +66,8 @@ public:
     fixed_t operator >> (int s) const { fixed_t r; r.f = f >> s; return r; } //NOTE: may have precision issues
     fixed_t operator << (int s) const { fixed_t r; r.f = f << s; return r; } //NOTE: may have precision issues
 
+    fixed_t operator / (fixed_t b) const { fixed_t r; r.f = (f << Q) / b.f; return r; }
+
 #endif
 };
 
@@ -149,6 +151,7 @@ int16_t fixed_to_short(fixed a) { return (int16_t)(a.f >> FIXED_FRACTIONBITS); }
 #endif
 
 inline fixed fixed_mul(fixed left, fixed right) { fixed r = { (fixed_basetype)((left.f * right.f)>>FIXED_FRACTIONBITS) }; return r; }
+inline fixed fixed_div(fixed left, fixed right) { fixed r = { (fixed_basetype)((left.f<<FIXED_FRACTIONBITS) / right.f) }; return r; }
 inline fixed fixed_shl_signed_char(fixed left, shift_t right) { fixed r = { (fixed_basetype)(left.f<<right) }; return r; }
 inline fixed fixed_shr_signed_char(fixed left, shift_t right) { fixed r = { (fixed_basetype)(left.f>>right) }; return r; }
 

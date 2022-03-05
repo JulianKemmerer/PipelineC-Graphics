@@ -414,8 +414,6 @@ color background_color2(fixed_type dir_y)
 color render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px, coord_type py, coord_type pz)
 {
   color c = background_color2(fixed_mul((fixed_sub(y, fixed_make_from_double(.5))), fixed_abs(fixed_sub(fixed_mul(x, x), fixed_make_from_double(1.)))));
-  
-  if(is_star(fixed_to_float(x), fixed_to_float(y))) c = fixed3_make_from_fixed(fixed_make_from_double(.5));
   coord_type inv_y = fixed_make_from_double(0.);
   uint16_t u;
   uint16_t v;
@@ -424,8 +422,8 @@ color render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px, coord_
     inv_y = fixed_shift(fixed_make_from_float(fixed_to_float(py) / fixed_to_float(y)), -(-3));
     coord_type ix = fixed_sub(fixed_mul(inv_y, x), px);
     coord_type iz = fixed_add(inv_y, pz);
-    u = fixed_to_short(fixed_shift(ix, (-3)));
-    v = fixed_to_short(fixed_shift(iz, (-3)));
+    u = fixed_to_short(fixed_shift((ix), ((-3))));
+    v = fixed_to_short(fixed_shift((iz), ((-3))));
     hole_t hole_d = plane_has_hole(ix, fixed_sub(fixed_make_from_int(0), iz));
     
     if(!(fixed_lt(hole_d, fixed_make_from_int(0)))) {
@@ -440,12 +438,12 @@ color render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px, coord_
 color render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, scene_t scene, scene_colors_t colors)
 {
   float FRAME_HEIGHT_FLOAT = FRAME_HEIGHT;
-  #define CAMERA_FACTOR	(-2. * 30. / FRAME_HEIGHT_FLOAT)
+  float CAMERA_FACTOR = -2. * 30. / FRAME_HEIGHT_FLOAT;
   color c = render_floor_alt(x, y, scene.plane.center.x, fixed_mul(scene.camera.y, fixed_make_from_float(CAMERA_FACTOR)), fixed_sub(scene.plane.center.z, scene.camera.z));
   c = color_select(fixed_abs(y), c, scene.fog);
   #define SPHERE_R	((-.707) * (-32.) / 4.5)
   coord_type dz = fixed_sub(scene.camera.z, fixed_make_from_double((-32.)));
-  coord_type dx = fixed_sub(fixed_mul(x, dz), (fixed_sub(scene.sphere.center.x, scene.camera.x)));
+  coord_type dx = fixed_sub(fixed_mul(x, dz), (scene.sphere.center.x));
   coord_type dy = fixed_sub(fixed_mul(y, dz), (fixed_sub(scene.sphere.center.y, scene.camera.y)));
   
   if((((((((fixed_gt(dx, fixed_make_from_float(-SPHERE_R))))!=0) & (((fixed_lt(dx, fixed_make_from_float(SPHERE_R))))!=0))!=0) & (((fixed_gt(dy, fixed_make_from_float(-SPHERE_R))))!=0))!=0) & (((fixed_lt(dy, fixed_make_from_float(SPHERE_R))))!=0)) {
@@ -474,9 +472,9 @@ pixel_t render_pixel(uint16_t i, uint16_t j, scene_t scene)
   }
   else {
     color c = render_pixel_internal_alt(x, y, scene, scene_colors(scene));
-    uint9_t r = fixed_to_short(fixed_shift(c.x, 8));
-    uint9_t g = fixed_to_short(fixed_shift(c.y, 8));
-    uint9_t b = fixed_to_short(fixed_shift(c.z, 8));
+    uint9_t r = fixed_to_short(fixed_shift((c.x), (8)));
+    uint9_t g = fixed_to_short(fixed_shift((c.y), (8)));
+    uint9_t b = fixed_to_short(fixed_shift((c.z), (8)));
     pix.r = (r >= 256) ? 255 : r;
     pix.g = (g >= 256) ? 255 : g;
     pix.b = (b >= 256) ? 255 : b;

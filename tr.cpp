@@ -435,7 +435,6 @@ static const color K_gold_color = {243./256., 201./256., 104./256.};
 static const color K_lava_color = {255./256.*2.0, 70./256.*1.5, 32./256.*1.5};
 static const color K_plane_color1 = {.8, .8, .8};
 static const color K_plane_color2 = {.1, .0, .0};
-//TODO: add K_ to rest of constants
 static const color K_floor_difusse = {1.,1.,1.};
 static const color K_floor_reflect = {.5, .5, .5};
 #ifdef GAME_MODE
@@ -534,7 +533,7 @@ color_basic_t plane_effect(uint16_t frame, IN(scene_colors_t) colors, IN(plane_t
 
   bool cx = (ix & 1) != 0;
   bool cz = (iz & 1) != 0;
-  const color_type bk = .3;
+  static const color_type bk = .3;
 #ifndef COLOR_DECOMP
   color_basic_t color2 = {
     (ix & 0x400)!=0 ? bk : colors.plane_color2.r,
@@ -781,8 +780,8 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
 {
   color_basic_t c = background_color2((y-.5)*fixed_abs(x*x-1.));
 
-  if(is_star(float_type(x), float_type(y)))
-   c = color_basic_t(STAR_INTENSITY);
+  //if(is_star(float_type(x), float_type(y)))
+  // c = color_basic_t(STAR_INTENSITY);
 
 #warning check why fixed types can't be left uninitialized
   coord_type inv_y = 0.;
@@ -793,18 +792,11 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
 #warning implement equal operator
   if ((y < 0. && py < 0.) || !(y < 0. || py < 0.))
   {
-#if 0
-    inv_y = coord_type(float_type(py) / float_type(y));
-
-    coord_type ix = inv_y*coord_type(x) - fixed_shift(px, FLOOR_SHIFT);
-    coord_type iz = inv_y + fixed_shift(pz, FLOOR_SHIFT);
-
-    u = round16(ix);
-    v = round16(iz);
-
-    hole_t hole_d = plane_has_hole((ix)*8., (iz)*(-8.));
-#else
+#ifdef PIPELINEC_SUGAR
     inv_y = fixed_shift(coord_type(float_type(py) / float_type(y)), -FLOOR_SHIFT);
+#else
+    inv_y = fixed_shift(py, -FLOOR_SHIFT)/y;
+#endif
 
     coord_type ix = inv_y*x-px;
     coord_type iz = inv_y + pz;
@@ -813,7 +805,7 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
     v = fixed_asshort(iz, FLOOR_SHIFT);
 
     hole_t hole_d = plane_has_hole(ix, coord_type(0)-iz);
-#endif
+
 	if(!(hole_d < 0)) //internal area
     {
       c = ((u ^ v) & 1) ? K_plane_color2 : K_plane_color1;
@@ -829,9 +821,9 @@ color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(s
 {
 #ifdef PIPELINEC_SUGAR
 	float FRAME_HEIGHT_FLOAT = FRAME_HEIGHT;
-	const float CAMERA_FACTOR = -2.*CAMERA_Z/FRAME_HEIGHT_FLOAT;
+	float CAMERA_FACTOR = -2.*CAMERA_Z/FRAME_HEIGHT_FLOAT;
 #else
-	const float CAMERA_FACTOR = -2.*CAMERA_Z/FRAME_HEIGHT;
+	static const float CAMERA_FACTOR = -2.*CAMERA_Z/FRAME_HEIGHT;
 #endif
 	color_basic_t c = render_floor_alt(x, y,
 		scene.plane.center.x/*-scene.camera.x*/,
@@ -841,9 +833,9 @@ color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(s
     c = color_select(fixed_abs(y), c, scene.fog);
 
 	//draw sphere
-	const float SPHERE_R = (-.707)*SPHERE_Z/SPHERE_RADIUS; //FIXME: check if code generator parenthesizes it
+	static const float SPHERE_R = (-.707)*SPHERE_Z/SPHERE_RADIUS; //FIXME: check if code generator parenthesizes it
     coord_type dz = coord_type(scene.camera.z-SPHERE_Z);
-	coord_type dx = coord_type(x*dz - (scene.sphere.center.x-scene.camera.x));
+	coord_type dx = coord_type(x*dz - (scene.sphere.center.x/*-scene.camera.x*/));
 	coord_type dy = coord_type(y*dz - (scene.sphere.center.y-scene.camera.y));
 	if((dx > -SPHERE_R) && (dx < SPHERE_R) && (dy > -SPHERE_R) && (dy < SPHERE_R)) //FIXME: use >=, <=
     {
@@ -876,7 +868,7 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(scene_t) scene
   int16_t cy = j << 1;
   cy = (FRAME_HEIGHT + 1) - cy;
 #endif
-  const shift_t cshift = -CLOG2(FRAME_HEIGHT);
+  static const shift_t cshift = -CLOG2(FRAME_HEIGHT);
   screen_coord_t x = fixed_convert(screen_coord_t, cx, cshift);
   screen_coord_t y = fixed_convert(screen_coord_t, cy, cshift);
 
