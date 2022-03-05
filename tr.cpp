@@ -61,6 +61,9 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 #define PLANE_OFFSET 110 //startig at coordinate 0 doesn't draw a good looking scene
 #define SCORE_MARGINS 10
 #define FLOOR_SHIFT (-3)
+#define FLOOR_X 0.
+#define FLOOR_Y 0.
+#define FLOOR_Z 0.
 
 #ifdef GAME_MODE
 //#define CIRCLE_SIZE .3
@@ -442,7 +445,7 @@ static const color K_fog_color = {.01,.01,.1};
 #else
 static const color K_fog_color = {.02,.02,.12};
 #endif
-static const object_coord_t K_plane_center_start = {0., 0., 0.};
+static const object_coord_t K_plane_center_start = {FLOOR_X, FLOOR_Y, FLOOR_Z}; //FIXME: test if works when != 0
 static const object_coord_t K_sphere_center_start = {-20., 40., SPHERE_Z};
 static const object_coord_t K_camera_pos_start = {0.,30.,CAMERA_Z};
 static const vec3 VECTOR_NURMAL_UPWARDS = {0.,1.,0.};
@@ -776,18 +779,15 @@ color_basic_t background_color2(fixed_type dir_y)
   return color_basic_t(dir_y < 0 ? color_type(0.) : color_type(dir_y*dir_y));
 }
 
-color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px, coord_type py, coord_type pz)
+color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px, coord_type py, coord_type pz, color_basic_t c)
 {
-  color_basic_t c = background_color2((y-.5)*fixed_abs(x*x-1.));
-
-  //if(is_star(float_type(x), float_type(y)))
-  // c = color_basic_t(STAR_INTENSITY);
 
 #warning check why fixed types can't be left uninitialized
   coord_type inv_y = 0.;
   
   uint16_t u;
   uint16_t v;
+  bool drawfog = false;
 
 #warning implement equal operator
   if ((y < 0. && py < 0.) || !(y < 0. || py < 0.))
@@ -810,28 +810,29 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
     {
       c = ((u ^ v) & 1) ? K_plane_color2 : K_plane_color1;
       if(hole_d < HOLE_BORDER)
+      {
 		c = K_floor_difusse;
+      }
+      drawfog = true;
     }
   }
+  else
+    drawfog = true;
 
+  if(drawfog)
+  {
+      c = color_select(fixed_abs(y), c, K_fog_color);
+  }
   return c;
 }
 
 color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(scene_t) scene, IN(scene_colors_t) colors)
 {
-#ifdef PIPELINEC_SUGAR
-	float FRAME_HEIGHT_FLOAT = FRAME_HEIGHT;
-	float CAMERA_FACTOR = -2.*CAMERA_Z/FRAME_HEIGHT_FLOAT;
-#else
-	static const float CAMERA_FACTOR = -2.*CAMERA_Z/FRAME_HEIGHT;
-#endif
-	color_basic_t c = render_floor_alt(x, y,
-		scene.plane.center.x/*-scene.camera.x*/,
-		scene.camera.y*coord_type(CAMERA_FACTOR),
-		scene.plane.center.z-scene.camera.z);
+color_basic_t c = background_color2((y-.5)*fixed_abs(x*x-1.));
+  //if(is_star(float_type(x), float_type(y)))
+  // c = color_basic_t(STAR_INTENSITY);
 
-    c = color_select(fixed_abs(y), c, scene.fog);
-
+bool floor = true;
 	//draw sphere
 	static const float SPHERE_R = (-.707)*SPHERE_Z/SPHERE_RADIUS; //FIXME: check if code generator parenthesizes it
     coord_type dz = coord_type(scene.camera.z-SPHERE_Z);
@@ -841,9 +842,27 @@ color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(s
     {
 		//inside bounding box
 		if(dx*dx + dy*dy < SPHERE_R*SPHERE_R)
+        {
 			c = /*K_gold_color*/scene.sphere.material.diffuse_color;
 		//else c.b = 1.; //uncomment to display bounding box
+		floor = scene.sphere.center.y + dy < FLOOR_Y;
+        }
     }
+
+	if(floor)
+{
+#ifdef PIPELINEC_SUGAR
+	float FRAME_HEIGHT_FLOAT = FRAME_HEIGHT;
+	float CAMERA_FACTOR = -2.*CAMERA_Z/FRAME_HEIGHT_FLOAT;
+#else
+	static const float CAMERA_FACTOR = -2.*CAMERA_Z/FRAME_HEIGHT;
+#endif
+	c = render_floor_alt(x, y,
+		scene.plane.center.x/*-scene.camera.x*/,
+		scene.camera.y*coord_type(CAMERA_FACTOR),
+		scene.plane.center.z-scene.camera.z, c);
+
+}
 	return c;
 }
 #endif

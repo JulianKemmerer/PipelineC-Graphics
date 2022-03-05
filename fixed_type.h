@@ -155,7 +155,6 @@ inline fixed fixed_div(fixed left, fixed right) { fixed r = { (fixed_basetype)((
 inline fixed fixed_shl_signed_char(fixed left, shift_t right) { fixed r = { (fixed_basetype)(left.f<<right) }; return r; }
 inline fixed fixed_shr_signed_char(fixed left, shift_t right) { fixed r = { (fixed_basetype)(left.f>>right) }; return r; }
 
-
 #else //FIXED_EMULATE_WITH_FLOAT = true
 typedef float fixed_basetype;
 typedef struct fixed { fixed_basetype f; } fixed;
@@ -211,7 +210,9 @@ fixed3 const_fixed3_mul_float(fixed3 left, float right)
   { fixed3 r = { fixed_mul(left.x, fixed_make_from_float(right)), fixed_mul(left.y, fixed_make_from_float(right)), fixed_mul(left.z, fixed_make_from_float(right)) }; return r; }
 #define const_fixed3_mul_double(left, right) const_fixed3_mul_float(left, (float)right)
 #endif
+inline fixed3 fixed3_make_from_const_fixed3(fixed3 a) { return a; }
 
 #endif //CCOMPILE
+
 
 #endif //__FIXED_TYPE__

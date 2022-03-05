@@ -411,12 +411,12 @@ color background_color2(fixed_type dir_y)
   return fixed3_make_from_fixed(fixed_lt(dir_y, fixed_make_from_int(0)) ? fixed_make_from_double(0.) : fixed_mul(dir_y, dir_y));
 }
 
-color render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px, coord_type py, coord_type pz)
+color render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px, coord_type py, coord_type pz, color c)
 {
-  color c = background_color2(fixed_mul((fixed_sub(y, fixed_make_from_double(.5))), fixed_abs(fixed_sub(fixed_mul(x, x), fixed_make_from_double(1.)))));
   coord_type inv_y = fixed_make_from_double(0.);
   uint16_t u;
   uint16_t v;
+  bool drawfog = false;
   
   if((((((fixed_lt(y, fixed_make_from_double(0.)))!=0) & ((fixed_lt(py, fixed_make_from_double(0.)))!=0)))!=0) | ((!(((fixed_lt(y, fixed_make_from_double(0.)))!=0) | ((fixed_lt(py, fixed_make_from_double(0.)))!=0)))!=0)) {
     inv_y = fixed_shift(fixed_make_from_float(fixed_to_float(py) / fixed_to_float(y)), -(-3));
@@ -429,18 +429,24 @@ color render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px, coord_
     if(!(fixed_lt(hole_d, fixed_make_from_int(0)))) {
       c = ((u ^ v) & 1) ? K_plane_color2 : K_plane_color1;
       
-      if(fixed_lt(hole_d, fixed_make_from_double(.1))) c = K_floor_difusse;
+      if(fixed_lt(hole_d, fixed_make_from_double(.1))) {
+        c = K_floor_difusse;
+      }
+      drawfog = true;
     }
+  }
+  else drawfog = true;
+  
+  if(drawfog) {
+    c = color_select(fixed_abs(y), c, fixed3_make_from_const_fixed3(K_fog_color));
   }
   return c;
 }
 
 color render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, scene_t scene, scene_colors_t colors)
 {
-  float FRAME_HEIGHT_FLOAT = FRAME_HEIGHT;
-  float CAMERA_FACTOR = -2. * 30. / FRAME_HEIGHT_FLOAT;
-  color c = render_floor_alt(x, y, scene.plane.center.x, fixed_mul(scene.camera.y, fixed_make_from_float(CAMERA_FACTOR)), fixed_sub(scene.plane.center.z, scene.camera.z));
-  c = color_select(fixed_abs(y), c, scene.fog);
+  color c = background_color2(fixed_mul((fixed_sub(y, fixed_make_from_double(.5))), fixed_abs(fixed_sub(fixed_mul(x, x), fixed_make_from_double(1.)))));
+  bool floor = true;
   #define SPHERE_R	((-.707) * (-32.) / 4.5)
   coord_type dz = fixed_sub(scene.camera.z, fixed_make_from_double((-32.)));
   coord_type dx = fixed_sub(fixed_mul(x, dz), (scene.sphere.center.x));
@@ -448,7 +454,16 @@ color render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, scene_t scen
   
   if((((((((fixed_gt(dx, fixed_make_from_float(-SPHERE_R))))!=0) & (((fixed_lt(dx, fixed_make_from_float(SPHERE_R))))!=0))!=0) & (((fixed_gt(dy, fixed_make_from_float(-SPHERE_R))))!=0))!=0) & (((fixed_lt(dy, fixed_make_from_float(SPHERE_R))))!=0)) {
     
-    if(fixed_lt(fixed_add(fixed_mul(dx, dx), fixed_mul(dy, dy)), fixed_make_from_float(SPHERE_R * SPHERE_R))) c = scene.sphere.material.diffuse_color;
+    if(fixed_lt(fixed_add(fixed_mul(dx, dx), fixed_mul(dy, dy)), fixed_make_from_float(SPHERE_R * SPHERE_R))) {
+      c = scene.sphere.material.diffuse_color;
+      floor = fixed_lt(fixed_add(scene.sphere.center.y, dy), fixed_make_from_double(0.));
+    }
+  }
+  
+  if(floor) {
+    float FRAME_HEIGHT_FLOAT = FRAME_HEIGHT;
+    float CAMERA_FACTOR = -2. * 30. / FRAME_HEIGHT_FLOAT;
+    c = render_floor_alt(x, y, scene.plane.center.x, fixed_mul(scene.camera.y, fixed_make_from_float(CAMERA_FACTOR)), fixed_sub(scene.plane.center.z, scene.camera.z), c);
   }
   return c;
 }
