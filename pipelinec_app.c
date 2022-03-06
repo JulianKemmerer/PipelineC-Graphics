@@ -61,7 +61,7 @@ inline user_input_t get_user_input()
 
 // Helper func with isolated local static var to hold state
 // while do_state_update local volatile static state is updating.
-full_state_t curr_state_buffer(full_state_t updated_state, uint1_t update_valid)
+full_state_t state_buffer(full_state_t updated_state, uint1_t update_valid)
 {
   // State reg
   static full_state_t state;
@@ -74,14 +74,29 @@ full_state_t curr_state_buffer(full_state_t updated_state, uint1_t update_valid)
   return rv;
 }
 
+// Helper func with isolated local static var to hold state
+// while do_state_update local volatile static state is updating.
+game_state_t stinout_buffer(game_state_t updated_stinout, uint1_t update_valid)
+{
+  // State reg
+  static game_state_t stinout;
+  game_state_t rv = stinout;
+  // Updated occassionally
+  if(update_valid)
+  {
+    stinout = updated_stinout;
+  }
+  return rv;
+}
+
 // Logic to update the state in a multiple cycle volatile feedback pipeline
 inline full_state_t do_state_update(uint1_t reset, uint1_t end_of_frame)
 {
   // Volatile state registers
-  #ifdef __PIPELINEC__ // Not same as software volatile
-  volatile 
-  #endif
-  static full_state_t state;
+  // Not same as software volatile
+  // Could use #ifdef __PIPELINEC__ to remove volatile for software sim 
+  volatile static full_state_t state;
+  volatile static game_state_t stinout;
   // TODO support non static/register based feedback (WIRE's/FEEDBACK pragmas)
   
   // Use 'slow' end of frame pulse as 'now' valid flag occuring 
@@ -93,12 +108,12 @@ inline full_state_t do_state_update(uint1_t reset, uint1_t end_of_frame)
   {
     // Reset condition?
     state = reset_state();
+    stinout = state.stinout;
   }
   else if(end_of_frame)
   {
     // Normal next state update
     // Adaptation of simulator_main.cpp, might be able to restructure in/out stuff
-    game_state_t stinout = state.stinout;
     user_input_t i = get_user_input();
     state.stin.press = i.button_pressed;
     game_state_out_t outs = next_state_func(state.stin, stinout);
@@ -108,12 +123,14 @@ inline full_state_t do_state_update(uint1_t reset, uint1_t end_of_frame)
   
   // Buffer/save state as it periodically is updated/output from above
   // TODO as mentioned above, could use this registering to replace with WIRE's and/or FEEDBACK
-  full_state_t curr_state = curr_state_buffer(state, update_now);
-  
+  full_state_t curr_state = state_buffer(state, update_now);
+  game_state_t curr_stinout = stinout_buffer(stinout, update_now);
+
   // Overwrite potententially invalid volatile 'state' circulating in feedback
   // replacing it with always valid buffered curr state. 
   // This way state will be known good when the next frame occurs
   state = curr_state;
+  stinout = curr_stinout;
          
   return curr_state;
 }
