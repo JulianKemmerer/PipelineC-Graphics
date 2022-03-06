@@ -33,10 +33,11 @@ MAIN_MHZ(app, PIXEL_CLK_MHZ)
 #include "fixed_type.h"
 #include "tr_pipelinec.gen.c"
 
-// User input (eventually more than one button?)
+// User input
 typedef struct user_input_t
 {
-  uint1_t button_pressed;
+  uint1_t jump_pressed;
+  uint1_t reset_pressed;
 }user_input_t;
 inline user_input_t get_user_input()
 {
@@ -49,12 +50,11 @@ inline user_input_t get_user_input()
   //uint4_t sws;
   //WIRE_READ(uint4_t, sws, switches)
   // Select which buttons and switches do what?
-  i.button_pressed = btns >> 0;
-  //i.zoom_in = sws >> 0;
-  //i.zoom_out = sws >> 1;
+  i.jump_pressed = btns >> 0;
+  i.reset_pressed = btns >> 3;
   #else
   // TODO user IO for running as C code
-  i.button_pressed = 1;
+  i.jump_pressed = 1;
   #endif
   return i;
 }
@@ -98,13 +98,19 @@ inline full_state_t do_state_update(uint1_t reset, uint1_t end_of_frame)
   volatile static full_state_t state;
   volatile static game_state_t stinout;
   // TODO support non static/register based feedback (WIRE's/FEEDBACK pragmas)
+
+  // Read user input
+  user_input_t ui = get_user_input();
+  // Combine button reset with power on reset input from reset_ctrl()
+  // maybe can remove power on reset since have button now?
+  uint1_t either_reset = reset | ui.reset_pressed;
   
   // Use 'slow' end of frame pulse as 'now' valid flag occuring 
-  // every N cycles > pipeline depth/latency
-  uint1_t update_now = end_of_frame | reset;
+  // every N cycles > pipeline depth/latency (or when infrequent reset happens)
+  uint1_t update_now = end_of_frame | either_reset;
 
   // Update state
-  if(reset)
+  if(either_reset)
   {
     // Reset condition?
     state = reset_state();
@@ -114,8 +120,7 @@ inline full_state_t do_state_update(uint1_t reset, uint1_t end_of_frame)
   {
     // Normal next state update
     // Adaptation of simulator_main.cpp, might be able to restructure in/out stuff
-    user_input_t i = get_user_input();
-    state.stin.press = i.button_pressed;
+    state.stin.press = ui.jump_pressed;
     game_state_out_t outs = next_state_func(state.stin, stinout);
     stinout = outs.stinout;
     state.scene = update_scene(state.scene, outs);
