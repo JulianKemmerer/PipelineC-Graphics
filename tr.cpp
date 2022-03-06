@@ -1114,7 +1114,8 @@ void app()
   if(reset)
   {
     state = reset_state();
-    WIRE_WRITE(game_state_t, state.stinout, stinout);
+    //WIRE_WRITE(game_state_t, state.stinout, stinout);
+    memcpy((game_state_t*)&stinout, &state.stinout, sizeof(stinout));
     reset = 0;
   }
 
@@ -1122,7 +1123,8 @@ void app()
   {
     state.stin.press = buttons_pressed() & 1;
     game_state_out_t outs = next_state_func(state.stin, stinout);
-    WIRE_WRITE(game_state_t, outs.stinout, stinout);
+    //WIRE_WRITE(game_state_t, outs.stinout, stinout);
+    memcpy((game_state_t*)&stinout, &outs.stinout, sizeof(stinout));
     state.scene = update_scene(state.scene, outs);
   }  
 

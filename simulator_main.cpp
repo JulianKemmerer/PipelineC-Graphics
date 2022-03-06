@@ -42,7 +42,8 @@ int FRAME_HEIGHT = _FRAME_HEIGHT;
 
 
 
-#define WIRE_WRITE(a,b,c) memcpy((a*)&c, &b, sizeof(c));
+// Not equivalent to PipelineC WIRE_WRITE, don't use
+// #define WIRE_WRITE(a,b,c) memcpy((a*)&c, &b, sizeof(c));
 
 #define FRAME_PITCH 2048
 //struct pixel_t { uint8_t a, b, g, r; };
@@ -164,9 +165,12 @@ int main()
         return 1;
 
 #ifndef GATEWARE_VGA
+    // Apply reset
     full_state_t state = reset_state();
     /*volatile*/ game_state_t stinout;
-    WIRE_WRITE(game_state_t, state.stinout, stinout);
+    //WIRE_WRITE(game_state_t, state.stinout, stinout);
+    memcpy((game_state_t*)&stinout, &state.stinout, sizeof(stinout));
+    // stinout = state.stinout;
 #endif
     t0 = higres_ticks();
     for(;;)
@@ -177,9 +181,12 @@ int main()
       if(fb_should_quit())
         break;
 #ifndef SPIRV
+      // Compute next state via user input and next_state_func
       state.stin.press = buttons_pressed() & 1;
       game_state_out_t outs = next_state_func(state.stin, stinout);
-      WIRE_WRITE(game_state_t, outs.stinout, stinout);
+      //WIRE_WRITE(game_state_t, outs.stinout, stinout);
+      memcpy((game_state_t*)&stinout, &outs.stinout, sizeof(stinout));
+      // stinout = outs.stinout
 #endif
 
 
