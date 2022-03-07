@@ -136,7 +136,6 @@ inline constexpr fixed fixed_make_from_int(int a) { const fixed r = {fixed_baset
 inline constexpr fixed fixed_make_from_short(short a) { const fixed r = {fixed_basetype(a << FIXED_FRACTIONBITS)}; return r; }
 inline constexpr fixed fixed_make_from_float(float a) { fixed r = {(fixed_basetype) (float(a)*(1<<FIXED_FRACTIONBITS))}; return r; }
 inline constexpr fixed fixed_make_from_double(double a) { return fixed_make_from_float(a); }
-inline fixed fixed_div(fixed left, fixed right) { fixed r = { (fixed_basetype)((left.f<<FIXED_FRACTIONBITS) / right.f) }; return r; }
 
 inline float fixed_to_float(fixed a) { return (float) a.f / (1<<FIXED_FRACTIONBITS); }
 inline short fixed_to_short(fixed a) { return a.f >> FIXED_FRACTIONBITS; }
@@ -149,13 +148,12 @@ fixed fixed_make_from_short(int16_t a) { const fixed r = {a << FIXED_FRACTIONBIT
 fixed fixed_make_from_float(float a) { fixed r = {(fixed_basetype)float_shift(a, FIXED_FRACTIONBITS)}; return r; }
 #define fixed_make_from_double(x) fixed_make_from_float(x) //doubles are aliased to float by macros
 #warning this implementation of the division operator loses precision
-inline fixed fixed_div(fixed left, fixed right) { fixed r = { (fixed_basetype)(((((int32_t)left.f)<<(FIXED_FRACTIONBITS-1)) / (int32_t)
-(right.f))<<1) }; return r; }
 
 float fixed_to_float(fixed a) { return float_shift((float)a.f, -FIXED_FRACTIONBITS); }
 int16_t fixed_to_short(fixed a) { return (int16_t)(a.f >> FIXED_FRACTIONBITS); }
 //int fixed_asinteger(fixed a, int n) { return FIXED_FRACTIONBITS > n ? (a.f >> (FIXED_FRACTIONBITS-n)) : (a.f << (n-FIXED_FRACTIONBITS)) }
 
+#include "fixed_div.h"
 #endif
 
 inline fixed fixed_mul(fixed left, fixed right) { fixed r = { (fixed_basetype)((left.f * right.f)>>FIXED_FRACTIONBITS) }; return r; }
@@ -224,5 +222,6 @@ inline fixed3 fixed3_make_from_const_fixed3(fixed3 a) { return a; }
 #endif //CCOMPILE
 
 #define fixed_sign(x) fixed_is_negative(x)
+#include "fixed_div.h"
 
 #endif //__FIXED_TYPE__
