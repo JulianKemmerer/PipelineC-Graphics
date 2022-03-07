@@ -109,7 +109,7 @@ float float_min(float a, float b)
   return a < b ? a : b;
 }
 
-#define BIG_FLOAT	((float)100000000000000000.)
+#define BIG_FLOAT	((double)1.0e23)
 #define vec2 float2
 #define vec3 float3
 #define vec4 float4
@@ -317,9 +317,9 @@ pixel_t render_pixel(uint16_t i, uint16_t j, scene_t scene)
     uint9_t r = fixed_to_short(fixed_shift((c.x), (8)));
     uint9_t g = fixed_to_short(fixed_shift((c.y), (8)));
     uint9_t b = fixed_to_short(fixed_shift((c.z), (8)));
-    r = dither(i, j, r);
-    g = dither(i, j, g);
-    b = dither(i, j, b);
+    r = dither(i ^ scene.frame, j, r);
+    g = dither(i, j ^ scene.frame, g);
+    b = dither(j, i, b);
     pix.r = (r >= 256) ? 255 : r;
     pix.g = (g >= 256) ? 255 : g;
     pix.b = (b >= 256) ? 255 : b;

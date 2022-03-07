@@ -4,7 +4,7 @@
 
 #ifdef GAME_MODE
 #define HEAT_CONSTANT 1
-#define STAR_INTENSITY .5
+#define STAR_INTENSITY .35
 #define HOLE_BORDER .1
 #else
 #define STAR_INTENSITY 1.5
@@ -72,6 +72,7 @@
 
 #define EPS 1.e-3
 
+#define SCR_CSHIFT (FRAME_WIDTH < 1024 ? -9 : -11)
 
 #define PIPELINEC_SUGAR
 #warning PIPELINEC_SUGAR shouldn't be a need
