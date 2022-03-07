@@ -58,10 +58,9 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 #define SPHERE_Z (-32.)
 #define SPHERE_X (-20.)
 #define CAMERA_Z 30. //start pos
-#define PLANE_OFFSET 110 //startig at coordinate 0 doesn't draw a good looking scene
 #define SCORE_MARGINS 10
 #define FLOOR_SHIFT (-3)
-#define FLOOR_X 0.
+#define FLOOR_X (-110.)
 #define FLOOR_Y 0.
 #define FLOOR_Z 0.
 
@@ -84,6 +83,8 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 #define XVEL_DEFAULT 0.23
 #define HOLE_GUARD_MARGIN .05
 #endif
+
+#define GRAVITY_CONSTANT_LIGHT .03
 
 #define EPS 1.e-3
 
@@ -251,6 +252,75 @@ inline scene_colors_t scene_colors(IN(scene_t) scene, uint2_t channel)
 }
 #endif
 
+
+
+typedef coord_type hole_t;
+
+hole_t plane_has_hole(hole_t x, hole_t z)
+{
+  hole_t ret = 1.; 
+  x=fixed_shift(x, -4);
+  z=fixed_shift(z, -5);
+
+  int16_t ix = round16(x);
+  int16_t iz = round16(z);
+  hole_t fracx = hole_t(ix)-x;
+  hole_t fracz = hole_t(iz)-z;
+  uint16_t hx = hash16(ix) >> 5;
+  uint16_t hz = hash16(iz) >> 5;
+  if((hx ^ hz) < ix+600)
+  {
+#ifndef SHADER //this simplifies automatic conversion to C
+    if((ix & 0x240)==0x240 || ((ix & ~0x7FF) != 0) )
+     ret = 0.; //no hole
+    else
+#endif
+    {
+      bool fx = (hx & 1) != 0;
+      bool fz = ((hz>>1) & 1) != 0;
+      bool hard = (ix & 0x200) != 0;
+#ifdef CIRCLE_SIZE
+      if((((ix & 0xC0) == 0xC0) && (fx ^ fz)))
+        ret = fracx*fracx + fracz*fracz - CIRCLE_SIZE*CIRCLE_SIZE; //circles
+      else
+#endif
+      {
+        hole_t ax = fixed_abs(fracx);
+        hole_t az = fixed_abs(fracz);
+#ifdef RHOMBUS_SIZE
+        if(hard) //rhombus or squares
+          ret = fixed_max(ax, az) - hole_t(SQUARE_SIZE);
+        else
+          ret = (ax + az) - hole_t(RHOMBUS_SIZE); 
+#else
+        ret = fixed_max(ax, az) - SQUARE_SIZE;
+#endif
+      }
+    }
+  }
+  return ret;
+}
+
+static const color K_gold_color = {243./256., 201./256., 104./256.};
+static const color K_lava_color = {255./256.*2.0, 70./256.*1.5, 32./256.*1.5};
+static const color K_plane_color1 = {.8, .8, .8};
+static const color K_plane_color2 = {.1, .0, .0};
+static const color K_floor_difusse = {1.,1.,1.};
+static const color K_floor_reflect = {.5, .5, .5};
+#ifdef GAME_MODE
+static const color K_fog_color = {.01,.01,.1};
+#else
+static const color K_fog_color = {.02,.02,.12};
+#endif
+static const object_coord_t K_plane_center_start = {FLOOR_X, FLOOR_Y, FLOOR_Z}; //FIXME: test if works when != 0
+static const object_coord_t K_sphere_center_start = {-20., 40., SPHERE_Z};
+static const object_coord_t K_camera_pos_start = {0.,30.,CAMERA_Z};
+static const vec3 VECTOR_NURMAL_UPWARDS = {0.,1.,0.};
+
+
+
+#ifndef ALTERNATE_UI
+
 #ifdef ANTIALIAS
 float_type calc_accdist(IN(hit_in) hitin, IN(hit_out) hitout)
 {
@@ -386,69 +456,6 @@ hit_out ray_sphere_intersect_(IN(sphere_t) s, IN(hit_in) hitin)
   return hitout;
 }
 */
-
-typedef coord_type hole_t;
-
-hole_t plane_has_hole(hole_t x, hole_t z)
-{
-  hole_t ret = 1.; 
-  x=fixed_shift(x, -4);
-  z=fixed_shift(z, -5);
-
-  int16_t ix = round16(x);
-  int16_t iz = round16(z);
-  hole_t fracx = hole_t(ix)-x;
-  hole_t fracz = hole_t(iz)-z;
-  uint16_t hx = hash16(ix) >> 5;
-  uint16_t hz = hash16(iz) >> 5;
-  if((hx ^ hz) < ix+600)
-  {
-#ifndef SHADER //this simplifies automatic conversion to C
-    if((ix & 0x240)==0x240 || ((ix & ~0x7FF) != 0) )
-     ret = 0.; //no hole
-    else
-#endif
-    {
-      bool fx = (hx & 1) != 0;
-      bool fz = ((hz>>1) & 1) != 0;
-      bool hard = (ix & 0x200) != 0;
-#ifdef CIRCLE_SIZE
-      if((((ix & 0xC0) == 0xC0) && (fx ^ fz)))
-        ret = fracx*fracx + fracz*fracz - CIRCLE_SIZE*CIRCLE_SIZE; //circles
-      else
-#endif
-      {
-        hole_t ax = fixed_abs(fracx);
-        hole_t az = fixed_abs(fracz);
-#ifdef RHOMBUS_SIZE
-        if(hard) //rhombus or squares
-          ret = fixed_max(ax, az) - hole_t(SQUARE_SIZE);
-        else
-          ret = (ax + az) - hole_t(RHOMBUS_SIZE); 
-#else
-        ret = fixed_max(ax, az) - SQUARE_SIZE;
-#endif
-      }
-    }
-  }
-  return ret;
-}
-
-static const color K_gold_color = {243./256., 201./256., 104./256.};
-static const color K_lava_color = {255./256.*2.0, 70./256.*1.5, 32./256.*1.5};
-static const color K_plane_color1 = {.8, .8, .8};
-static const color K_plane_color2 = {.1, .0, .0};
-static const color K_floor_difusse = {1.,1.,1.};
-static const color K_floor_reflect = {.5, .5, .5};
-#ifdef GAME_MODE
-static const color K_fog_color = {.01,.01,.1};
-#else
-static const color K_fog_color = {.02,.02,.12};
-#endif
-static const object_coord_t K_plane_center_start = {FLOOR_X, FLOOR_Y, FLOOR_Z}; //FIXME: test if works when != 0
-static const object_coord_t K_sphere_center_start = {-20., 40., SPHERE_Z};
-static const object_coord_t K_camera_pos_start = {0.,30.,CAMERA_Z};
-static const vec3 VECTOR_NURMAL_UPWARDS = {0.,1.,0.};
 
 
 hit_out ray_plane_intersect(IN(plane_t) plane, IN(hit_in) hitin)
@@ -772,6 +779,8 @@ color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y, IN(scene
   return c;
 }
 
+#endif
+
 #ifdef ALTERNATE_UI
 
 color_basic_t background_color2(fixed_type dir_y)
@@ -792,11 +801,7 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
 #warning implement equal operator
   if ((y < 0. && py < 0.) || !(y < 0. || py < 0.))
   {
-#ifdef PIPELINEC_SUGAR
-    inv_y = fixed_shift(coord_type(float_type(py) / float_type(y)), -FLOOR_SHIFT);
-#else
     inv_y = fixed_shift(py, -FLOOR_SHIFT)/y;
-#endif
 
     coord_type ix = inv_y*x-px;
     coord_type iz = inv_y + pz;
@@ -832,7 +837,7 @@ color_basic_t c = background_color2((y-.5)*fixed_abs(x*x-1.));
   //if(is_star(float_type(x), float_type(y)))
   // c = color_basic_t(STAR_INTENSITY);
 
-bool floor = true;
+    bool drawfloor = true;
 	//draw sphere
 	static const float SPHERE_R = (-.707)*SPHERE_Z/SPHERE_RADIUS; //FIXME: check if code generator parenthesizes it
     coord_type dz = coord_type(scene.camera.z-SPHERE_Z);
@@ -843,14 +848,14 @@ bool floor = true;
 		//inside bounding box
 		if(dx*dx + dy*dy < SPHERE_R*SPHERE_R)
         {
-			c = /*K_gold_color*/scene.sphere.material.diffuse_color;
-		//else c.b = 1.; //uncomment to display bounding box
-		floor = scene.sphere.center.y + dy < FLOOR_Y;
+          c = /*K_gold_color*/scene.sphere.material.diffuse_color;
+          //else c.b = 1.; //uncomment to display bounding box
+          drawfloor = scene.sphere.center.y + dy < FLOOR_Y;
         }
     }
 
-	if(floor)
-{
+  if(drawfloor)
+  {
 #ifdef PIPELINEC_SUGAR
 	float FRAME_HEIGHT_FLOAT = FRAME_HEIGHT;
 	float CAMERA_FACTOR = -2.*CAMERA_Z/FRAME_HEIGHT_FLOAT;
@@ -862,8 +867,8 @@ bool floor = true;
 		scene.camera.y*coord_type(CAMERA_FACTOR),
 		scene.plane.center.z-scene.camera.z, c);
 
-}
-	return c;
+  }
+  return c;
 }
 #endif
 
@@ -935,80 +940,9 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(scene_t) scene
 }
 #endif
 
-game_state_out_t next_state_func(IN(game_state_in) stin, IN(game_state_t) stinout)
+#warning parameter needed just to avoid errors on code generator
+full_state_t reset_state0(bool x)
 {
-#ifdef _DEBUG
-  perf_clear();
-#endif
-
-  game_state_out_t n;
-  WIRE_READ(game_state_t, n.stinout, stinout); //n.stinout = stinout;
-
-  n.stinout.plane_x = n.stinout.plane_x + n.stinout.sphere_xvel;
-
-  n.stinout.sphere_yvel = n.stinout.sphere_yvel + GRAVITY_CONSTANT;
-  n.stinout.sphere_y = n.stinout.sphere_y - n.stinout.sphere_yvel;
-   
-  coord_type underground = (n.stinout.sphere_y - SPHERE_RADIUS) - stin.plane_y;
-  if(fixed_is_negative(underground))
-  {
-    n.stinout.sphere_xvel = n.stinout.sphere_xvel - XVEL_CONSTANT;
-    coord_type coord_x = stin.sphere_x - n.stinout.plane_x;
-    coord_type coord_z = stin.sphere_z - n.stinout.plane_x; //z=x
-
-    bool half_up = n.stinout.sphere_y > stin.plane_y;
-    if(half_up)
-    {
-#ifdef HEAT_CONSTANT
-      if(n.stinout.sphere_yvel>0.)
-        n.stinout.heat = fixed_type(0)-fixed_convert(color_type, n.stinout.sphere_xvel, -HEAT_CONSTANT);
-#warning implement unary -
-#endif
-
-      if(plane_has_hole(coord_x, coord_z) > -HOLE_GUARD_MARGIN) // > about -.1 gives margin for the ball size
-      {
-        n.stinout.score = n.stinout.score+1;
-        if(n.stinout.score >= MAXSCORE && !n.stinout.won)
-           n.stinout.won = true;
-        n.stinout.sphere_yvel = stin.press ? -JUMP_CONSTANT : -GRAVITY_CONSTANT*.3;
-        if(stin.press) n.stinout.sphere_xvel = -XVEL_DEFAULT;
-      }
-    }
-    else
-    {
-      n.stinout.camera_z = n.stinout.camera_z-fixed_shift(underground, ZOOMOUT_CONSTANT); //lose => fadeout
-    }
-  }
-
-#ifdef HEAT_CONSTANT
-  n.stinout.heat = n.stinout.heat - (color_type)fixed_shift(n.stinout.heat, -4);
-#endif
-  n.stinout.camera_y = n.stinout.camera_y + fixed_shift(n.stinout.sphere_y - n.stinout.camera_y, -5);
-
-  //write all outputs
-  n.stout.lose = fixed_is_negative(underground) && (-int16_t(underground) & (0x0000FC00))!=0; //underground < -2000.
-
-  if(n.stout.lose)
-    n.stinout.score = n.stinout.score - (n.stinout.score >> 4); //% lose
-#ifdef GAME_MODE
-  n.stout.diffuse_color = color_select(n.stinout.heat, stin.lava_color, stin.gold_color);
-  n.stout.reflect_color = stin.gold_reflect_color*(color_type(1.) - (color_type)fixed_shift(n.stinout.heat,-2));
-#else
-  n.stout.diffuse_color = stin.gold_color;
-  n.stout.reflect_color = stin.gold_reflect_color;
-#endif
-
-  n.stout.scorebar = n.stinout.won ? 0 : n.stinout.score;
-
-#ifdef _DEBUG
-  perf_gameplay_dump();
-#endif
-  return n;
-}
-
-full_state_t reset_state(void)
-{
-    uint16_t startpos = PLANE_OFFSET; //FIXME: seems redundant
 
     material_t gold;
     gold.diffuse_color = K_gold_color*(1.5*.15);
@@ -1018,8 +952,6 @@ full_state_t reset_state(void)
     floor_material.reflect_color = K_floor_reflect;
 
     scene_t scene;
-
-
     scene.plane.center = K_plane_center_start;
     scene.plane.material = floor_material;
     scene.plane.color1 = K_plane_color1;
@@ -1047,7 +979,7 @@ full_state_t reset_state(void)
     stinout.heat     = scene.sphere.heat;
     stinout.camera_y = (coord_type) scene.camera.y;
     stinout.camera_z = (coord_type) scene.camera.z;
-    stinout.plane_x  = coord_type(-(startpos + PLANE_OFFSET)); //FIXME: integrate values
+    stinout.plane_x  = coord_type(FLOOR_X);
     stinout.sphere_xvel = 0.;
     stinout.sphere_yvel = 0.;
     stinout.won = false;
@@ -1062,6 +994,95 @@ full_state_t reset_state(void)
     return f;
 }
 
+full_state_t reset_state() { return reset_state0(true); }
+
+game_state_t restart_state(game_state_t st)
+{
+  game_state_t n;
+  full_state_t r = reset_state0(false); //FIXME: don't go to zero but to the start of level 
+  n = r.stinout;
+  n.score = st.score - (st.score >> 4); //% lose
+  return n;
+}
+
+game_state_out_t next_state_func(IN(game_state_in) stin, IN(game_state_t) stinout)
+{
+#ifdef _DEBUG
+  perf_clear();
+#endif
+  game_state_out_t n;
+  //WIRE_READ(game_state_t, n.stinout, stinout);
+  n.stinout = stinout;
+
+  n.stinout.plane_x = n.stinout.plane_x + n.stinout.sphere_xvel;
+
+  n.stinout.sphere_yvel = n.stinout.sphere_yvel + GRAVITY_CONSTANT;
+  n.stinout.sphere_y = n.stinout.sphere_y - n.stinout.sphere_yvel;
+   
+  coord_type underground = (n.stinout.sphere_y - SPHERE_RADIUS) - stin.plane_y;
+  if(fixed_is_negative(underground))
+  {
+    n.stinout.sphere_xvel = n.stinout.sphere_xvel - XVEL_CONSTANT;
+    coord_type coord_x = stin.sphere_x - n.stinout.plane_x;
+    coord_type coord_z = stin.sphere_z - n.stinout.plane_x; //z=x
+
+    bool half_up = n.stinout.sphere_y > stin.plane_y;
+    if(half_up)
+    {
+#ifdef HEAT_CONSTANT
+      if(n.stinout.sphere_yvel>0.)
+        n.stinout.heat = fixed_type(0)-fixed_convert(color_type, n.stinout.sphere_xvel, -HEAT_CONSTANT);
+#warning implement unary -
+#endif
+
+      if(plane_has_hole(coord_x, coord_z) > -HOLE_GUARD_MARGIN) // > about -.1 gives margin for the ball size
+      {
+        n.stinout.score = n.stinout.score+1;
+        if(n.stinout.score >= MAXSCORE && !n.stinout.won)
+           n.stinout.won = true;
+        if(stin.press)
+        {
+          n.stinout.sphere_yvel = -JUMP_CONSTANT;
+          n.stinout.sphere_xvel = -XVEL_DEFAULT;
+        }
+        else
+          n.stinout.sphere_yvel = -GRAVITY_CONSTANT_LIGHT;
+      }
+    }
+    else
+    {
+      n.stinout.camera_z = n.stinout.camera_z-fixed_shift(underground, ZOOMOUT_CONSTANT); //lose => fadeout
+    }
+  }
+
+#ifdef HEAT_CONSTANT
+  n.stinout.heat = n.stinout.heat - (color_type)fixed_shift(n.stinout.heat, -4);
+#endif
+  n.stinout.camera_y = n.stinout.camera_y + fixed_shift(n.stinout.sphere_y - n.stinout.camera_y, -5);
+
+  //write all outputs
+  n.stout.lose = fixed_is_negative(underground) && (-int16_t(underground) & (0x0000FC00))!=0; //underground < -2000.
+
+#ifdef GAME_MODE
+  n.stout.diffuse_color = color_select(n.stinout.heat, stin.lava_color, stin.gold_color);
+  n.stout.reflect_color = stin.gold_reflect_color*(color_type(1.) - fixed_shift(n.stinout.heat,-2));
+#else
+  n.stout.diffuse_color = stin.gold_color;
+  n.stout.reflect_color = stin.gold_reflect_color;
+#endif
+
+  n.stout.scorebar = n.stinout.won ? 0 : n.stinout.score;
+
+#ifdef _DEBUG
+  perf_gameplay_dump();
+#endif
+
+  if(n.stout.lose)
+     n.stinout = restart_state(stinout); //restart logic, FIXME: add the partial restart!
+
+  return n;
+}
+
 
 scene_t update_scene(IN(scene_t) scenein, IN(game_state_out_t) outs)
 {
@@ -1071,7 +1092,8 @@ scene_t update_scene(IN(scene_t) scenein, IN(game_state_out_t) outs)
   scene.sphere.heat = outs.stinout.heat;
   scene.camera.y = outs.stinout.camera_y;
   scene.camera.z = outs.stinout.camera_z;
-  scene.plane.center.z = scene.plane.center.x = outs.stinout.plane_x;
+  scene.plane.center.x = outs.stinout.plane_x;
+  scene.plane.center.z = outs.stinout.plane_x;
   scene.sphere.material.diffuse_color = outs.stout.diffuse_color;
   scene.sphere.material.reflect_color = outs.stout.reflect_color;
   scene.sphere.yvel = (float_type) outs.stinout.sphere_yvel;
@@ -1096,6 +1118,7 @@ void main()
 }
 #endif
 
+/*
 #ifdef __PIPELINEC__
 #ifndef COLOR_DECOMP
 MAIN_MHZ(app, PIXEL_CLK_MHZ)
@@ -1103,19 +1126,19 @@ MAIN_MHZ(app, PIXEL_CLK_MHZ)
 MAIN_MHZ(app, PIXEL_CLK_MHZ*3)
 #endif
 
+#warning check correct implementation
 void app()
 {
   static vga_signals_t vga_signals;
   
   static full_state_t state;
   static bool reset = 1;
-  /*volatile*/ static game_state_t stinout;
+  volatile static game_state_t stinout;
 
   if(reset)
   {
     state = reset_state();
-    //WIRE_WRITE(game_state_t, state.stinout, stinout);
-    memcpy((game_state_t*)&stinout, &state.stinout, sizeof(stinout));
+    WIRE_WRITE(game_state_t, state.stinout, stinout);
     reset = 0;
   }
 
@@ -1123,8 +1146,7 @@ void app()
   {
     state.stin.press = buttons_pressed() & 1;
     game_state_out_t outs = next_state_func(state.stin, stinout);
-    //WIRE_WRITE(game_state_t, outs.stinout, stinout);
-    memcpy((game_state_t*)&stinout, &outs.stinout, sizeof(stinout));
+    WIRE_WRITE(game_state_t, outs.stinout, stinout);
     state.scene = update_scene(state.scene, outs);
   }  
 
@@ -1147,5 +1169,6 @@ void app()
   }
 #endif
 }
-
 #endif
+*/
+
