@@ -40,20 +40,15 @@ inline fixed_basetype fixed_div_i(fixed_basetype left, fixed_basetype right)
 {
   fixed_basetype r = 0; //division by zero makes it undefined
 
-  //comparisons avoids absolute value
-  fixed_basetype leftm = -left;
-  fixed_basetype rightm = -right;
-  if(left > 0 & right > 0)
-    r = fixed_div_u(left, right);
-  else if(left < 0 & right < 0)
-    r = fixed_div_u(leftm, rightm);
-  else if(left < 0 & right > 0)
-    r = -fixed_div_u(leftm, right);
-  else if(left > 0 & right < 0)
-    r = -fixed_div_u(left, rightm);
-  return r;
+  bool left_sign = left < 0; //FIXME: test sign bit
+  bool right_sign = right < 0;
+  fixed_basetype leftx = left_sign ? -left : left;
+  fixed_basetype rightx = right_sign ? -right : right;
+  r = fixed_div_u(leftx, rightx);
+  return left_sign == right_sign ? r : -r;
 }
 
+#warning after testing, use the bit-for-bit div calculation only for synthesis
 inline fixed fixed_div(fixed a, fixed b) { fixed r = { fixed_div_i(a.f, b.f) }; return r; }
 #endif
 
