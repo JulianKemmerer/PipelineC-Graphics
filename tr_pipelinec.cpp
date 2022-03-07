@@ -32,7 +32,7 @@ inline float inversesqrt( float number ) //should one more newton iteration
 inline float sqrt(float x) {return 1./inversesqrt(x); }
 inline float float_max(float a, float b) { return a>b?a:b; }
 inline float float_min(float a, float b) { return a<b?a:b; }
-const float BIG_FLOAT = 1.0e23;
+static const float BIG_FLOAT = 1.0e23;
 
 typedef float2 vec2;
 typedef float3 vec3;
@@ -43,8 +43,8 @@ inline float dot(vec3 a, vec3 b) { return a.x*b.x+a.y*b.y+a.z*b.z; }
 inline vec3 reflect(vec3 I, vec3 N) { return I - N*float_shift(dot(I,N),1); }
 inline vec3 normalize(vec3 v) { return v*inversesqrt(dot(v, v)); }
 
-#define fixed_asinteger(x, s) (int)fixed_shift(x, s)
-#define fixed_asshort(x, s) (short)fixed_shift(x, s)
+#define fixed_asinteger(x, s) (int)fixed_shift((x), (s))
+#define fixed_asshort(x, s) (short)fixed_shift((x), (s))
 
 //template<class F, class T> T float_select(const F& x, const T& a, const T& b) { return b+(a-b)*x; }
 inline vec3 float_select(float x, vec3 a, vec3 b) { return b+(a-b)*x; }

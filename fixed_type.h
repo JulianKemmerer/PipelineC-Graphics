@@ -132,6 +132,7 @@ inline constexpr fixed fixed_make_from_int(int a) { const fixed r = {fixed_baset
 inline constexpr fixed fixed_make_from_short(short a) { const fixed r = {fixed_basetype(a << FIXED_FRACTIONBITS)}; return r; }
 inline constexpr fixed fixed_make_from_float(float a) { fixed r = {(fixed_basetype) (float(a)*(1<<FIXED_FRACTIONBITS))}; return r; }
 inline constexpr fixed fixed_make_from_double(double a) { return fixed_make_from_float(a); }
+inline fixed fixed_div(fixed left, fixed right) { fixed r = { (fixed_basetype)((left.f<<FIXED_FRACTIONBITS) / right.f) }; return r; }
 
 inline float fixed_to_float(fixed a) { return (float) a.f / (1<<FIXED_FRACTIONBITS); }
 inline short fixed_to_short(fixed a) { return a.f >> FIXED_FRACTIONBITS; }
@@ -142,7 +143,10 @@ typedef struct fixed { fixed_basetype f; } fixed;
 fixed fixed_make_from_int(int32_t a) { const fixed r = {a << FIXED_FRACTIONBITS}; return r; }
 fixed fixed_make_from_short(int16_t a) { const fixed r = {a << FIXED_FRACTIONBITS}; return r; }
 fixed fixed_make_from_float(float a) { fixed r = {(fixed_basetype)float_shift(a, FIXED_FRACTIONBITS)}; return r; }
-#define fixed_make_from_double(x) fixed_make_from_float((float)(x))
+#define fixed_make_from_double(x) fixed_make_from_float(x) //doubles are aliased to float by macros
+#warning this implementation of the division operator loses precision
+inline fixed fixed_div(fixed left, fixed right) { fixed r = { (fixed_basetype)(((((int32_t)left.f)<<(FIXED_FRACTIONBITS-1)) / (int32_t)
+(right.f))<<1) }; return r; }
 
 float fixed_to_float(fixed a) { return float_shift((float)a.f, -FIXED_FRACTIONBITS); }
 int16_t fixed_to_short(fixed a) { return (int16_t)(a.f >> FIXED_FRACTIONBITS); }
@@ -151,7 +155,6 @@ int16_t fixed_to_short(fixed a) { return (int16_t)(a.f >> FIXED_FRACTIONBITS); }
 #endif
 
 inline fixed fixed_mul(fixed left, fixed right) { fixed r = { (fixed_basetype)((left.f * right.f)>>FIXED_FRACTIONBITS) }; return r; }
-inline fixed fixed_div(fixed left, fixed right) { fixed r = { (fixed_basetype)((left.f<<FIXED_FRACTIONBITS) / right.f) }; return r; }
 inline fixed fixed_shl_signed_char(fixed left, shift_t right) { fixed r = { (fixed_basetype)(left.f<<right) }; return r; }
 inline fixed fixed_shr_signed_char(fixed left, shift_t right) { fixed r = { (fixed_basetype)(left.f>>right) }; return r; }
 

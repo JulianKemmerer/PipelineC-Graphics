@@ -12,6 +12,7 @@
 // Shift is built in
 #define float_shift(x,shift) ((x)<<(shift))
 
+#define double float
 #else
 typedef uint16_t uint12_t;
 typedef uint16_t uint9_t;
@@ -19,7 +20,7 @@ typedef uint8_t uint1_t;
 typedef int8_t int6_t;
 typedef int32_t int22_t;
 
-#define WIRE_READ(t, lhs, rhs) lhs=rhs;
+//#define WIRE_READ(t, lhs, rhs) lhs=rhs
 #define MAIN_MHZ
 
 #endif
