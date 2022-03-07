@@ -553,9 +553,25 @@ color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y, IN(scene
 
 #else // ALTERNATE_UI = true
 
-color_basic_t background_color2(fixed_type dir_y)
+uint12_t star_vel(uint12_t a, uint8_t b)
 {
-  return color_basic_t(dir_y < 0 ? color_type(0.) : color_type(dir_y*dir_y));
+  uint12_t r = a;
+  if(b & 1) r = r + a;
+  if(b & 2) r = r + (a<<1);
+  if(b & 4) r = r + (a<<2);
+  return r >> 4;
+}
+
+color_basic_t background_color_alt(screen_coord_t x, screen_coord_t y, uint16_t frame, uint16_t off)
+{
+  fixed_type dir_y = (y-.5)*fixed_abs(x*x-1.);
+  color_basic_t c = (dir_y < 0 ? color_type(0.) : color_type(dir_y*dir_y));
+  int16_t cy = (int16_t) fixed_shift(y, -SCR_CSHIFT-1);
+  int16_t cx = (int16_t) fixed_shift(x, -SCR_CSHIFT-1) + star_vel(off, cy & 7); //add some movement
+  uint16_t pix_hash = hash16(cx ^ hash16(cy)); //FIXME: pixel hash shold be part of the scene
+  if((pix_hash & 0xFFC0) == 0) //add star
+    c = color_basic_t(fixed_shift(((pix_hash<<2) + frame) & 0x7F, -9) + STAR_INTENSITY);
+  return c;
 }
 
 color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px, coord_type py, coord_type pz, color_basic_t c)
@@ -604,9 +620,7 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
 
 color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(scene_t) scene, IN(scene_colors_t) colors)
 {
-  color_basic_t c = background_color2((y-.5)*fixed_abs(x*x-1.));
-  //if(is_star(float_type(x), float_type(y)))
-  // c = color_basic_t(STAR_INTENSITY);
+  color_basic_t c = background_color_alt(x, y, scene.frame, -(int16_t)scene.plane.center.x);
 
     bool drawfloor = true;
 	//draw sphere
@@ -645,10 +659,9 @@ color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(s
 
 #define DITHER
 #ifdef DITHER
-uint9_t dither(uint16_t x, uint16_t y, uint9_t c) //FIXME: use uint4_t
+uint9_t dither(uint16_t x, uint16_t y, uint9_t c)
 {
- c = c + (hash16((x&0x7)^hash16(y&0x7)) & 0xF);
- return c & 0x1F0;
+ return (c + (hash16((x&0x7)^hash16(y&0x7)) & 0xF)) & 0x1F0;
 }
 #endif
 
@@ -672,8 +685,8 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(scene_t) scene
   int16_t cy = j << 1;
   cy = (FRAME_HEIGHT + 1) - cy;
 #endif
-  screen_coord_t x = fixed_convert(screen_coord_t, cx, FRAME_WIDTH < 1024 ? -9 : -11);
-  screen_coord_t y = fixed_convert(screen_coord_t, cy, FRAME_WIDTH < 1024 ? -9 : -11);
+  screen_coord_t x = fixed_convert(screen_coord_t, cx, SCR_CSHIFT);
+  screen_coord_t y = fixed_convert(screen_coord_t, cy, SCR_CSHIFT);
 
   pixel_t pix; //ignores alpha
 
@@ -697,9 +710,9 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(scene_t) scene
     uint9_t g = fixed_asshort(c.g, 8);
     uint9_t b = fixed_asshort(c.b, 8);
 #ifdef DITHER
-    r = dither(i, j, r);
-    g = dither(i, j, g);
-    b = dither(i, j, b);
+    r = dither(i^scene.frame, j, r);
+    g = dither(i, j^scene.frame, g);
+    b = dither(j, i, b);
 #endif
     pix.r = (r >= 256) ? uint8_t(255):uint8_t(r);
     pix.g = (g >= 256) ? uint8_t(255):uint8_t(g);
