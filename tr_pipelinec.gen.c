@@ -109,7 +109,7 @@ float float_min(float a, float b)
   return a < b ? a : b;
 }
 
-#define BIG_FLOAT	((double)1.0e23)
+#define BIG_FLOAT	((float)100000000000000000.)
 #define vec2 float2
 #define vec3 float3
 #define vec4 float4
@@ -209,9 +209,28 @@ scene_colors_t scene_colors(scene_t scene)
   return r;
 }
 
-color background_color2(fixed_type dir_y)
+uint12_t star_vel(uint12_t a, uint8_t b)
 {
-  return fixed3_make_from_fixed(fixed_lt(dir_y, fixed_make_from_int(0)) ? fixed_make_from_double((double)0.) : fixed_mul(dir_y, dir_y));
+  uint12_t r = a;
+  
+  if(b & 1) r = r + a;
+  
+  if(b & 2) r = r + (a << 1);
+  
+  if(b & 4) r = r + (a << 2);
+  return r >> 4;
+}
+
+color background_color_alt(screen_coord_t x, screen_coord_t y, uint16_t frame, uint16_t off)
+{
+  fixed_type dir_y = fixed_mul((fixed_sub(y, fixed_make_from_double((double).5))), fixed_abs(fixed_sub(fixed_mul(x, x), fixed_make_from_double((double)1.))));
+  color c = fixed3_make_from_fixed((fixed_lt(dir_y, fixed_make_from_int(0)) ? fixed_make_from_double((double)0.) : fixed_mul(dir_y, dir_y)));
+  int16_t cy = fixed_to_short(fixed_shift(y, -(FRAME_WIDTH < 1024 ? -9 : -11) - 1));
+  int16_t cx = fixed_to_short(fixed_shift(x, -(FRAME_WIDTH < 1024 ? -9 : -11) - 1)) + star_vel(off, cy & 7);
+  uint16_t pix_hash = hash16(cx ^ hash16(cy));
+  
+  if((pix_hash & 0xFFC0) == 0) c = fixed3_make_from_fixed(fixed_add(fixed_shift(fixed_make_from_int(((pix_hash << 2) + frame) & 0x7F), -9), fixed_make_from_double((double).35)));
+  return c;
 }
 
 color render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px, coord_type py, coord_type pz, color c)
@@ -248,7 +267,7 @@ color render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px, coord_
 
 color render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, scene_t scene, scene_colors_t colors)
 {
-  color c = background_color2(fixed_mul((fixed_sub(y, fixed_make_from_double((double).5))), fixed_abs(fixed_sub(fixed_mul(x, x), fixed_make_from_double((double)1.)))));
+  color c = background_color_alt(x, y, scene.frame, -fixed_to_short(scene.plane.center.x));
   bool drawfloor = 1;
   #define SPHERE_R	(((double)-.707) * ((double)-32.) / (double)4.5)
   coord_type dz = fixed_sub(scene.camera.z, fixed_make_from_double(((double)-32.)));
@@ -271,14 +290,19 @@ color render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, scene_t scen
   return c;
 }
 
+uint9_t dither(uint16_t x, uint16_t y, uint9_t c)
+{
+  return (c + (hash16((x & 0x7) ^ hash16(y & 0x7)) & 0xF)) & 0x1F0;
+}
+
 pixel_t render_pixel(uint16_t i, uint16_t j, scene_t scene)
 {
   int16_t cx = i << 1;
   cx = cx - (FRAME_WIDTH + 1);
   int16_t cy = j << 1;
   cy = (FRAME_HEIGHT + 1) - cy;
-  screen_coord_t x = fixed_shift(fixed_make_from_short(cx), FRAME_WIDTH < 1024 ? -9 : -11);
-  screen_coord_t y = fixed_shift(fixed_make_from_short(cy), FRAME_WIDTH < 1024 ? -9 : -11);
+  screen_coord_t x = fixed_shift(fixed_make_from_short(cx), (FRAME_WIDTH < 1024 ? -9 : -11));
+  screen_coord_t y = fixed_shift(fixed_make_from_short(cy), (FRAME_WIDTH < 1024 ? -9 : -11));
   pixel_t pix;
   #define score_factor	((1 << 11) * (FRAME_WIDTH - 2 * 10) / 15000)
   uint16_t scorebar = score_factor * scene.scorebar >> 11;
@@ -293,6 +317,9 @@ pixel_t render_pixel(uint16_t i, uint16_t j, scene_t scene)
     uint9_t r = fixed_to_short(fixed_shift((c.x), (8)));
     uint9_t g = fixed_to_short(fixed_shift((c.y), (8)));
     uint9_t b = fixed_to_short(fixed_shift((c.z), (8)));
+    r = dither(i, j, r);
+    g = dither(i, j, g);
+    b = dither(i, j, b);
     pix.r = (r >= 256) ? 255 : r;
     pix.g = (g >= 256) ? 255 : g;
     pix.b = (b >= 256) ? 255 : b;
