@@ -168,57 +168,9 @@ struct full_state_t
   game_state_t stinout;
 };
 
-#ifndef COLOR_DECOMP
-inline scene_colors_t scene_colors(IN(scene_t) scene)
-{
-  scene_colors_t r;
-  r.sphere = scene.sphere.material;
-  r.plane = scene.plane.material;
-  r.plane_color1 = scene.plane.color1;
-  r.plane_color2 = scene.plane.color2;
-  r.fog = scene.fog;
-  return r;
-}
 
-#else
-inline scene_colors_t scene_colors(IN(scene_t) scene, uint2_t channel)
-{
-  scene_colors_t r;
-  if(channel == 0)
-  {
-    r.sphere.diffuse_color = scene.sphere.material.diffuse_color.r;
-    r.sphere.reflect_color = scene.sphere.material.reflect_color.r;
-    r.plane.diffuse_color = scene.plane.material.diffuse_color.r;
-    r.plane.reflect_color = scene.plane.material.reflect_color.r;
-    r.plane_color1 = scene.plane.color1.r;
-    r.plane_color2 = scene.plane.color2.r;
-    r.fog = scene.fog.r;
-  }
-  else if(channel == 1)
-  {
-    r.sphere.diffuse_color = scene.sphere.material.diffuse_color.g;
-    r.sphere.reflect_color = scene.sphere.material.reflect_color.g;
-    r.plane.diffuse_color = scene.plane.material.diffuse_color.g;
-    r.plane.reflect_color = scene.plane.material.reflect_color.g;
-    r.plane_color1 = scene.plane.color1.g;
-    r.plane_color2 = scene.plane.color2.g;
-    r.fog = scene.fog.g;
-  }
-  else
-  {
-    r.sphere.diffuse_color = scene.sphere.material.diffuse_color.b;
-    r.sphere.reflect_color = scene.sphere.material.reflect_color.b;
-    r.plane.diffuse_color = scene.plane.material.diffuse_color.b;
-    r.plane.reflect_color = scene.plane.material.reflect_color.b;
-    r.plane_color1 = scene.plane.color1.b;
-    r.plane_color2 = scene.plane.color2.b;
-    r.fog = scene.fog.b;
-  }
-  return r;
-}
-#endif
-
-static const color K_gold_color = {243./256., 201./256., 104./256.};
+static const color K_gold_color = {(1.5*.15)*243./256., (1.5*.15)*201./256., (1.5*.15)*104./256.};
+static const color K_gold_reflect_color = {1.5*(1.-.15)*243./256., 1.5*(1.-.15)*201./256., 1.5*(1.-.15)*104./256.};
 static const color K_lava_color = {255./256.*2.0, 70./256.*1.5, 32./256.*1.5};
 static const color K_plane_color1 = {.8, .8, .8};
 static const color K_plane_color2 = {.1, .0, .0};

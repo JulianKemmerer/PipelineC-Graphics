@@ -66,6 +66,57 @@ hole_t plane_has_hole(hole_t x, hole_t z)
 }
 
 
+#ifndef COLOR_DECOMP
+inline scene_colors_t scene_colors(IN(scene_t) scene)
+{
+  scene_colors_t r;
+  r.sphere = scene.sphere.material;
+  r.plane = scene.plane.material;
+  r.plane_color1 = scene.plane.color1;
+  r.plane_color2 = scene.plane.color2;
+  r.fog = scene.fog;
+  return r;
+}
+
+#else
+inline scene_colors_t scene_colors(IN(scene_t) scene, uint2_t channel)
+{
+  scene_colors_t r;
+  if(channel == 0)
+  {
+    r.sphere.diffuse_color = scene.sphere.material.diffuse_color.r;
+    r.sphere.reflect_color = scene.sphere.material.reflect_color.r;
+    r.plane.diffuse_color = scene.plane.material.diffuse_color.r;
+    r.plane.reflect_color = scene.plane.material.reflect_color.r;
+    r.plane_color1 = scene.plane.color1.r;
+    r.plane_color2 = scene.plane.color2.r;
+    r.fog = scene.fog.r;
+  }
+  else if(channel == 1)
+  {
+    r.sphere.diffuse_color = scene.sphere.material.diffuse_color.g;
+    r.sphere.reflect_color = scene.sphere.material.reflect_color.g;
+    r.plane.diffuse_color = scene.plane.material.diffuse_color.g;
+    r.plane.reflect_color = scene.plane.material.reflect_color.g;
+    r.plane_color1 = scene.plane.color1.g;
+    r.plane_color2 = scene.plane.color2.g;
+    r.fog = scene.fog.g;
+  }
+  else
+  {
+    r.sphere.diffuse_color = scene.sphere.material.diffuse_color.b;
+    r.sphere.reflect_color = scene.sphere.material.reflect_color.b;
+    r.plane.diffuse_color = scene.plane.material.diffuse_color.b;
+    r.plane.reflect_color = scene.plane.material.reflect_color.b;
+    r.plane_color1 = scene.plane.color1.b;
+    r.plane_color2 = scene.plane.color2.b;
+    r.fog = scene.fog.b;
+  }
+  return r;
+}
+#endif
+
+
 #ifndef ALTERNATE_UI
 
 #ifdef ANTIALIAS
@@ -180,46 +231,6 @@ diff = B;
   return hitout;
 }
 
-/*
-//sphere intersection without motion blur
-hit_out ray_sphere_intersect_(IN(sphere_t) s, IN(hit_in) hitin)
-{
-  hit_out hitout;
-  hitout.dist = RAY_NOINT;
-  vec3 s_center = vec3convert(s.center);
-
-  vec3 L = s_center - hitin.orig;
-
-  float_type tca = dot(L, hitin.dir);
-
-  float_type d2 = dot(L, L) - tca*tca;
-  float_type diff = float_type(SPHERE_RADIUS*SPHERE_RADIUS) - d2;
-  if (!is_negative(diff))
-  {
-    float_type thc = sqrt(diff);
-    float_type t0 = tca - thc;
-    //float_type t1 = tca + thc;
-
-    if (is_negative(t0))
-      diff = -diff;
-    else
-    {
-      hitout.dist = t0;
-#ifdef ANTIALIAS
-      hitout.accdist = calc_accdist(hitin, hitout);
-#endif
-      hitout.hit = hitin.orig + hitin.dir*hitout.dist;
-      hitout.N = normalize(hitout.hit - s_center);
-
-      //diff *= inversesqrt(1+float_abs(hitout.N.y)*sy); //antialias dependent on y
-    }
-  }
-
-
-  hitout.borderdist = diff;
-  return hitout;
-}
-*/
 
 
 hit_out ray_plane_intersect(IN(plane_t) plane, IN(hit_in) hitin)
@@ -454,17 +465,21 @@ color_basic_t cast_ray(IN(scene_t) scene, IN(scene_colors_t) colors, IN(hit_in) 
 {
    bool has_star = is_star(hitin.dir.x, hitin.dir.y);
    color_basic_t sky = has_star ? color_basic_t(STAR_INTENSITY) : background_color(hitin.dir.y);
+
    float_type ys = float_abs(float_shift(hitin.dir.y, 1));
-   color_type mix = ys<1. ? color_type(color_type(1.)-color_type(ys)): color_type(0.);
+   color_type mix = ys<1. ? color_type(1)-color_type(ys): color_type(0);
    color_basic_t bfog = color_select(mix, colors.fog, sky);
+#if 0
+return bfog;
+#else
 
    hit_out hitsphere = hit_sphere(scene.frame, colors, scene.sphere, hitin);
    hit_out hitplane = hit_plane(scene.frame, colors, scene.plane, hitin);
 #ifdef MOTION_BLUR
-{
-//FIXME: this is duplicated 
+  {
+     //FIXME: this is duplicated 
      register_dist(hitsphere.borderdist*.1*.5); //FIXME: blur sphere
-}
+  }
 #warning MOTION_BLUR
 #endif
 
@@ -478,7 +493,7 @@ color_basic_t cast_ray(IN(scene_t) scene, IN(scene_colors_t) colors, IN(hit_in) 
    color_basic_t planecolor = shade(scene, colors, bfog, hitin.dir, hitplane, mix); //FIXME: bfog
 
    float_type sphere_plane_dist = hitplane.dist - hitsphere.dist;
-   if(is_negative(sphere_plane_dist) /*&& hitplane.dist < hitsphere.dist*/)
+   if(is_negative(sphere_plane_dist)) //&& hitplane.dist < hitsphere.dist
    {
 #ifdef ANTIALIAS
      if(hitplane.borderdist < hitplane.accdist)
@@ -489,7 +504,7 @@ color_basic_t cast_ray(IN(scene_t) scene, IN(scene_colors_t) colors, IN(hit_in) 
      else
        rcolor = planecolor;
 #else
-     rcolor = is_negative(hitplane.borderdist) ? background : planecolor; /*hitplane.dist == RAY_NOINT*/
+     rcolor = is_negative(hitplane.borderdist) ? background : planecolor; //hitplane.dist == RAY_NOINT
 #endif
    }
    else
@@ -509,6 +524,7 @@ color_basic_t cast_ray(IN(scene_t) scene, IN(scene_colors_t) colors, IN(hit_in) 
    }
 
    return rcolor;
+#endif
 #endif
 }
 
@@ -535,9 +551,7 @@ color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y, IN(scene
   return c;
 }
 
-#endif
-
-#ifdef ALTERNATE_UI
+#else // ALTERNATE_UI = true
 
 color_basic_t background_color2(fixed_type dir_y)
 {
@@ -555,7 +569,8 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
   bool drawfog = false;
 
 #warning implement equal operator
-  if ((y < 0. && py < 0.) || !(y < 0. || py < 0.))
+  //if ((y < 0. && py < 0.) || !(y < 0. || py < 0.))
+  if (y != 0. && (fixed_sign(y) == fixed_sign(py)))
   {
     inv_y = fixed_shift(py, -FLOOR_SHIFT)/y;
 
@@ -680,7 +695,8 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(scene_t) scene
   pixel_t pix; //ignores alpha
 
   //TODO: GPU score
-  uint16_t scorebar = scene.scorebar*(FRAME_WIDTH-2*SCORE_MARGINS)/MAXSCORE;
+  static const uint16_t score_factor = (1<<11)*(FRAME_WIDTH-2*SCORE_MARGINS)/MAXSCORE;
+  uint16_t scorebar = score_factor*scene.scorebar >> 11;
   if(i >= SCORE_MARGINS && i < SCORE_MARGINS + scorebar && j > SCORE_MARGINS && j < 2*SCORE_MARGINS)
   {
     pix.r = 0; pix.g = 200; pix.b = 0; //    pix = color(0., 200./255., 0.);
@@ -731,8 +747,8 @@ full_state_t reset_state0(bool x)
 {
 
     material_t gold;
-    gold.diffuse_color = K_gold_color*(1.5*.15);
-    gold.reflect_color = K_gold_color*(1.5*(1.-.15));
+    gold.diffuse_color = K_gold_color;
+    gold.reflect_color = K_gold_reflect_color;
     material_t floor_material;
     floor_material.diffuse_color = K_floor_difusse;
     floor_material.reflect_color = K_floor_reflect;

@@ -133,24 +133,6 @@ vec3 float_select(float x, vec3 a, vec3 b)
   return float3_add(b, float3_mul_float((float3_sub(a, b)), x));
 }
 
-uint16_t CLOG2(uint16_t v)
-{
-  uint16_t r;
-  uint16_t shift;
-  r = 0;
-  shift = (v > 0xFF) ? 8 : 0;
-  v >>= shift;
-  r |= shift;
-  shift = (v > 0x0F) ? 4 : 0;
-  v >>= shift;
-  r |= shift;
-  shift = (v > 0x03) ? 2 : 0;
-  v >>= shift;
-  r |= shift;
-  r |= (v >> 1);
-  return r + 1;
-}
-
 uint16_t hash16(uint16_t v)
 {
   return v * 0x9E37u;
@@ -172,18 +154,8 @@ typedef struct game_state_t { coord_type sphere_y; color_type heat; coord_type c
 typedef struct game_state_out { color diffuse_color; color reflect_color; uint16_t scorebar; bool lose; } game_state_out;
 typedef struct game_state_out_t { game_state_out stout; game_state_t stinout; } game_state_out_t;
 typedef struct full_state_t { scene_t scene; game_state_in stin; game_state_t stinout; } full_state_t;
-scene_colors_t scene_colors(scene_t scene)
-{
-  scene_colors_t r;
-  r.sphere = scene.sphere.material;
-  r.plane = scene.plane.material;
-  r.plane_color1 = scene.plane.color1;
-  r.plane_color2 = scene.plane.color2;
-  r.fog = scene.fog;
-  return r;
-}
-
-#define K_gold_color	(fixed3_make(fixed_make_from_double((double)243. / (double)256.), fixed_make_from_double((double)201. / (double)256.), fixed_make_from_double((double)104. / (double)256.)))
+#define K_gold_color	(fixed3_make(fixed_make_from_double(((double)1.5 * (double).15) * (double)243. / (double)256.), fixed_make_from_double(((double)1.5 * (double).15) * (double)201. / (double)256.), fixed_make_from_double(((double)1.5 * (double).15) * (double)104. / (double)256.)))
+#define K_gold_reflect_color	(fixed3_make(fixed_make_from_double((double)1.5 * ((double)1. - (double).15) * (double)243. / (double)256.), fixed_make_from_double((double)1.5 * ((double)1. - (double).15) * (double)201. / (double)256.), fixed_make_from_double((double)1.5 * ((double)1. - (double).15) * (double)104. / (double)256.)))
 #define K_lava_color	(fixed3_make(fixed_make_from_double((double)255. / (double)256. * (double)2.0), fixed_make_from_double((double)70. / (double)256. * (double)1.5), fixed_make_from_double((double)32. / (double)256. * (double)1.5)))
 #define K_plane_color1	(fixed3_make(fixed_make_from_double((double).8), fixed_make_from_double((double).8), fixed_make_from_double((double).8)))
 #define K_plane_color2	(fixed3_make(fixed_make_from_double((double).1), fixed_make_from_double((double).0), fixed_make_from_double((double).0)))
@@ -226,6 +198,17 @@ hole_t plane_has_hole(hole_t x, hole_t z)
   return ret;
 }
 
+scene_colors_t scene_colors(scene_t scene)
+{
+  scene_colors_t r;
+  r.sphere = scene.sphere.material;
+  r.plane = scene.plane.material;
+  r.plane_color1 = scene.plane.color1;
+  r.plane_color2 = scene.plane.color2;
+  r.fog = scene.fog;
+  return r;
+}
+
 color background_color2(fixed_type dir_y)
 {
   return fixed3_make_from_fixed(fixed_lt(dir_y, fixed_make_from_int(0)) ? fixed_make_from_double((double)0.) : fixed_mul(dir_y, dir_y));
@@ -238,7 +221,7 @@ color render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px, coord_
   uint16_t v;
   bool drawfog = 0;
   
-  if((((((fixed_lt(y, fixed_make_from_double((double)0.)))!=0) & ((fixed_lt(py, fixed_make_from_double((double)0.)))!=0)))!=0) | ((!(((fixed_lt(y, fixed_make_from_double((double)0.)))!=0) | ((fixed_lt(py, fixed_make_from_double((double)0.)))!=0)))!=0)) {
+  if(((fixed_neq(y, fixed_make_from_double((double)0.)))!=0) & (((fixed_is_negative(y) == fixed_is_negative(py)))!=0)) {
     inv_y = fixed_div(fixed_shift(py, -(-3)), y);
     coord_type ix = fixed_sub(fixed_mul(inv_y, x), px);
     coord_type iz = fixed_add(inv_y, pz);
@@ -297,7 +280,8 @@ pixel_t render_pixel(uint16_t i, uint16_t j, scene_t scene)
   screen_coord_t x = fixed_shift(fixed_make_from_short(cx), FRAME_WIDTH < 1024 ? -9 : -11);
   screen_coord_t y = fixed_shift(fixed_make_from_short(cy), FRAME_WIDTH < 1024 ? -9 : -11);
   pixel_t pix;
-  uint16_t scorebar = scene.scorebar * (FRAME_WIDTH - 2 * 10) / 15000;
+  #define score_factor	((1 << 11) * (FRAME_WIDTH - 2 * 10) / 15000)
+  uint16_t scorebar = score_factor * scene.scorebar >> 11;
   
   if(((((((i >= 10)!=0) & ((i < 10 + scorebar)!=0))!=0) & ((j > 10)!=0))!=0) & ((j < 2 * 10)!=0)) {
     pix.r = 0;
@@ -319,8 +303,8 @@ pixel_t render_pixel(uint16_t i, uint16_t j, scene_t scene)
 full_state_t reset_state0(bool x)
 {
   material_t gold;
-  gold.diffuse_color = const_fixed3_mul_double(K_gold_color, ((double)1.5 * (double).15));
-  gold.reflect_color = const_fixed3_mul_double(K_gold_color, ((double)1.5 * ((double)1. - (double).15)));
+  gold.diffuse_color = K_gold_color;
+  gold.reflect_color = K_gold_reflect_color;
   material_t floor_material;
   floor_material.diffuse_color = K_floor_difusse;
   floor_material.reflect_color = K_floor_reflect;

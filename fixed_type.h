@@ -69,6 +69,9 @@ public:
 
     fixed_t operator / (fixed_t b) const { fixed_t r; r.f = (f << Q) / b.f; return r; }
 
+    bool operator == (fixed_t b) const { return f == b.f; }
+    bool operator != (fixed_t b) const { return f != b.f; }
+
 #endif
 };
 
@@ -156,6 +159,7 @@ int16_t fixed_to_short(fixed a) { return (int16_t)(a.f >> FIXED_FRACTIONBITS); }
 #endif
 
 inline fixed fixed_mul(fixed left, fixed right) { fixed r = { (fixed_basetype)((left.f * right.f)>>FIXED_FRACTIONBITS) }; return r; }
+inline fixed fixed_mul_short(fixed left, short right) { fixed r = { left.f * (fixed_basetype)right}; return r; }
 inline fixed fixed_shl_signed_char(fixed left, shift_t right) { fixed r = { (fixed_basetype)(left.f<<right) }; return r; }
 inline fixed fixed_shr_signed_char(fixed left, shift_t right) { fixed r = { (fixed_basetype)(left.f>>right) }; return r; }
 
@@ -167,7 +171,6 @@ inline constexpr fixed fixed_make_from_int(int a) { const fixed r = {(fixed_base
 inline constexpr fixed fixed_make_from_short(short a) { const fixed r = {(fixed_basetype)a}; return r; }
 inline constexpr fixed fixed_make_from_float(float a) { const fixed r = {(fixed_basetype)a}; return r; };
 inline constexpr fixed fixed_make_from_double(double a) { const fixed r = {(fixed_basetype)a}; return r; };
-
 
 inline float fixed_to_float(fixed a) { return a.f; }
 inline int fixed_to_int(fixed a) { return (int) a.f; }
@@ -188,6 +191,8 @@ inline bool fixed_lt(fixed left, fixed right) { return left.f < right.f; }
 inline bool fixed_gt(fixed left, fixed right) { return left.f > right.f; }
 inline bool fixed_lte(fixed left, fixed right) { return left.f <= right.f; }
 inline bool fixed_gte(fixed left, fixed right) { return left.f >= right.f; }
+inline bool fixed_eq(fixed left, fixed right) { return left.f == right.f; }
+inline bool fixed_neq(fixed left, fixed right) { return left.f != right.f; }
 
 typedef struct fixed3 { fixed x, y, z; } fixed3;
 inline fixed3 fixed3_make(fixed x, fixed y, fixed z) { fixed3 r = {x, y, z}; return r; } //constructor
@@ -218,5 +223,6 @@ inline fixed3 fixed3_make_from_const_fixed3(fixed3 a) { return a; }
 
 #endif //CCOMPILE
 
+#define fixed_sign(x) fixed_is_negative(x)
 
 #endif //__FIXED_TYPE__
