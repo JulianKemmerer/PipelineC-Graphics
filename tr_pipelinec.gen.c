@@ -42,12 +42,12 @@ fixed fixed_shift(fixed a, int6_t shift)
 
 bool fixed_is_negative(fixed x)
 {
-  return fixed_lt(x, fixed_make_from_float((float)0.));
+  return x.f < 0;
 }
 
 fixed fixed_abs(fixed x)
 {
-  return fixed_is_negative(x) ? fixed_sub(fixed_make_from_float((float)0.), x) : x;
+  return fixed_is_negative(x) ? fixed_sub(fixed_make_from_int(0), x) : x;
 }
 
 fixed fixed_min(fixed a, fixed b)
@@ -163,12 +163,10 @@ uint16_t hashf(float_type f)
 }
 
 typedef struct material_t { color diffuse_color; color reflect_color; } material_t;
-typedef struct sphere_t { object_coord_t center; material_t material; color_type heat; float_type yvel; } sphere_t;
+typedef struct sphere_t { object_coord_t center; material_t material; color_type heat; object_coord_t yvel; } sphere_t;
 typedef struct plane_t { object_coord_t center; material_t material; color color1; color color2; } plane_t;
 typedef struct scene_t { sphere_t sphere; plane_t plane; object_coord_t camera; uint16_t frame; uint16_t scorebar; color fog; } scene_t;
 typedef struct scene_colors_t { material_t sphere; material_t plane; color plane_color1; color plane_color2; color fog; } scene_colors_t;
-typedef struct hit_in { vec3 orig; vec3 dir; } hit_in;
-typedef struct hit_out { float_type dist; float_type borderdist; vec3 N; vec3 hit; material_t material; } hit_out;
 typedef struct game_state_in { coord_type plane_y; coord_type sphere_x; coord_type sphere_z; color gold_color; color gold_reflect_color; color lava_color; bool press; } game_state_in;
 typedef struct game_state_t { coord_type sphere_y; color_type heat; coord_type camera_y; coord_type camera_z; coord_type plane_x; coord_type sphere_xvel; coord_type sphere_yvel; uint16_t score; bool won; } game_state_t;
 typedef struct game_state_out { color diffuse_color; color reflect_color; uint16_t scorebar; bool lose; } game_state_out;
@@ -185,6 +183,17 @@ scene_colors_t scene_colors(scene_t scene)
   return r;
 }
 
+#define K_gold_color	(fixed3_make(fixed_make_from_double((double)243. / (double)256.), fixed_make_from_double((double)201. / (double)256.), fixed_make_from_double((double)104. / (double)256.)))
+#define K_lava_color	(fixed3_make(fixed_make_from_double((double)255. / (double)256. * (double)2.0), fixed_make_from_double((double)70. / (double)256. * (double)1.5), fixed_make_from_double((double)32. / (double)256. * (double)1.5)))
+#define K_plane_color1	(fixed3_make(fixed_make_from_double((double).8), fixed_make_from_double((double).8), fixed_make_from_double((double).8)))
+#define K_plane_color2	(fixed3_make(fixed_make_from_double((double).1), fixed_make_from_double((double).0), fixed_make_from_double((double).0)))
+#define K_floor_difusse	(fixed3_make(fixed_make_from_double((double)1.), fixed_make_from_double((double)1.), fixed_make_from_double((double)1.)))
+#define K_floor_reflect	(fixed3_make(fixed_make_from_double((double).5), fixed_make_from_double((double).5), fixed_make_from_double((double).5)))
+#define K_fog_color	(fixed3_make(fixed_make_from_double((double).01), fixed_make_from_double((double).01), fixed_make_from_double((double).1)))
+#define K_plane_center_start	(fixed3_make(fixed_make_from_double(((double)-110.)), fixed_make_from_double((double)0.), fixed_make_from_double((double)0.)))
+#define K_sphere_center_start	(fixed3_make(fixed_make_from_double((double)-20.), fixed_make_from_double((double)40.), fixed_make_from_double(((double)-32.))))
+#define K_camera_pos_start	(fixed3_make(fixed_make_from_double((double)0.), fixed_make_from_double((double)30.), fixed_make_from_double((double)30.)))
+#define VECTOR_NURMAL_UPWARDS	{(double)0., (double)1., (double)0.}
 #define hole_t coord_type
 hole_t plane_has_hole(hole_t x, hole_t z)
 {
@@ -217,17 +226,6 @@ hole_t plane_has_hole(hole_t x, hole_t z)
   return ret;
 }
 
-#define K_gold_color	(fixed3_make(fixed_make_from_double((double)243. / (double)256.), fixed_make_from_double((double)201. / (double)256.), fixed_make_from_double((double)104. / (double)256.)))
-#define K_lava_color	(fixed3_make(fixed_make_from_double((double)255. / (double)256. * (double)2.0), fixed_make_from_double((double)70. / (double)256. * (double)1.5), fixed_make_from_double((double)32. / (double)256. * (double)1.5)))
-#define K_plane_color1	(fixed3_make(fixed_make_from_double((double).8), fixed_make_from_double((double).8), fixed_make_from_double((double).8)))
-#define K_plane_color2	(fixed3_make(fixed_make_from_double((double).1), fixed_make_from_double((double).0), fixed_make_from_double((double).0)))
-#define K_floor_difusse	(fixed3_make(fixed_make_from_double((double)1.), fixed_make_from_double((double)1.), fixed_make_from_double((double)1.)))
-#define K_floor_reflect	(fixed3_make(fixed_make_from_double((double).5), fixed_make_from_double((double).5), fixed_make_from_double((double).5)))
-#define K_fog_color	(fixed3_make(fixed_make_from_double((double).01), fixed_make_from_double((double).01), fixed_make_from_double((double).1)))
-#define K_plane_center_start	(fixed3_make(fixed_make_from_double(((double)-110.)), fixed_make_from_double((double)0.), fixed_make_from_double((double)0.)))
-#define K_sphere_center_start	(fixed3_make(fixed_make_from_double((double)-20.), fixed_make_from_double((double)40.), fixed_make_from_double(((double)-32.))))
-#define K_camera_pos_start	(fixed3_make(fixed_make_from_double((double)0.), fixed_make_from_double((double)30.), fixed_make_from_double((double)30.)))
-#define VECTOR_NURMAL_UPWARDS	{(double)0., (double)1., (double)0.}
 color background_color2(fixed_type dir_y)
 {
   return fixed3_make_from_fixed(fixed_lt(dir_y, fixed_make_from_int(0)) ? fixed_make_from_double((double)0.) : fixed_mul(dir_y, dir_y));
@@ -296,9 +294,8 @@ pixel_t render_pixel(uint16_t i, uint16_t j, scene_t scene)
   cx = cx - (FRAME_WIDTH + 1);
   int16_t cy = j << 1;
   cy = (FRAME_HEIGHT + 1) - cy;
-  #define cshift	(-CLOG2(FRAME_HEIGHT))
-  screen_coord_t x = fixed_shift(fixed_make_from_short(cx), cshift);
-  screen_coord_t y = fixed_shift(fixed_make_from_short(cy), cshift);
+  screen_coord_t x = fixed_shift(fixed_make_from_short(cx), FRAME_WIDTH < 1024 ? -9 : -11);
+  screen_coord_t y = fixed_shift(fixed_make_from_short(cy), FRAME_WIDTH < 1024 ? -9 : -11);
   pixel_t pix;
   uint16_t scorebar = scene.scorebar * (FRAME_WIDTH - 2 * 10) / 15000;
   
@@ -435,7 +432,7 @@ scene_t update_scene(scene_t scenein, game_state_out_t outs)
   scene.plane.center.z = outs.stinout.plane_x;
   scene.sphere.material.diffuse_color = outs.stout.diffuse_color;
   scene.sphere.material.reflect_color = outs.stout.reflect_color;
-  scene.sphere.yvel = fixed_to_float(outs.stinout.sphere_yvel);
+  scene.sphere.yvel = fixed3_make_from_fixed(outs.stinout.sphere_yvel);
   scene.scorebar = outs.stout.scorebar;
   scene.frame = scene.frame + 1;
   return scene;

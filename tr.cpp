@@ -16,243 +16,7 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 */
 #define ALTERNATE_UI
 
-#define GAME_MODE
-
-#ifdef GAME_MODE
-#define HEAT_CONSTANT 1
-#define STAR_INTENSITY .5
-#define HOLE_BORDER .1
-#else
-#define STAR_INTENSITY 1.5
-#endif
-
-#ifdef _DEBUG
-#define SPHERE_MAXRECURSIVITY 2
-#define PLANE_MAXRECURSIVITY 1
-#else
-#define SPHERE_MAXRECURSIVITY 2
-#define PLANE_MAXRECURSIVITY 2
-#endif
-
-
-#ifdef _DEBUG
-#undef ANTIALIAS
-#else
-//#define ANTIALIAS (6) //6 ok, more is sharper
-#endif
-
-#ifdef ANTIALIAS
-#define SPHERE_MOTIONBLUR
-#endif
-
-#define MAXSCORE 15000
-
-#define RAY_NOINT BIG_FLOAT //arbitraty value, maybe MAXFLOAT
-
-//constants
-#define ambient_intensity  .1
-#define light_heigth 16.
-#define light_z (-10.)
-#define DIST_SHIFT (9) //for fog calculations
-#define SPHERE_RADIUS 4.5
-#define SPHERE_Z (-32.)
-#define SPHERE_X (-20.)
-#define CAMERA_Z 30. //start pos
-#define SCORE_MARGINS 10
-#define FLOOR_SHIFT (-3)
-#define FLOOR_X (-110.)
-#define FLOOR_Y 0.
-#define FLOOR_Z 0.
-
-#ifdef GAME_MODE
-//#define CIRCLE_SIZE .3
-#define RHOMBUS_SIZE .4
-#define SQUARE_SIZE .3
-#define GRAVITY_CONSTANT .1//.1
-#define JUMP_CONSTANT 2.
-#define ZOOMOUT_CONSTANT -4 //.075
-#define XVEL_CONSTANT 0.03
-#define XVEL_DEFAULT 0.5
-#define HOLE_GUARD_MARGIN .05
-#else
-#define SQUARE_SIZE .4
-#define GRAVITY_CONSTANT .05
-#define JUMP_CONSTANT 1.6
-#define ZOOMOUT_CONSTANT -5//.045	
-#define XVEL_CONSTANT 0.015
-#define XVEL_DEFAULT 0.23
-#define HOLE_GUARD_MARGIN .05
-#endif
-
-#define GRAVITY_CONSTANT_LIGHT .03
-
-#define EPS 1.e-3
-
-#define PIPELINEC_SUGAR
-#warning PIPELINEC_SUGAR shouldn't be a need
-
-struct material_t {
-    color diffuse_color;
-    color reflect_color;
-};
-
-#ifndef SHADER
-//#define COLOR_DECOMP
-#endif
-
-#ifdef COLOR_DECOMP
-#define color_basic_t color_type
-struct render_material_t {
-    color_basic_t diffuse_color;
-    color_basic_t reflect_color;
-};
-#else
-#define color_basic_t color
-#define render_material_t material_t
-#endif
-
-struct sphere_t {
-    object_coord_t center;
-    material_t material;
-    color_type heat;
-    float_type yvel;
-};
-
-struct plane_t {
-    object_coord_t center;
-    material_t material;
-    color color1, color2;
-};
-
-struct scene_t
-{
-  sphere_t sphere;
-  plane_t plane;
-  object_coord_t camera;
-  uint16_t frame;
-  uint16_t scorebar;
-  color fog;
-};
-
-struct scene_colors_t
-{
-  render_material_t sphere, plane;
-  color_basic_t plane_color1, plane_color2;
-  color_basic_t fog; //FIXME: maybe background
-};
-
-struct hit_in
-{
-  vec3 orig, dir;
-#ifdef ANTIALIAS
-  float_type dist;
-#endif
-};
-
-struct hit_out
-{
-  float_type dist, borderdist;
-  vec3 N, hit;
-  render_material_t material;
-#ifdef ANTIALIAS
-  float_type accdist;
-#endif
-};
-
-
-struct game_state_in
-{
-    coord_type plane_y;
-    coord_type sphere_x;
-    coord_type sphere_z;
-    color gold_color, gold_reflect_color, lava_color;
-    bool press;
-};
-
-struct game_state_t
-{
-    coord_type sphere_y;
-    color_type heat;
-    coord_type camera_y;
-    coord_type camera_z;
-    coord_type plane_x;
-    coord_type sphere_xvel;
-    coord_type sphere_yvel;
-    uint16_t score;
-    bool won;
-};
-
-struct game_state_out
-{
-    color diffuse_color, reflect_color;
-    uint16_t scorebar;
-    bool lose;
-};
-
-struct game_state_out_t
-{
-  game_state_out stout;
-  game_state_t stinout;
-};
-
-struct full_state_t
-{
-  scene_t scene;
-  game_state_in stin;
-  game_state_t stinout;
-};
-
-#ifndef COLOR_DECOMP
-inline scene_colors_t scene_colors(IN(scene_t) scene)
-{
-  scene_colors_t r;
-  r.sphere = scene.sphere.material;
-  r.plane = scene.plane.material;
-  r.plane_color1 = scene.plane.color1;
-  r.plane_color2 = scene.plane.color2;
-  r.fog = scene.fog;
-  return r;
-}
-
-#else
-inline scene_colors_t scene_colors(IN(scene_t) scene, uint2_t channel)
-{
-  scene_colors_t r;
-  if(channel == 0)
-  {
-    r.sphere.diffuse_color = scene.sphere.material.diffuse_color.r;
-    r.sphere.reflect_color = scene.sphere.material.reflect_color.r;
-    r.plane.diffuse_color = scene.plane.material.diffuse_color.r;
-    r.plane.reflect_color = scene.plane.material.reflect_color.r;
-    r.plane_color1 = scene.plane.color1.r;
-    r.plane_color2 = scene.plane.color2.r;
-    r.fog = scene.fog.r;
-  }
-  else if(channel == 1)
-  {
-    r.sphere.diffuse_color = scene.sphere.material.diffuse_color.g;
-    r.sphere.reflect_color = scene.sphere.material.reflect_color.g;
-    r.plane.diffuse_color = scene.plane.material.diffuse_color.g;
-    r.plane.reflect_color = scene.plane.material.reflect_color.g;
-    r.plane_color1 = scene.plane.color1.g;
-    r.plane_color2 = scene.plane.color2.g;
-    r.fog = scene.fog.g;
-  }
-  else
-  {
-    r.sphere.diffuse_color = scene.sphere.material.diffuse_color.b;
-    r.sphere.reflect_color = scene.sphere.material.reflect_color.b;
-    r.plane.diffuse_color = scene.plane.material.diffuse_color.b;
-    r.plane.reflect_color = scene.plane.material.reflect_color.b;
-    r.plane_color1 = scene.plane.color1.b;
-    r.plane_color2 = scene.plane.color2.b;
-    r.fog = scene.fog.b;
-  }
-  return r;
-}
-#endif
-
-
+#include "tr.h"
 
 typedef coord_type hole_t;
 
@@ -301,23 +65,6 @@ hole_t plane_has_hole(hole_t x, hole_t z)
   return ret;
 }
 
-static const color K_gold_color = {243./256., 201./256., 104./256.};
-static const color K_lava_color = {255./256.*2.0, 70./256.*1.5, 32./256.*1.5};
-static const color K_plane_color1 = {.8, .8, .8};
-static const color K_plane_color2 = {.1, .0, .0};
-static const color K_floor_difusse = {1.,1.,1.};
-static const color K_floor_reflect = {.5, .5, .5};
-#ifdef GAME_MODE
-static const color K_fog_color = {.01,.01,.1};
-#else
-static const color K_fog_color = {.02,.02,.12};
-#endif
-static const object_coord_t K_plane_center_start = {FLOOR_X, FLOOR_Y, FLOOR_Z}; //FIXME: test if works when != 0
-static const object_coord_t K_sphere_center_start = {-20., 40., SPHERE_Z};
-static const object_coord_t K_camera_pos_start = {0.,30.,CAMERA_Z};
-static const vec3 VECTOR_NURMAL_UPWARDS = {0.,1.,0.};
-
-
 
 #ifndef ALTERNATE_UI
 
@@ -332,6 +79,23 @@ float_type calc_accdist(IN(hit_in) hitin, IN(hit_out) hitout)
 
 //raytracer math inspired on tinyraytracer https://github.com/ssloy/tinyraytracer
 
+struct hit_in
+{
+  vec3 orig, dir;
+#ifdef ANTIALIAS
+  float_type dist;
+#endif
+};
+
+struct hit_out
+{
+  float_type dist, borderdist;
+  vec3 N, hit;
+  render_material_t material;
+#ifdef ANTIALIAS
+  float_type accdist;
+#endif
+};
 
 hit_out ray_sphere_intersect(IN(sphere_t) s, IN(hit_in) hitin)
 {
@@ -527,7 +291,6 @@ float_type triang(float_type x )
 }
 #endif
 
-
 color_basic_t plane_effect(uint16_t frame, IN(scene_colors_t) colors, IN(plane_t) plane, IN(hit_out) hit)
 {
   color_basic_t rcolor = colors.plane.diffuse_color;
@@ -595,12 +358,8 @@ color_basic_t plane_effect(uint16_t frame, IN(scene_colors_t) colors, IN(plane_t
   }
 #endif
 
-
-
   return rcolor;
 }
-
-
 
 color_basic_t background_color(float_type dir_y)
 {
@@ -625,8 +384,6 @@ hit_out hit_sphere(uint32_t frame, IN(scene_colors_t) colors, IN(sphere_t) spher
     hitout.material.diffuse_color = sphere_effect(frame, colors, sphere, hitout);
   return hitout;
 }
-
-
 
 hit_out hit_plane(uint32_t frame, IN(scene_colors_t) colors, IN(plane_t) plane, IN(hit_in) hitin)
 {
@@ -756,7 +513,6 @@ color_basic_t cast_ray(IN(scene_t) scene, IN(scene_colors_t) colors, IN(hit_in) 
 }
 
 
-
 #ifdef _DEBUG
 void perf_clear();
 void perf_render_dump();
@@ -833,7 +589,7 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
 
 color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(scene_t) scene, IN(scene_colors_t) colors)
 {
-color_basic_t c = background_color2((y-.5)*fixed_abs(x*x-1.));
+  color_basic_t c = background_color2((y-.5)*fixed_abs(x*x-1.));
   //if(is_star(float_type(x), float_type(y)))
   // c = color_basic_t(STAR_INTENSITY);
 
@@ -872,6 +628,32 @@ color_basic_t c = background_color2((y-.5)*fixed_abs(x*x-1.));
 }
 #endif
 
+#ifdef DITHER
+uint9_t dither(uint16_t x, uint16_t y, uint9_t c) //FIXME: use uint4_t
+{
+static const uint8_t BAYER_PATTERN[16][16] =   {   //  16x16 Bayer Dithering Matrix.  Color levels: 256
+                                                {     0, 191,  48, 239,  12, 203,  60, 251,   3, 194,  51, 242,  15, 206,  63, 254  }, 
+                                                {   127,  64, 175, 112, 139,  76, 187, 124, 130,  67, 178, 115, 142,  79, 190, 127  },
+                                                {    32, 223,  16, 207,  44, 235,  28, 219,  35, 226,  19, 210,  47, 238,  31, 222  },
+                                                {   159,  96, 143,  80, 171, 108, 155,  92, 162,  99, 146,  83, 174, 111, 158,  95  },
+                                                {     8, 199,  56, 247,   4, 195,  52, 243,  11, 202,  59, 250,   7, 198,  55, 246  },
+                                                {   135,  72, 183, 120, 131,  68, 179, 116, 138,  75, 186, 123, 134,  71, 182, 119  },
+                                                {    40, 231,  24, 215,  36, 227,  20, 211,  43, 234,  27, 218,  39, 230,  23, 214  },
+                                                {   167, 104, 151,  88, 163, 100, 147,  84, 170, 107, 154,  91, 166, 103, 150,  87  },
+                                                {     2, 193,  50, 241,  14, 205,  62, 253,   1, 192,  49, 240,  13, 204,  61, 252  },
+                                                {   129,  66, 177, 114, 141,  78, 189, 126, 128,  65, 176, 113, 140,  77, 188, 125  },
+                                                {    34, 225,  18, 209,  46, 237,  30, 221,  33, 224,  17, 208,  45, 236,  29, 220  },
+                                                {   161,  98, 145,  82, 173, 110, 157,  94, 160,  97, 144,  81, 172, 109, 156,  93  },
+                                                {    10, 201,  58, 249,   6, 197,  54, 245,   9, 200,  57, 248,   5, 196,  53, 244  },
+                                                {   137,  74, 185, 122, 133,  70, 181, 118, 136,  73, 184, 121, 132,  69, 180, 117  },
+                                                {    42, 233,  26, 217,  38, 229,  22, 213,  41, 232,  25, 216,  37, 228,  21, 212  },
+                                                {   169, 106, 153,  90, 165, 102, 149,  86, 168, 105, 152,  89, 164, 101, 148,  85  }
+                                            };
+ c = (c + (BAYER_PATTERN[y&0xF][x&0xF]>>4)) & 0x1F0;
+return c;
+}
+#endif
+
 #ifndef SHADER
 inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(scene_t) scene
 #ifdef COLOR_DECOMP
@@ -892,9 +674,8 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(scene_t) scene
   int16_t cy = j << 1;
   cy = (FRAME_HEIGHT + 1) - cy;
 #endif
-  static const shift_t cshift = -CLOG2(FRAME_HEIGHT);
-  screen_coord_t x = fixed_convert(screen_coord_t, cx, cshift);
-  screen_coord_t y = fixed_convert(screen_coord_t, cy, cshift);
+  screen_coord_t x = fixed_convert(screen_coord_t, cx, FRAME_WIDTH < 1024 ? -9 : -11);
+  screen_coord_t y = fixed_convert(screen_coord_t, cy, FRAME_WIDTH < 1024 ? -9 : -11);
 
   pixel_t pix; //ignores alpha
 
@@ -916,6 +697,11 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(scene_t) scene
     uint9_t r = fixed_asshort(c.r, 8);
     uint9_t g = fixed_asshort(c.g, 8);
     uint9_t b = fixed_asshort(c.b, 8);
+#ifdef DITHER
+    r = dither(i, j, r);
+    g = dither(i, j, g);
+    b = dither(i, j, b);
+#endif
     pix.r = (r >= 256) ? uint8_t(255):uint8_t(r);
     pix.g = (g >= 256) ? uint8_t(255):uint8_t(g);
     pix.b = (b >= 256) ? uint8_t(255):uint8_t(b);
@@ -980,8 +766,8 @@ full_state_t reset_state0(bool x)
     stinout.camera_y = (coord_type) scene.camera.y;
     stinout.camera_z = (coord_type) scene.camera.z;
     stinout.plane_x  = coord_type(FLOOR_X);
-    stinout.sphere_xvel = 0.;
-    stinout.sphere_yvel = 0.;
+    stinout.sphere_xvel = (coord_type) 0.;
+    stinout.sphere_yvel = (coord_type) 0.;
     stinout.won = false;
     stinout.score = 0;
 
@@ -1096,7 +882,7 @@ scene_t update_scene(IN(scene_t) scenein, IN(game_state_out_t) outs)
   scene.plane.center.z = outs.stinout.plane_x;
   scene.sphere.material.diffuse_color = outs.stout.diffuse_color;
   scene.sphere.material.reflect_color = outs.stout.reflect_color;
-  scene.sphere.yvel = (float_type) outs.stinout.sphere_yvel;
+  scene.sphere.yvel = coord_type(outs.stinout.sphere_yvel);
   scene.scorebar = outs.stout.scorebar;
   scene.frame = scene.frame + 1;
   return scene;

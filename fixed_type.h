@@ -36,6 +36,7 @@ public:
     fixed_t operator << (int a) const { return float_shift(f, a); }
     fixed_t operator >> (int a) const { return float_shift(f, -a); }
 #else //not FIXED_EMULATE_WITH_FLOAT
+public:
 
 #if 1//def NO_BIT_EXACT
   //U f;
@@ -78,7 +79,7 @@ class fixed3
 public:
     typedef fixed type;
 
-    fixed3(type a=0.) : x(a),y(a),z(a) {}
+    fixed3(type a=0) : x(a),y(a),z(a) {}
     fixed3(type a1, type a2, type a3) : x(a1),y(a2),z(a3) {}
     fixed3(const fixed3& o) : x(o.x),y(o.y),z(o.z) {}
 
@@ -108,10 +109,10 @@ inline int16_t round16(fixed a) { return int16_t(a+.5f); }
 inline fixed fixed_shift(fixed a, shift_t shift) { return shift >= 0 ? (a << shift) : (a >> shift_t(-shift)); }
 
 
-inline bool fixed_is_negative(fixed x) { return x < 0.f; }
+inline bool fixed_is_negative(fixed x) { return x.f < 0; }
 //inline fixed fixed_abs(fixed x) { return fixed_is_negative(x) ? fixed(-x) : x; }
 #warning implement unary -
-inline fixed fixed_abs(fixed x) { return fixed_is_negative(x) ? fixed(0.f)-x : x; }
+inline fixed fixed_abs(fixed x) { return fixed_is_negative(x) ? fixed(0)-x : x; }
 
 inline fixed fixed_min(fixed a, fixed b) { return a>b?a:b; }
 inline fixed fixed_max(fixed a, fixed b) { return a<b?a:b; }
