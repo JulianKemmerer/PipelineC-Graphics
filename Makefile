@@ -32,14 +32,14 @@ tr_gen: tr_pipelinec.gen.c simulator_main.cpp
 	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_vgaconfig.h
 	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_vgaconfig.h
 	$(PIPELINEC) ./pipelinec_app.c --out_dir ./build --comb --sim --verilator
-	@echo FLOAT USAGE:
-	grep -v fixed_make_from_float synth/float_module_instances.log
 
 ./synth/top/top.v: pipelinec_app.c tr_pipelinec.gen.c
 	#rm -Rf ./synth
 	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_vgaconfig.h
 	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_vgaconfig.h
 	$(PIPELINEC) ./pipelinec_app.c --out_dir ./synth --comb #delete --comb for full pipelining (~10% more resources and slower)
+	@echo FLOAT USAGE:
+	grep -v fixed_make_from_float synth/float_module_instances.log
 
 ./fullsynth/top/top.v: pipelinec_app.c tr_pipelinec.gen.c
 	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_vgaconfig.h
