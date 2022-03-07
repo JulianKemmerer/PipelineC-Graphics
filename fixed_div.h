@@ -12,8 +12,8 @@ inline fixed_basetype fixed_div_u(fixed_basetype N, fixed_basetype D)
 {
 #if 1
   fixed_basetype Q = 0;
-  uint32_t R = 0;
-  uint32_t RD = 0;
+  fixed_basetype R = 0;
+  fixed_basetype RD = 0;
   uint32_t BIT;
 
   int6_t i;
@@ -24,7 +24,7 @@ inline fixed_basetype fixed_div_u(fixed_basetype N, fixed_basetype D)
     if((N & (BIT>>FIXED_FRACTIONBITS)) != 0)
       R = R | 1;
     RD = R - D;
-	if ((RD >> 31) == 0)
+    if (((int32_t)RD >> 31) == 0) //checks sign bit
     {
       R = RD;
       Q = Q | BIT;
