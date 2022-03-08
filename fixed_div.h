@@ -10,7 +10,7 @@
 
 inline fixed_basetype fixed_div_u(fixed_basetype N, fixed_basetype D)
 {
-#if 1
+#ifdef __PIPELINEC__
   fixed_basetype Q = 0;
   fixed_basetype R = 0;
   fixed_basetype RD = 0;

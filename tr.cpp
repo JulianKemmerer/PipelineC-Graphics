@@ -14,7 +14,7 @@ For GPU (software renderer):
 $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 
 */
-#define ALTERNATE_UI
+//#define ALTERNATE_UI
 
 #include "tr.h"
 
@@ -562,15 +562,19 @@ uint12_t star_vel(uint12_t a, uint8_t b)
   return r >> 4;
 }
 
-color_basic_t background_color_alt(screen_coord_t x, screen_coord_t y, uint16_t frame, uint16_t off)
+color_basic_t background_color_alt(screen_coord_t x, screen_coord_t y, uint16_t frame, uint16_t off, coord_type z)
 {
   fixed_type dir_y = (y-.5)*fixed_abs(x*x-1.);
   color_basic_t c = (dir_y < 0 ? color_type(0.) : color_type(dir_y*dir_y));
-  int16_t cy = (int16_t) fixed_shift(y, -SCR_CSHIFT-1);
-  int16_t cx = (int16_t) fixed_shift(x, -SCR_CSHIFT-1) + star_vel(off, cy & 7); //add some movement
-  uint16_t pix_hash = hash16(cx ^ hash16(cy)); //FIXME: pixel hash shold be part of the scene
-  if((pix_hash & 0xFFC0) == 0) //add star
-    c = color_basic_t(fixed_shift(((pix_hash<<2) + frame) & 0x7F, -9) + STAR_INTENSITY);
+
+  if(z < 4)
+  {
+    int16_t cy = (int16_t) fixed_shift(y*z, -SCR_CSHIFT-1);
+    int16_t cx = (int16_t) fixed_shift(x*z, -SCR_CSHIFT-1) + star_vel(off, cy & 7); //add some movement
+    uint16_t pix_hash = hash16(cx ^ hash16(cy)); //FIXME: pixel hash shold be part of the scene
+    if((pix_hash & 0xFFC0) == 0) //add star
+      c = color_basic_t(fixed_shift(((pix_hash<<2) + frame) & 0x7F, -9) + STAR_INTENSITY);
+  }
   return c;
 }
 
@@ -584,9 +588,7 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
   uint16_t v;
   bool drawfog = false;
 
-#warning implement equal operator
-  //if ((y < 0. && py < 0.) || !(y < 0. || py < 0.))
-  if (y != 0. && (fixed_sign(y) == fixed_sign(py)))
+  if (y != 0. && fixed_sign(y) == fixed_sign(py))
   {
     inv_y = fixed_shift(py, -FLOOR_SHIFT)/y;
 
@@ -600,10 +602,11 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
 
 	if(!(hole_d < 0)) //internal area
     {
-      c = ((u ^ v) & 1) ? K_plane_color2 : K_plane_color1;
-      if(hole_d < HOLE_BORDER)
+      if((((int16_t)inv_y) >> 9) == 0)
       {
-		c = K_floor_difusse;
+        c = ((u ^ v) & 1) ? K_plane_color2 : K_plane_color1;
+        if(hole_d < HOLE_BORDER)
+          c = K_floor_difusse;
       }
       drawfog = true;
     }
@@ -612,22 +615,21 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
     drawfog = true;
 
   if(drawfog)
-  {
       c = color_select(fixed_abs(y), c, K_fog_color);
-  }
   return c;
 }
 
 color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(scene_t) scene, IN(scene_colors_t) colors)
 {
-  color_basic_t c = background_color_alt(x, y, scene.frame, -(int16_t)scene.plane.center.x);
+    coord_type dz = coord_type(scene.camera.z-SPHERE_Z);
+	coord_type dx = coord_type(x*dz - (scene.sphere.center.x/*-scene.camera.x*/));
+	coord_type dy = coord_type(y*dz - (scene.sphere.center.y-scene.camera.y));
+
+  color_basic_t c = background_color_alt(x, y, scene.frame, -(int16_t)scene.plane.center.x, dz*fixed(.5/CAMERA_Z));
 
     bool drawfloor = true;
 	//draw sphere
 	static const float SPHERE_R = (-.707)*SPHERE_Z/SPHERE_RADIUS; //FIXME: check if code generator parenthesizes it
-    coord_type dz = coord_type(scene.camera.z-SPHERE_Z);
-	coord_type dx = coord_type(x*dz - (scene.sphere.center.x/*-scene.camera.x*/));
-	coord_type dy = coord_type(y*dz - (scene.sphere.center.y-scene.camera.y));
 	if((dx > -SPHERE_R) && (dx < SPHERE_R) && (dy > -SPHERE_R) && (dy < SPHERE_R)) //FIXME: use >=, <=
     {
 		//inside bounding box
@@ -745,6 +747,7 @@ full_state_t reset_state0(bool x)
     material_t gold;
     gold.diffuse_color = K_gold_color;
     gold.reflect_color = K_gold_reflect_color;
+
     material_t floor_material;
     floor_material.diffuse_color = K_floor_difusse;
     floor_material.reflect_color = K_floor_reflect;
@@ -809,15 +812,19 @@ game_state_out_t next_state_func(IN(game_state_in) stin, IN(game_state_t) stinou
   perf_clear();
 #endif
   game_state_out_t n;
-  //WIRE_READ(game_state_t, n.stinout, stinout);
   n.stinout = stinout;
 
   n.stinout.plane_x = n.stinout.plane_x + n.stinout.sphere_xvel;
 
   n.stinout.sphere_yvel = n.stinout.sphere_yvel + GRAVITY_CONSTANT;
   n.stinout.sphere_y = n.stinout.sphere_y - n.stinout.sphere_yvel;
+
    
-  coord_type underground = (n.stinout.sphere_y - SPHERE_RADIUS) - stin.plane_y;
+  coord_type underground = (n.stinout.sphere_y - SPHERE_RADIUS) - FLOOR_Y; //PLANE_Y is always 0
+
+  if(stinout.won)
+    n.stinout.sphere_yvel = fixed_shift(underground, -4);
+
   if(fixed_is_negative(underground))
   {
     n.stinout.sphere_xvel = n.stinout.sphere_xvel - XVEL_CONSTANT;
@@ -825,7 +832,7 @@ game_state_out_t next_state_func(IN(game_state_in) stin, IN(game_state_t) stinou
     coord_type coord_z = stin.sphere_z - n.stinout.plane_x; //z=x
 
     bool half_up = n.stinout.sphere_y > stin.plane_y;
-    if(half_up)
+    if(half_up && stinout.won!=true)
     {
 #ifdef HEAT_CONSTANT
       if(n.stinout.sphere_yvel>0.)
@@ -836,7 +843,7 @@ game_state_out_t next_state_func(IN(game_state_in) stin, IN(game_state_t) stinou
       if(plane_has_hole(coord_x, coord_z) > -HOLE_GUARD_MARGIN) // > about -.1 gives margin for the ball size
       {
         n.stinout.score = n.stinout.score+1;
-        if(n.stinout.score >= MAXSCORE && !n.stinout.won)
+        if(n.stinout.score >= MAXSCORE && n.stinout.won!=true)
            n.stinout.won = true;
         if(stin.press)
         {
@@ -859,7 +866,7 @@ game_state_out_t next_state_func(IN(game_state_in) stin, IN(game_state_t) stinou
   n.stinout.camera_y = n.stinout.camera_y + fixed_shift(n.stinout.sphere_y - n.stinout.camera_y, -5);
 
   //write all outputs
-  n.stout.lose = fixed_is_negative(underground) && (-int16_t(underground) & (0x0000FC00))!=0; //underground < -2000.
+  n.stout.lose = fixed_is_negative(underground) && (-int16_t(underground) >> 10); //underground < -2048.
 
 #ifdef GAME_MODE
   n.stout.diffuse_color = color_select(n.stinout.heat, stin.lava_color, stin.gold_color);

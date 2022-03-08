@@ -38,11 +38,12 @@ public:
 #else //not FIXED_EMULATE_WITH_FLOAT
 public:
 
-#if 1//def NO_BIT_EXACT
+#if 0//def NO_BIT_EXACT
   //U f;
   fixed_basetype f;
 #else
-  U f:Q+INT+1; //+1 for sign
+  //U f:Q+INT+1; //+1 for sign
+  fixed_basetype f:22;
 #endif
 
 public:

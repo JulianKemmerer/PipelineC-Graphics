@@ -209,84 +209,183 @@ scene_colors_t scene_colors(scene_t scene)
   return r;
 }
 
-uint12_t star_vel(uint12_t a, uint8_t b)
+typedef struct hit_in { vec3 orig; vec3 dir; } hit_in;
+typedef struct hit_out { float_type dist; float_type borderdist; vec3 N; vec3 hit; material_t material; } hit_out;
+hit_out ray_sphere_intersect(sphere_t s, hit_in hitin)
 {
-  uint12_t r = a;
+  hit_out hitout;
+  vec3 ro = hitin.orig;
+  vec3 rd = hitin.dir;
+  vec3 sp = vec3convert(s.center);
+  hitout.dist = BIG_FLOAT;
+  float diff;
+  float t;
+  vec3 rc = float3_sub(ro, sp);
+  float b = dot(rc, rd);
+  float c = dot(rc, rc) - (double)4.5 * (double)4.5;
+  diff = b * b - c;
   
-  if(b & 1) r = r + a;
-  
-  if(b & 2) r = r + (a << 1);
-  
-  if(b & 4) r = r + (a << 2);
-  return r >> 4;
-}
-
-color background_color_alt(screen_coord_t x, screen_coord_t y, uint16_t frame, uint16_t off)
-{
-  fixed_type dir_y = fixed_mul((fixed_sub(y, fixed_make_from_double((double).5))), fixed_abs(fixed_sub(fixed_mul(x, x), fixed_make_from_double((double)1.))));
-  color c = fixed3_make_from_fixed((fixed_lt(dir_y, fixed_make_from_int(0)) ? fixed_make_from_double((double)0.) : fixed_mul(dir_y, dir_y)));
-  int16_t cy = fixed_to_short(fixed_shift(y, -(FRAME_WIDTH < 1024 ? -9 : -11) - 1));
-  int16_t cx = fixed_to_short(fixed_shift(x, -(FRAME_WIDTH < 1024 ? -9 : -11) - 1)) + star_vel(off, cy & 7);
-  uint16_t pix_hash = hash16(cx ^ hash16(cy));
-  
-  if((pix_hash & 0xFFC0) == 0) c = fixed3_make_from_fixed(fixed_add(fixed_shift(fixed_make_from_int(((pix_hash << 2) + frame) & 0x7F), -9), fixed_make_from_double((double).35)));
-  return c;
-}
-
-color render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px, coord_type py, coord_type pz, color c)
-{
-  coord_type inv_y = fixed_make_from_double((double)0.);
-  uint16_t u;
-  uint16_t v;
-  bool drawfog = 0;
-  
-  if(((fixed_neq(y, fixed_make_from_double((double)0.)))!=0) & (((fixed_is_negative(y) == fixed_is_negative(py)))!=0)) {
-    inv_y = fixed_div(fixed_shift(py, -(-3)), y);
-    coord_type ix = fixed_sub(fixed_mul(inv_y, x), px);
-    coord_type iz = fixed_add(inv_y, pz);
-    u = fixed_to_short(fixed_shift((ix), ((-3))));
-    v = fixed_to_short(fixed_shift((iz), ((-3))));
-    hole_t hole_d = plane_has_hole(ix, fixed_sub(fixed_make_from_int(0), iz));
+  if(diff > (double)0.) {
+    t = -b - sqrt(diff);
     
-    if(!(fixed_lt(hole_d, fixed_make_from_int(0)))) {
-      c = ((u ^ v) & 1) ? K_plane_color2 : K_plane_color1;
+    if(t > (double)0.) {
+      hitout.dist = t;
+      hitout.hit = float3_add(hitin.orig, float3_mul_float(hitin.dir, hitout.dist));
+      hitout.N = normalize(float3_sub(hitout.hit, sp));
+    }
+    else diff = -diff;
+  }
+  hitout.borderdist = diff;
+  return hitout;
+}
+
+hit_out ray_plane_intersect(plane_t plane, hit_in hitin)
+{
+  hit_out hitout;
+  hitout.dist = BIG_FLOAT;
+  hitout.borderdist = (double)0.;
+  vec3 plane_center = vec3convert(plane.center);
+  float_type d;
+  vec3 pt;
+  hole_t hole_margin = fixed_make_from_int(0);
+  vec3 o;
+  
+  if(hitin.dir.y != (double)0.) {
+    d = -(hitin.orig.y - plane_center.y) / hitin.dir.y;
+    pt = float3_add(hitin.orig, float3_mul_float(hitin.dir, d));
+    
+    if(d > (double)1.e-3) {
+      o = float3_sub(pt, plane_center);
+      hole_margin = plane_has_hole(fixed_make_from_float(o.x), fixed_make_from_float(o.z));
       
-      if(fixed_lt(hole_d, fixed_make_from_double((double).1))) {
-        c = K_floor_difusse;
+      if(!fixed_is_negative(hole_margin)) {
+        hitout.dist = d;
+        hitout.hit = pt;
+        vec3 N = VECTOR_NURMAL_UPWARDS;
+        hitout.N = N;
       }
-      drawfog = 1;
+      hitout.borderdist = fixed_to_float(hole_margin);
     }
   }
-  else drawfog = 1;
-  
-  if(drawfog) {
-    c = color_select(fixed_abs(y), c, fixed3_make_from_const_fixed3(K_fog_color));
-  }
-  return c;
+  return hitout;
 }
 
-color render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, scene_t scene, scene_colors_t colors)
+color sphere_effect(uint16_t frame, scene_colors_t colors, sphere_t s, hit_out hit)
 {
-  color c = background_color_alt(x, y, scene.frame, -fixed_to_short(scene.plane.center.x));
-  bool drawfloor = 1;
-  #define SPHERE_R	(((double)-.707) * ((double)-32.) / (double)4.5)
-  coord_type dz = fixed_sub(scene.camera.z, fixed_make_from_double(((double)-32.)));
-  coord_type dx = fixed_sub(fixed_mul(x, dz), (scene.sphere.center.x));
-  coord_type dy = fixed_sub(fixed_mul(y, dz), (fixed_sub(scene.sphere.center.y, scene.camera.y)));
+  color rcolor = hit.material.diffuse_color;
+  return rcolor;
+}
+
+color plane_effect(uint16_t frame, scene_colors_t colors, plane_t plane, hit_out hit)
+{
+  color rcolor = colors.plane.diffuse_color;
+  vec3 plane_center = vec3convert(plane.center);
+  float_type hitx = hit.hit.x - plane_center.x;
+  float_type hitz = hit.hit.z - plane_center.z;
+  float_type ox = float_shift(hitx, (-3));
+  float_type oz = float_shift(hitz, (-3));
+  int16_t ix = round16(fixed_make_from_float(ox));
+  int16_t iz = round16(fixed_make_from_float(oz));
+  bool cx = (ix & 1) != 0;
+  bool cz = (iz & 1) != 0;
+  #define bk	(fixed_make_from_double((double).3))
+  color color2 = fixed3_make((ix & 0x400) != 0 ? bk : colors.plane_color2.x, (ix & 0x200) != 0 ? bk : colors.plane_color2.y, (ix & 0x100) != 0 ? bk : colors.plane_color2.z);
+  rcolor = (cx == cz) ? colors.plane_color1 : color2;
   
-  if((((((((fixed_gt(dx, fixed_make_from_float(-SPHERE_R))))!=0) & (((fixed_lt(dx, fixed_make_from_float(SPHERE_R))))!=0))!=0) & (((fixed_gt(dy, fixed_make_from_float(-SPHERE_R))))!=0))!=0) & (((fixed_lt(dy, fixed_make_from_float(SPHERE_R))))!=0)) {
-    
-    if(fixed_lt(fixed_add(fixed_mul(dx, dx), fixed_mul(dy, dy)), fixed_make_from_float(SPHERE_R * SPHERE_R))) {
-      c = scene.sphere.material.diffuse_color;
-      drawfloor = fixed_lt(fixed_add(scene.sphere.center.y, dy), fixed_make_from_double((double)0.));
-    }
+  if(hit.borderdist < (double).1) {
+    rcolor = colors.plane.diffuse_color;
   }
+  return rcolor;
+}
+
+color background_color(float_type dir_y)
+{
+  color_type y = is_negative(dir_y) ? fixed_make_from_double((double)0.) : fixed_make_from_float(dir_y * dir_y);
+  return fixed3_make_from_fixed(y);
+}
+
+color_type light_intensity(vec3 hit)
+{
+  float_type lz = hit.z - ((double)-10.);
+  float_type dl = hit.x * hit.x + (double)16. * (double)16. + lz * lz;
+  return fixed_add(fixed_make_from_float(float_max((double)0., inversesqrt(dl) * (double)16.)), fixed_make_from_double((double).1));
+}
+
+hit_out hit_sphere(uint32_t frame, scene_colors_t colors, sphere_t sphere, hit_in hitin)
+{
+  hit_out hitout;
+  hitout = ray_sphere_intersect(sphere, hitin);
+  hitout.material = colors.sphere;
   
-  if(drawfloor) {
-    float FRAME_HEIGHT_FLOAT = FRAME_HEIGHT;
-    float CAMERA_FACTOR = (double)-2. * (double)30. / FRAME_HEIGHT_FLOAT;
-    c = render_floor_alt(x, y, scene.plane.center.x, fixed_mul(scene.camera.y, fixed_make_from_float(CAMERA_FACTOR)), fixed_sub(scene.plane.center.z, scene.camera.z), c);
+  if(!is_negative(hitout.borderdist)) hitout.material.diffuse_color = sphere_effect(frame, colors, sphere, hitout);
+  return hitout;
+}
+
+hit_out hit_plane(uint32_t frame, scene_colors_t colors, plane_t plane, hit_in hitin)
+{
+  hit_out hitout;
+  hitout = ray_plane_intersect(plane, hitin);
+  hitout.material = colors.plane;
+  
+  if(!is_negative(hitout.borderdist)) hitout.material.diffuse_color = plane_effect(frame, colors, plane, hitout);
+  return hitout;
+}
+
+color cast_ray0(scene_t scene, scene_colors_t colors, hit_in hitin)
+{
+  hit_out hitsphere = hit_sphere(scene.frame, colors, scene.sphere, hitin);
+  hit_out hitplane = hit_plane(scene.frame, colors, scene.plane, hitin);
+  hit_out hitout = hitplane.dist < hitsphere.dist ? hitplane : hitsphere;
+  color rcolor = fixed3_make_from_fixed(fixed_make_from_double((double)0.));
+  
+  if(hitout.dist >= float_shift((double)1., (9))) rcolor = background_color(hitin.dir.y);
+  else rcolor = fixed3_mul_fixed(hitout.material.diffuse_color, light_intensity(hitout.hit));
+  return rcolor;
+}
+
+color shade(scene_t scene, scene_colors_t colors, color background, vec3 dir, hit_out hit, color_type minfog)
+{
+  color rcolor = background;
+  float_type fogmix = float_shift(hit.dist, -(9));
+  
+  if(fogmix < (double)1.) {
+    hit_in hitreflect;
+    hitreflect.orig = hit.hit;
+    hitreflect.dir = reflect(dir, hit.N);
+    color reflect_color = cast_ray0(scene, colors, hitreflect);
+    color diffuse_color = fixed3_mul_fixed(hit.material.diffuse_color, light_intensity(hit.hit));
+    color comb_color = fixed3_add(diffuse_color, fixed3_mul(reflect_color, hit.material.reflect_color));
+    rcolor = color_select(color_max(fixed_make_from_float(fogmix), minfog), colors.fog, comb_color);
   }
+  return rcolor;
+}
+
+bool is_star(float_type x, float_type y)
+{
+  return ((hashf(x) >> 2) & (hashf(y) >> 2)) > 0x3E00;
+}
+
+color cast_ray(scene_t scene, scene_colors_t colors, hit_in hitin)
+{
+  bool has_star = is_star(hitin.dir.x, hitin.dir.y);
+  color sky = has_star ? fixed3_make_from_fixed(fixed_make_from_double((double).35)) : background_color(hitin.dir.y);
+  float_type ys = float_abs(float_shift(hitin.dir.y, 1));
+  color_type mix = ys < (double)1. ? fixed_sub(fixed_make_from_int(1), fixed_make_from_float(ys)) : fixed_make_from_int(0);
+  color bfog = color_select(mix, colors.fog, sky);
+  hit_out hitsphere = hit_sphere(scene.frame, colors, scene.sphere, hitin);
+  hit_out hitplane = hit_plane(scene.frame, colors, scene.plane, hitin);
+  bool sphit = hitsphere.dist < hitplane.dist;
+  hit_out hitout = sphit ? hitsphere : hitplane;
+  return shade(scene, colors, bfog, hitin.dir, hitout, sphit ? fixed_make_from_double((double)0.) : mix);
+}
+
+color render_pixel_internal(screen_coord_t x, screen_coord_t y, scene_t scene, scene_colors_t colors)
+{
+  hit_in hitin;
+  hitin.orig = vec3convert(scene.camera);
+  vec3 camera_dir = {fixed_to_float(x), fixed_to_float(y), (double)-1.};
+  hitin.dir = normalize(camera_dir);
+  color c = cast_ray(scene, colors, hitin);
   return c;
 }
 
@@ -313,7 +412,7 @@ pixel_t render_pixel(uint16_t i, uint16_t j, scene_t scene)
     pix.b = 0;
   }
   else {
-    color c = render_pixel_internal_alt(x, y, scene, scene_colors(scene));
+    color c = render_pixel_internal(x, y, scene, scene_colors(scene));
     uint9_t r = fixed_to_short(fixed_shift((c.x), (8)));
     uint9_t g = fixed_to_short(fixed_shift((c.y), (8)));
     uint9_t b = fixed_to_short(fixed_shift((c.z), (8)));
@@ -382,7 +481,8 @@ game_state_t restart_state(game_state_t st)
   game_state_t n;
   full_state_t r = reset_state0(0);
   n = r.stinout;
-  n.score = st.score - (st.score >> 4);
+  n.score = st.score >> 1;
+  n.score = 15000;
   return n;
 }
 
@@ -393,7 +493,9 @@ game_state_out_t next_state_func(game_state_in stin, game_state_t stinout)
   n.stinout.plane_x = fixed_add(n.stinout.plane_x, n.stinout.sphere_xvel);
   n.stinout.sphere_yvel = fixed_add(n.stinout.sphere_yvel, fixed_make_from_double((double).1));
   n.stinout.sphere_y = fixed_sub(n.stinout.sphere_y, n.stinout.sphere_yvel);
-  coord_type underground = fixed_sub((fixed_sub(n.stinout.sphere_y, fixed_make_from_double((double)4.5))), stin.plane_y);
+  coord_type underground = fixed_sub((fixed_sub(n.stinout.sphere_y, fixed_make_from_double((double)4.5))), fixed_make_from_double((double)0.));
+  
+  if(stinout.won) n.stinout.sphere_yvel = fixed_shift(underground, -4);
   
   if(fixed_is_negative(underground)) {
     n.stinout.sphere_xvel = fixed_sub(n.stinout.sphere_xvel, fixed_make_from_double((double)0.03));
@@ -401,14 +503,14 @@ game_state_out_t next_state_func(game_state_in stin, game_state_t stinout)
     coord_type coord_z = fixed_sub(stin.sphere_z, n.stinout.plane_x);
     bool half_up = fixed_gt(n.stinout.sphere_y, stin.plane_y);
     
-    if(half_up) {
+    if(((half_up)!=0) & ((stinout.won != 1)!=0)) {
       
       if(fixed_gt(n.stinout.sphere_yvel, fixed_make_from_double((double)0.))) n.stinout.heat = fixed_sub(fixed_make_from_int(0), fixed_shift(n.stinout.sphere_xvel, -1));
       
       if(fixed_gt(plane_has_hole(coord_x, coord_z), fixed_make_from_double((double)-.05))) {
         n.stinout.score = n.stinout.score + 1;
         
-        if(((n.stinout.score >= 15000)!=0) & ((!n.stinout.won)!=0)) n.stinout.won = 1;
+        if(((n.stinout.score >= 15000)!=0) & ((n.stinout.won != 1)!=0)) n.stinout.won = 1;
         
         if(stin.press) {
           n.stinout.sphere_yvel = fixed_make_from_double((double)-2.);
@@ -423,7 +525,7 @@ game_state_out_t next_state_func(game_state_in stin, game_state_t stinout)
   }
   n.stinout.heat = fixed_sub(n.stinout.heat, fixed_shift(n.stinout.heat, -4));
   n.stinout.camera_y = fixed_add(n.stinout.camera_y, fixed_shift(fixed_sub(n.stinout.sphere_y, n.stinout.camera_y), -5));
-  n.stout.lose = ((fixed_is_negative(underground))!=0) & (((-fixed_to_short(underground) & (0x0000FC00)) != 0)!=0);
+  n.stout.lose = ((fixed_is_negative(underground))!=0) & (((-fixed_to_short(underground) >> 10))!=0);
   n.stout.diffuse_color = color_select(n.stinout.heat, stin.lava_color, stin.gold_color);
   n.stout.reflect_color = fixed3_mul_fixed(stin.gold_reflect_color, (fixed_sub(fixed_make_from_double((double)1.), fixed_shift(n.stinout.heat, -2))));
   n.stout.scorebar = n.stinout.won ? 0 : n.stinout.score;
