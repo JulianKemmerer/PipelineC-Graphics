@@ -87,6 +87,19 @@ de0nano: compile
 
 litex: $(BOARD)
 
+
+
+./vhd/all_vhdl_files/top.vhd: pipelinec_litex.c tr_pipelinec.gen.c top_glue_no_struct.vhd
+	rm -Rf ./build
+	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_vgaconfig.h
+	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_vgaconfig.h
+	$(PIPELINEC) pipelinec_litex.c --out_dir ./vhd --comb --sim
+	cp top_glue_no_struct.vhd ./vhd/all_vhdl_files/
+
+vhd: ./vhd/all_vhdl_files/top.vhd
+	python3 ./litex_soc.py $(BOARD) --cpu-type=None
+
+
 clean:
-	rm -Rf *.o tr_sim tr_gen build cxxrtl_build obj_dir synth fullsynth tr_pipelinec.gen.c tr_pipelinec.E.cpp
+	rm -Rf *.o tr_sim tr_gen vhd build cxxrtl_build obj_dir synth fullsynth tr_pipelinec.gen.c tr_pipelinec.E.cpp
 

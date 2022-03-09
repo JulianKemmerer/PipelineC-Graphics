@@ -1,5 +1,5 @@
-# Integration of graphics generators into LiteX, supporting HDMI output
-# Only requirement is a verilog module called "top" with the needed video arguments
+# Integration of graphics generators into LiteX, supporting DVI output or a VGA pmod
+# Only requirement is a verilog module called "top" with the needed arguments
 #
 # Copyright (c) 2022 Victor Suarez Rovere <suarezvictor@gmail.com>
 # code portions from LiteX framework (C) Enjoy-Digital https://github.com/enjoy-digital/litex
@@ -22,32 +22,16 @@ class GraphicsGenerator(Module):
         self.source   = source = stream.Endpoint(video_data_layout)
         self.comb += vtg_sink.connect(source, keep={"valid", "ready", "last", "de", "hsync", "vsync"}),
 
-        """
-		module top(clk_25p0, render_pixel_interactive_i, render_pixel_interactive_j, render_pixel_interactive_reset, render_pixel_interactive_vsync, render_pixel_interactive_button, \render_pixel_interactive_return_output.a , \render_pixel_interactive_return_output.b , \render_pixel_interactive_return_output.g , \render_pixel_interactive_return_output.r );
-		  input clk_25p0;
-		  input render_pixel_interactive_button;
-		  input [15:0] render_pixel_interactive_i;
-		  input [15:0] render_pixel_interactive_j;
-		  input render_pixel_interactive_reset;
-		  output [7:0] \render_pixel_interactive_return_output.a ;
-		  output [7:0] \render_pixel_interactive_return_output.b ;
-		  output [7:0] \render_pixel_interactive_return_output.g ;
-		  output [7:0] \render_pixel_interactive_return_output.r ;
-		  input render_pixel_interactive_vsync;
-		  );
-		endmodule
-        """
         framedisplay = Module()
         self.return_output_a = Signal(8)
-        self.button = Signal()#FIXME: use button!!
-        framedisplay.specials += Instance("top",
-          i_clk_25p0 = ClockSignal("sys"), #results in "hdmi" (or corresponding video) clock
+        framedisplay.specials += Instance("top_glue_no_struct", #FIXME: figure out how to avoid the glue and access the output structure
+          i_videoclk = ClockSignal("sys"), #results in "hdmi" (or corresponding video) clock
           i_render_pixel_interactive_x = vtg_sink.hcount,
           i_render_pixel_interactive_y = vtg_sink.vcount,
           i_render_pixel_interactive_reset = ResetSignal("sys"),
           i_render_pixel_interactive_vsync = ~vtg_sink.vsync,
-          i_render_pixel_interactive_button = self.button,
-          o_render_pixel_interactive_return_output_a = self.return_output_a,
+          i_render_pixel_interactive_button = button,
+          o_render_pixel_interactive_return_output_a = self.return_output_a, #FIXME: just Signal(8)
           o_render_pixel_interactive_return_output_b = source.b,
           o_render_pixel_interactive_return_output_g = source.g,
           o_render_pixel_interactive_return_output_r = source.r
@@ -64,7 +48,6 @@ def add_video_custom_generator(soc, name="video", phy=None, timings="800x600@60H
     vtg = ClockDomainsRenamer(clock_domain)(vtg)
     setattr(soc.submodules, f"{name}_vtg", vtg)
 
-    soc.button = soc.platform.request('user_btn', 0) #FIXME: move this code appropriately
     graphics = GraphicsGenerator(soc.button)
     graphics = ClockDomainsRenamer(clock_domain)(graphics)
     setattr(soc.submodules, name, graphics)
@@ -99,8 +82,8 @@ def build_de0nano(args):
 	sys_clk_freq = int(50e6)
 	soc = SoCCore(platform, sys_clk_freq, **soc_core_argdict(args))
 	soc.submodules.crg = _CRG(soc.platform, sys_clk_freq, sdram_rate="1:1")
-	soc.submodules.videophy = VideoHDMIPHY(soc.platform.request("gpdi"), clock_domain="hdmi")
-	add_video_custom_generator(soc, phy=soc.videophy, timings="640x480@60Hz", clock_domain="hdmi")
+	soc.video_clock_domain = "hdmi"
+	soc.submodules.videophy = VideoHDMIPHY(soc.platform.request("gpdi"), clock_domain = soc.video_clock_domain)
 	return soc
 
 
@@ -143,8 +126,8 @@ def build_arty(args):
 	sys_clk_freq = int(100e6)
 	soc = SoCCore(platform, sys_clk_freq, **soc_core_argdict(args))
 	soc.submodules.crg = _CRG_arty(platform, sys_clk_freq, False)
-	soc.submodules.videophy = VideoVGAPHY(platform.request("vga"), clock_domain="vga")
-	add_video_custom_generator(soc, phy=soc.videophy, timings="640x480@60Hz", clock_domain="vga")
+	soc.video_clock_domain = "vga"
+	soc.submodules.videophy = VideoVGAPHY(platform.request("vga"), clock_domain=soc.video_clock_domain)
 	return soc
 
 
@@ -161,7 +144,13 @@ if __name__ == "__main__":
 	if boardname == "de0nano": soc = build_de0nano(args)
 	if boardname == "arty": soc = build_arty(args)
 
-	soc.platform.add_source("./build/top/top_litex.v") #generated verilog for graphics
+	soc.button = Signal() #soc.platform.request('user_btn', 0) #FIXME: button enabled avoid comb-only to work without glitches
+	add_video_custom_generator(soc, phy=soc.videophy, timings="640x480@60Hz", clock_domain=soc.video_clock_domain)
+	soc.platform.add_source_dir("./vhd/all_vhdl_files", recursive=False)
+	#alternative: read contents of ./vhd/vhdl_files.txt
+	#soc.platform.add_source("./build/top/top_litex.v") #for generated verilog, single file (i.e. from verilator)
+	#soc.platform.add_source("top_glue.v") #TODO: is it really needed?
+
 
 	builder = Builder(soc)
 	builder.build(run=True)
