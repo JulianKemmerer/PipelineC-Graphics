@@ -157,13 +157,7 @@ typedef struct fixed { fixed_basetype f; } fixed;
 fixed fixed_make_from_int(int32_t a) { const fixed r = {a << FIXED_FRACTIONBITS}; return r; }
 fixed fixed_make_from_short(int16_t a) { const fixed r = {a << FIXED_FRACTIONBITS}; return r; }
 fixed fixed_make_from_float(float a) { fixed r = {(fixed_basetype)float_shift(a, FIXED_FRACTIONBITS)}; return r; }
-<<<<<<< HEAD
-fixed fixed_make_from_double(double x) { fixed r = {(fixed_basetype) float_shift(a, FIXED_FRACTIONBITS)}; return r; } //a gets a cast prior to call
-=======
-//#define fixed_make_from_double(x) fixed_make_from_float(x) //doubles are aliased to float by macros
 fixed fixed_make_from_double(double a) { fixed r = {(fixed_basetype) float_shift(a, FIXED_FRACTIONBITS)}; return r; } //a gets a cast prior to call
-#warning this implementation of the division operator loses precision
->>>>>>> 4c0d591710dcaeb8584f18c7b00ac1afbef1cb55
 
 float fixed_to_float(fixed a) { return float_shift((float)a.f, -FIXED_FRACTIONBITS); }
 int16_t fixed_to_short(fixed a) { return (int16_t)(a.f >> FIXED_FRACTIONBITS); }
