@@ -659,11 +659,18 @@ color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(s
 }
 #endif
 
-#define DITHER
+//#define DITHER
+
 #ifdef DITHER
-uint9_t dither(uint16_t x, uint16_t y, uint9_t c)
+inline uint8_t mask_code(uint8_t v) {
+  v = ((v&1)<<3) | ((v&2)<<1) | ((v&4)>>1) | ((v&8)>>3); //bit reverse
+  return v ^ (v>>1); //gray
+}
+
+inline uint9_t dither(uint8_t x, uint8_t y, uint9_t v)
 {
- return (c + (hash16((x&0x7)^hash16(y&0x7)) & 0xF)) & 0x1F0;
+ return ((mask_code(y^mask_code(x/*^mask_code(frame)*/))) + v ) & 0x1F0;
+ //return v & 0x1F0; //simple threshold
 }
 #endif
 
@@ -712,9 +719,9 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(scene_t) scene
     uint9_t g = fixed_asshort(c.g, 8);
     uint9_t b = fixed_asshort(c.b, 8);
 #ifdef DITHER
-    r = dither(i^scene.frame, j, r);
-    g = dither(i, j^scene.frame, g);
-    b = dither(j, i, b);
+    r = dither(i^j, i, r);
+    g = dither(i+j, j, g);
+    b = dither(i, j, b); //i+j, i or i, j or j, i
 #endif
     pix.r = (r >= 256) ? uint8_t(255):uint8_t(r);
     pix.g = (g >= 256) ? uint8_t(255):uint8_t(g);
