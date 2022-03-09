@@ -108,7 +108,7 @@ public:
 float3 vec3convert(fixed3 a) { float3 r = { (float) a.x, (float) a.y, (float) a.z }; return r; }
 
 //inline int lround(fixed a) { return (a.f + (1 << (FIXED_FRACTIONBITS-1))) >> FIXED_FRACTIONBITS; }
-inline int16_t round16(fixed a) { return int16_t(a+.5f); }
+inline int16_t round16(fixed a) { return int16_t(a+.5); }
 
 inline fixed fixed_shift(fixed a, shift_t shift) { return shift >= 0 ? (a << shift) : (a >> shift_t(-shift)); }
 
@@ -147,8 +147,7 @@ typedef struct fixed { fixed_basetype f; } fixed;
 fixed fixed_make_from_int(int32_t a) { const fixed r = {a << FIXED_FRACTIONBITS}; return r; }
 fixed fixed_make_from_short(int16_t a) { const fixed r = {a << FIXED_FRACTIONBITS}; return r; }
 fixed fixed_make_from_float(float a) { fixed r = {(fixed_basetype)float_shift(a, FIXED_FRACTIONBITS)}; return r; }
-#define fixed_make_from_double(x) fixed_make_from_float(x) //doubles are aliased to float by macros
-#warning this implementation of the division operator loses precision
+fixed fixed_make_from_double(double x) { fixed r = {(fixed_basetype) float_shift(a, FIXED_FRACTIONBITS)}; return r; } //a gets a cast prior to call
 
 float fixed_to_float(fixed a) { return float_shift((float)a.f, -FIXED_FRACTIONBITS); }
 int16_t fixed_to_short(fixed a) { return (int16_t)(a.f >> FIXED_FRACTIONBITS); }
@@ -179,8 +178,6 @@ inline fixed fixed_mul(fixed left, fixed right) { fixed r = { left.f * right.f};
 inline fixed fixed_shl_int(fixed left, int right) { fixed r = { left.f*((int)1<<right) }; return r; }
 inline fixed fixed_shr_int(fixed left, int right) { fixed r = { left.f/((int)1<<right) }; return r; }
 
-//FIXME: change name from lround to fixround
-//inline int lround(fixed x) { return int(x.f+.5); }
 #endif //FIXED_EMULATE_WITH_FLOAT
 
 //this is equivalent with ints or floats
