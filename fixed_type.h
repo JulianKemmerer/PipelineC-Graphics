@@ -108,7 +108,7 @@ public:
 float3 vec3convert(fixed3 a) { float3 r = { (float) a.x, (float) a.y, (float) a.z }; return r; }
 
 //inline int lround(fixed a) { return (a.f + (1 << (FIXED_FRACTIONBITS-1))) >> FIXED_FRACTIONBITS; }
-inline int16_t round16(fixed a) { return int16_t(a+.5f); }
+inline int16_t round16(fixed a) { return int16_t(a+.5); }
 
 inline fixed fixed_shift(fixed a, shift_t shift) { return shift >= 0 ? (a << shift) : (a >> shift_t(-shift)); }
 
@@ -141,13 +141,24 @@ inline constexpr fixed fixed_make_from_double(double a) { return fixed_make_from
 inline float fixed_to_float(fixed a) { return (float) a.f / (1<<FIXED_FRACTIONBITS); }
 inline short fixed_to_short(fixed a) { return a.f >> FIXED_FRACTIONBITS; }
 #else // __PIPELINEC__ = true
+
+// No logic functions
+#pragma FUNC_WIRES fixed_make_from_int
+#pragma FUNC_WIRES fixed_make_from_short
+#pragma FUNC_WIRES fixed_to_short
+#pragma FUNC_WIRES fixed3_make
+#pragma FUNC_WIRES fixed3_make_from_fixed
+#pragma FUNC_WIRES fixed3_make_from_const_fixed3
+#pragma FUNC_WIRES fixed_make_from_double
+
 //#warning: base type of fixed should be correctly defined
 typedef struct fixed { fixed_basetype f; } fixed;
 
 fixed fixed_make_from_int(int32_t a) { const fixed r = {a << FIXED_FRACTIONBITS}; return r; }
 fixed fixed_make_from_short(int16_t a) { const fixed r = {a << FIXED_FRACTIONBITS}; return r; }
 fixed fixed_make_from_float(float a) { fixed r = {(fixed_basetype)float_shift(a, FIXED_FRACTIONBITS)}; return r; }
-#define fixed_make_from_double(x) fixed_make_from_float(x) //doubles are aliased to float by macros
+//#define fixed_make_from_double(x) fixed_make_from_float(x) //doubles are aliased to float by macros
+fixed fixed_make_from_double(double a) { fixed r = {(fixed_basetype) float_shift(a, FIXED_FRACTIONBITS)}; return r; } //a gets a cast prior to call
 #warning this implementation of the division operator loses precision
 
 float fixed_to_float(fixed a) { return float_shift((float)a.f, -FIXED_FRACTIONBITS); }

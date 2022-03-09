@@ -1,8 +1,8 @@
 #define CCOMPILE
 
 #ifdef __PIPELINEC__
-//#pragma PART "LFE5U-85F-6BG381C" // An ECP5U 85F part
-#pragma PART "xc7a35ticsg324-1l" // Arty
+#pragma PART "LFE5U-85F-6BG381C" // An ECP5U 85F part
+//#pragma PART "xc7a35ticsg324-1l" // Arty
 
 #include "pipelinec_app_vgaconfig.h"
 
@@ -18,12 +18,6 @@
 //#include "dvi/dvi_pmod.c"
 // Reset state func needs special marker to not be synthesized alone
 // ~sorta PipelineC constexpr/const marker
-#pragma FUNC_WIRES fixed_make_from_int
-#pragma FUNC_WIRES fixed_make_from_short
-#pragma FUNC_WIRES fixed_to_short
-#pragma FUNC_WIRES fixed3_make
-#pragma FUNC_WIRES fixed3_make_from_fixed
-#pragma FUNC_WIRES fixed3_make_from_const_fixed3
 #pragma FUNC_WIRES reset_state 
 #pragma FUNC_WIRES reset_state0
 
