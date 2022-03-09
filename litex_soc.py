@@ -144,7 +144,7 @@ if __name__ == "__main__":
 	if boardname == "de0nano": soc = build_de0nano(args)
 	if boardname == "arty": soc = build_arty(args)
 
-	soc.button = Signal() #soc.platform.request('user_btn', 0) #FIXME: button enabled avoid comb-only to work without glitches
+	soc.button = soc.platform.request('user_btn', 0)
 	add_video_custom_generator(soc, phy=soc.videophy, timings="640x480@60Hz", clock_domain=soc.video_clock_domain)
 	soc.platform.add_source_dir("./vhd/all_vhdl_files", recursive=False)
 	#alternative: read contents of ./vhd/vhdl_files.txt
