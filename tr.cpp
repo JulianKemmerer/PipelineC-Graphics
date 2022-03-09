@@ -14,9 +14,15 @@ For GPU (software renderer):
 $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 
 */
-//#define ALTERNATE_UI
+#define ALTERNATE_UI 3 //level of graphics detail
 
 #include "tr.h"
+
+
+#if ALTERNATE_UI < 2
+#undef HEAT_CONSTANT
+#endif
+
 
 typedef coord_type hole_t;
 
@@ -624,8 +630,11 @@ color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(s
     coord_type dz = coord_type(scene.camera.z-SPHERE_Z);
 	coord_type dx = coord_type(x*dz - (scene.sphere.center.x/*-scene.camera.x*/));
 	coord_type dy = coord_type(y*dz - (scene.sphere.center.y-scene.camera.y));
-
+#if ALTERNATE_UI > 1
   color_basic_t c = background_color_alt(x, y, scene.frame, -(int16_t)scene.plane.center.x, dz*fixed(.5/CAMERA_Z));
+#else
+   color_basic_t c = K_fog_color;
+#endif
 
     bool drawfloor = true;
 	//draw sphere
@@ -640,6 +649,7 @@ color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(s
           drawfloor = scene.sphere.center.y + dy < FLOOR_Y;
         }
     }
+#if ALTERNATE_UI > 2
 
   if(drawfloor)
   {
@@ -655,11 +665,13 @@ color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(s
 		scene.plane.center.z-scene.camera.z, c);
 
   }
+#endif
+
   return c;
 }
 #endif
 
-//#define DITHER
+#define DITHER
 
 #ifdef DITHER
 inline uint8_t mask_code(uint8_t v) {
@@ -847,6 +859,7 @@ game_state_out_t next_state_func(IN(game_state_in) stin, IN(game_state_t) stinou
 #warning implement unary -
 #endif
 
+      //TODO: if the plane has a hole can be calculated at rendering time and reused!
       if(plane_has_hole(coord_x, coord_z) > -HOLE_GUARD_MARGIN) // > about -.1 gives margin for the ball size
       {
         n.stinout.score = n.stinout.score+1;
@@ -875,7 +888,7 @@ game_state_out_t next_state_func(IN(game_state_in) stin, IN(game_state_t) stinou
   //write all outputs
   n.stout.lose = fixed_is_negative(underground) && (-int16_t(underground) >> 10); //underground < -2048.
 
-#ifdef GAME_MODE
+#if defined(GAME_MODE) && ALTERNATE_UI > 1
   n.stout.diffuse_color = color_select(n.stinout.heat, stin.lava_color, stin.gold_color);
   n.stout.reflect_color = stin.gold_reflect_color*(color_type(1.) - fixed_shift(n.stinout.heat,-2));
 #else
@@ -908,8 +921,8 @@ scene_t update_scene(IN(scene_t) scenein, IN(game_state_out_t) outs)
   scene.plane.center.z = outs.stinout.plane_x;
   scene.sphere.material.diffuse_color = outs.stout.diffuse_color;
   scene.sphere.material.reflect_color = outs.stout.reflect_color;
-  scene.sphere.yvel = coord_type(outs.stinout.sphere_yvel);
-  scene.scorebar = outs.stout.scorebar;
+  scene.sphere.yvel = coord_type(outs.stinout.sphere_yvel); //FIXME: is the cast needed?
+  scene.scorebar = outs.stout.scorebar; //FIXME: move to state update function to make this function wires-only
   scene.frame = scene.frame + 1;
   return scene;
 }
@@ -929,58 +942,4 @@ void main()
   outColor = vec4(render_pixel_internal(x, y, state.scene, colors), 1.);
 }
 #endif
-
-/*
-#ifdef __PIPELINEC__
-#ifndef COLOR_DECOMP
-MAIN_MHZ(app, PIXEL_CLK_MHZ)
-#else
-MAIN_MHZ(app, PIXEL_CLK_MHZ*3)
-#endif
-
-#warning check correct implementation
-void app()
-{
-  static vga_signals_t vga_signals;
-  
-  static full_state_t state;
-  static bool reset = 1;
-  volatile static game_state_t stinout;
-
-  if(reset)
-  {
-    state = reset_state();
-    WIRE_WRITE(game_state_t, state.stinout, stinout);
-    reset = 0;
-  }
-
-  if(vga_signals.start_of_frame)
-  {
-    state.stin.press = buttons_pressed() & 1;
-    game_state_out_t outs = next_state_func(state.stin, stinout);
-    WIRE_WRITE(game_state_t, outs.stinout, stinout);
-    state.scene = update_scene(state.scene, outs);
-  }  
-
-#ifndef COLOR_DECOMP
-  vga_signals = vga_timing();
-  pixel_t color = render_pixel(vga_signals.pos.x, vga_signals.pos.y, state.scene);
-  vga_register_outputs(vga_signals, color);
-#else
-  static uint2_t ch = 0;
-  static pixel_t color;
-  if(ch == 0)
-    vga_signals = vga_timing();
-
-  color = render_pixel(vga_signals.pos.x, vga_signals.pos.y, state.scene, ch, color);
-  ++ch;
-  if(ch == 3)
-  {
-    ch = 0;
-    vga_register_outputs(vga_signals, color);
-  }
-#endif
-}
-#endif
-*/
 

@@ -292,6 +292,17 @@ color render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, scene_t scen
   return c;
 }
 
+uint8_t mask_code(uint8_t v)
+{
+  v = ((v & 1) << 3) | ((v & 2) << 1) | ((v & 4) >> 1) | ((v & 8) >> 3);
+  return v ^ (v >> 1);
+}
+
+uint9_t dither(uint8_t x, uint8_t y, uint9_t v)
+{
+  return ((mask_code(y ^ mask_code(x))) + v) & 0x1F0;
+}
+
 pixel_t render_pixel(uint16_t i, uint16_t j, scene_t scene)
 {
   int16_t cx = i << 1;
@@ -314,6 +325,9 @@ pixel_t render_pixel(uint16_t i, uint16_t j, scene_t scene)
     uint9_t r = fixed_to_short(fixed_shift((c.x), (8)));
     uint9_t g = fixed_to_short(fixed_shift((c.y), (8)));
     uint9_t b = fixed_to_short(fixed_shift((c.z), (8)));
+    r = dither(i ^ j, i, r);
+    g = dither(i + j, j, g);
+    b = dither(i, j, b);
     pix.r = (r >= 256) ? 255 : r;
     pix.g = (g >= 256) ? 255 : g;
     pix.b = (b >= 256) ? 255 : b;

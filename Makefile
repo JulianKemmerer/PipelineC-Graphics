@@ -1,3 +1,6 @@
+#current working command:
+#$ make clean litex PIPELINEC_MAIN=pipelinec_litex.c
+
 FRAME_WIDTH?=640
 FRAME_HEIGHT?=480
 VERILATOR?=verilator
@@ -5,6 +8,8 @@ VERILATOR_CFLAGS+=-CFLAGS -DUSE_VERILATOR -CFLAGS -DFRAME_WIDTH=$(FRAME_WIDTH) -
 CFLEX_C?=python3 ../CflexHDL/cflexparser/cflexc.py
 PIPELINEC ?=../PipelineC/src/pipelinec
 INCLUDE+=-I../PipelineC/
+PIPELINEC_MAIN?=./pipelinec_app.c
+BOARD?=arty
 
 all: run
 
@@ -31,7 +36,7 @@ tr_gen: tr_pipelinec.gen.c simulator_main.cpp
 	rm -Rf ./build
 	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_vgaconfig.h
 	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_vgaconfig.h
-	$(PIPELINEC) ./pipelinec_app.c --out_dir ./build --comb --sim --verilator
+	$(PIPELINEC) $(PIPELINEC_MAIN) --out_dir ./build --comb --sim --verilator
 
 ./synth/top/top.v: pipelinec_app.c tr_pipelinec.gen.c
 	#rm -Rf ./synth
@@ -70,6 +75,18 @@ cxxrtl_top: ./synth/top/top.v
 cxxrtl: ./cxxrtl_build/cxxrtl_top
 	./cxxrtl_build/cxxrtl_top
 
+arty: compile
+	sed 's/\\render_pixel_interactive_return_output\./render_pixel_interactive_return_output_/g' ./build/top/top.v > ./build/top/top_litex.v #fix naming issues
+	python3 ./litex_soc.py $(BOARD) --cpu-type=None
+	openFPGALoader -b $(BOARD) ./build/digilent_arty/gateware/digilent_arty.bit
+
+de0nano: compile
+	sed 's/\\render_pixel_interactive_return_output\./render_pixel_interactive_return_output_/g' ./build/top/top.v > ./build/top/top_litex.v #fix naming issues
+	python3 ./litex_soc.py $(BOARD) --cpu-type=None
+	openFPGALoader -b $(BOARD) ./build/terasic_de0nano/gateware/terasic_de0nano.rbf
+
+litex: $(BOARD)
+
 clean:
-	rm -Rf *.o tr_sim tr_gen build obj_dir synth fullsynth tr_pipelinec.gen.c tr_pipelinec.E.cpp
+	rm -Rf *.o tr_sim tr_gen build cxxrtl_build obj_dir synth fullsynth tr_pipelinec.gen.c tr_pipelinec.E.cpp
 
