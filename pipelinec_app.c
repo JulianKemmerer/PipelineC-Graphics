@@ -19,12 +19,10 @@
 // Reset state func needs special marker to not be synthesized alone
 // ~sorta PipelineC constexpr/const marker
 #pragma FUNC_WIRES fixed_make_from_int
-#pragma FUNC_WIRES fixed_make_from_float
 #pragma FUNC_WIRES fixed_make_from_short
 #pragma FUNC_WIRES fixed_to_short
 #pragma FUNC_WIRES fixed3_make
 #pragma FUNC_WIRES fixed3_make_from_fixed
-#pragma FUNC_WIRES fixed3_make_from_float
 #pragma FUNC_WIRES fixed3_make_from_const_fixed3
 #pragma FUNC_WIRES reset_state 
 #pragma FUNC_WIRES reset_state0
