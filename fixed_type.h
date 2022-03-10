@@ -1,4 +1,4 @@
-// (C) 2021 Victor Suarez Rovere <suarezvictor@gmail.com>
+// Copyright (C) 2021-2022 Victor Suarez Rovere <suarezvictor@gmail.com>
 
 #ifndef __FIXED_TYPE__
 #define __FIXED_TYPE__
@@ -38,7 +38,7 @@ public:
 #else //not FIXED_EMULATE_WITH_FLOAT
 public:
 
-#if 0//def NO_BIT_EXACT
+#if 1//def NO_BIT_EXACT
   //U f;
   fixed_basetype f;
 #else
@@ -150,6 +150,8 @@ inline short fixed_to_short(fixed a) { return a.f >> FIXED_FRACTIONBITS; }
 #pragma FUNC_WIRES fixed3_make_from_fixed
 #pragma FUNC_WIRES fixed3_make_from_const_fixed3
 #pragma FUNC_WIRES fixed_make_from_double
+#pragma FUNC_WIRES fixed_shl_signed_char
+#pragma FUNC_WIRES fixed_shr_signed_char
 
 //#warning: base type of fixed should be correctly defined
 typedef struct fixed { fixed_basetype f; } fixed;
@@ -163,7 +165,6 @@ float fixed_to_float(fixed a) { return float_shift((float)a.f, -FIXED_FRACTIONBI
 int16_t fixed_to_short(fixed a) { return (int16_t)(a.f >> FIXED_FRACTIONBITS); }
 //int fixed_asinteger(fixed a, int n) { return FIXED_FRACTIONBITS > n ? (a.f >> (FIXED_FRACTIONBITS-n)) : (a.f << (n-FIXED_FRACTIONBITS)) }
 
-#include "fixed_div.h"
 #endif
 
 inline fixed fixed_mul(fixed left, fixed right) { fixed r = { (fixed_basetype)((left.f * right.f)>>FIXED_FRACTIONBITS) }; return r; }
@@ -225,11 +226,12 @@ fixed3 const_fixed3_mul_float(fixed3 left, float right)
   { fixed3 r = { fixed_mul(left.x, fixed_make_from_float(right)), fixed_mul(left.y, fixed_make_from_float(right)), fixed_mul(left.z, fixed_make_from_float(right)) }; return r; }
 #define const_fixed3_mul_double(left, right) const_fixed3_mul_float(left, (float)right)
 #endif
+
 inline fixed3 fixed3_make_from_const_fixed3(fixed3 a) { return a; }
+#include "fixed_div.h"
 
 #endif //CCOMPILE
 
 #define fixed_sign(x) fixed_is_negative(x)
-#include "fixed_div.h"
 
 #endif //__FIXED_TYPE__

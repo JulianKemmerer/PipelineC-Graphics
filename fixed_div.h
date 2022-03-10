@@ -4,13 +4,9 @@
 #ifndef __FIXED_DIV_H__
 #define __FIXED_DIV_H__
 
-#ifndef CCOMPILE
-#define fixed_div(a,b) ((a)/(b))
-#else
-
+#ifdef __PIPELINEC__
 inline fixed_basetype fixed_div_u(fixed_basetype N, fixed_basetype D)
 {
-#ifdef __PIPELINEC__
   fixed_basetype Q = 0;
   fixed_basetype R = 0;
   fixed_basetype RD = 0;
@@ -31,9 +27,6 @@ inline fixed_basetype fixed_div_u(fixed_basetype N, fixed_basetype D)
     }
   }
   return Q;
-#else
-  return ((uint32_t)N<<FIXED_FRACTIONBITS)/D;
-#endif
 }
 
 inline fixed_basetype fixed_div_i(fixed_basetype left, fixed_basetype right)
@@ -48,8 +41,9 @@ inline fixed_basetype fixed_div_i(fixed_basetype left, fixed_basetype right)
   return left_sign == right_sign ? r : -r;
 }
 
-#warning after testing, use the bit-for-bit div calculation only for synthesis
-inline fixed fixed_div(fixed a, fixed b) { fixed r = { fixed_div_i(a.f, b.f) }; return r; }
+inline fixed fixed_div(fixed a, fixed b) { fixed r; r.f = { fixed_div_i(a.f, b.f) }; return r; }
+#else
+inline fixed fixed_div(fixed a, fixed b) { fixed r; r.f = { (a.f<<FIXED_FRACTIONBITS)/b.f }; return r; }
 #endif
 
 #endif //__FIXED_DIV_H__
