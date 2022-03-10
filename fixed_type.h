@@ -169,8 +169,8 @@ int16_t fixed_to_short(fixed a) { return (int16_t)(a.f >> FIXED_FRACTIONBITS); }
 
 inline fixed fixed_mul(fixed left, fixed right) { fixed r = { (fixed_basetype)((left.f * right.f)>>FIXED_FRACTIONBITS) }; return r; }
 inline fixed fixed_mul_short(fixed left, short right) { fixed r = { left.f * (fixed_basetype)right}; return r; }
-inline fixed fixed_shl_signed_char(fixed left, shift_t right) { fixed r = { (fixed_basetype)(left.f<<right) }; return r; }
-inline fixed fixed_shr_signed_char(fixed left, shift_t right) { fixed r = { (fixed_basetype)(left.f>>right) }; return r; }
+inline fixed fixed_shl_signed_char(fixed left, shift_t right) { fixed r = { (fixed_basetype)left.f<<right }; return r; }
+inline fixed fixed_shr_signed_char(fixed left, shift_t right) { fixed r = { (fixed_basetype)left.f>>right }; return r; }
 
 #else //FIXED_EMULATE_WITH_FLOAT = true
 typedef float fixed_basetype;

@@ -14,9 +14,13 @@ For GPU (software renderer):
 $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 
 */
-#define ALTERNATE_UI 3 //level of graphics detail
+
+//#define ALTERNATE_UI 3 //level of graphics detail
+//#define RT_SMALL_UI //enable to reduce raytracing complexity
+
 
 #include "tr.h"
+#warning: fixed_shift may be not used, and have a preference for shift right or left by constants depending on the case
 
 
 #if ALTERNATE_UI < 2
@@ -386,9 +390,18 @@ color_basic_t background_color(float_type dir_y)
 
 color_type light_intensity(IN(vec3) hit)
 {
-  float_type lz = hit.z-light_z;
-  float_type dl = hit.x*hit.x + light_heigth*light_heigth + lz*lz;
-  return color_type(float_max(float_type(0.), inversesqrt(dl)*light_heigth)) + ambient_intensity;
+#if 0
+  //this float version takes 2148 FPGA cells
+  float_type lz = hit.z-LIGHT_Z;
+  float_type dl = hit.x*hit.x + LIGHT_Y*LIGHT_Y + lz*lz;
+  return color_type(inversesqrt(dl)*LIGHT_Y) + AMBIENT_INTENSITY;
+#else
+  //light_intensity optimized for fixe points
+  coord_type lz = (coord_type(hit.z)-LIGHT_Z)*coord_type(1./LIGHT_Y);
+  coord_type lx = coord_type(hit.x)*coord_type(1./LIGHT_Y);
+  coord_type dl = lx*lx + 1. + lz*lz;
+  return color_type(inversesqrt(float_type(dl))) + AMBIENT_INTENSITY; //FIXME: implement RSQRT for fixed points
+#endif
 }
 
 hit_out hit_sphere(uint32_t frame, IN(scene_colors_t) colors, IN(sphere_t) sphere, IN(hit_in) hitin)
@@ -414,8 +427,13 @@ hit_out hit_plane(uint32_t frame, IN(scene_colors_t) colors, IN(plane_t) plane, 
   return hitout;
 }
 
-color_basic_t cast_ray0(IN(scene_t) scene, IN(scene_colors_t) colors, IN(hit_in) hitin)
+color_basic_t cast_ray_nested(IN(scene_t) scene, IN(scene_colors_t) colors, IN(hit_in) hitin)
 {
+
+#ifdef RT_SMALL_UI
+  return background_color(hitin.dir.y);
+#else
+
 #if 1<PLANE_MAXRECURSIVITY
   hit_out hitsphere = hit_sphere(scene.frame, colors, scene.sphere, hitin);
 #else
@@ -436,8 +454,8 @@ color_basic_t cast_ray0(IN(scene_t) scene, IN(scene_colors_t) colors, IN(hit_in)
     rcolor = background_color(hitin.dir.y); //has other direction
   else
     rcolor = hitout.material.diffuse_color*light_intensity(hitout.hit);
-
   return rcolor;
+#endif
 }
 
 color_basic_t shade(IN(scene_t) scene, IN(scene_colors_t) colors, IN(color_basic_t) background, vec3 dir, IN(hit_out) hit, color_type minfog)
@@ -453,7 +471,7 @@ color_basic_t shade(IN(scene_t) scene, IN(scene_colors_t) colors, IN(color_basic
 #ifdef ANTIALIAS
     hitreflect.dist = hit.dist; //to accumulate distance
 #endif
-    color_basic_t reflect_color = cast_ray0(scene, colors, hitreflect);
+    color_basic_t reflect_color = cast_ray_nested(scene, colors, hitreflect);
     color_basic_t diffuse_color = hit.material.diffuse_color * light_intensity(hit.hit);
     color_basic_t comb_color = diffuse_color + reflect_color*hit.material.reflect_color;
     rcolor = color_select(color_max(color_type(fogmix), minfog), colors.fog, comb_color);
@@ -475,12 +493,14 @@ color_basic_t cast_ray(IN(scene_t) scene, IN(scene_colors_t) colors, IN(hit_in) 
    float_type ys = float_abs(float_shift(hitin.dir.y, 1));
    color_type mix = ys<1. ? color_type(1)-color_type(ys): color_type(0);
    color_basic_t bfog = color_select(mix, colors.fog, sky);
-#if 0
-return bfog;
-#else
 
    hit_out hitsphere = hit_sphere(scene.frame, colors, scene.sphere, hitin);
+#ifndef RT_SMALL_UI
    hit_out hitplane = hit_plane(scene.frame, colors, scene.plane, hitin);
+#else
+   hit_out hitplane; hitplane.dist = BIG_FLOAT;
+#endif
+
 #ifdef MOTION_BLUR
   {
      //FIXME: this is duplicated 
@@ -496,6 +516,7 @@ return bfog;
 #else
    color_basic_t rcolor;
 
+#ifndef RT_SMALL_UI
    color_basic_t planecolor = shade(scene, colors, bfog, hitin.dir, hitplane, mix); //FIXME: bfog
 
    float_type sphere_plane_dist = hitplane.dist - hitsphere.dist;
@@ -514,6 +535,7 @@ return bfog;
 #endif
    }
    else
+#endif //RT_SMALL_UI
    {
      color_basic_t spherecolor = shade(scene, colors, bfog, hitin.dir, hitsphere, 0.);
      float_type aaradius = float_shift(hitsphere.dist, ANTIALIAS-13);
@@ -530,7 +552,6 @@ return bfog;
    }
 
    return rcolor;
-#endif
 #endif
 }
 

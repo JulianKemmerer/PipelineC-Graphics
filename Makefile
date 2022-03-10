@@ -93,7 +93,9 @@ litex: $(BOARD)
 	rm -Rf ./build
 	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_vgaconfig.h
 	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_vgaconfig.h
-	$(PIPELINEC) pipelinec_litex.c --out_dir ./vhd --comb --sim
+	$(PIPELINEC) pipelinec_litex.c --out_dir ./vhd # "try --coarse --start 75 / "--comb --sim" also works! with no glitches
+	mkdir -p ./vhd/all_vhdl_files/
+	cp `cat ./vhd/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
 	cp top_glue_no_struct.vhd ./vhd/all_vhdl_files/
 
 vhd: ./vhd/all_vhdl_files/top.vhd
@@ -102,4 +104,11 @@ vhd: ./vhd/all_vhdl_files/top.vhd
 
 clean:
 	rm -Rf *.o tr_sim tr_gen vhd build cxxrtl_build obj_dir synth fullsynth tr_pipelinec.gen.c tr_pipelinec.E.cpp
+
+
+pipelinec-synth: #synth and load with pipelinec (NOTE: fixed 1080p PLLs)
+	cd PipelineC/examples/arty
+	vivado arty.xpr -mode batch -source gen_bit.tcl 
+	vivado arty.xpr -mode batch -source load_bit.tcl
+
 

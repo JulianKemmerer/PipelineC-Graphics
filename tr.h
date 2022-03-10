@@ -1,4 +1,5 @@
-
+#ifndef __TR_H__
+#define __TR_H__
 
 #define GAME_MODE
 
@@ -34,9 +35,9 @@
 #define RAY_NOINT BIG_FLOAT //arbitraty value, maybe MAXFLOAT
 
 //constants
-#define ambient_intensity  .1
-#define light_heigth 16.
-#define light_z (-10.)
+#define AMBIENT_INTENSITY  .1
+#define LIGHT_Y 16.
+#define LIGHT_Z (-10.)
 #define DIST_SHIFT (9) //for fog calculations
 #define SPHERE_RADIUS 4.5
 #define SPHERE_Z (-32.)
@@ -72,7 +73,7 @@
 
 #define EPS 1.e-3
 
-#define SCR_CSHIFT (FRAME_WIDTH < 1024 ? -9 : -11)
+#define SCR_CSHIFT (/*FRAME_WIDTH < 800 ? -9 :*/ FRAME_WIDTH < 1024 ? -10 : -11)
 
 #define PIPELINEC_SUGAR
 #warning PIPELINEC_SUGAR shouldn't be a need
@@ -187,4 +188,4 @@ static const object_coord_t K_sphere_center_start = {-20., 40., SPHERE_Z};
 static const object_coord_t K_camera_pos_start = {0.,30.,CAMERA_Z};
 static const vec3 VECTOR_NURMAL_UPWARDS = {0.,1.,0.};
 
-
+#endif //__TR_H__
