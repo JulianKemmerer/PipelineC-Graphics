@@ -227,8 +227,8 @@ color background_color_alt(screen_coord_t x, screen_coord_t y, uint16_t frame, u
   color c = fixed3_make_from_fixed((fixed_lt(dir_y, fixed_make_from_int(0)) ? fixed_make_from_double((double)0.) : fixed_mul(dir_y, dir_y)));
   
   if(fixed_lt(z, fixed_make_from_int(4))) {
-    int16_t cy = fixed_to_short(fixed_shift(fixed_mul(y, z), -(FRAME_WIDTH < 1024 ? -9 : -11) - 1));
-    int16_t cx = fixed_to_short(fixed_shift(fixed_mul(x, z), -(FRAME_WIDTH < 1024 ? -9 : -11) - 1)) + star_vel(off, cy & 7);
+    int16_t cy = fixed_to_short(fixed_shift(fixed_mul(y, z), -(FRAME_WIDTH < 800 ? -9 : FRAME_WIDTH < 1024 ? -10 : -11) - 1));
+    int16_t cx = fixed_to_short(fixed_shift(fixed_mul(x, z), -(FRAME_WIDTH < 800 ? -9 : FRAME_WIDTH < 1024 ? -10 : -11) - 1)) + star_vel(off, cy & 7);
     uint16_t pix_hash = hash16(cx ^ hash16(cy));
     
     if((pix_hash & 0xFFC0) == 0) c = fixed3_make_from_fixed(fixed_add(fixed_shift(fixed_make_from_int(((pix_hash << 2) + frame) & 0x7F), -9), fixed_make_from_double((double).35)));
@@ -292,25 +292,14 @@ color render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, scene_t scen
   return c;
 }
 
-uint8_t mask_code(uint8_t v)
-{
-  v = ((v & 1) << 3) | ((v & 2) << 1) | ((v & 4) >> 1) | ((v & 8) >> 3);
-  return v ^ (v >> 1);
-}
-
-uint9_t dither(uint8_t x, uint8_t y, uint9_t v)
-{
-  return ((mask_code(y ^ mask_code(x))) + v) & 0x1F0;
-}
-
 pixel_t render_pixel(uint16_t i, uint16_t j, scene_t scene)
 {
   int16_t cx = i << 1;
   cx = cx - (FRAME_WIDTH + 1);
   int16_t cy = j << 1;
   cy = (FRAME_HEIGHT + 1) - cy;
-  screen_coord_t x = fixed_shift(fixed_make_from_short(cx), (FRAME_WIDTH < 1024 ? -9 : -11));
-  screen_coord_t y = fixed_shift(fixed_make_from_short(cy), (FRAME_WIDTH < 1024 ? -9 : -11));
+  screen_coord_t x = fixed_shift(fixed_make_from_short(cx), (FRAME_WIDTH < 800 ? -9 : FRAME_WIDTH < 1024 ? -10 : -11));
+  screen_coord_t y = fixed_shift(fixed_make_from_short(cy), (FRAME_WIDTH < 800 ? -9 : FRAME_WIDTH < 1024 ? -10 : -11));
   pixel_t pix;
   #define score_factor	((1 << 11) * (FRAME_WIDTH - 2 * 10) / 15000)
   uint16_t scorebar = score_factor * scene.scorebar >> 11;
@@ -325,9 +314,6 @@ pixel_t render_pixel(uint16_t i, uint16_t j, scene_t scene)
     uint9_t r = fixed_to_short(fixed_shift((c.x), (8)));
     uint9_t g = fixed_to_short(fixed_shift((c.y), (8)));
     uint9_t b = fixed_to_short(fixed_shift((c.z), (8)));
-    r = dither(i ^ j, i, r);
-    g = dither(i + j, j, g);
-    b = dither(i, j, b);
     pix.r = (r >= 256) ? 255 : r;
     pix.g = (g >= 256) ? 255 : g;
     pix.b = (b >= 256) ? 255 : b;

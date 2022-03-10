@@ -147,9 +147,6 @@ if __name__ == "__main__":
 	soc.button = soc.platform.request('user_btn', 0)
 	add_video_custom_generator(soc, phy=soc.videophy, timings="640x480@60Hz", clock_domain=soc.video_clock_domain)
 	soc.platform.add_source_dir("./vhd/all_vhdl_files", recursive=False)
-	#alternative: read contents of ./vhd/vhdl_files.txt
-	#soc.platform.add_source("./build/top/top_litex.v") #for generated verilog, single file (i.e. from verilator)
-	#soc.platform.add_source("top_glue.v") #TODO: is it really needed?
 
 
 	builder = Builder(soc)
