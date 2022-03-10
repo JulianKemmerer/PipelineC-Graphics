@@ -41,7 +41,7 @@ inline fixed_basetype fixed_div_i(fixed_basetype left, fixed_basetype right)
   return left_sign == right_sign ? r : -r;
 }
 
-inline fixed fixed_div(fixed a, fixed b) { fixed r; r.f = { fixed_div_i(a.f, b.f) }; return r; }
+inline fixed fixed_div(fixed a, fixed b) { fixed r; r.f = fixed_div_i(a.f, b.f); return r; }
 #else
 inline fixed fixed_div(fixed a, fixed b) { fixed r; r.f = { (a.f<<FIXED_FRACTIONBITS)/b.f }; return r; }
 #endif

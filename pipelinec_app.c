@@ -9,16 +9,8 @@
 #include "uintN_t.h"
 #include "intN_t.h"
 #include "float_e_m_t_helper.h" // Variable mantissa sizes
-// Access to board buttons and switches
-//#include "../PipelineC/examples/arty/src/buttons/buttons.c"
 // Reset state func needs special marker to not be synthesized alone
 // ~sorta PipelineC constexpr/const marker
-#pragma FUNC_WIRES fixed_make_from_int
-#pragma FUNC_WIRES fixed_make_from_short
-#pragma FUNC_WIRES fixed_to_short
-#pragma FUNC_WIRES fixed3_make
-#pragma FUNC_WIRES fixed3_make_from_fixed
-#pragma FUNC_WIRES fixed3_make_from_const_fixed3
 #pragma FUNC_WIRES reset_state 
 #pragma FUNC_WIRES reset_state0
 
@@ -27,6 +19,8 @@
 // See top level IO wiring + DVI/VGA resolution timing logic in
 #include "vga/vga_pmod.c"
 //#include "dvi/dvi_pmod.c"
+// Access to board buttons and switches
+#include "../PipelineC/examples/arty/src/buttons/buttons.c"
 MAIN_MHZ(app, PIXEL_CLK_MHZ)
 #else
 //FIXME: MHz depends on resolution, but using vga module here bring issues
@@ -165,7 +159,8 @@ inline user_input_t get_user_input()
 {
   user_input_t i;
   // For now only exists in hardware
-  #if 0//def __PIPELINEC__
+  #ifdef __PIPELINEC__
+  #ifndef LITEX_INTEGRATION
   // Read buttons wire/board IO port
   uint4_t btns;
   WIRE_READ(uint4_t, btns, buttons) // btns = buttons
@@ -174,6 +169,7 @@ inline user_input_t get_user_input()
   // Select which buttons and switches do what?
   i.jump_pressed = btns >> 0;
   i.reset_pressed = btns >> 3;
+  #endif
   #else
   // TODO user IO for running as C code
   i.jump_pressed = 1;
