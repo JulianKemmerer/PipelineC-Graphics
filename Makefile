@@ -32,7 +32,7 @@ tr_gen: tr_pipelinec.gen.c simulator_main.cpp
 	clang -x c++ -DCCOMPILE -DFRAME_WIDTH=$(FRAME_WIDTH) -DFRAME_HEIGHT=$(FRAME_HEIGHT) -include pipelinec_compat.h -include float_type.h -include fixed_type.h -c tr_pipelinec.gen.c -o tr_pipelinec.gen.o
 	clang++ -DCCOMPILE -D_FRAME_WIDTH=$(FRAME_WIDTH) -D_FRAME_HEIGHT=$(FRAME_HEIGHT) $(INCLUDE) -O3 -ffast-math `sdl2-config --cflags --libs` simulator_main.cpp -o tr_gen
 
-./build/top/top.v: pipelinec_app.c tr_pipelinec.gen.c
+./build/top/top.v: $(PIPELINEC_MAIN) pipelinec_app.c tr_pipelinec.gen.c
 	rm -Rf ./build
 	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_vgaconfig.h
 	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_vgaconfig.h
@@ -76,12 +76,18 @@ cxxrtl: ./cxxrtl_build/cxxrtl_top
 	./cxxrtl_build/cxxrtl_top
 
 arty: compile
-	sed 's/\\render_pixel_interactive_return_output\./render_pixel_interactive_return_output_/g' ./build/top/top.v > ./build/top/top_litex.v #fix naming issues
+	#FIXME: unify builr and vhd directories
+	mkdir -p ./vhd/all_vhdl_files/
+	cp `cat ./build/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
+	cp top_glue_no_struct.vhd ./vhd/all_vhdl_files/
 	python3 ./litex_soc.py $(BOARD) --cpu-type=None
 	openFPGALoader -b $(BOARD) ./build/digilent_arty/gateware/digilent_arty.bit
 
 de0nano: compile
-	sed 's/\\render_pixel_interactive_return_output\./render_pixel_interactive_return_output_/g' ./build/top/top.v > ./build/top/top_litex.v #fix naming issues
+	#FIXME: unify builr and vhd directories
+	mkdir -p ./vhd/all_vhdl_files/
+	cp `cat ./build/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
+	cp top_glue_no_struct.vhd ./vhd/all_vhdl_files/
 	python3 ./litex_soc.py $(BOARD) --cpu-type=None
 	openFPGALoader -b $(BOARD) ./build/terasic_de0nano/gateware/terasic_de0nano.rbf
 
