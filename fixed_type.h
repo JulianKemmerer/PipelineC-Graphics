@@ -105,8 +105,6 @@ public:
     fixed3 operator - (fixed3 v) const { fixed3 r = { x-v.x, y-v.y, z-v.z }; return r;  }
 };
 
-float3 vec3convert(fixed3 a) { float3 r = { (float) a.x, (float) a.y, (float) a.z }; return r; }
-
 //inline int lround(fixed a) { return (a.f + (1 << (FIXED_FRACTIONBITS-1))) >> FIXED_FRACTIONBITS; }
 inline int16_t round16(fixed a) { return int16_t(a+.5); }
 

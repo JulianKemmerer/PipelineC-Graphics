@@ -16,7 +16,8 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 */
 
 //#define ALTERNATE_UI 3 //level of graphics detail
-//#define RT_SMALL_UI //enable to reduce raytracing complexity
+//#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702)
+//#define DITHER
 
 
 #include "tr.h"
@@ -164,7 +165,7 @@ hit_out ray_sphere_intersect(IN(sphere_t) s, IN(hit_in) hitin)
  hit_out hitout;
  vec3 ro = hitin.orig;
  vec3 rd = hitin.dir;
- vec3 sp = vec3convert(s.center);
+ vec3 sp = object_coord_to_float3(s.center);
 
  hitout.dist = RAY_NOINT;
  float diff;
@@ -248,7 +249,7 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(hit_in) hitin)
   hit_out hitout;
   hitout.dist = RAY_NOINT;
   hitout.borderdist = /*-EPS*/0.;
-  vec3 plane_center = vec3convert(plane.center);
+  vec3 plane_center = object_coord_to_float3(plane.center);
   float_type d;
   vec3 pt;
   hole_t hole_margin = 0; //FIXME: parser needs initialization
@@ -315,7 +316,7 @@ float_type triang(float_type x )
 color_basic_t plane_effect(uint16_t frame, IN(scene_colors_t) colors, IN(plane_t) plane, IN(hit_out) hit)
 {
   color_basic_t rcolor = colors.plane.diffuse_color;
-  vec3 plane_center = vec3convert(plane.center);
+  vec3 plane_center = object_coord_to_float3(plane.center);
 
   float_type hitx = hit.hit.x - plane_center.x;
   float_type hitz = hit.hit.z - plane_center.z;
@@ -566,7 +567,7 @@ color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y, IN(scene
 {
 
   hit_in hitin;
-  hitin.orig = vec3convert(scene.camera);
+  hitin.orig = object_coord_to_float3(scene.camera);
   vec3 camera_dir = {float_type(x), float_type(y), float_type(-1.)};
   hitin.dir = normalize(camera_dir);
 #ifdef ANTIALIAS
@@ -691,8 +692,6 @@ color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(s
   return c;
 }
 #endif
-
-#define DITHER
 
 #ifdef DITHER
 inline uint8_t mask_code(uint8_t v) {

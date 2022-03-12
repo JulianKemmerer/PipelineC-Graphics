@@ -5,6 +5,33 @@ extern int FRAME_HEIGHT;
 struct pixel_t { uint8_t a, b, g, r; };
 
 #include "float_type.h"
+
+#ifndef CCOMPILE
+typedef float_type fixed_type;
+typedef float_type coord_type;
+typedef float3 object_coord_t;
+typedef float_type screen_coord_t;
+
+#define fixed_shift float_shift
+#define fixed_abs float_abs
+#define fixed_max float_max
+
+#if 1
+#warning simulation using all floats!
+typedef float_type color_type;
+typedef float3 color;
+inline int16_t round16(float_type x) { return x+0.5; }
+#define fixed_is_negative(x) ((x)<0)
+#define fixed_convert(t, x, shift) float_shift(x, shift)
+#else
+//color in fixed types (slower)
+#include "fixed_type.h"
+typedef fixed_type color_type;
+typedef fixed3 color;
+#endif
+
+
+#else
 #include "fixed_type.h"
 typedef fixed fixed_type;
 typedef fixed_type coord_type;
@@ -12,11 +39,13 @@ typedef fixed3 object_coord_t;
 typedef coord_type screen_coord_t;
 typedef fixed_type color_type;
 typedef fixed3 color;
+#endif
+
+float3 object_coord_to_float3(object_coord_t a) { float3 r = { (float) a.x, (float) a.y, (float) a.z }; return r; } //TODO: rename to
 
 inline color color_select(color_type x, color a, color b) { return b+(a-b)*x; }
 inline color_type color_max(color_type a, color_type b) { return a>b?a:b; }
 
-typedef float float_type;
 #define assert(x)
 
 inline float is_negative(float x) { return float_to_uint(x)&0x80000000; }

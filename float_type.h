@@ -1,6 +1,8 @@
 #ifndef __FLOAT_TYPE_H__
 #define __FLOAT_TYPE_H__
 
+typedef float float_type;
+
 #ifdef PARSING
 float float_shift(float x, int shift);
 unsigned float_to_uint(float a);
