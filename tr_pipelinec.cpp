@@ -6,7 +6,7 @@ struct pixel_t { uint8_t a, b, g, r; };
 
 #include "float_type.h"
 
-#ifndef CCOMPILE
+#ifndef PARSING //only on faster simulation
 typedef float_type fixed_type;
 typedef float_type coord_type;
 typedef float3 object_coord_t;

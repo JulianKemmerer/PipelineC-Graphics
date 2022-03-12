@@ -326,9 +326,7 @@ color_basic_t plane_effect(uint16_t frame, IN(scene_colors_t) colors, IN(plane_t
   int16_t ix = round16(ox);
   int16_t iz = round16(oz);
 
-  bool cx = (ix & 1) != 0;
-  bool cz = (iz & 1) != 0;
-  static const color_type bk = .3;
+  static const color_type bk = .3; 
 #ifndef COLOR_DECOMP
   color_basic_t color2 = {
     (ix & 0x400)!=0 ? bk : colors.plane_color2.r,
@@ -339,7 +337,7 @@ color_basic_t plane_effect(uint16_t frame, IN(scene_colors_t) colors, IN(plane_t
  color_basic_t color2 = colors.plane_color2;
 #endif
 
-  rcolor = (cx == cz) ? colors.plane_color1 : color2;
+  rcolor = ((ix ^ iz) & 1) ? colors.plane_color1 : color2;
 #ifdef ANTIALIAS
   color_basic_t rcolor2 = !(cx == cz) ? colors.plane_color1 : color2;
 
