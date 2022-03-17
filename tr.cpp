@@ -1,5 +1,5 @@
 /*
-"SPHERY VS. SHAPES" by Victor Suarez Rovere and Manuel Suarez Impellizzeri
+"SPHERY VS. SHAPES" by Victor Suarez Rovere and Manuel Suarez
 
 Copyright (C) 2021 Victor Suarez Rovere <suarezvictor@gmail.com>
 
@@ -777,10 +777,10 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(scene_t) scene
 }
 #endif
 
-#warning parameter needed just to avoid errors on code generator
-full_state_t reset_state0(bool x)
+full_state_t reset_state(uint16_t score)
 {
-
+    full_state_t state;
+    
     material_t gold;
     gold.diffuse_color = K_gold_color;
     gold.reflect_color = K_gold_reflect_color;
@@ -789,161 +789,133 @@ full_state_t reset_state0(bool x)
     floor_material.diffuse_color = K_floor_difusse;
     floor_material.reflect_color = K_floor_reflect;
 
-    scene_t scene;
-    scene.plane.center = K_plane_center_start;
-    scene.plane.material = floor_material;
-    scene.plane.color1 = K_plane_color1;
-    scene.plane.color2 = K_plane_color2;
+    state.scene.plane.center = K_plane_center_start;
+    state.scene.plane.material = floor_material;
+    state.scene.plane.color1 = K_plane_color1;
+    state.scene.plane.color2 = K_plane_color2;
 
-    scene.sphere.center = K_sphere_center_start;
-    scene.sphere.material = gold;
-    scene.sphere.heat = 0.;
-    scene.camera = K_camera_pos_start;
-    scene.frame = 0;
-    scene.scorebar = 0;
-    scene.fog = K_fog_color;
+    state.scene.sphere.center = K_sphere_center_start;
+    state.scene.sphere.material = gold;
+    state.scene.sphere.heat = 0.;
+    state.scene.camera = K_camera_pos_start;
+    state.scene.frame = 0;
+    state.scene.scorebar = 0;
+    state.scene.fog = K_fog_color;
 
-    game_state_in stin;
-    stin.plane_y    = (coord_type) scene.plane.center.y;
-    stin.sphere_x   = (coord_type) scene.sphere.center.x;
-    stin.sphere_z   = (coord_type) scene.sphere.center.z;
-    stin.gold_color = gold.diffuse_color;
-    stin.gold_reflect_color = gold.reflect_color;
-    stin.lava_color = K_lava_color;
-    stin.press = false;
+    state.plane_y    = (coord_type) state.scene.plane.center.y;
+    state.sphere_x   = (coord_type) state.scene.sphere.center.x;
+    state.sphere_z   = (coord_type) state.scene.sphere.center.z;
+    state.gold_color = gold.diffuse_color;
+    state.gold_reflect_color = gold.reflect_color;
+    state.lava_color = K_lava_color;
 
-    game_state_t stinout;
-    stinout.sphere_y = (coord_type) scene.sphere.center.y;
-    stinout.heat     = scene.sphere.heat;
-    stinout.camera_y = (coord_type) scene.camera.y;
-    stinout.camera_z = (coord_type) scene.camera.z;
-    stinout.plane_x  = coord_type(FLOOR_X);
-    stinout.sphere_xvel = (coord_type) 0.;
-    stinout.sphere_yvel = (coord_type) 0.;
-    stinout.won = false;
-    stinout.score = 0;
+    state.sphere_y = (coord_type) state.scene.sphere.center.y;
+    state.heat     = state.scene.sphere.heat;
+    state.camera_y = (coord_type) state.scene.camera.y;
+    state.camera_z = (coord_type) state.scene.camera.z;
+    state.plane_x  = coord_type(FLOOR_X);
+    state.sphere_xvel = (coord_type) 0.;
+    state.sphere_yvel = (coord_type) 0.;
+    state.won = false;
+    state.score = score;
 
-
-    full_state_t f; //FIXME do not copy variables, use full scene variables
-    f.scene = scene;
-    f.stin = stin;
-    f.stinout = stinout;
-
-    return f;
+    return state;
 }
 
-full_state_t reset_state() { return reset_state0(true); }
-
-game_state_t restart_state(game_state_t st)
+full_state_t full_update(full_state_t state, bool reset, bool button_state)
 {
-  game_state_t n;
-  full_state_t r = reset_state0(false); //FIXME: don't go to zero but to the start of level 
-  n = r.stinout;
-  n.score = st.score - (st.score >> 4); //% lose
-  return n;
-}
+  uint16_t score = state.score;
+  if(reset) score = 0;
 
-game_state_out_t next_state_func(IN(game_state_in) stin, IN(game_state_t) stinout)
-{
-#ifdef _DEBUG
-  perf_clear();
-#endif
-  game_state_out_t n;
-  n.stinout = stinout;
+  state.plane_x = state.plane_x + state.sphere_xvel;
 
-  n.stinout.plane_x = n.stinout.plane_x + n.stinout.sphere_xvel;
+  state.sphere_yvel = state.sphere_yvel + GRAVITY_CONSTANT;
+  state.sphere_y = state.sphere_y - state.sphere_yvel;
 
-  n.stinout.sphere_yvel = n.stinout.sphere_yvel + GRAVITY_CONSTANT;
-  n.stinout.sphere_y = n.stinout.sphere_y - n.stinout.sphere_yvel;
+  coord_type underground = (state.sphere_y - SPHERE_RADIUS) - FLOOR_Y; //PLANE_Y is always 0
 
-   
-  coord_type underground = (n.stinout.sphere_y - SPHERE_RADIUS) - FLOOR_Y; //PLANE_Y is always 0
-
-  if(stinout.won)
-    n.stinout.sphere_yvel = fixed_shift(underground, -4);
+  if(state.won)
+    state.sphere_yvel = fixed_shift(underground, -4);
 
   if(fixed_is_negative(underground))
   {
-    n.stinout.sphere_xvel = n.stinout.sphere_xvel - XVEL_CONSTANT;
-    coord_type coord_x = stin.sphere_x - n.stinout.plane_x;
-    coord_type coord_z = stin.sphere_z - n.stinout.plane_x; //z=x
+    state.sphere_xvel = state.sphere_xvel - XVEL_CONSTANT;
+    coord_type coord_x = state.sphere_x - state.plane_x;
+    coord_type coord_z = state.sphere_z - state.plane_x; //z=x
 
-    bool half_up = n.stinout.sphere_y > stin.plane_y;
-    if(half_up && stinout.won!=true)
+    bool half_up = state.sphere_y > state.plane_y;
+    if(half_up && state.won == false)
     {
 #ifdef HEAT_CONSTANT
-      if(n.stinout.sphere_yvel>0.)
-        n.stinout.heat = fixed_type(0)-fixed_convert(color_type, n.stinout.sphere_xvel, -HEAT_CONSTANT);
+      if(state.sphere_yvel>0.)
+        state.heat = fixed_type(0)-fixed_convert(color_type, state.sphere_xvel, -HEAT_CONSTANT);
 #warning implement unary -
 #endif
 
       //TODO: if the plane has a hole can be calculated at rendering time and reused!
       if(plane_has_hole(coord_x, coord_z) > -HOLE_GUARD_MARGIN) // > about -.1 gives margin for the ball size
       {
-        n.stinout.score = n.stinout.score+1;
-        if(n.stinout.score >= MAXSCORE && n.stinout.won!=true)
-           n.stinout.won = true;
-        if(stin.press)
+        state.score = state.score+1;
+        if(state.score >= MAXSCORE && state.won!=true)
+           state.won = true;
+        if(button_state)
         {
-          n.stinout.sphere_yvel = -JUMP_CONSTANT;
-          n.stinout.sphere_xvel = -XVEL_DEFAULT;
+          state.sphere_yvel = -JUMP_CONSTANT;
+          state.sphere_xvel = -XVEL_DEFAULT;
         }
         else
-          n.stinout.sphere_yvel = -GRAVITY_CONSTANT_LIGHT;
+          state.sphere_yvel = -GRAVITY_CONSTANT_LIGHT;
       }
     }
     else
     {
-      n.stinout.camera_z = n.stinout.camera_z-fixed_shift(underground, ZOOMOUT_CONSTANT); //lose => fadeout
+      state.camera_z = state.camera_z-fixed_shift(underground, ZOOMOUT_CONSTANT); //lose => fadeout
     }
   }
 
 #ifdef HEAT_CONSTANT
-  n.stinout.heat = n.stinout.heat - (color_type)fixed_shift(n.stinout.heat, -4);
+  state.heat = state.heat - (color_type)fixed_shift(state.heat, -4);
 #endif
-  n.stinout.camera_y = n.stinout.camera_y + fixed_shift(n.stinout.sphere_y - n.stinout.camera_y, -5);
+  state.camera_y = state.camera_y + fixed_shift(state.sphere_y - state.camera_y, -5);
 
   //write all outputs
-  n.stout.lose = fixed_is_negative(underground) && (-int16_t(underground) >> 10); //underground < -2048.
+  state.lose = fixed_is_negative(underground) && (-int16_t(underground) >> 10); //underground < -2048.
 
 #if defined(GAME_MODE) && ALTERNATE_UI > 1
-  n.stout.diffuse_color = color_select(n.stinout.heat, stin.lava_color, stin.gold_color);
-  n.stout.reflect_color = stin.gold_reflect_color*(color_type(1.) - fixed_shift(n.stinout.heat,-2));
+  state.diffuse_color = color_select(state.heat, state.lava_color, state.gold_color);
+  state.reflect_color = state.gold_reflect_color*(color_type(1.) - fixed_shift(state.heat,-2));
 #else
-  n.stout.diffuse_color = stin.gold_color;
-  n.stout.reflect_color = stin.gold_reflect_color;
+  state.diffuse_color = state.gold_color;
+  state.reflect_color = state.gold_reflect_color;
 #endif
 
-  n.stout.scorebar = n.stinout.won ? 0 : n.stinout.score;
+  state.scorebar = state.won ? 0 : state.score;
 
 #ifdef _DEBUG
   perf_gameplay_dump();
 #endif
 
-  if(n.stout.lose)
-     n.stinout = restart_state(stinout); //restart logic, FIXME: add the partial restart!
+  if(state.lose)
+     reset = true;
 
-  return n;
+  if(reset)
+    state = reset_state(score);
+
+  state.scene.sphere.center.y = state.sphere_y;
+  state.scene.sphere.heat = state.heat;
+  state.scene.camera.y = state.camera_y;
+  state.scene.camera.z = state.camera_z;
+  state.scene.plane.center.x = state.plane_x;
+  state.scene.plane.center.z = state.plane_x;
+  state.scene.sphere.material.diffuse_color = state.diffuse_color;
+  state.scene.sphere.material.reflect_color = state.reflect_color;
+  state.scene.sphere.yvel = coord_type(state.sphere_yvel); //FIXME: is the cast needed?
+  state.scene.scorebar = state.scorebar; //FIXME: move to state update function to make this function wires-only
+  state.scene.frame = state.scene.frame + 1;
+  
+  return state;
 }
 
-
-scene_t update_scene(IN(scene_t) scenein, IN(game_state_out_t) outs)
-{
-  scene_t scene = scenein;
-  //update results
-  scene.sphere.center.y = outs.stinout.sphere_y;
-  scene.sphere.heat = outs.stinout.heat;
-  scene.camera.y = outs.stinout.camera_y;
-  scene.camera.z = outs.stinout.camera_z;
-  scene.plane.center.x = outs.stinout.plane_x;
-  scene.plane.center.z = outs.stinout.plane_x;
-  scene.sphere.material.diffuse_color = outs.stout.diffuse_color;
-  scene.sphere.material.reflect_color = outs.stout.reflect_color;
-  scene.sphere.yvel = coord_type(outs.stinout.sphere_yvel); //FIXME: is the cast needed?
-  scene.scorebar = outs.stout.scorebar; //FIXME: move to state update function to make this function wires-only
-  scene.frame = scene.frame + 1;
-  return scene;
-}
 
 
 #ifdef SHADER

@@ -164,25 +164,17 @@ int main()
         return 1;
 
 #ifndef GATEWARE_VGA
-    full_state_t state = reset_state();
-    /*volatile*/ game_state_t stinout;
-    WIRE_WRITE(game_state_t, state.stinout, stinout);
+    full_state_t state;
+    state = full_update(state, true, false); //reset state
 #endif
     t0 = higres_ticks();
     for(;;)
     {
 #ifdef GATEWARE_VGA
-      app(); 
+      app();
 #else
       if(fb_should_quit())
         break;
-#ifndef SPIRV
-      state.stin.press = buttons_pressed() & 1;
-      game_state_out_t outs = next_state_func(state.stin, stinout);
-      WIRE_WRITE(game_state_t, outs.stinout, stinout);
-#endif
-
-
 
       #pragma omp parallel for
       for(int y = 0; y < FRAME_HEIGHT; ++y)
@@ -239,10 +231,10 @@ int main()
         }
       }
 
-
-#ifndef SPIRV
-      state.scene = update_scene(state.scene, outs);
+#ifndef GATEWARE_VGA
+      state = full_update(state, false, buttons_pressed() & 1);
 #endif
+
       fb_update();
       ++frame;
 #endif
@@ -283,7 +275,7 @@ bool fb_init(unsigned width, unsigned height)
       SDL_SetWindowFullscreen(win, SDL_WINDOW_FULLSCREEN);
 
     SDL_ShowCursor(SDL_DISABLE);
-    renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE | SDL_RENDERER_PRESENTVSYNC);
+    renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE /*| SDL_RENDERER_PRESENTVSYNC*/);
     if (!renderer)
       return false;
 

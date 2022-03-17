@@ -116,9 +116,9 @@ struct scene_t
   sphere_t sphere;
   plane_t plane;
   object_coord_t camera;
+  color fog;
   uint16_t frame;
   uint16_t scorebar;
-  color fog;
 };
 
 struct scene_colors_t
@@ -128,46 +128,26 @@ struct scene_colors_t
   color_basic_t fog; //FIXME: maybe background
 };
 
-struct game_state_in
-{
-    coord_type plane_y;
-    coord_type sphere_x;
-    coord_type sphere_z;
-    color gold_color, gold_reflect_color, lava_color;
-    bool press;
-};
-
-struct game_state_t
-{
-    coord_type sphere_y;
-    color_type heat;
-    coord_type camera_y;
-    coord_type camera_z;
-    coord_type plane_x;
-    coord_type sphere_xvel;
-    coord_type sphere_yvel;
-    uint16_t score;
-    bool won;
-};
-
-struct game_state_out
-{
-    color diffuse_color, reflect_color;
-    uint16_t scorebar;
-    bool lose;
-};
-
-struct game_state_out_t
-{
-  game_state_out stout;
-  game_state_t stinout;
-};
 
 struct full_state_t
 {
   scene_t scene;
-  game_state_in stin;
-  game_state_t stinout;
+  color gold_color, gold_reflect_color, lava_color;
+  coord_type plane_y;
+  coord_type sphere_x;
+  coord_type sphere_z;
+  coord_type sphere_y;
+  color_type heat;
+  coord_type camera_y;
+  coord_type camera_z;
+  coord_type plane_x;
+  coord_type sphere_xvel;
+  coord_type sphere_yvel;
+  color diffuse_color, reflect_color;
+  uint16_t scorebar;
+  uint16_t score;
+  bool won;
+  bool lose;
 };
 
 

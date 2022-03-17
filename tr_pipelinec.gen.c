@@ -147,13 +147,9 @@ uint16_t hashf(float_type f)
 typedef struct material_t { color diffuse_color; color reflect_color; } material_t;
 typedef struct sphere_t { object_coord_t center; material_t material; color_type heat; object_coord_t yvel; } sphere_t;
 typedef struct plane_t { object_coord_t center; material_t material; color color1; color color2; } plane_t;
-typedef struct scene_t { sphere_t sphere; plane_t plane; object_coord_t camera; uint16_t frame; uint16_t scorebar; color fog; } scene_t;
+typedef struct scene_t { sphere_t sphere; plane_t plane; object_coord_t camera; color fog; uint16_t frame; uint16_t scorebar; } scene_t;
 typedef struct scene_colors_t { material_t sphere; material_t plane; color plane_color1; color plane_color2; color fog; } scene_colors_t;
-typedef struct game_state_in { coord_type plane_y; coord_type sphere_x; coord_type sphere_z; color gold_color; color gold_reflect_color; color lava_color; bool press; } game_state_in;
-typedef struct game_state_t { coord_type sphere_y; color_type heat; coord_type camera_y; coord_type camera_z; coord_type plane_x; coord_type sphere_xvel; coord_type sphere_yvel; uint16_t score; bool won; } game_state_t;
-typedef struct game_state_out { color diffuse_color; color reflect_color; uint16_t scorebar; bool lose; } game_state_out;
-typedef struct game_state_out_t { game_state_out stout; game_state_t stinout; } game_state_out_t;
-typedef struct full_state_t { scene_t scene; game_state_in stin; game_state_t stinout; } full_state_t;
+typedef struct full_state_t { scene_t scene; color gold_color; color gold_reflect_color; color lava_color; coord_type plane_y; coord_type sphere_x; coord_type sphere_z; coord_type sphere_y; color_type heat; coord_type camera_y; coord_type camera_z; coord_type plane_x; coord_type sphere_xvel; coord_type sphere_yvel; color diffuse_color; color reflect_color; uint16_t scorebar; uint16_t score; bool won; bool lose; } full_state_t;
 #define K_gold_color	(fixed3_make(fixed_make_from_double(((double)1.5 * (double).15) * (double)243. / (double)256.), fixed_make_from_double(((double)1.5 * (double).15) * (double)201. / (double)256.), fixed_make_from_double(((double)1.5 * (double).15) * (double)104. / (double)256.)))
 #define K_gold_reflect_color	(fixed3_make(fixed_make_from_double((double)1.5 * ((double)1. - (double).15) * (double)243. / (double)256.), fixed_make_from_double((double)1.5 * ((double)1. - (double).15) * (double)201. / (double)256.), fixed_make_from_double((double)1.5 * ((double)1. - (double).15) * (double)104. / (double)256.)))
 #define K_lava_color	(fixed3_make(fixed_make_from_double((double)255. / (double)256. * (double)2.0), fixed_make_from_double((double)70. / (double)256. * (double)1.5), fixed_make_from_double((double)32. / (double)256. * (double)1.5)))
@@ -417,125 +413,101 @@ pixel_t render_pixel(uint16_t i, uint16_t j, scene_t scene)
   return pix;
 }
 
-full_state_t reset_state0(bool x)
+full_state_t reset_state(uint16_t score)
 {
+  full_state_t state;
   material_t gold;
   gold.diffuse_color = K_gold_color;
   gold.reflect_color = K_gold_reflect_color;
   material_t floor_material;
   floor_material.diffuse_color = K_floor_difusse;
   floor_material.reflect_color = K_floor_reflect;
-  scene_t scene;
-  scene.plane.center = K_plane_center_start;
-  scene.plane.material = floor_material;
-  scene.plane.color1 = K_plane_color1;
-  scene.plane.color2 = K_plane_color2;
-  scene.sphere.center = K_sphere_center_start;
-  scene.sphere.material = gold;
-  scene.sphere.heat = fixed_make_from_double((double)0.);
-  scene.camera = K_camera_pos_start;
-  scene.frame = 0;
-  scene.scorebar = 0;
-  scene.fog = K_fog_color;
-  game_state_in stin;
-  stin.plane_y = scene.plane.center.y;
-  stin.sphere_x = scene.sphere.center.x;
-  stin.sphere_z = scene.sphere.center.z;
-  stin.gold_color = gold.diffuse_color;
-  stin.gold_reflect_color = gold.reflect_color;
-  stin.lava_color = K_lava_color;
-  stin.press = 0;
-  game_state_t stinout;
-  stinout.sphere_y = scene.sphere.center.y;
-  stinout.heat = scene.sphere.heat;
-  stinout.camera_y = scene.camera.y;
-  stinout.camera_z = scene.camera.z;
-  stinout.plane_x = fixed_make_from_double(((double)-110.));
-  stinout.sphere_xvel = fixed_make_from_double((double)0.);
-  stinout.sphere_yvel = fixed_make_from_double((double)0.);
-  stinout.won = 0;
-  stinout.score = 0;
-  full_state_t f;
-  f.scene = scene;
-  f.stin = stin;
-  f.stinout = stinout;
-  return f;
+  state.scene.plane.center = K_plane_center_start;
+  state.scene.plane.material = floor_material;
+  state.scene.plane.color1 = K_plane_color1;
+  state.scene.plane.color2 = K_plane_color2;
+  state.scene.sphere.center = K_sphere_center_start;
+  state.scene.sphere.material = gold;
+  state.scene.sphere.heat = fixed_make_from_double((double)0.);
+  state.scene.camera = K_camera_pos_start;
+  state.scene.frame = 0;
+  state.scene.scorebar = 0;
+  state.scene.fog = K_fog_color;
+  state.plane_y = state.scene.plane.center.y;
+  state.sphere_x = state.scene.sphere.center.x;
+  state.sphere_z = state.scene.sphere.center.z;
+  state.gold_color = gold.diffuse_color;
+  state.gold_reflect_color = gold.reflect_color;
+  state.lava_color = K_lava_color;
+  state.sphere_y = state.scene.sphere.center.y;
+  state.heat = state.scene.sphere.heat;
+  state.camera_y = state.scene.camera.y;
+  state.camera_z = state.scene.camera.z;
+  state.plane_x = fixed_make_from_double(((double)-110.));
+  state.sphere_xvel = fixed_make_from_double((double)0.);
+  state.sphere_yvel = fixed_make_from_double((double)0.);
+  state.won = 0;
+  state.score = score;
+  return state;
 }
 
-full_state_t reset_state()
+full_state_t full_update(full_state_t state, bool reset, bool button_state)
 {
-  return reset_state0(1);
-}
-
-game_state_t restart_state(game_state_t st)
-{
-  game_state_t n;
-  full_state_t r = reset_state0(0);
-  n = r.stinout;
-  n.score = st.score - (st.score >> 4);
-  return n;
-}
-
-game_state_out_t next_state_func(game_state_in stin, game_state_t stinout)
-{
-  game_state_out_t n;
-  n.stinout = stinout;
-  n.stinout.plane_x = fixed_add(n.stinout.plane_x, n.stinout.sphere_xvel);
-  n.stinout.sphere_yvel = fixed_add(n.stinout.sphere_yvel, fixed_make_from_double((double).1));
-  n.stinout.sphere_y = fixed_sub(n.stinout.sphere_y, n.stinout.sphere_yvel);
-  coord_type underground = fixed_sub((fixed_sub(n.stinout.sphere_y, fixed_make_from_double((double)4.5))), fixed_make_from_double((double)0.));
+  uint16_t score = state.score;
   
-  if(stinout.won) n.stinout.sphere_yvel = fixed_shift(underground, -4);
+  if(reset) score = 0;
+  state.plane_x = fixed_add(state.plane_x, state.sphere_xvel);
+  state.sphere_yvel = fixed_add(state.sphere_yvel, fixed_make_from_double((double).1));
+  state.sphere_y = fixed_sub(state.sphere_y, state.sphere_yvel);
+  coord_type underground = fixed_sub((fixed_sub(state.sphere_y, fixed_make_from_double((double)4.5))), fixed_make_from_double((double)0.));
+  
+  if(state.won) state.sphere_yvel = fixed_shift(underground, -4);
   
   if(fixed_is_negative(underground)) {
-    n.stinout.sphere_xvel = fixed_sub(n.stinout.sphere_xvel, fixed_make_from_double((double)0.03));
-    coord_type coord_x = fixed_sub(stin.sphere_x, n.stinout.plane_x);
-    coord_type coord_z = fixed_sub(stin.sphere_z, n.stinout.plane_x);
-    bool half_up = fixed_gt(n.stinout.sphere_y, stin.plane_y);
+    state.sphere_xvel = fixed_sub(state.sphere_xvel, fixed_make_from_double((double)0.03));
+    coord_type coord_x = fixed_sub(state.sphere_x, state.plane_x);
+    coord_type coord_z = fixed_sub(state.sphere_z, state.plane_x);
+    bool half_up = fixed_gt(state.sphere_y, state.plane_y);
     
-    if(((half_up)!=0) & ((stinout.won != 1)!=0)) {
+    if(((half_up)!=0) & ((state.won == 0)!=0)) {
       
       if(fixed_gt(plane_has_hole(coord_x, coord_z), fixed_make_from_double((double)-.05))) {
-        n.stinout.score = n.stinout.score + 1;
+        state.score = state.score + 1;
         
-        if(((n.stinout.score >= 15000)!=0) & ((n.stinout.won != 1)!=0)) n.stinout.won = 1;
+        if(((state.score >= 15000)!=0) & ((state.won != 1)!=0)) state.won = 1;
         
-        if(stin.press) {
-          n.stinout.sphere_yvel = fixed_make_from_double((double)-2.);
-          n.stinout.sphere_xvel = fixed_make_from_double((double)-0.5);
+        if(button_state) {
+          state.sphere_yvel = fixed_make_from_double((double)-2.);
+          state.sphere_xvel = fixed_make_from_double((double)-0.5);
         }
-        else n.stinout.sphere_yvel = fixed_make_from_double((double)-.03);
+        else state.sphere_yvel = fixed_make_from_double((double)-.03);
       }
     }
     else {
-      n.stinout.camera_z = fixed_sub(n.stinout.camera_z, fixed_shift(underground, -4));
+      state.camera_z = fixed_sub(state.camera_z, fixed_shift(underground, -4));
     }
   }
-  n.stinout.camera_y = fixed_add(n.stinout.camera_y, fixed_shift(fixed_sub(n.stinout.sphere_y, n.stinout.camera_y), -5));
-  n.stout.lose = ((fixed_is_negative(underground))!=0) & (((-fixed_to_short(underground) >> 10))!=0);
-  n.stout.diffuse_color = stin.gold_color;
-  n.stout.reflect_color = stin.gold_reflect_color;
-  n.stout.scorebar = n.stinout.won ? 0 : n.stinout.score;
+  state.camera_y = fixed_add(state.camera_y, fixed_shift(fixed_sub(state.sphere_y, state.camera_y), -5));
+  state.lose = ((fixed_is_negative(underground))!=0) & (((-fixed_to_short(underground) >> 10))!=0);
+  state.diffuse_color = state.gold_color;
+  state.reflect_color = state.gold_reflect_color;
+  state.scorebar = state.won ? 0 : state.score;
   
-  if(n.stout.lose) n.stinout = restart_state(stinout);
-  return n;
-}
-
-scene_t update_scene(scene_t scenein, game_state_out_t outs)
-{
-  scene_t scene = scenein;
-  scene.sphere.center.y = outs.stinout.sphere_y;
-  scene.sphere.heat = outs.stinout.heat;
-  scene.camera.y = outs.stinout.camera_y;
-  scene.camera.z = outs.stinout.camera_z;
-  scene.plane.center.x = outs.stinout.plane_x;
-  scene.plane.center.z = outs.stinout.plane_x;
-  scene.sphere.material.diffuse_color = outs.stout.diffuse_color;
-  scene.sphere.material.reflect_color = outs.stout.reflect_color;
-  scene.sphere.yvel = fixed3_make_from_fixed(outs.stinout.sphere_yvel);
-  scene.scorebar = outs.stout.scorebar;
-  scene.frame = scene.frame + 1;
-  return scene;
+  if(state.lose) reset = 1;
+  
+  if(reset) state = reset_state(score);
+  state.scene.sphere.center.y = state.sphere_y;
+  state.scene.sphere.heat = state.heat;
+  state.scene.camera.y = state.camera_y;
+  state.scene.camera.z = state.camera_z;
+  state.scene.plane.center.x = state.plane_x;
+  state.scene.plane.center.z = state.plane_x;
+  state.scene.sphere.material.diffuse_color = state.diffuse_color;
+  state.scene.sphere.material.reflect_color = state.reflect_color;
+  state.scene.sphere.yvel = fixed3_make_from_fixed(state.sphere_yvel);
+  state.scene.scorebar = state.scorebar;
+  state.scene.frame = state.scene.frame + 1;
+  return state;
 }
 
 
