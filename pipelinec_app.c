@@ -45,12 +45,8 @@ inline full_state_t do_state_update(uint1_t reset, uint1_t end_of_frame, uint1_t
 
   // Use 'slow' end of frame pulse as 'now' valid flag occuring 
   // every N cycles > pipeline depth/latency (or when infrequent reset happens)
-  uint1_t update_now = end_of_frame | reset;
-  if(update_now)
-  {
-    // Normal next state update
+  if(end_of_frame | reset) // Normal next state update
     state = full_update(state, reset, button);
-  }  
            
   return state;
 }

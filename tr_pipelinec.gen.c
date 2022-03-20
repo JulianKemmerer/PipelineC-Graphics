@@ -96,7 +96,7 @@ float inversesqrt(float number)
 
 float sqrt(float x)
 {
-  return (double)1. / inversesqrt(x);
+  return x * inversesqrt(x);
 }
 
 float float_max(float a, float b)

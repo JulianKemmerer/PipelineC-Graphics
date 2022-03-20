@@ -651,7 +651,7 @@ color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(s
 	coord_type dx = coord_type(x*dz - (scene.sphere.center.x/*-scene.camera.x*/));
 	coord_type dy = coord_type(y*dz - (scene.sphere.center.y-scene.camera.y));
 #if ALTERNATE_UI > 1
-  color_basic_t c = background_color_alt(x, y, scene.frame, -(int16_t)scene.plane.center.x, dz*fixed(.5/CAMERA_Z));
+  color_basic_t c = background_color_alt(x, y, scene.frame, -(int16_t)scene.plane.center.x, dz*coord_type(.5/CAMERA_Z));
 #else
    color_basic_t c = K_fog_color;
 #endif

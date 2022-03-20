@@ -15,6 +15,7 @@ typedef float_type screen_coord_t;
 #define fixed_shift float_shift
 #define fixed_abs float_abs
 #define fixed_max float_max
+#define fixed_sign(x) ((x)<0)
 
 #if 1
 #warning simulation using all floats!
@@ -58,7 +59,7 @@ inline float inversesqrt( float number ) //should one more newton iteration
   return conv_f*(float_type(1.5) - conv_f*conv_f*x2);
 }
 
-inline float sqrt(float x) {return 1./inversesqrt(x); }
+inline float sqrt(float x) { return x*inversesqrt(x); }
 inline float float_max(float a, float b) { return a>b?a:b; }
 inline float float_min(float a, float b) { return a<b?a:b; }
 static const float BIG_FLOAT = 1.0e23;
