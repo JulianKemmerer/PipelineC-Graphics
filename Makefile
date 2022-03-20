@@ -6,18 +6,21 @@ FRAME_HEIGHT?=480
 VERILATOR?=verilator
 VERILATOR_CFLAGS+=-CFLAGS -DUSE_VERILATOR -CFLAGS -DFRAME_WIDTH=$(FRAME_WIDTH) -CFLAGS -DFRAME_HEIGHT=$(FRAME_HEIGHT) -LDFLAGS $(shell sdl2-config --libs)
 CFLEX_C?=python3 ../CflexHDL/cflexparser/cflexc.py
-PIPELINEC ?=../PipelineC/src/pipelinec
-INCLUDE+=-I../PipelineC/
+#PIPELINEC_ROOT?=../PipelineC
+PIPELINEC_ROOT?=../pipelinec-branch
+PIPELINEC?=$(PIPELINEC_ROOT)/src/pipelinec
+INCLUDE+=-I$(PIPELINEC_ROOT) -I../CflexHDL/include
 PIPELINEC_MAIN?=./pipelinec_app.c
 BOARD?=arty
 OMP_FLAGS=-fopenmp=libiomp5
+CLANGXX?=clang++-14
 
 all: run
 
 sim: run
 
 tr_sim: tr.cpp simulator_main.cpp tr_pipelinec.cpp
-	clang++ -D_FRAME_WIDTH=$(FRAME_WIDTH) -D_FRAME_HEIGHT=$(FRAME_HEIGHT) $(INCLUDE) -O3 $(OMP_FLAGS) -ffast-math `sdl2-config --cflags` simulator_main.cpp `sdl2-config --libs` -o tr_sim
+	$(CLANGXX) -D_FRAME_WIDTH=$(FRAME_WIDTH) -D_FRAME_HEIGHT=$(FRAME_HEIGHT) $(INCLUDE) -O3 $(OMP_FLAGS) -ffast-math `sdl2-config --cflags` simulator_main.cpp `sdl2-config --libs` -o tr_sim
 
 run: tr_sim
 	./tr_sim
@@ -30,13 +33,14 @@ gen: tr_gen
 	./tr_gen
 
 tr_gen: tr_pipelinec.gen.c simulator_main.cpp
-	clang -x c++ -DCCOMPILE -DFRAME_WIDTH=$(FRAME_WIDTH) -DFRAME_HEIGHT=$(FRAME_HEIGHT) -include pipelinec_compat.h -include float_type.h -include fixed_type.h -c tr_pipelinec.gen.c -o tr_pipelinec.gen.o
-	clang++ -DCCOMPILE -D_FRAME_WIDTH=$(FRAME_WIDTH) -D_FRAME_HEIGHT=$(FRAME_HEIGHT) $(INCLUDE) -O3 -ffast-math `sdl2-config --cflags --libs` simulator_main.cpp -o tr_gen
+	clang $(INCLUDE) -x c++ -DCCOMPILE -DFRAME_WIDTH=$(FRAME_WIDTH) -DFRAME_HEIGHT=$(FRAME_HEIGHT) -include pipelinec_compat.h -include float_type.h -include fixed_type.h -c tr_pipelinec.gen.c -o tr_pipelinec.gen.o
+	$(CLANGXX) -DCCOMPILE -D_FRAME_WIDTH=$(FRAME_WIDTH) -D_FRAME_HEIGHT=$(FRAME_HEIGHT) $(INCLUDE) -O3 $(OMP_FLAGS) -ffast-math `sdl2-config --cflags --libs` simulator_main.cpp -o tr_gen
 
 ./build/top/top.v: $(PIPELINEC_MAIN) pipelinec_app.c tr_pipelinec.gen.c
 	rm -Rf ./build
 	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_vgaconfig.h
 	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_vgaconfig.h
+	#clang $(INCLUDE) -E -D__PIPELINEC__ $(PIPELINEC_MAIN) > $(PIPELINEC_MAIN).gen
 	$(PIPELINEC) $(PIPELINEC_MAIN) --out_dir ./build --comb --sim --verilator
 
 ./synth/top/top.v: pipelinec_app.c tr_pipelinec.gen.c
@@ -71,7 +75,7 @@ cxxrtl_top: ./synth/top/top.v
 	ghdl -i --std=08 `cat ../synth/vhdl_files.txt`
 	ghdl -m --std=08 top
 	yosys -g -m ghdl -p "ghdl --std=08 top; write_cxxrtl ./top.cpp"
-	clang++ -DUSE_CXXRTL -g -O3 -std=c++14 -I `yosys-config --datdir`/include ../main.cpp -o cxxrtl_top
+	$(CLANGXX) -DUSE_CXXRTL -g -O3 -std=c++14 -I `yosys-config --datdir`/include ../main.cpp -o cxxrtl_top
 
 cxxrtl: ./cxxrtl_build/cxxrtl_top
 	./cxxrtl_build/cxxrtl_top
@@ -97,7 +101,7 @@ litex: $(BOARD)
 
 
 ./vhd/all_vhdl_files/top.vhd: pipelinec_litex.c tr_pipelinec.gen.c top_glue_no_struct.vhd
-	rm -Rf ./build
+	rm -Rf ./vhd
 	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_vgaconfig.h
 	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_vgaconfig.h
 	$(PIPELINEC) pipelinec_litex.c --out_dir ./vhd # "try --coarse --start 75 / "--comb --sim" also works! with no glitches
@@ -107,7 +111,7 @@ litex: $(BOARD)
 
 vhd: ./vhd/all_vhdl_files/top.vhd
 	python3 ./litex_soc.py $(BOARD) --cpu-type=None
-
+	
 
 clean:
 	rm -Rf *.o tr_sim tr_gen vhd build cxxrtl_build obj_dir synth fullsynth tr_pipelinec.gen.c tr_pipelinec.E.cpp

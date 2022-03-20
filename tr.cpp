@@ -242,8 +242,6 @@ diff = B;
   return hitout;
 }
 
-
-
 hit_out ray_plane_intersect(IN(plane_t) plane, IN(hit_in) hitin)
 {
   hit_out hitout;
@@ -254,10 +252,12 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(hit_in) hitin)
   vec3 pt;
   hole_t hole_margin = 0; //FIXME: parser needs initialization
   vec3 o;
-  if (hitin.dir.y != 0.) // avoid division by zero
+  //if (hitin.dir.y != 0.) // avoids division by zero
+  if (is_negative(hitin.dir.y)) // avoids division by zero
   //if (float_abs(hitin.dir.y) > EPS) // avoid division by zero
   {
-    d = -(hitin.orig.y-plane_center.y)/hitin.dir.y;
+    //d = -(hitin.orig.y-plane_center.y)/hitin.dir.y; 
+    d = float_fast_div_u(hitin.orig.y-plane_center.y, -hitin.dir.y); 
     pt = hitin.orig + hitin.dir*d;
     if (d>EPS) //strict gt
     {

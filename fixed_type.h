@@ -22,7 +22,10 @@
 
 #ifndef CCOMPILE
 
-template<fixed_basetype Q/*, unsigned INT=32-Q-1, class U=int*/>
+//inline fixed_basetype fixed_div_impl(fixed_basetype a, fixed_basetype b, unsigned Q);
+
+
+template<unsigned Q/*, unsigned INT=32-Q-1, class U=int*/>
 class fixed_t
 {
 #ifdef FIXED_EMULATE_WITH_FLOAT
@@ -68,7 +71,7 @@ public:
     fixed_t operator >> (int s) const { fixed_t r; r.f = f >> s; return r; } //NOTE: may have precision issues
     fixed_t operator << (int s) const { fixed_t r; r.f = f << s; return r; } //NOTE: may have precision issues
 
-    fixed_t operator / (fixed_t b) const { fixed_t r; r.f = (f << Q) / b.f; return r; }
+    fixed_t operator / (fixed_t b) const { fixed_t r; r.f = (f << Q) / b.f/*fixed_div_impl(f, b.f, Q)*/; return r; }
 
     bool operator == (fixed_t b) const { return f == b.f; }
     bool operator != (fixed_t b) const { return f != b.f; }
@@ -105,7 +108,6 @@ public:
     fixed3 operator - (fixed3 v) const { fixed3 r = { x-v.x, y-v.y, z-v.z }; return r;  }
 };
 
-//inline int lround(fixed a) { return (a.f + (1 << (FIXED_FRACTIONBITS-1))) >> FIXED_FRACTIONBITS; }
 inline int16_t round16(fixed a) { return int16_t(a+.5); }
 
 inline fixed fixed_shift(fixed a, shift_t shift) { return shift >= 0 ? (a << shift) : (a >> shift_t(-shift)); }
@@ -226,9 +228,21 @@ fixed3 const_fixed3_mul_float(fixed3 left, float right)
 #endif
 
 inline fixed3 fixed3_make_from_const_fixed3(fixed3 a) { return a; }
+
+#if 0
 #include "fixed_div.h"
+#else
+#ifndef __PIPELINEC__
+inline fixed fixed_div(fixed a, fixed b) { fixed r; r.f = { (a.f<<FIXED_FRACTIONBITS)/b.f }; return r; }
+#else
+inline fixed fixed_div(fixed a, fixed b) { fixed r = { (a.f<<FIXED_FRACTIONBITS)/b.f }; return r; }
+#endif
+
+#endif
 
 #endif //CCOMPILE
+
+
 
 #define fixed_sign(x) fixed_is_negative(x)
 

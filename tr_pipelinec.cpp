@@ -53,13 +53,39 @@ inline float is_negative(float x) { return float_to_uint(x)&0x80000000; }
 inline float float_abs(float x) { return uint_to_float(float_to_uint(x)&0x7FFFFFFF); }
 inline float inversesqrt( float number ) //should one more newton iteration
 {
+#if 1
   // https://en.wikipedia.org/wiki/Fast_inverse_square_root
   float_type x2 = float_shift(number, -1);
   float_type conv_f = uint_to_float(0x5f3759df - (float_to_uint(number) >> 1));
   return conv_f*(float_type(1.5) - conv_f*conv_f*x2);
+#else
+  return 1.f/sqrtf(number);
+#endif
 }
 
 inline float sqrt(float x) { return x*inversesqrt(x); }
+
+inline float float_fast_reciprocal_u(float_type x)
+{
+#ifdef PARSING
+#warning use below implementation with correct constant for hardware
+  float_type y = inversesqrt(x);
+  return y*y;
+#else
+  //https://stackoverflow.com/questions/9939322/fast-1-x-division-reciprocal
+  const uint32_t K = 0x7EF127EA;
+  float f = uint_to_float(K - float_to_uint(x));
+  // Efficient Iterative Approximation Improvement in horner polynomial form.
+  return f * (2. - x*f);     // Single iteration, Err = -3.36e-3 * 2^(-flr(log2(x)))
+#endif
+}
+
+inline float_type float_fast_div_u(float_type a, float_type b)
+{
+  //return a/b;
+  return a*float_fast_reciprocal_u(b); //actually faster!
+}
+
 inline float float_max(float a, float b) { return a>b?a:b; }
 inline float float_min(float a, float b) { return a<b?a:b; }
 static const float BIG_FLOAT = 1.0e23;
