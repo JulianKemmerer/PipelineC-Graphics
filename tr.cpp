@@ -158,40 +158,48 @@ struct hit_out
 #endif
 };
 
-hit_out ray_sphere_intersect(IN(sphere_t) s, IN(point_and_dir) hitin)
+hit_out sphere_hit(bool hit, IN(vec3) center, IN(point_and_dir) hitin, float t, float diff)
 {
-
  hit_out hitout;
- vec3 ro = hitin.orig;
- vec3 rd = hitin.dir;
- vec3 sp = object_coord_to_float3(s.center);
-
- hitout.dist = RAY_NOINT;
- float diff;
- float t;
-	
-	vec3  rc = ro - sp;
-#ifndef SPHERE_MOTIONBLUR
-	float b =  dot(rc,rd);
-	float c =  dot(rc,rc) - SPHERE_RADIUS*SPHERE_RADIUS;
-	diff = b*b - c; //aab = A*A - B;
-	if(diff > 0.)
-	{
-          t = -b - sqrt(diff);
-          if (t > 0.)
-          {
-            hitout.dist = t;
-#ifdef ANTIALIAS
+  hitout.dist = hit ? t : RAY_NOINT;
+#ifndef PARSING //always calculate for hardware
+  if(hit)
+#endif
+  {
+            hitout.hit.orig = hitin.orig + hitin.dir*t;
+	    hitout.hit.dir = normalize(hitout.hit.orig - center);
+  #ifdef ANTIALIAS
             hitout.accdist = calc_accdist(hitin, hitout);
 #endif
-            hitout.hit.orig = hitin.orig + hitin.dir*hitout.dist;
-	    hitout.hit.dir = normalize(hitout.hit.orig - sp);
-          }
-         else
-          diff = -diff;
-        }
+  }
+  hitout.borderdist = diff;
+  return hitout;
+}
+
+hit_out ray_sphere_intersect(IN(vec3) center, IN(point_and_dir) hitin)
+{
+  float diff;
+  float t;
+  bool nothit;
+#ifndef SPHERE_MOTIONBLUR
+  vec3  rc = hitin.orig - center;
+  float b =  dot(rc,hitin.dir);
+  float c =  dot(rc,rc) - SPHERE_RADIUS*SPHERE_RADIUS;
+  diff = b*b - c; //aab = A*A - B;
+
+  nothit = is_negative(diff);
+  if(nothit == false)
+  {
+    t = -(b + sqrt(diff));
+    nothit = is_negative(t);
+    if (nothit)
+      diff = -diff;
+  }
 
 #else
+	vec3  rc = hitin.orig - center;
+  vec3 ro = hitin.orig;
+ vec3 rd = hitin.dir;
         float_type ve_y(s.yvel*4);
         //vec3 ve(0., float_type(s.yvel), 0); //velocity vector
 
@@ -237,8 +245,7 @@ diff = B;
 #endif
 
 
-  hitout.borderdist = diff;
-  return hitout;
+  return sphere_hit(nothit == false, center, hitin, t, diff);
 }
 
 hit_out ray_plane_intersect(IN(plane_t) plane, IN(point_and_dir) hitin)
@@ -411,7 +418,7 @@ color_basic_t cast_ray_nested(IN(scene_t) scene, IN(scene_colors_t) colors, IN(p
   material_t hit_material;
   hit_material = colors.sphere;//this is what's reflected on the floor
 #if 1<PLANE_MAXRECURSIVITY
-  hit_out hitout = ray_sphere_intersect(scene.sphere, hitin);
+  hit_out hitout = ray_sphere_intersect(object_coord_to_float3(scene.sphere.center), hitin);
 #else
 #error not tested
   hit_out hitout;
@@ -478,7 +485,7 @@ color_basic_t cast_ray(IN(scene_t) scene, IN(scene_colors_t) colors, IN(point_an
   color_basic_t bfog = color_select(mix, colors.fog, sky);
 
   material_t hit_material;
-  hit_out hitsphere = ray_sphere_intersect(scene.sphere, hitin);
+  hit_out hitsphere = ray_sphere_intersect(object_coord_to_float3(scene.sphere.center), hitin);
   hit_material = colors.sphere; //FIXME: needed?
   if (!is_negative(hitsphere.borderdist))
   {
