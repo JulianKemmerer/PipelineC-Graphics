@@ -159,16 +159,14 @@ struct hit_out
 #warning: this seems to add cells to synth, FIXME: inline and define 'hit_out hitout;' at top
 hit_out sphere_hit(bool hit, IN(vec3) center, IN(point_and_dir) hitin, float t, float diff)
 {
- hit_out hitout;
+  hit_out hitout;
   hitout.dist = hit ? t : RAY_NOINT;
-#ifndef PARSING //always calculate for hardware
-  if(hit)
-#endif
+  //if(hit) //always calculated to save hardware muxes
   {
-            hitout.hit.orig = hitin.orig + hitin.dir*t;
-	    hitout.hit.dir = normalize(hitout.hit.orig - center);
-  #ifdef ANTIALIAS
-            hitout.accdist = calc_accdist(hitin, hitout);
+    hitout.hit.orig = hitin.orig + hitin.dir*hitout.dist;
+    hitout.hit.dir = normalize(hitout.hit.orig - center);
+#ifdef ANTIALIAS
+    hitout.accdist = calc_accdist(hitin, hitout);
 #endif
   }
   hitout.borderdist = diff;
@@ -178,7 +176,7 @@ hit_out sphere_hit(bool hit, IN(vec3) center, IN(point_and_dir) hitin, float t, 
 hit_out ray_sphere_intersect(IN(vec3) center, IN(point_and_dir) hitin)
 {
   float diff;
-  float t;
+  float t = RAY_NOINT;
   bool nothit;
 #ifndef SPHERE_MOTIONBLUR
   vec3  rc = hitin.orig - center;
@@ -197,8 +195,8 @@ hit_out ray_sphere_intersect(IN(vec3) center, IN(point_and_dir) hitin)
 
 #else
 	vec3  rc = hitin.orig - center;
-  vec3 ro = hitin.orig;
- vec3 rd = hitin.dir;
+	vec3 ro = hitin.orig;
+	vec3 rd = hitin.dir;
         float_type ve_y(s.yvel*4);
         //vec3 ve(0., float_type(s.yvel), 0); //velocity vector
 
@@ -242,7 +240,6 @@ diff = B;
 		}
 	}
 #endif
-
 
   return sphere_hit(nothit == false, center, hitin, t, diff);
 }
