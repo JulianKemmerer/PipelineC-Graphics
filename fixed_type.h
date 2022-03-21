@@ -110,7 +110,8 @@ public:
 
 inline int16_t round16(fixed a) { return int16_t(a+.5); }
 
-inline fixed fixed_shift(fixed a, shift_t shift) { return shift >= 0 ? (a << shift) : (a >> shift_t(-shift)); }
+fixed fixed_shr(fixed a, shift_t shift) { return a >> shift; }
+fixed fixed_shl(fixed a, shift_t shift) { return a << shift; }
 
 
 inline bool fixed_is_negative(fixed x) { return x.f < 0; }
@@ -120,8 +121,6 @@ inline fixed fixed_abs(fixed x) { return fixed_is_negative(x) ? fixed(0)-x : x; 
 
 inline fixed fixed_min(fixed a, fixed b) { return a>b?a:b; }
 inline fixed fixed_max(fixed a, fixed b) { return a<b?a:b; }
-
-#define fixed_convert(t, x, s) (t)fixed_shift(x, s)
 
 
 #else //CCOMPILE = true
@@ -169,8 +168,8 @@ int16_t fixed_to_short(fixed a) { return (int16_t)(a.f >> FIXED_FRACTIONBITS); }
 
 inline fixed fixed_mul(fixed left, fixed right) { fixed r = { (fixed_basetype)((left.f * right.f)>>FIXED_FRACTIONBITS) }; return r; }
 inline fixed fixed_mul_short(fixed left, short right) { fixed r = { left.f * (fixed_basetype)right}; return r; }
-inline fixed fixed_shl_signed_char(fixed left, shift_t right) { fixed r = { (fixed_basetype)left.f<<right }; return r; }
-inline fixed fixed_shr_signed_char(fixed left, shift_t right) { fixed r = { (fixed_basetype)left.f>>right }; return r; }
+inline fixed fixed_shl_signed_char(fixed left, shift_t right) { fixed r; r.f = (fixed_basetype)left.f<<right; return r; }
+inline fixed fixed_shr_signed_char(fixed left, shift_t right) { fixed r; r.f = (fixed_basetype)left.f>>right; return r; }
 
 #else //FIXED_EMULATE_WITH_FLOAT = true
 typedef float fixed_basetype;
@@ -186,8 +185,8 @@ inline int fixed_to_int(fixed a) { return (int) a.f; }
 
 inline fixed fixed_mul(fixed left, fixed right) { fixed r = { left.f * right.f}; return r; }
 //FIXME: shl/shr doesn't need type of 2nd operand in name (always integer)
-inline fixed fixed_shl_int(fixed left, int right) { fixed r = { left.f*((int)1<<right) }; return r; }
-inline fixed fixed_shr_int(fixed left, int right) { fixed r = { left.f/((int)1<<right) }; return r; }
+//#define fixed_shl_int fixed_shl_signed_char
+//#define fixed_shr_int fixed_shr_signed_char
 
 #endif //FIXED_EMULATE_WITH_FLOAT
 
@@ -241,9 +240,5 @@ inline fixed fixed_div(fixed a, fixed b) { fixed r = { (a.f<<FIXED_FRACTIONBITS)
 #endif
 
 #endif //CCOMPILE
-
-
-
-#define fixed_sign(x) fixed_is_negative(x)
 
 #endif //__FIXED_TYPE__

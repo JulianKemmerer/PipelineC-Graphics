@@ -21,10 +21,8 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 
 
 #include "tr.h"
-#warning: fixed_shift may be not used, and have a preference for shift right or left by constants depending on the case
 
-
-#if ALTERNATE_UI < 2
+#if defined(ALTERNATE_UI) and ALTERNATE_UI < 2
 #undef HEAT_CONSTANT
 #endif
 
@@ -34,8 +32,8 @@ typedef coord_type hole_t;
 hole_t plane_has_hole(hole_t x, hole_t z)
 {
   hole_t ret = 1.; 
-  x=fixed_shift(x, -4);
-  z=fixed_shift(z, -5);
+  x=fixed_shr(x, 4);
+  z=fixed_shr(z, 5);
 
   int16_t ix = round16(x);
   int16_t iz = round16(z);
@@ -158,6 +156,7 @@ struct hit_out
 #endif
 };
 
+#warning: this seems to add cells to synth, FIXME: inline and define 'hit_out hitout;' at top
 hit_out sphere_hit(bool hit, IN(vec3) center, IN(point_and_dir) hitin, float t, float diff)
 {
  hit_out hitout;
@@ -290,14 +289,14 @@ color_basic_t sphere_effect(uint16_t frame, IN(scene_colors_t) colors, IN(sphere
 {
   color_basic_t rcolor = hit_material.diffuse_color;
 #ifdef BLINKY
-  uint6_t tick  = frame>>2;
+  uint8_t tick  = frame>>2;
   if((tick & 0x3F) != 0 || ((hash16(tick)>>13) & 1) != 0)
   {
     //eyeballs
-    float_type dy = (hit.N.y-float_shift(float_type(s.center.y),-6)*1.5); //FIXME: optimize constants 1.5, 1.25
-    float_type dx = float_shift(float_abs(hit.N.z-hit.N.x)-.6, -1)*1.25;
+    float_type dy = (hit.hit.dir.y-float_shift(float_type(s.center.y),-6)*1.5); //FIXME: optimize constants 1.5, 1.25
+    float_type dx = float_shift(float_abs(hit.hit.dir.z-hit.hit.dir.x)-.6, -1)*1.25;
     float_type d = dx*dx+dy*dy;
-    coord_type mindist = fixed_shift(s.heat, -4) + .25*.25;
+    coord_type mindist = fixed_shr(s.heat, 4) + .25*.25;
     if(coord_type(d) < mindist)
       rcolor = d < .15*.15 ? color_basic_t(0.) : color_basic_t(1.2);
 
@@ -597,11 +596,11 @@ color_basic_t background_color_alt(screen_coord_t x, screen_coord_t y, uint16_t 
 
   if(z < 4)
   {
-    int16_t cy = (int16_t) fixed_shift(y*z, -SCR_CSHIFT-1);
-    int16_t cx = (int16_t) fixed_shift(x*z, -SCR_CSHIFT-1) + star_vel(off, cy & 7); //add some movement
+    int16_t cy = (int16_t) fixed_shl(y*z, SCR_CSHIFT-1);
+    int16_t cx = (int16_t) fixed_shl(x*z, SCR_CSHIFT-1) + star_vel(off, cy & 7); //add some movement
     uint16_t pix_hash = hash16(cx ^ hash16(cy)); //FIXME: pixel hash shold be part of the scene
     if((pix_hash & 0xFFC0) == 0) //add star
-      c = color_basic_t(fixed_shift(((pix_hash<<2) + frame) & 0x7F, -9) + STAR_INTENSITY);
+      c = color_basic_t(fixed_shr(((pix_hash<<2) + frame) & 0x7F, 9) + STAR_INTENSITY);
   }
   return c;
 }
@@ -618,7 +617,7 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
 
   if (y != 0. && fixed_sign(y) == fixed_sign(py))
   {
-    inv_y = fixed_shift(py, -FLOOR_SHIFT)/y;
+    inv_y = fixed_shr(py, FLOOR_SHIFT)/y;
 
     coord_type ix = inv_y*x-px;
     coord_type iz = inv_y + pz;
@@ -726,8 +725,8 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(scene_t) scene
   int16_t cy = j << 1;
   cy = (FRAME_HEIGHT + 1) - cy;
 #endif
-  screen_coord_t x = fixed_convert(screen_coord_t, cx, SCR_CSHIFT);
-  screen_coord_t y = fixed_convert(screen_coord_t, cy, SCR_CSHIFT);
+  screen_coord_t x = fixed_shr(cx, SCR_CSHIFT);
+  screen_coord_t y = fixed_shr(cy, SCR_CSHIFT);
 
   pixel_t pix; //ignores alpha
 
@@ -837,7 +836,7 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
   coord_type underground = (state.sphere_y - SPHERE_RADIUS) - FLOOR_Y; //PLANE_Y is always 0
 
   if(state.won)
-    state.sphere_yvel = fixed_shift(underground, -4);
+    state.sphere_yvel = fixed_shr(underground, 4);
 
   if(fixed_is_negative(underground))
   {
@@ -850,7 +849,7 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
     {
 #ifdef HEAT_CONSTANT
       if(state.sphere_yvel>0.)
-        state.heat = fixed_type(0)-fixed_convert(color_type, state.sphere_xvel, -HEAT_CONSTANT);
+        state.heat = fixed_type(0)-fixed_shr(state.sphere_xvel, HEAT_CONSTANT);
 #warning implement unary -
 #endif
 
@@ -871,21 +870,21 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
     }
     else
     {
-      state.camera_z = state.camera_z-fixed_shift(underground, ZOOMOUT_CONSTANT); //lose => fadeout
+      state.camera_z = state.camera_z-fixed_shr(underground, ZOOMOUT_CONSTANT); //lose => fadeout
     }
   }
 
 #ifdef HEAT_CONSTANT
-  state.heat = state.heat - (color_type)fixed_shift(state.heat, -4);
+  state.heat = state.heat - (color_type)fixed_shr(state.heat, 4);
 #endif
-  state.camera_y = state.camera_y + fixed_shift(state.sphere_y - state.camera_y, -5);
+  state.camera_y = state.camera_y + fixed_shr(state.sphere_y - state.camera_y, 5);
 
   //write all outputs
   state.lose = fixed_is_negative(underground) && (-int16_t(underground) >> 10); //underground < -2048.
 
-#if defined(GAME_MODE) && ALTERNATE_UI > 1
+#if HEAT_CONSTANT // && ALTERNATE_UI > 1
   state.diffuse_color = color_select(state.heat, state.lava_color, state.gold_color);
-  state.reflect_color = state.gold_reflect_color*(color_type(1.) - fixed_shift(state.heat,-2));
+  state.reflect_color = state.gold_reflect_color*(color_type(1.) - fixed_shr(state.heat, 2));
 #else
   state.diffuse_color = state.gold_color;
   state.reflect_color = state.gold_reflect_color;

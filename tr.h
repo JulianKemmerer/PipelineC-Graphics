@@ -55,7 +55,7 @@
 #define SQUARE_SIZE .3
 #define GRAVITY_CONSTANT .1//.1
 #define JUMP_CONSTANT 2.
-#define ZOOMOUT_CONSTANT -4 //.075
+#define ZOOMOUT_CONSTANT 4 //.075
 #define XVEL_CONSTANT 0.03
 #define XVEL_DEFAULT 0.5
 #define HOLE_GUARD_MARGIN .05
@@ -63,7 +63,7 @@
 #define SQUARE_SIZE .4
 #define GRAVITY_CONSTANT .05
 #define JUMP_CONSTANT 1.6
-#define ZOOMOUT_CONSTANT -5//.045	
+#define ZOOMOUT_CONSTANT 5//.045	
 #define XVEL_CONSTANT 0.015
 #define XVEL_DEFAULT 0.23
 #define HOLE_GUARD_MARGIN .05
@@ -73,7 +73,7 @@
 
 #define EPS 1.e-3
 
-#define SCR_CSHIFT (/*FRAME_WIDTH < 800 ? -9 :*/ FRAME_WIDTH < 1024 ? -10 : -11)
+#define SCR_CSHIFT (/*FRAME_WIDTH < 800 ? 9 :*/ FRAME_WIDTH < 1024 ? 10 : 11)
 
 #define PIPELINEC_SUGAR
 #warning PIPELINEC_SUGAR shouldn't be a need
@@ -157,7 +157,7 @@ static const color K_lava_color = {255./256.*2.0, 70./256.*1.5, 32./256.*1.5};
 static const color K_plane_color1 = {.8, .8, .8};
 static const color K_plane_color2 = {.1, .0, .0};
 static const color K_floor_difusse = {1., 1., 1.};
-static const color K_floor_reflect = {1.5, 1.5, 1.5};
+static const color K_floor_reflect = {.25, .25, .25};
 #ifdef GAME_MODE
 static const color K_fog_color = {.01,.01,.1};
 #else
