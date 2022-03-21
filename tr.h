@@ -35,7 +35,7 @@
 #define RAY_NOINT BIG_FLOAT //arbitraty value, maybe MAXFLOAT
 
 //constants
-#define AMBIENT_INTENSITY  .1
+#define AMBIENT_INTENSITY  .2
 #define LIGHT_Y 16.
 #define LIGHT_Z (-10.)
 #define DIST_SHIFT (9) //for fog calculations
@@ -151,13 +151,13 @@ struct full_state_t
 };
 
 
-static const color K_gold_color = {(1.5*.15)*243./256., (1.5*.15)*201./256., (1.5*.15)*104./256.};
+static const color K_gold_color = {(1.2*.15)*243./256., (1.2*.15)*201./256., (1.2*.15)*104./256.};
 static const color K_gold_reflect_color = {1.5*(1.-.15)*243./256., 1.5*(1.-.15)*201./256., 1.5*(1.-.15)*104./256.};
 static const color K_lava_color = {255./256.*2.0, 70./256.*1.5, 32./256.*1.5};
 static const color K_plane_color1 = {.8, .8, .8};
 static const color K_plane_color2 = {.1, .0, .0};
-static const color K_floor_difusse = {1.,1.,1.};
-static const color K_floor_reflect = {.5, .5, .5};
+static const color K_floor_difusse = {1., 1., 1.};
+static const color K_floor_reflect = {1.5, 1.5, 1.5};
 #ifdef GAME_MODE
 static const color K_fog_color = {.01,.01,.1};
 #else

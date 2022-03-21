@@ -153,7 +153,6 @@ struct hit_out
 {
   float_type dist, borderdist;
   point_and_dir hit;
-  render_material_t material;
 #ifdef ANTIALIAS
   float_type accdist;
 #endif
@@ -280,9 +279,9 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(point_and_dir) hitin)
 }
 
 //#define BLINKY
-color_basic_t sphere_effect(uint16_t frame, IN(scene_colors_t) colors, IN(sphere_t) s, IN(hit_out) hit)
+color_basic_t sphere_effect(uint16_t frame, IN(scene_colors_t) colors, IN(sphere_t) s, IN(hit_out) hit, IN(material_t) hit_material)
 {
-  color_basic_t rcolor = hit.material.diffuse_color;
+  color_basic_t rcolor = hit_material.diffuse_color;
 #ifdef BLINKY
   uint6_t tick  = frame>>2;
   if((tick & 0x3F) != 0 || ((hash16(tick)>>13) & 1) != 0)
@@ -403,61 +402,46 @@ color_type light_intensity(IN(vec3) hit)
 #endif
 }
 
-hit_out hit_sphere(uint32_t frame, IN(scene_colors_t) colors, IN(sphere_t) sphere, IN(point_and_dir) hitin)
-{
-  hit_out hitout;
-  hitout = ray_sphere_intersect(sphere, hitin);
-  hitout.material = colors.sphere;
-
-  if (!is_negative(hitout.borderdist))
-    hitout.material.diffuse_color = sphere_effect(frame, colors, sphere, hitout);
-  return hitout;
-}
-
-hit_out hit_plane(uint32_t frame, IN(scene_colors_t) colors, IN(plane_t) plane, IN(point_and_dir) hitin)
-{
-  hit_out hitout;
-  hitout = ray_plane_intersect(plane, hitin);
-  hitout.material = colors.plane;
-
-  if (!is_negative(hitout.borderdist))
-    hitout.material.diffuse_color = plane_effect(frame, colors, plane, hitout);
-
-  return hitout;
-}
-
 color_basic_t cast_ray_nested(IN(scene_t) scene, IN(scene_colors_t) colors, IN(point_and_dir) hitin)
 {
 
 #ifdef RT_SMALL_UI
   return background_color(hitin.dir.y);
 #else
-
+  material_t hit_material;
+  hit_material = colors.sphere;//this is what's reflected on the floor
 #if 1<PLANE_MAXRECURSIVITY
-  hit_out hitsphere = hit_sphere(scene.frame, colors, scene.sphere, hitin);
+  hit_out hitout = ray_sphere_intersect(scene.sphere, hitin);
 #else
-  hit_out hitsphere;
-  hitsphere.dist = RAY_NOINT;
+#error not tested
+  hit_out hitout;
+  hitout.dist = RAY_NOINT;
 #endif
 
 #if 1<SPHERE_MAXRECURSIVITY
-  hit_out hitplane = hit_plane(scene.frame, colors, scene.plane, hitin);
-  hit_out hitout = hitplane.dist < hitsphere.dist ? hitplane : hitsphere;
-#else
-  hit_out hitout = hitsphere;
+  hit_out hitplane = ray_plane_intersect(scene.plane, hitin);
+
+  if (hitplane.dist < hitout.dist)
+  {
+    //this controls what's reflected on the sphere
+    hitout = hitplane;
+    hit_material = colors.plane;
+    hit_material.diffuse_color = plane_effect(scene.frame, colors, scene.plane, hitplane);
+  }
 #endif
+  
 
   color_basic_t rcolor(0.);
 #warning solve need to initialize
   if (hitout.dist >= float_shift(1., DIST_SHIFT))
     rcolor = background_color(hitin.dir.y); //has other direction
   else
-    rcolor = hitout.material.diffuse_color*light_intensity(hitout.hit.orig);
+    rcolor = hit_material.diffuse_color*light_intensity(hitout.hit.orig);
   return rcolor;
 #endif
 }
 
-color_basic_t shade(IN(scene_t) scene, IN(scene_colors_t) colors, IN(color_basic_t) background, vec3 dir, IN(hit_out) hit, color_type minfog)
+color_basic_t shade(IN(scene_t) scene, IN(scene_colors_t) colors, IN(color_basic_t) background, vec3 dir, IN(hit_out) hit, IN(material_t) hit_material, color_type minfog)
 {
   color_basic_t rcolor = background;
 
@@ -471,8 +455,8 @@ color_basic_t shade(IN(scene_t) scene, IN(scene_colors_t) colors, IN(color_basic
     hitreflect.dist = hit.dist; //to accumulate distance
 #endif
     color_basic_t reflect_color = cast_ray_nested(scene, colors, hitreflect);
-    color_basic_t diffuse_color = hit.material.diffuse_color * light_intensity(hit.hit.orig);
-    color_basic_t comb_color = diffuse_color + reflect_color*hit.material.reflect_color;
+    color_basic_t diffuse_color = hit_material.diffuse_color * light_intensity(hit.hit.orig);
+    color_basic_t comb_color = diffuse_color + reflect_color*hit_material.reflect_color;
     rcolor = color_select(color_max(color_type(fogmix), minfog), colors.fog, comb_color);
   }
 
@@ -486,19 +470,31 @@ bool is_star(float_type x, float_type y)
 
 color_basic_t cast_ray(IN(scene_t) scene, IN(scene_colors_t) colors, IN(point_and_dir) hitin)
 {
-   bool has_star = is_star(hitin.dir.x, hitin.dir.y);
-   color_basic_t sky = has_star ? color_basic_t(STAR_INTENSITY) : background_color(hitin.dir.y);
+  bool has_star = is_star(hitin.dir.x, hitin.dir.y);
+  color_basic_t sky = has_star ? color_basic_t(STAR_INTENSITY) : background_color(hitin.dir.y);
 
-   float_type ys = float_abs(float_shift(hitin.dir.y, 1));
-   color_type mix = ys<1. ? color_type(1)-color_type(ys): color_type(0);
-   color_basic_t bfog = color_select(mix, colors.fog, sky);
+  float_type ys = float_abs(float_shift(hitin.dir.y, 1));
+  color_type mix = ys<1. ? color_type(1)-color_type(ys): color_type(0);
+  color_basic_t bfog = color_select(mix, colors.fog, sky);
 
-   hit_out hitsphere = hit_sphere(scene.frame, colors, scene.sphere, hitin);
+  material_t hit_material;
+  hit_out hitsphere = ray_sphere_intersect(scene.sphere, hitin);
+  hit_material = colors.sphere; //FIXME: needed?
+  if (!is_negative(hitsphere.borderdist))
+  {
+    hit_material.diffuse_color = sphere_effect(scene.frame, colors, scene.sphere, hitsphere, hit_material);
+  }
 #ifndef RT_SMALL_UI
-   hit_out hitplane = hit_plane(scene.frame, colors, scene.plane, hitin);
+  hit_out hitplane = ray_plane_intersect(scene.plane, hitin);
 #else
-   hit_out hitplane; hitplane.dist = BIG_FLOAT;
+  hit_out hitplane; hitplane.dist = BIG_FLOAT;
 #endif
+  bool planehit =  hitplane.dist < hitsphere.dist;
+  if (planehit)
+  {
+    hit_material = colors.plane;  //FIXME: needed?
+    hit_material.diffuse_color = plane_effect(scene.frame, colors, scene.plane, hitplane);
+  }
 
 #ifdef MOTION_BLUR
   {
@@ -509,9 +505,8 @@ color_basic_t cast_ray(IN(scene_t) scene, IN(scene_colors_t) colors, IN(point_an
 #endif
 
 #ifndef ANTIALIAS
-   bool sphit =  hitsphere.dist < hitplane.dist;
-   hit_out hitout = sphit ? hitsphere : hitplane;
-   return shade(scene, colors, bfog, hitin.dir, hitout, sphit ? color_type(0.) : mix); //no fog for sphere
+   hit_out hitout = planehit ? hitplane : hitsphere;
+   return shade(scene, colors, bfog, hitin.dir, hitout, hit_material, planehit ? mix : color_type(0.)); //no fog for sphere
 #else
    color_basic_t rcolor;
 
