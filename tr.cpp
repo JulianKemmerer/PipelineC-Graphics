@@ -131,7 +131,7 @@ inline scene_colors_t scene_colors(IN(scene_t) scene, uint2_t channel)
 #ifndef ALTERNATE_UI
 
 #ifdef ANTIALIAS
-float_type calc_accdist(IN(hit_in) hitin, IN(hit_out) hitout)
+float_type calc_accdist(IN(point_and_dir) hitin, IN(hit_out) hitout)
 {
   float_type din = hitin.dist + hitout.dist;
   float_type d = float_shift(din, -(ANTIALIAS+6));
@@ -141,25 +141,25 @@ float_type calc_accdist(IN(hit_in) hitin, IN(hit_out) hitout)
 
 //raytracer math inspired on tinyraytracer https://github.com/ssloy/tinyraytracer
 
-struct hit_in
+struct point_and_dir
 {
   vec3 orig, dir;
 #ifdef ANTIALIAS
-  float_type dist;
+  float_type dist; //FIXME: move appropiately
 #endif
 };
 
 struct hit_out
 {
   float_type dist, borderdist;
-  vec3 N, hit;
+  point_and_dir hit;
   render_material_t material;
 #ifdef ANTIALIAS
   float_type accdist;
 #endif
 };
 
-hit_out ray_sphere_intersect(IN(sphere_t) s, IN(hit_in) hitin)
+hit_out ray_sphere_intersect(IN(sphere_t) s, IN(point_and_dir) hitin)
 {
 
  hit_out hitout;
@@ -185,8 +185,8 @@ hit_out ray_sphere_intersect(IN(sphere_t) s, IN(hit_in) hitin)
 #ifdef ANTIALIAS
             hitout.accdist = calc_accdist(hitin, hitout);
 #endif
-            hitout.hit = hitin.orig + hitin.dir*hitout.dist;
-	    hitout.N = normalize(hitout.hit - sp);
+            hitout.hit.orig = hitin.orig + hitin.dir*hitout.dist;
+	    hitout.hit.dir = normalize(hitout.hit.orig - sp);
           }
          else
           diff = -diff;
@@ -242,7 +242,7 @@ diff = B;
   return hitout;
 }
 
-hit_out ray_plane_intersect(IN(plane_t) plane, IN(hit_in) hitin)
+hit_out ray_plane_intersect(IN(plane_t) plane, IN(point_and_dir) hitin)
 {
   hit_out hitout;
   hitout.dist = RAY_NOINT;
@@ -269,9 +269,9 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(hit_in) hitin)
 #ifdef ANTIALIAS
           hitout.accdist = calc_accdist(hitin, hitout);
 #endif
-          hitout.hit = pt;
+          hitout.hit.orig = pt;
           vec3 N = VECTOR_NURMAL_UPWARDS;
-          hitout.N = N; //points upwards
+          hitout.hit.dir = N; //points upwards
       }
       hitout.borderdist = float_type(hole_margin);
     }
@@ -318,8 +318,8 @@ color_basic_t plane_effect(uint16_t frame, IN(scene_colors_t) colors, IN(plane_t
   color_basic_t rcolor = colors.plane.diffuse_color;
   vec3 plane_center = object_coord_to_float3(plane.center);
 
-  float_type hitx = hit.hit.x - plane_center.x;
-  float_type hitz = hit.hit.z - plane_center.z;
+  float_type hitx = hit.hit.orig.x - plane_center.x;
+  float_type hitz = hit.hit.orig.z - plane_center.z;
   float_type ox = float_shift(hitx, FLOOR_SHIFT); //FIXME: same coordinates in this game
   float_type oz = float_shift(hitz, FLOOR_SHIFT);
   
@@ -403,7 +403,7 @@ color_type light_intensity(IN(vec3) hit)
 #endif
 }
 
-hit_out hit_sphere(uint32_t frame, IN(scene_colors_t) colors, IN(sphere_t) sphere, IN(hit_in) hitin)
+hit_out hit_sphere(uint32_t frame, IN(scene_colors_t) colors, IN(sphere_t) sphere, IN(point_and_dir) hitin)
 {
   hit_out hitout;
   hitout = ray_sphere_intersect(sphere, hitin);
@@ -414,7 +414,7 @@ hit_out hit_sphere(uint32_t frame, IN(scene_colors_t) colors, IN(sphere_t) spher
   return hitout;
 }
 
-hit_out hit_plane(uint32_t frame, IN(scene_colors_t) colors, IN(plane_t) plane, IN(hit_in) hitin)
+hit_out hit_plane(uint32_t frame, IN(scene_colors_t) colors, IN(plane_t) plane, IN(point_and_dir) hitin)
 {
   hit_out hitout;
   hitout = ray_plane_intersect(plane, hitin);
@@ -426,7 +426,7 @@ hit_out hit_plane(uint32_t frame, IN(scene_colors_t) colors, IN(plane_t) plane, 
   return hitout;
 }
 
-color_basic_t cast_ray_nested(IN(scene_t) scene, IN(scene_colors_t) colors, IN(hit_in) hitin)
+color_basic_t cast_ray_nested(IN(scene_t) scene, IN(scene_colors_t) colors, IN(point_and_dir) hitin)
 {
 
 #ifdef RT_SMALL_UI
@@ -452,7 +452,7 @@ color_basic_t cast_ray_nested(IN(scene_t) scene, IN(scene_colors_t) colors, IN(h
   if (hitout.dist >= float_shift(1., DIST_SHIFT))
     rcolor = background_color(hitin.dir.y); //has other direction
   else
-    rcolor = hitout.material.diffuse_color*light_intensity(hitout.hit);
+    rcolor = hitout.material.diffuse_color*light_intensity(hitout.hit.orig);
   return rcolor;
 #endif
 }
@@ -464,14 +464,14 @@ color_basic_t shade(IN(scene_t) scene, IN(scene_colors_t) colors, IN(color_basic
   float_type fogmix = float_shift(hit.dist, -DIST_SHIFT); //no need to accumulated dist
   if (fogmix < 1.)
   {
-    hit_in hitreflect;
-    hitreflect.orig = hit.hit;
-    hitreflect.dir = reflect(dir, hit.N);
+    point_and_dir hitreflect;
+    hitreflect.orig = hit.hit.orig;
+    hitreflect.dir = reflect(dir, hit.hit.dir);
 #ifdef ANTIALIAS
     hitreflect.dist = hit.dist; //to accumulate distance
 #endif
     color_basic_t reflect_color = cast_ray_nested(scene, colors, hitreflect);
-    color_basic_t diffuse_color = hit.material.diffuse_color * light_intensity(hit.hit);
+    color_basic_t diffuse_color = hit.material.diffuse_color * light_intensity(hit.hit.orig);
     color_basic_t comb_color = diffuse_color + reflect_color*hit.material.reflect_color;
     rcolor = color_select(color_max(color_type(fogmix), minfog), colors.fog, comb_color);
   }
@@ -484,7 +484,7 @@ bool is_star(float_type x, float_type y)
   return ((hashf(x)>>2) & (hashf(y)>>2)) > 0x3E00;
 }
 
-color_basic_t cast_ray(IN(scene_t) scene, IN(scene_colors_t) colors, IN(hit_in) hitin)
+color_basic_t cast_ray(IN(scene_t) scene, IN(scene_colors_t) colors, IN(point_and_dir) hitin)
 {
    bool has_star = is_star(hitin.dir.x, hitin.dir.y);
    color_basic_t sky = has_star ? color_basic_t(STAR_INTENSITY) : background_color(hitin.dir.y);
@@ -564,7 +564,7 @@ void perf_gameplay_dump();
 color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y, IN(scene_t) scene, IN(scene_colors_t) colors)
 {
 
-  hit_in hitin;
+  point_and_dir hitin;
   hitin.orig = object_coord_to_float3(scene.camera);
   vec3 camera_dir = {float_type(x), float_type(y), float_type(-1.)};
   hitin.dir = normalize(camera_dir);

@@ -218,9 +218,9 @@ scene_colors_t scene_colors(scene_t scene)
   return r;
 }
 
-typedef struct hit_in { vec3 orig; vec3 dir; } hit_in;
-typedef struct hit_out { float_type dist; float_type borderdist; vec3 N; vec3 hit; material_t material; } hit_out;
-hit_out ray_sphere_intersect(sphere_t s, hit_in hitin)
+typedef struct point_and_dir { vec3 orig; vec3 dir; } point_and_dir;
+typedef struct hit_out { float_type dist; float_type borderdist; point_and_dir hit; material_t material; } hit_out;
+hit_out ray_sphere_intersect(sphere_t s, point_and_dir hitin)
 {
   hit_out hitout;
   vec3 ro = hitin.orig;
@@ -239,8 +239,8 @@ hit_out ray_sphere_intersect(sphere_t s, hit_in hitin)
     
     if(t > (double)0.) {
       hitout.dist = t;
-      hitout.hit = float3_add(hitin.orig, float3_mul_float(hitin.dir, hitout.dist));
-      hitout.N = normalize(float3_sub(hitout.hit, sp));
+      hitout.hit.orig = float3_add(hitin.orig, float3_mul_float(hitin.dir, hitout.dist));
+      hitout.hit.dir = normalize(float3_sub(hitout.hit.orig, sp));
     }
     else diff = -diff;
   }
@@ -248,7 +248,7 @@ hit_out ray_sphere_intersect(sphere_t s, hit_in hitin)
   return hitout;
 }
 
-hit_out ray_plane_intersect(plane_t plane, hit_in hitin)
+hit_out ray_plane_intersect(plane_t plane, point_and_dir hitin)
 {
   hit_out hitout;
   hitout.dist = BIG_FLOAT;
@@ -269,9 +269,9 @@ hit_out ray_plane_intersect(plane_t plane, hit_in hitin)
       
       if(!fixed_is_negative(hole_margin)) {
         hitout.dist = d;
-        hitout.hit = pt;
+        hitout.hit.orig = pt;
         vec3 N = VECTOR_NURMAL_UPWARDS;
-        hitout.N = N;
+        hitout.hit.dir = N;
       }
       hitout.borderdist = fixed_to_float(hole_margin);
     }
@@ -289,8 +289,8 @@ color plane_effect(uint16_t frame, scene_colors_t colors, plane_t plane, hit_out
 {
   color rcolor = colors.plane.diffuse_color;
   vec3 plane_center = object_coord_to_float3(plane.center);
-  float_type hitx = hit.hit.x - plane_center.x;
-  float_type hitz = hit.hit.z - plane_center.z;
+  float_type hitx = hit.hit.orig.x - plane_center.x;
+  float_type hitz = hit.hit.orig.z - plane_center.z;
   float_type ox = float_shift(hitx, (-3));
   float_type oz = float_shift(hitz, (-3));
   int16_t ix = round16(fixed_make_from_float(ox));
@@ -319,7 +319,7 @@ color_type light_intensity(vec3 hit)
   return fixed_add(fixed_make_from_float(inversesqrt(fixed_to_float(dl))), fixed_make_from_double((double).1));
 }
 
-hit_out hit_sphere(uint32_t frame, scene_colors_t colors, sphere_t sphere, hit_in hitin)
+hit_out hit_sphere(uint32_t frame, scene_colors_t colors, sphere_t sphere, point_and_dir hitin)
 {
   hit_out hitout;
   hitout = ray_sphere_intersect(sphere, hitin);
@@ -329,7 +329,7 @@ hit_out hit_sphere(uint32_t frame, scene_colors_t colors, sphere_t sphere, hit_i
   return hitout;
 }
 
-hit_out hit_plane(uint32_t frame, scene_colors_t colors, plane_t plane, hit_in hitin)
+hit_out hit_plane(uint32_t frame, scene_colors_t colors, plane_t plane, point_and_dir hitin)
 {
   hit_out hitout;
   hitout = ray_plane_intersect(plane, hitin);
@@ -339,7 +339,7 @@ hit_out hit_plane(uint32_t frame, scene_colors_t colors, plane_t plane, hit_in h
   return hitout;
 }
 
-color cast_ray_nested(scene_t scene, scene_colors_t colors, hit_in hitin)
+color cast_ray_nested(scene_t scene, scene_colors_t colors, point_and_dir hitin)
 {
   hit_out hitsphere = hit_sphere(scene.frame, colors, scene.sphere, hitin);
   hit_out hitplane = hit_plane(scene.frame, colors, scene.plane, hitin);
@@ -347,7 +347,7 @@ color cast_ray_nested(scene_t scene, scene_colors_t colors, hit_in hitin)
   color rcolor = fixed3_make_from_fixed(fixed_make_from_double((double)0.));
   
   if(hitout.dist >= float_shift((double)1., (9))) rcolor = background_color(hitin.dir.y);
-  else rcolor = fixed3_mul_fixed(hitout.material.diffuse_color, light_intensity(hitout.hit));
+  else rcolor = fixed3_mul_fixed(hitout.material.diffuse_color, light_intensity(hitout.hit.orig));
   return rcolor;
 }
 
@@ -357,11 +357,11 @@ color shade(scene_t scene, scene_colors_t colors, color background, vec3 dir, hi
   float_type fogmix = float_shift(hit.dist, -(9));
   
   if(fogmix < (double)1.) {
-    hit_in hitreflect;
-    hitreflect.orig = hit.hit;
-    hitreflect.dir = reflect(dir, hit.N);
+    point_and_dir hitreflect;
+    hitreflect.orig = hit.hit.orig;
+    hitreflect.dir = reflect(dir, hit.hit.dir);
     color reflect_color = cast_ray_nested(scene, colors, hitreflect);
-    color diffuse_color = fixed3_mul_fixed(hit.material.diffuse_color, light_intensity(hit.hit));
+    color diffuse_color = fixed3_mul_fixed(hit.material.diffuse_color, light_intensity(hit.hit.orig));
     color comb_color = fixed3_add(diffuse_color, fixed3_mul(reflect_color, hit.material.reflect_color));
     rcolor = color_select(color_max(fixed_make_from_float(fogmix), minfog), colors.fog, comb_color);
   }
@@ -373,7 +373,7 @@ bool is_star(float_type x, float_type y)
   return ((hashf(x) >> 2) & (hashf(y) >> 2)) > 0x3E00;
 }
 
-color cast_ray(scene_t scene, scene_colors_t colors, hit_in hitin)
+color cast_ray(scene_t scene, scene_colors_t colors, point_and_dir hitin)
 {
   bool has_star = is_star(hitin.dir.x, hitin.dir.y);
   color sky = has_star ? fixed3_make_from_fixed(fixed_make_from_double((double).35)) : background_color(hitin.dir.y);
@@ -389,7 +389,7 @@ color cast_ray(scene_t scene, scene_colors_t colors, hit_in hitin)
 
 color render_pixel_internal(screen_coord_t x, screen_coord_t y, scene_t scene, scene_colors_t colors)
 {
-  hit_in hitin;
+  point_and_dir hitin;
   hitin.orig = object_coord_to_float3(scene.camera);
   vec3 camera_dir = {fixed_to_float(x), fixed_to_float(y), (double)-1.};
   hitin.dir = normalize(camera_dir);
