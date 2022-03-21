@@ -12,7 +12,8 @@ typedef float_type coord_type;
 typedef float3 object_coord_t;
 typedef float_type screen_coord_t;
 
-#define fixed_shift float_shift
+#define fixed_shl float_shift
+#define fixed_shr(x,s) float_shift(x,-(s))
 #define fixed_abs float_abs
 #define fixed_max float_max
 #define fixed_sign(x) ((x)<0)
@@ -101,8 +102,8 @@ inline float dot(vec3 a, vec3 b) { return a.x*b.x+a.y*b.y+a.z*b.z; }
 inline vec3 reflect(vec3 I, vec3 N) { return I - N*float_shift(dot(I,N),1); }
 inline vec3 normalize(vec3 v) { return v*inversesqrt(dot(v, v)); }
 
-#define fixed_asinteger(x, s) (int)fixed_shift((x), (s))
-#define fixed_asshort(x, s) (short)fixed_shift((x), (s))
+#define fixed_asinteger(x, s) (int)fixed_shl((x), (s))
+#define fixed_asshort(x, s) (short)fixed_shl((x), (s))
 
 //template<class F, class T> T float_select(const F& x, const T& a, const T& b) { return b+(a-b)*x; }
 inline vec3 float_select(float x, vec3 a, vec3 b) { return b+(a-b)*x; }
