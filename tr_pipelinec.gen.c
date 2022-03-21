@@ -99,10 +99,12 @@ float sqrt(float x)
   return x * inversesqrt(x);
 }
 
-float float_fast_reciprocal_u(float_type x)
+float float_fast_reciprocal_u(float x)
 {
-  float_type y = inversesqrt(x);
-  return y * y;
+  bool neg = is_negative(x);
+  float_type y = inversesqrt(neg ? -x : x);
+  y = y * y;
+  return neg ? -y : y;
 }
 
 float_type float_fast_div_u(float_type a, float_type b)
@@ -257,7 +259,7 @@ hit_out ray_plane_intersect(plane_t plane, hit_in hitin)
   hole_t hole_margin = fixed_make_from_int(0);
   vec3 o;
   
-  if(is_negative(hitin.dir.y)) {
+  if(hitin.dir.y != (double)0.) {
     d = float_fast_div_u(hitin.orig.y - plane_center.y, -hitin.dir.y);
     pt = float3_add(hitin.orig, float3_mul_float(hitin.dir, d));
     

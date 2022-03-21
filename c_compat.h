@@ -34,7 +34,8 @@ inline float3 float3_sub(float3 left, float3 right) { float3 r = { left.x - righ
 inline float3 float3_mul(float3 left, float3 right) { float3 r = { left.x * right.x, left.y * right.y, left.z * right.z }; return r; }
 inline float3 float3_mul_float(float3 left, float right) { float3 r = { left.x * right, left.y * right, left.z * right }; return r; }
 
-#else
+
+#else // CCOMPILE = false
 
 //typedef float vec2 __attribute__((vector_size(2*4)));
 //typedef float vec3 __attribute__((vector_size(3*4)));
@@ -43,10 +44,18 @@ typedef float __attribute__((ext_vector_type(2))) float2;
 typedef float __attribute__((ext_vector_type(3))) float3;
 typedef float __attribute__((ext_vector_type(4))) float4;
 
+
 #endif //CCOMPILE
+
+#ifdef PARSING
+#define IN(t) t
+#define INOUT(t) t
+#else
+#define IN(t) const t&
+#define INOUT(t) t&
+#endif
 
 #define shift_t int6_t
 
-#define IN(t) t
 
 #endif //__C_COMPAT_H__

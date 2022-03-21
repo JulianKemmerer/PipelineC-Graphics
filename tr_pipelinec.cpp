@@ -65,12 +65,14 @@ inline float inversesqrt( float number ) //should one more newton iteration
 
 inline float sqrt(float x) { return x*inversesqrt(x); }
 
-inline float float_fast_reciprocal_u(float_type x)
+inline float float_fast_reciprocal_u(float x)
 {
 #ifdef PARSING
-#warning use below implementation with correct constant for hardware
-  float_type y = inversesqrt(x);
-  return y*y;
+#warning use below implementation with shifted constant for hardware
+  bool neg = is_negative(x);
+  float_type y = inversesqrt(neg ? -x:x);
+  y = y*y;
+  return neg?-y:y;
 #else
   //https://stackoverflow.com/questions/9939322/fast-1-x-division-reciprocal
   const uint32_t K = 0x7EF127EA;

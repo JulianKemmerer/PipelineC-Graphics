@@ -252,8 +252,8 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(hit_in) hitin)
   vec3 pt;
   hole_t hole_margin = 0; //FIXME: parser needs initialization
   vec3 o;
-  //if (hitin.dir.y != 0.) // avoids division by zero
-  if (is_negative(hitin.dir.y)) // avoids division by zero
+  if (hitin.dir.y != 0.) // avoids division by zero
+  //if (is_negative(hitin.dir.y)) // avoids division by zero
   //if (float_abs(hitin.dir.y) > EPS) // avoid division by zero
   {
     //d = -(hitin.orig.y-plane_center.y)/hitin.dir.y; 
@@ -814,15 +814,15 @@ full_state_t reset_state(uint16_t score)
     state.camera_y = (coord_type) state.scene.camera.y;
     state.camera_z = (coord_type) state.scene.camera.z;
     state.plane_x  = coord_type(FLOOR_X);
-    state.sphere_xvel = (coord_type) 0.;
-    state.sphere_yvel = (coord_type) 0.;
+    state.sphere_xvel = 0.;
+    state.sphere_yvel = 0.;
     state.won = false;
     state.score = score;
 
     return state;
 }
 
-full_state_t full_update(full_state_t state, bool reset, bool button_state)
+full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_state)
 {
   uint16_t score = state.score;
   if(reset) score = 0;
