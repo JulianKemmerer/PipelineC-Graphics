@@ -30,6 +30,10 @@ There's no game nor render logic in this source, all that is defined by the HDL 
 int FRAME_WIDTH = _FRAME_WIDTH;
 int FRAME_HEIGHT = _FRAME_HEIGHT;
 
+struct scene_t;
+const scene_t& get_scene();
+
+
 #include "pipelinec_compat.h"
 #include "float_type.h"
 
@@ -40,6 +44,8 @@ int FRAME_HEIGHT = _FRAME_HEIGHT;
 #include "tr_pipelinec.gen.c" //generated source
 #endif
 
+static full_state_t state;
+const scene_t& get_scene() { return state.scene; }
 
 
 #define WIRE_WRITE(a,b,c) memcpy((a*)&c, &b, sizeof(c));
@@ -164,7 +170,6 @@ int main()
         return 1;
 
 #ifndef GATEWARE_VGA
-    full_state_t state;
     state = full_update(state, true, false); //reset state
 #endif
     t0 = higres_ticks();
@@ -186,12 +191,12 @@ int main()
 #endif
 
 #ifndef COLOR_DECOMP
-          pixel_t c = render_pixel(x, y, state.scene);
+          pixel_t c = render_pixel(x, y);
 #else
           pixel_t c;
-          c = render_pixel(x, y, state.scene, 0, c);
-          c = render_pixel(x, y, state.scene, 1, c);
-          c = render_pixel(x, y, state.scene, 2, c);
+          c = render_pixel(x, y, 0, c);
+          c = render_pixel(x, y, 1, c);
+          c = render_pixel(x, y, 2, c);
 #endif
 
         //while(frame == 26) { if(fb_should_quit()) exit(0); }
@@ -275,7 +280,7 @@ bool fb_init(unsigned width, unsigned height)
       SDL_SetWindowFullscreen(win, SDL_WINDOW_FULLSCREEN);
 
     SDL_ShowCursor(SDL_DISABLE);
-    renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE /*| SDL_RENDERER_PRESENTVSYNC*/);
+    renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE | SDL_RENDERER_PRESENTVSYNC*0);
     if (!renderer)
       return false;
 

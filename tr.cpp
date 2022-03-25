@@ -76,6 +76,7 @@ hole_t plane_has_hole(hole_t x, hole_t z)
 
 
 #ifndef COLOR_DECOMP
+#warning integrate this in scene struct
 inline scene_colors_t scene_colors(IN(scene_t) scene)
 {
   scene_colors_t r;
@@ -88,8 +89,11 @@ inline scene_colors_t scene_colors(IN(scene_t) scene)
 }
 
 #else
-inline scene_colors_t scene_colors(IN(scene_t) scene, uint2_t channel)
+#warning integrate this in scene struct
+inline scene_colors_t scene_colors(uint2_t channel)
 {
+  IN(scene_t) scene = get_scene();
+
   scene_colors_t r;
   if(channel == 0)
   {
@@ -282,10 +286,15 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(point_and_dir) hitin)
 }
 
 //#define BLINKY
-color_basic_t sphere_effect(uint16_t frame, IN(scene_colors_t) colors, IN(sphere_t) s, IN(hit_out) hit, IN(material_t) hit_material)
+color_basic_t sphere_effect(IN(hit_out) hit, IN(material_t) hit_material)
 {
   color_basic_t rcolor = hit_material.diffuse_color;
 #ifdef BLINKY
+  IN(scene_t) scene = get_scene();
+  IN(scene_colors_t) colors = scene_colors(scene);
+  IN(sphere_t) s = scene.sphere;
+  uint16_t frame = scene.frame;
+
   uint8_t tick  = frame>>2;
   if((tick & 0x3F) != 0 || ((hash16(tick)>>13) & 1) != 0)
   {
@@ -315,8 +324,12 @@ float_type triang(float_type x )
 }
 #endif
 
-color_basic_t plane_effect(uint16_t frame, IN(scene_colors_t) colors, IN(plane_t) plane, IN(hit_out) hit)
+color_basic_t plane_effect(IN(hit_out) hit)
 {
+  IN(scene_t) scene = get_scene();
+  IN(scene_colors_t) colors = scene_colors(scene);
+  IN(plane_t) plane = scene.plane; 
+
   color_basic_t rcolor = colors.plane.diffuse_color;
   vec3 plane_center = object_coord_to_float3(plane.center);
 
@@ -405,8 +418,10 @@ color_type light_intensity(IN(vec3) hit)
 #endif
 }
 
-color_basic_t cast_ray_nested(IN(scene_t) scene, IN(scene_colors_t) colors, IN(point_and_dir) hitin)
+color_basic_t cast_ray_nested(IN(point_and_dir) hitin)
 {
+  IN(scene_t) scene = get_scene();
+  IN(scene_colors_t) colors = scene_colors(scene);
 
 #ifdef RT_SMALL_UI
   return background_color(hitin.dir.y);
@@ -429,7 +444,7 @@ color_basic_t cast_ray_nested(IN(scene_t) scene, IN(scene_colors_t) colors, IN(p
     //this controls what's reflected on the sphere
     hitout = hitplane;
     hit_material = colors.plane;
-    hit_material.diffuse_color = plane_effect(scene.frame, colors, scene.plane, hitplane);
+    hit_material.diffuse_color = plane_effect(hitplane);
   }
 #endif
   
@@ -444,8 +459,10 @@ color_basic_t cast_ray_nested(IN(scene_t) scene, IN(scene_colors_t) colors, IN(p
 #endif
 }
 
-color_basic_t shade(IN(scene_t) scene, IN(scene_colors_t) colors, IN(color_basic_t) background, vec3 dir, IN(hit_out) hit, IN(material_t) hit_material, color_type minfog)
+color_basic_t shade(IN(color_basic_t) background, IN(vec3) dir, IN(hit_out) hit, IN(material_t) hit_material, color_type minfog)
 {
+  IN(scene_t) scene = get_scene();
+  IN(scene_colors_t) colors = scene_colors(scene);
   color_basic_t rcolor = background;
 
   float_type fogmix = float_shift(hit.dist, -DIST_SHIFT); //no need to accumulated dist
@@ -457,7 +474,7 @@ color_basic_t shade(IN(scene_t) scene, IN(scene_colors_t) colors, IN(color_basic
 #ifdef ANTIALIAS
     hitreflect.dist = hit.dist; //to accumulate distance
 #endif
-    color_basic_t reflect_color = cast_ray_nested(scene, colors, hitreflect);
+    color_basic_t reflect_color = cast_ray_nested(hitreflect);
     color_basic_t diffuse_color = hit_material.diffuse_color * light_intensity(hit.hit.orig);
     color_basic_t comb_color = diffuse_color + reflect_color*hit_material.reflect_color;
     rcolor = color_select(color_max(color_type(fogmix), minfog), colors.fog, comb_color);
@@ -471,8 +488,11 @@ bool is_star(float_type x, float_type y)
   return ((hashf(x)>>2) & (hashf(y)>>2)) > 0x3E00;
 }
 
-color_basic_t cast_ray(IN(scene_t) scene, IN(scene_colors_t) colors, IN(point_and_dir) hitin)
+color_basic_t cast_ray(IN(point_and_dir) hitin)
 {
+  IN(scene_t) scene = get_scene();
+  IN(scene_colors_t) colors = scene_colors(scene);
+  
   bool has_star = is_star(hitin.dir.x, hitin.dir.y);
   color_basic_t sky = has_star ? color_basic_t(STAR_INTENSITY) : background_color(hitin.dir.y);
 
@@ -485,7 +505,7 @@ color_basic_t cast_ray(IN(scene_t) scene, IN(scene_colors_t) colors, IN(point_an
   hit_material = colors.sphere; //FIXME: needed?
   if (!is_negative(hitsphere.borderdist))
   {
-    hit_material.diffuse_color = sphere_effect(scene.frame, colors, scene.sphere, hitsphere, hit_material);
+    hit_material.diffuse_color = sphere_effect(hitsphere, hit_material);
   }
 #ifndef RT_SMALL_UI
   hit_out hitplane = ray_plane_intersect(scene.plane, hitin);
@@ -496,7 +516,7 @@ color_basic_t cast_ray(IN(scene_t) scene, IN(scene_colors_t) colors, IN(point_an
   if (planehit)
   {
     hit_material = colors.plane;  //FIXME: needed?
-    hit_material.diffuse_color = plane_effect(scene.frame, colors, scene.plane, hitplane);
+    hit_material.diffuse_color = plane_effect(hitplane);
   }
 
 #ifdef MOTION_BLUR
@@ -509,12 +529,12 @@ color_basic_t cast_ray(IN(scene_t) scene, IN(scene_colors_t) colors, IN(point_an
 
 #ifndef ANTIALIAS
    hit_out hitout = planehit ? hitplane : hitsphere;
-   return shade(scene, colors, bfog, hitin.dir, hitout, hit_material, planehit ? mix : color_type(0.)); //no fog for sphere
+   return shade(bfog, hitin.dir, hitout, hit_material, planehit ? mix : color_type(0.)); //no fog for sphere
 #else
    color_basic_t rcolor;
 
 #ifndef RT_SMALL_UI
-   color_basic_t planecolor = shade(scene, colors, bfog, hitin.dir, hitplane, mix); //FIXME: bfog
+   color_basic_t planecolor = shade(bfog, hitin.dir, hitplane, mix); //FIXME: bfog
 
    float_type sphere_plane_dist = hitplane.dist - hitsphere.dist;
    if(is_negative(sphere_plane_dist)) //&& hitplane.dist < hitsphere.dist
@@ -559,8 +579,10 @@ void perf_render_dump();
 void perf_gameplay_dump();
 #endif
 
-color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y, IN(scene_t) scene, IN(scene_colors_t) colors)
+color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y)
 {
+  IN(scene_t) scene = get_scene();
+  IN(scene_colors_t) colors = scene_colors(scene);
 
   point_and_dir hitin;
   hitin.orig = object_coord_to_float3(scene.camera);
@@ -569,7 +591,7 @@ color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y, IN(scene
 #ifdef ANTIALIAS
   hitin.dist = 0.; //start dist
 #endif
-  color_basic_t c = cast_ray(scene, colors, hitin);
+  color_basic_t c = cast_ray(hitin);
 
 
   return c;
@@ -643,8 +665,11 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
   return c;
 }
 
-color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, IN(scene_t) scene, IN(scene_colors_t) colors)
+color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y)
 {
+  IN(scene_t) scene = get_scene();
+  IN(scene_colors_t) colors = scene_colors(scene);
+
     coord_type dz = coord_type(scene.camera.z-SPHERE_Z);
 	coord_type dx = coord_type(x*dz - (scene.sphere.center.x/*-scene.camera.x*/));
 	coord_type dy = coord_type(y*dz - (scene.sphere.center.y-scene.camera.y));
@@ -703,12 +728,13 @@ inline uint9_t dither(uint8_t x, uint8_t y, uint9_t v)
 #endif
 
 #ifndef SHADER
-inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(scene_t) scene
+inline pixel_t render_pixel(uint16_t i, uint16_t j
 #ifdef COLOR_DECOMP
 , uint2_t channel, pixel_t pix_in
 #endif
 )
 {
+  IN(scene_t) scene = get_scene();
 #ifdef _DEBUG
   perf_clear();
 #endif
@@ -738,10 +764,10 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(scene_t) scene
   {
 #ifndef COLOR_DECOMP
 #ifdef ALTERNATE_UI
-	color c = render_pixel_internal_alt(x, y, scene, scene_colors(scene));
+	color c = render_pixel_internal_alt(x, y);
 	///*if((i ^ j) & (1<<7))*/ if(cx>0) c = render_pixel_internal(x, y, scene, scene_colors(scene)); //uncomment for checkerboard
 #else
-	color c = render_pixel_internal(x, y, scene, scene_colors(scene));
+	color c = render_pixel_internal(x, y);
 #endif
     uint9_t r = fixed_asshort(c.r, 8);
     uint9_t g = fixed_asshort(c.g, 8);
