@@ -168,6 +168,8 @@ typedef struct plane_t { object_coord_t center; material_t material; color color
 typedef struct scene_t { sphere_t sphere; plane_t plane; object_coord_t camera; color fog; uint16_t frame; uint16_t scorebar; } scene_t;
 typedef struct scene_colors_t { material_t sphere; material_t plane; color plane_color1; color plane_color2; color fog; } scene_colors_t;
 typedef struct full_state_t { scene_t scene; color gold_color; color gold_reflect_color; color lava_color; coord_type plane_y; coord_type sphere_x; coord_type sphere_z; coord_type sphere_y; color_type heat; coord_type camera_y; coord_type camera_z; coord_type plane_x; coord_type sphere_xvel; coord_type sphere_yvel; color diffuse_color; color reflect_color; uint16_t scorebar; uint16_t score; bool won; bool lose; } full_state_t;
+// Scene helper func declared before use in funcs below but after the scene_t struct definition
+#include "get_scene.h"
 #define K_gold_color	(fixed3_make(fixed_make_from_double(((double)1.2 * (double).15) * (double)243. / (double)256.), fixed_make_from_double(((double)1.2 * (double).15) * (double)201. / (double)256.), fixed_make_from_double(((double)1.2 * (double).15) * (double)104. / (double)256.)))
 #define K_gold_reflect_color	(fixed3_make(fixed_make_from_double((double)1.5 * ((double)1. - (double).15) * (double)243. / (double)256.), fixed_make_from_double((double)1.5 * ((double)1. - (double).15) * (double)201. / (double)256.), fixed_make_from_double((double)1.5 * ((double)1. - (double).15) * (double)104. / (double)256.)))
 #define K_lava_color	(fixed3_make(fixed_make_from_double((double)255. / (double)256. * (double)2.0), fixed_make_from_double((double)70. / (double)256. * (double)1.5), fixed_make_from_double((double)32. / (double)256. * (double)1.5)))
@@ -335,21 +337,7 @@ color cast_ray_nested(point_and_dir hitin)
 {
   scene_t scene = get_scene();
   scene_colors_t colors = scene_colors(scene);
-  material_t hit_material;
-  hit_material = colors.sphere;
-  hit_out hitout = ray_sphere_intersect(object_coord_to_float3(scene.sphere.center), hitin);
-  hit_out hitplane = ray_plane_intersect(scene.plane, hitin);
-  
-  if(hitplane.dist < hitout.dist) {
-    hitout = hitplane;
-    hit_material = colors.plane;
-    hit_material.diffuse_color = plane_effect(hitplane);
-  }
-  color rcolor = fixed3_make_from_fixed(fixed_make_from_double((double)0.));
-  
-  if(hitout.dist >= float_shift((double)1., (9))) rcolor = background_color(hitin.dir.y);
-  else rcolor = fixed3_mul_fixed(hit_material.diffuse_color, light_intensity(hitout.hit.orig));
-  return rcolor;
+  return background_color(hitin.dir.y);
 }
 
 color shade(color background, vec3 dir, hit_out hit, material_t hit_material, color_type minfog)
@@ -392,7 +380,8 @@ color cast_ray(point_and_dir hitin)
   if(!is_negative(hitsphere.borderdist)) {
     hit_material.diffuse_color = sphere_effect(hitsphere, hit_material);
   }
-  hit_out hitplane = ray_plane_intersect(scene.plane, hitin);
+  hit_out hitplane;
+  hitplane.dist = BIG_FLOAT;
   bool planehit = hitplane.dist < hitsphere.dist;
   
   if(planehit) {

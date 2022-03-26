@@ -21,11 +21,10 @@
 //#include "dvi/dvi_pmod.c"
 // Access to board buttons and switches
 #include "../PipelineC/examples/arty/src/buttons/buttons.c"
-MAIN_MHZ(app, PIXEL_CLK_MHZ)
 #else
 //FIXME: MHz depends on resolution, but using vga module here bring issues
-MAIN_MHZ(render_pixel_interactive, 25.0) 
-#endif
+//MAIN_MHZ(render_pixel_interactive, 25.0) 
+#endif // LITEX_INTEGRATION
 
 #endif //__PIPELINEC__
 
@@ -33,7 +32,11 @@ MAIN_MHZ(render_pixel_interactive, 25.0)
 #include "fixed_type.h"
 #include "tr_pipelinec.gen.c"
 
+/* Add to tr_pipelinec.gen.c after generating code
+// Scene helper func declared before use in funcs below but after the scene_t struct definition
+#include "get_scene.h" */
 
+/* Old code from when state updates and pixel rendering were combined
 // Logic to update the state in a multiple cycle volatile feedback pipeline
 inline full_state_t do_state_update(uint1_t reset, uint1_t end_of_frame, uint1_t button)
 {
@@ -82,7 +85,7 @@ vsync = ((x == FRAME_WIDTH-1) & (y == FRAME_HEIGHT-1)); //FIXME: pass correct ar
   // Render the pixel at x,y pos given buffered state
   return render_pixel(x, y, state.scene);
 }
-
+*/
 
 #ifndef LITEX_INTEGRATION
 
@@ -119,23 +122,72 @@ inline user_input_t get_user_input()
   return i;
 }
 
-void app()
+// Define the user created frame clock
+#define FRAME_CLK_MHZ 6e-5 // 60Hz
+uint1_t frame_clock;
+#include "clock_crossing/frame_clock.h"
+#pragma ASYNC_WIRE frame_clock
+CLK_MHZ(frame_clock, FRAME_CLK_MHZ)
+
+// Helper func make toggling clock with isolated static frame_clock_reg
+// Maybe include inside vga_timing?
+void frame_clock_logic(vga_signals_t vga_signals)
+{
+  // Need to make ~50% duty cycle frame clock
+  static uint1_t frame_clock_reg;
+  // Drive clock from register
+  WIRE_WRITE(uint1_t, frame_clock, frame_clock_reg)
+
+  // Falling edge mid frame (does not update state)
+  if( vga_signals.active & 
+     (vga_signals.pos.x==(FRAME_WIDTH/2)) &
+     (vga_signals.pos.y==(FRAME_HEIGHT/2))
+  ){
+    frame_clock_reg = 0;
+  }
+  // Rising edge at end of frame (state updated during back porch)
+  else if(vga_signals.active & 
+         (vga_signals.pos.x==(FRAME_WIDTH-1)) &
+         (vga_signals.pos.y==(FRAME_HEIGHT-1))
+  ){
+    frame_clock_reg = 1;
+  }
+}
+
+// Pixel pipeline logic
+MAIN_MHZ(pixel_logic, PIXEL_CLK_MHZ)
+void pixel_logic()
 {
   // VGA timing for fixed resolution
   vga_signals_t vga_signals = vga_timing();
 
+  // Use VGA timing to derive frame clock
+  frame_clock_logic(vga_signals);
+
+  // Render the pixel at x,y pos 
+  // Scene is wired in from frame logic domain
+  pixel_t color = render_pixel(vga_signals.pos.x, vga_signals.pos.y);
+
+  // Drive output signals/registers
+  pmod_register_outputs(vga_signals, color);
+}
+
+// Per next state frame comb. logic
+MAIN_MHZ(frame_logic, FRAME_CLK_MHZ)
+void frame_logic()
+{
+  static full_state_t state; // The state registers
+  static uint1_t power_on_reset = 1;
+
+  // Drive scene from register
+  WIRE_WRITE(uint1_t, scene_wire, state.scene)
+
   // Read user input
   user_input_t ui = get_user_input();
 
-  // Render the pixel at x,y pos 
-  pixel_t color = render_pixel_interactive(
-    vga_signals.pos.x, vga_signals.pos.y,
-    ui.reset_pressed,
-    vga_signals.end_of_frame,
-    ui.jump_pressed);
-  
-  // Drive output signals/registers
-  pmod_register_outputs(vga_signals, color);
+  // Normal next state update
+  state = full_update(state, ui.reset_pressed | power_on_reset, ui.jump_pressed);
+  power_on_reset = 0;
 }
 #endif //LITEX_INTEGRATION
 
