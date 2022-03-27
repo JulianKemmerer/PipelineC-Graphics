@@ -4,9 +4,9 @@ full_state_t state_wire;
 #pragma ASYNC_WIRE state_wire
 scene_t get_scene()
 {
-  scene_t rv;
-  WIRE_READ(scene_t, rv, state_wire.scene)
-  return rv;
+  full_state_t state;
+  WIRE_READ(full_state_t, state, state_wire)
+  return state.scene;
 }
 /* Read state wire to look like func args
 scene_t scene = get_scene();
