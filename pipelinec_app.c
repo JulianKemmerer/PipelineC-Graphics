@@ -180,7 +180,7 @@ void frame_logic()
   static uint1_t power_on_reset = 1;
 
   // Drive scene from register
-  WIRE_WRITE(uint1_t, scene_wire, state.scene)
+  WIRE_WRITE(full_state_t, state_wire, state)
 
   // Read user input
   user_input_t ui = get_user_input();

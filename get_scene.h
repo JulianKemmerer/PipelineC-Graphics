@@ -1,11 +1,11 @@
 #ifdef __PIPELINEC__
-scene_t scene_wire;
-#include "clock_crossing/scene_wire.h"
-#pragma ASYNC_WIRE scene_wire
+full_state_t state_wire;
+#include "clock_crossing/state_wire.h"
+#pragma ASYNC_WIRE state_wire
 scene_t get_scene()
 {
   scene_t rv;
-  WIRE_READ(scene_t, rv, scene_wire)
+  WIRE_READ(scene_t, rv, state_wire.scene)
   return rv;
 }
 /* Read state wire to look like func args
