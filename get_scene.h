@@ -2,6 +2,7 @@
 full_state_t state_wire;
 #include "clock_crossing/state_wire.h"
 #pragma ASYNC_WIRE state_wire
+#pragma FUNC_WIRES get_scene
 scene_t get_scene()
 {
   full_state_t state;
