@@ -5,7 +5,6 @@ extern int FRAME_HEIGHT;
 struct pixel_t { uint8_t a, b, g, r; };
 
 #include "float_type.h"
-
 #ifndef PARSING //only on faster simulation
 typedef float_type fixed_type;
 typedef float_type coord_type;
@@ -126,8 +125,5 @@ uint16_t CLOG2(uint16_t v)
 inline uint16_t hash16(uint16_t v) { return v * uint32_t(0x9E37u); } //16x16bits
 inline uint16_t hashf(float_type f) { uint32_t u = float_to_uint(f); return hash16(((u<<9)|(u>>23))^(u>>7)); }
 
-#if 0
-#include "rt.c"
-#else
-#include "tr.cpp"
-#endif
+#include RTCODE
+
