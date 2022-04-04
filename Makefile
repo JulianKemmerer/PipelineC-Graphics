@@ -14,19 +14,20 @@ PIPELINEC_MAIN?=./pipelinec_app.c
 BOARD?=arty
 OMP_FLAGS=-fopenmp=libiomp5
 CLANGXX?=clang++-14
+RTCODE?=tr.cpp
 
 all: run
 
 sim: run
 
-tr_sim: tr.cpp simulator_main.cpp tr_pipelinec.cpp
-	$(CLANGXX) -D_FRAME_WIDTH=$(FRAME_WIDTH) -D_FRAME_HEIGHT=$(FRAME_HEIGHT) $(INCLUDE) -O3 $(OMP_FLAGS) -ffast-math `sdl2-config --cflags` simulator_main.cpp `sdl2-config --libs` -o tr_sim
+tr_sim: $(RTCODE) simulator_main.cpp tr_pipelinec.cpp
+	$(CLANGXX) -DRTCODE=\"$(RTCODE)\" -D_FRAME_WIDTH=$(FRAME_WIDTH) -D_FRAME_HEIGHT=$(FRAME_HEIGHT) $(INCLUDE) -O3 $(OMP_FLAGS) -ffast-math `sdl2-config --cflags` simulator_main.cpp `sdl2-config --libs` -o tr_sim
 
 run: tr_sim
 	./tr_sim
 
-tr_pipelinec.gen.c: tr.cpp tr_pipelinec.cpp
-	clang -DPARSING -E tr_pipelinec.cpp > tr_pipelinec.E.cpp
+tr_pipelinec.gen.c: $(RTCODE) tr_pipelinec.cpp
+	clang -DPARSING -E -DRTCODE=\"$(RTCODE)\" tr_pipelinec.cpp > tr_pipelinec.E.cpp
 	$(CFLEX_C) tr_pipelinec.E.cpp > tr_pipelinec.gen.c
 
 gen: tr_gen
