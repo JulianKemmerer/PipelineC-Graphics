@@ -40,14 +40,19 @@
 #ifdef LITEX_INTEGRATION
 // Define the user created frame clock
 #define FRAME_CLK_MHZ 6e-5 // 60Hz
+uint1_t frame_clock;
+#include "clock_crossing/frame_clock.h"
+#pragma ASYNC_WIRE frame_clock
+CLK_MHZ(frame_clock, FRAME_CLK_MHZ)
 
 // Helper func make toggling clock with isolated static frame_clock_reg
-// Litex version does not include WIREing of frame_clock, is done is wrapper VHDL
-uint1_t frame_clock_logic(uint16_t x, uint16_t y)
+// Litex version does not include vga active signal
+void frame_clock_logic(uint16_t x, uint16_t y)
 {
   // Need to make ~50% duty cycle frame clock
   static uint1_t frame_clock_reg;
-  uint1_t rv = frame_clock_reg;
+  // Drive clock from register
+  WIRE_WRITE(uint1_t, frame_clock, frame_clock_reg)
   // Falling edge mid frame (does not update state)
   if( (x==(FRAME_WIDTH/2)) & (y==(FRAME_HEIGHT/2)) )
   {
@@ -58,22 +63,13 @@ uint1_t frame_clock_logic(uint16_t x, uint16_t y)
   {
     frame_clock_reg = 1;
   }
-
-  return rv;
 }
 
 // Pixel pipeline logic
-// LITEX version does not have vga timing and takes input of current x,y, 
-// and how many clocks delayed the pipeline is
-// returns pixels + frame clock appropriately delayed from pipeline output
-// Frame clock to be wired as frame logic clock in wrapper vhdl
-typedef struct pixels_and_clock_t
-{
-  pixel_t color;
-  uint1_t frame_clock;
-}pixels_and_clock_t;
+// LITEX version does not have internal vga timing and takes input of current x,y, 
+// and how many clocks delayed the pipeline output, returns pixels
 MAIN_MHZ(pixel_logic, PIXEL_CLK_MHZ)
-pixels_and_clock_t pixel_logic(uint16_t x, uint16_t y, uint16_t latency)
+pixel_t pixel_logic(uint16_t x, uint16_t y, uint16_t latency)
 {
   // Logic to adjust x and y for latency
   // transport (x, y) to the future!
@@ -87,53 +83,32 @@ pixels_and_clock_t pixel_logic(uint16_t x, uint16_t y, uint16_t latency)
   }
 
   // Use VGA x,y to derive frame clock
-  uint1_t frame_clock = frame_clock_logic(x, y);
+  frame_clock_logic(x, y);
 
   // Render the pixel at x,y pos 
   // Scene is wired in from frame logic domain
   pixel_t color = render_pixel(x, y);
 
-  pixels_and_clock_t rv;
-  rv.color = color;
-  rv.frame_clock = frame_clock;
-  return rv;
+  return color;
 }
 
 // Per next state frame comb. logic
-// LITEX version takes button as input and 
-// returns state that is manually wired into pixel logic
+// LITEX version takes button+reset as input
 MAIN_MHZ(frame_logic, FRAME_CLK_MHZ)
-full_state_t frame_logic(uint1_t jump_pressed)
+void frame_logic(uint1_t reset_pressed, uint1_t jump_pressed)
 {
   static full_state_t state; // The state registers
   static uint1_t power_on_reset = 1;
 
-  // Drive output from register
-  full_state_t rv = state;
+  // Drive scene wire from register
+  WIRE_WRITE(full_state_t, state_wire, state)
 
   // Normal next state update
-  state = full_update(state, power_on_reset, jump_pressed);
+  state = full_update(state, reset_pressed | power_on_reset, jump_pressed);
   power_on_reset = 0;
-
-  return rv;
-}
-
-// Wrapper/helper to fake WRITE side of state wire not used in LITEX
-// Instead state is wired in wrapper vhdl
-#pragma MAIN state_wire_fake
-void state_wire_fake(full_state_t fake_input)
-{
-  WIRE_WRITE(full_state_t, state_wire, fake_input)
 }
 
 #else // NOT LITEX_INTEGRATION
-
-// Define the user created frame clock
-#define FRAME_CLK_MHZ 6e-5 // 60Hz
-uint1_t frame_clock;
-#include "clock_crossing/frame_clock.h"
-#pragma ASYNC_WIRE frame_clock
-CLK_MHZ(frame_clock, FRAME_CLK_MHZ)
 
 // Helper func make toggling clock with isolated static frame_clock_reg
 // Maybe include inside vga_timing?
