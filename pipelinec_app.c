@@ -2,10 +2,12 @@
 #ifdef __PIPELINEC__
 //#pragma PART "LFE5U-85F-6BG381C" // An ECP5U 85F part
 #pragma PART "xc7a35ticsg324-1l" // Arty
+#define LITEX_INTEGRATION //TEMP
 
 #include "pipelinec_app_vgaconfig.h"
 
 #include "compiler.h"
+#include "wire.h"
 #include "uintN_t.h"
 #include "intN_t.h"
 #include "float_e_m_t_helper.h" // Variable mantissa sizes
@@ -23,7 +25,8 @@
 #include "../PipelineC/examples/arty/src/buttons/buttons.c"
 #else
 //FIXME: MHz depends on resolution, but using vga module here bring issues
-//MAIN_MHZ(render_pixel_interactive, 25.0) 
+//MAIN_MHZ(render_pixel_interactive, 25.0)
+#define PIXEL_CLK_MHZ 25.0 
 #endif // LITEX_INTEGRATION
 
 #endif //__PIPELINEC__
@@ -35,57 +38,6 @@
 /* Add to tr_pipelinec.gen.c after generating code
 // Scene helper func declared before use in funcs below but after the scene_t struct definition
 #include "get_scene.h" */
-
-/* Old code from when state updates and pixel rendering were combined
-// Logic to update the state in a multiple cycle volatile feedback pipeline
-inline full_state_t do_state_update(uint1_t reset, uint1_t end_of_frame, uint1_t button)
-{
-  // Volatile state registers
-  // Not same as software volatile
-  // Could use #ifdef __PIPELINEC__ to remove volatile for software sim 
-  volatile static full_state_t state;
-  // TODO support non static/register based feedback (WIRE's/FEEDBACK pragmas)
-
-  // Use 'slow' end of frame pulse as 'now' valid flag occuring 
-  // every N cycles > pipeline depth/latency (or when infrequent reset happens)
-  if(end_of_frame | reset) // Normal next state update
-    state = full_update(state, reset, button);
-           
-  return state;
-}
-
-// Logic to start in reset and exit reset after first frame
-// TODO maybe change to be faster out of reset?
-uint1_t reset_ctrl(uint1_t end_of_frame)
-{
-  // Reset register
-  static uint1_t reset = 1; // Start in reset
-  uint1_t rv = reset;
-  if(end_of_frame)
-  {
-    reset = 0; // Out of reset after first frame
-  }
-  return rv;
-}
-
-
-pixel_t render_pixel_interactive(uint16_t x, uint16_t y, uint1_t reset, uint1_t vsync, uint1_t button)
-{
-///////////////////////////////////////////////////////////
-vsync = ((x == FRAME_WIDTH-1) & (y == FRAME_HEIGHT-1)); //FIXME: pass correct argument!
-///////////////////////////////////////////////////////////
-
-   // Combine button reset with power on reset input from reset_ctrl()
-  // maybe can remove power on reset since have button now?
-  uint1_t either_reset = reset | reset_ctrl(vsync);
-
-  // Do state updating cycle (part of volatile multi cycle pipeline w/ state)
-  full_state_t state = do_state_update(either_reset, vsync, button);
-
-  // Render the pixel at x,y pos given buffered state
-  return render_pixel(x, y, state.scene);
-}
-*/
 
 #ifndef LITEX_INTEGRATION
 
@@ -190,4 +142,98 @@ void frame_logic()
   power_on_reset = 0;
 }
 #endif //LITEX_INTEGRATION
+
+// LITEX versions of functions, can integrate with above versions later
+#ifdef LITEX_INTEGRATION
+
+// Define the user created frame clock
+#define FRAME_CLK_MHZ 6e-5 // 60Hz
+
+// Helper func make toggling clock with isolated static frame_clock_reg
+// Litex version does not include WIREing of frame_clock, is done is wrapper VHDL
+uint1_t frame_clock_logic(uint16_t x, uint16_t y)
+{
+  // Need to make ~50% duty cycle frame clock
+  static uint1_t frame_clock_reg;
+  uint1_t rv = frame_clock_reg;
+  // Falling edge mid frame (does not update state)
+  if( (x==(FRAME_WIDTH/2)) & (y==(FRAME_HEIGHT/2)) )
+  {
+    frame_clock_reg = 0;
+  }
+  // Rising edge at end of frame (state updated during back porch)
+  else if( (x==(FRAME_WIDTH-1)) & (y==(FRAME_HEIGHT-1)) )
+  {
+    frame_clock_reg = 1;
+  }
+
+  return rv;
+}
+
+// Pixel pipeline logic
+// LITEX version does not have vga timing and takes input of current x,y, 
+// and how many clocks delayed the pipeline is
+// returns pixels + frame clock appropriately delayed from pipeline output
+// Frame clock to be wired as frame logic clock in wrapper vhdl
+typedef struct pixels_and_clock_t
+{
+  pixel_t color;
+  uint1_t frame_clock;
+}pixels_and_clock_t;
+MAIN_MHZ(pixel_logic, PIXEL_CLK_MHZ)
+pixels_and_clock_t pixel_logic(uint16_t x, uint16_t y, uint16_t latency)
+{
+  // Logic to adjust x and y for latency
+  // transport (x, y) to the future!
+  x = x + latency;
+  if(x >= FRAME_WIDTH)
+  {
+    x = x - FRAME_WIDTH;
+    y = y + 1;
+    if(y >= FRAME_HEIGHT)
+      y = 0;
+  }
+
+  // Use VGA x,y to derive frame clock
+  uint1_t frame_clock = frame_clock_logic(x, y);
+
+  // Render the pixel at x,y pos 
+  // Scene is wired in from frame logic domain
+  pixel_t color = render_pixel(x, y);
+
+  pixels_and_clock_t rv;
+  rv.color = color;
+  rv.frame_clock = frame_clock;
+  return rv;
+}
+
+
+// Per next state frame comb. logic
+// LITEX version takes button as input and 
+// returns state that is manually wired into pixel logic
+MAIN_MHZ(frame_logic, FRAME_CLK_MHZ)
+full_state_t frame_logic(uint1_t jump_pressed)
+{
+  static full_state_t state; // The state registers
+  static uint1_t power_on_reset = 1;
+
+  // Drive output from register
+  full_state_t rv = state;
+
+  // Normal next state update
+  state = full_update(state, power_on_reset, jump_pressed);
+  power_on_reset = 0;
+
+  return rv;
+}
+
+// Wrapper/helper to fake WRITE side of state wire not used in LITEX
+// Instead state is wired in wrapper vhdl
+#pragma MAIN state_wire_fake
+void state_wire_fake(full_state_t fake_input)
+{
+  WIRE_WRITE(full_state_t, state_wire, fake_input)
+}
+
+#endif // LITEX_INTEGRATION
 
