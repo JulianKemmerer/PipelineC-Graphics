@@ -16,7 +16,7 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 */
 
 //#define ALTERNATE_UI 3 //level of graphics detail
-//#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702)
+#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702)
 //#define DITHER
 
 
@@ -285,7 +285,7 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(point_and_dir) hitin)
   return hitout;
 }
 
-//#define BLINKY
+#define BLINKY
 color_basic_t sphere_effect(IN(hit_out) hit, IN(material_t) hit_material)
 {
   color_basic_t rcolor = hit_material.diffuse_color;
@@ -750,6 +750,8 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
 #endif
   screen_coord_t x = fixed_shr(cx, SCR_CSHIFT);
   screen_coord_t y = fixed_shr(cy, SCR_CSHIFT);
+  const float aspect = (float)(FRAME_HEIGHT*16)/(float)(FRAME_WIDTH*9);
+  x = x * aspect; //aspect ratio correction
 
   pixel_t pix; //ignores alpha
 

@@ -73,7 +73,7 @@
 
 #define EPS 1.e-3
 
-#define SCR_CSHIFT (/*FRAME_WIDTH < 800 ? 9 :*/ FRAME_WIDTH < 1024 ? 10 : 11)
+#define SCR_CSHIFT 10//(/*FRAME_WIDTH < 800 ? 9 :*/ FRAME_WIDTH < 1024 ? 10 : 10)
 
 #define PIPELINEC_SUGAR
 #warning PIPELINEC_SUGAR shouldn't be a need
