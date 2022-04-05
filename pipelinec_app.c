@@ -23,7 +23,7 @@
 #include "../PipelineC/examples/arty/src/buttons/buttons.c"
 #else
 //FIXME: MHz depends on resolution, but using vga module here bring issues
-//MAIN_MHZ(render_pixel_interactive, 25.0) 
+MAIN_MHZ(render_pixel_interactive, 25.0) 
 #endif // LITEX_INTEGRATION
 
 #endif //__PIPELINEC__
@@ -87,8 +87,54 @@ vsync = ((x == FRAME_WIDTH-1) & (y == FRAME_HEIGHT-1)); //FIXME: pass correct ar
 }
 */
 
-#ifndef LITEX_INTEGRATION
 
+// Define the user created frame clock
+#define FRAME_CLK_MHZ 6e-5 // 60Hz
+uint1_t frame_clock;
+#include "clock_crossing/frame_clock.h"
+#pragma ASYNC_WIRE frame_clock
+CLK_MHZ(frame_clock, FRAME_CLK_MHZ)
+
+// Helper func make toggling clock with isolated static frame_clock_reg
+// Maybe include inside vga_timing?
+void frame_clock_logic(uint16_t x, uint16_t y, bool active)
+{
+  // Need to make ~50% duty cycle frame clock
+  static uint1_t frame_clock_reg;
+  // Drive clock from register
+  WIRE_WRITE(uint1_t, frame_clock, frame_clock_reg)
+
+  // Falling edge mid frame (does not update state)
+  if( active & 
+     (x==(FRAME_WIDTH/2)) &
+     (y==(FRAME_HEIGHT/2))
+  ){
+    frame_clock_reg = 0;
+  }
+  // Rising edge at end of frame (state updated during back porch)
+  else if(active & 
+         (x==(FRAME_WIDTH-1)) &
+         (y==(FRAME_HEIGHT-1))
+  ){
+    frame_clock_reg = 1;
+  }
+}
+
+#ifdef LITEX_INTEGRATION
+pixel_t render_pixel_interactive(uint16_t x, uint16_t y, uint1_t reset, uint1_t vsync, uint1_t button)
+{
+///////////////////////////////////////////////////////////
+vsync = ((x == FRAME_WIDTH-1) & (y == FRAME_HEIGHT-1)); //FIXME: pass correct argument!
+///////////////////////////////////////////////////////////
+
+  // Use VGA timing to derive frame clock
+  frame_clock_logic(x, y, !vsync);
+
+  // Render the pixel at x,y pos given buffered state
+  return render_pixel(x, y);
+}
+
+#else
 /////////////////////////////
 // Hardware access
 /////////////////////////////
@@ -122,38 +168,6 @@ inline user_input_t get_user_input()
   return i;
 }
 
-// Define the user created frame clock
-#define FRAME_CLK_MHZ 6e-5 // 60Hz
-uint1_t frame_clock;
-#include "clock_crossing/frame_clock.h"
-#pragma ASYNC_WIRE frame_clock
-CLK_MHZ(frame_clock, FRAME_CLK_MHZ)
-
-// Helper func make toggling clock with isolated static frame_clock_reg
-// Maybe include inside vga_timing?
-void frame_clock_logic(vga_signals_t vga_signals)
-{
-  // Need to make ~50% duty cycle frame clock
-  static uint1_t frame_clock_reg;
-  // Drive clock from register
-  WIRE_WRITE(uint1_t, frame_clock, frame_clock_reg)
-
-  // Falling edge mid frame (does not update state)
-  if( vga_signals.active & 
-     (vga_signals.pos.x==(FRAME_WIDTH/2)) &
-     (vga_signals.pos.y==(FRAME_HEIGHT/2))
-  ){
-    frame_clock_reg = 0;
-  }
-  // Rising edge at end of frame (state updated during back porch)
-  else if(vga_signals.active & 
-         (vga_signals.pos.x==(FRAME_WIDTH-1)) &
-         (vga_signals.pos.y==(FRAME_HEIGHT-1))
-  ){
-    frame_clock_reg = 1;
-  }
-}
-
 // Pixel pipeline logic
 MAIN_MHZ(pixel_logic, PIXEL_CLK_MHZ)
 void pixel_logic()
@@ -162,7 +176,7 @@ void pixel_logic()
   vga_signals_t vga_signals = vga_timing();
 
   // Use VGA timing to derive frame clock
-  frame_clock_logic(vga_signals);
+  frame_clock_logic(vga_signals.pos.x, vga_signals.pos.y, vga_signals.active);
 
   // Render the pixel at x,y pos 
   // Scene is wired in from frame logic domain
@@ -171,6 +185,7 @@ void pixel_logic()
   // Drive output signals/registers
   pmod_register_outputs(vga_signals, color);
 }
+#endif //LITEX_INTEGRATION
 
 // Per next state frame comb. logic
 MAIN_MHZ(frame_logic, FRAME_CLK_MHZ)
@@ -178,16 +193,23 @@ void frame_logic()
 {
   static full_state_t state; // The state registers
   static uint1_t power_on_reset = 1;
+  static uint1_t reset_pressed;
+  static uint1_t jump_pressed;
 
   // Drive scene from register
   WIRE_WRITE(full_state_t, state_wire, state)
 
+#ifndef LITEX_INTEGRATION
   // Read user input
   user_input_t ui = get_user_input();
-
+  reset_pressed = ui.reset_pressed; 
+  jump_pressed = ui.jump_pressed; 
+#else
+  reset_pressed = 0;
+  jump_pressed = 0;
+#endif
   // Normal next state update
   state = full_update(state, ui.reset_pressed | power_on_reset, ui.jump_pressed);
   power_on_reset = 0;
 }
-#endif //LITEX_INTEGRATION
 
