@@ -25,17 +25,31 @@ class GraphicsGenerator(Module):
 
         framedisplay = Module()
         self.return_output_a = Signal(8)
+        """
+		port(
+		videoclk : in std_logic;
+		video_x : in unsigned(15 downto 0);
+		video_y : in unsigned(15 downto 0);
+		vsync : in unsigned(0 downto 0);
+		reset : in unsigned(0 downto 0);
+		jump_pressed : in unsigned(0 downto 0);
+		pixel_a : out unsigned(7 downto 0);
+		pixel_r : out unsigned(7 downto 0);
+		pixel_g : out unsigned(7 downto 0);
+		pixel_b : out unsigned(7 downto 0)
+		);
+        """
         framedisplay.specials += Instance("top_glue_no_struct", #FIXME: figure out how to avoid the glue and access the output structure
           i_videoclk = ClockSignal("sys"), #results in "hdmi" (or corresponding video) clock
-          i_render_pixel_interactive_x = vtg_sink.hcount,
-          i_render_pixel_interactive_y = vtg_sink.vcount,
-          i_render_pixel_interactive_reset = ResetSignal("sys"),
-          i_render_pixel_interactive_vsync = ~vtg_sink.vsync,
-          i_render_pixel_interactive_button = button,
-          o_render_pixel_interactive_return_output_a = self.return_output_a, #FIXME: just Signal(8)
-          o_render_pixel_interactive_return_output_b = source.r,
-          o_render_pixel_interactive_return_output_g = source.g,
-          o_render_pixel_interactive_return_output_r = source.b #FIXME: why colors inverted?
+          i_video_x = vtg_sink.hcount,
+          i_video_y = vtg_sink.vcount,
+          i_reset = ResetSignal("sys"),
+          i_vsync = ~vtg_sink.vsync,
+          i_jump_pressed = button,
+          o_pixel_a = self.return_output_a, #FIXME: just Signal(8)
+          o_pixel_b = source.r,
+          o_pixel_g = source.g,
+          o_pixel_r = source.b #FIXME: why colors inverted?
         )
     
         self.framedisplay = framedisplay 
