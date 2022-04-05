@@ -2,10 +2,11 @@
 #ifdef __PIPELINEC__
 //#pragma PART "LFE5U-85F-6BG381C" // An ECP5U 85F part
 #pragma PART "xc7a35ticsg324-1l" // Arty
-
+#define LITEX_INTEGRATION //TEMP
 #include "pipelinec_app_vgaconfig.h"
 
 #include "compiler.h"
+#include "wire.h"
 #include "uintN_t.h"
 #include "intN_t.h"
 #include "float_e_m_t_helper.h" // Variable mantissa sizes
@@ -22,8 +23,7 @@
 // Access to board buttons and switches
 #include "../PipelineC/examples/arty/src/buttons/buttons.c"
 #else
-//FIXME: MHz depends on resolution, but using vga module here bring issues
-MAIN_MHZ(render_pixel_interactive, 25.0) 
+#define PIXEL_CLK_MHZ 25.0
 #endif // LITEX_INTEGRATION
 
 #endif //__PIPELINEC__
@@ -36,64 +36,79 @@ MAIN_MHZ(render_pixel_interactive, 25.0)
 // Scene helper func declared before use in funcs below but after the scene_t struct definition
 #include "get_scene.h" */
 
-/* Old code from when state updates and pixel rendering were combined
-// Logic to update the state in a multiple cycle volatile feedback pipeline
-inline full_state_t do_state_update(uint1_t reset, uint1_t end_of_frame, uint1_t button)
-{
-  // Volatile state registers
-  // Not same as software volatile
-  // Could use #ifdef __PIPELINEC__ to remove volatile for software sim 
-  volatile static full_state_t state;
-  // TODO support non static/register based feedback (WIRE's/FEEDBACK pragmas)
-
-  // Use 'slow' end of frame pulse as 'now' valid flag occuring 
-  // every N cycles > pipeline depth/latency (or when infrequent reset happens)
-  if(end_of_frame | reset) // Normal next state update
-    state = full_update(state, reset, button);
-           
-  return state;
-}
-
-// Logic to start in reset and exit reset after first frame
-// TODO maybe change to be faster out of reset?
-uint1_t reset_ctrl(uint1_t end_of_frame)
-{
-  // Reset register
-  static uint1_t reset = 1; // Start in reset
-  uint1_t rv = reset;
-  if(end_of_frame)
-  {
-    reset = 0; // Out of reset after first frame
-  }
-  return rv;
-}
-
-
-pixel_t render_pixel_interactive(uint16_t x, uint16_t y, uint1_t reset, uint1_t vsync, uint1_t button)
-{
-///////////////////////////////////////////////////////////
-vsync = ((x == FRAME_WIDTH-1) & (y == FRAME_HEIGHT-1)); //FIXME: pass correct argument!
-///////////////////////////////////////////////////////////
-
-   // Combine button reset with power on reset input from reset_ctrl()
-  // maybe can remove power on reset since have button now?
-  uint1_t either_reset = reset | reset_ctrl(vsync);
-
-  // Do state updating cycle (part of volatile multi cycle pipeline w/ state)
-  full_state_t state = do_state_update(either_reset, vsync, button);
-
-  // Render the pixel at x,y pos given buffered state
-  return render_pixel(x, y, state.scene);
-}
-*/
-
-
+// LITEX versions of functions, can integrate with NOT-LITEX versions later
+#ifdef LITEX_INTEGRATION
 // Define the user created frame clock
 #define FRAME_CLK_MHZ 6e-5 // 60Hz
 uint1_t frame_clock;
 #include "clock_crossing/frame_clock.h"
 #pragma ASYNC_WIRE frame_clock
 CLK_MHZ(frame_clock, FRAME_CLK_MHZ)
+
+// Helper func make toggling clock with isolated static frame_clock_reg
+// Litex version does not include vga active signal
+void frame_clock_logic(uint16_t x, uint16_t y)
+{
+  // Need to make ~50% duty cycle frame clock
+  static uint1_t frame_clock_reg;
+  // Drive clock from register
+  WIRE_WRITE(uint1_t, frame_clock, frame_clock_reg)
+  // Falling edge mid frame (does not update state)
+  if( (x==(FRAME_WIDTH/2)) & (y==(FRAME_HEIGHT/2)) )
+  {
+    frame_clock_reg = 0;
+  }
+  // Rising edge at end of frame (state updated during back porch)
+  else if( (x==(FRAME_WIDTH-1)) & (y==(FRAME_HEIGHT-1)) )
+  {
+    frame_clock_reg = 1;
+  }
+}
+
+// Pixel pipeline logic
+// LITEX version does not have internal vga timing and takes input of current x,y, 
+// and how many clocks delayed the pipeline output, returns pixels
+MAIN_MHZ(pixel_logic, PIXEL_CLK_MHZ)
+pixel_t pixel_logic(uint16_t x, uint16_t y, uint16_t latency)
+{
+  // Logic to adjust x and y for latency
+  // transport (x, y) to the future!
+  x = x + latency;
+  if(x >= FRAME_WIDTH)
+  {
+    x = x - FRAME_WIDTH;
+    y = y + 1;
+    if(y >= FRAME_HEIGHT)
+      y = 0;
+  }
+
+  // Use VGA x,y to derive frame clock
+  frame_clock_logic(x, y);
+
+  // Render the pixel at x,y pos 
+  // Scene is wired in from frame logic domain
+  pixel_t color = render_pixel(x, y);
+
+  return color;
+}
+
+// Per next state frame comb. logic
+// LITEX version takes button+reset as input
+MAIN_MHZ(frame_logic, FRAME_CLK_MHZ)
+void frame_logic(uint1_t reset_pressed, uint1_t jump_pressed)
+{
+  static full_state_t state; // The state registers
+  static uint1_t power_on_reset = 1;
+
+  // Drive scene wire from register
+  WIRE_WRITE(full_state_t, state_wire, state)
+
+  // Normal next state update
+  state = full_update(state, reset_pressed | power_on_reset, jump_pressed);
+  power_on_reset = 0;
+}
+
+#else // NOT LITEX_INTEGRATION
 
 // Helper func make toggling clock with isolated static frame_clock_reg
 // Maybe include inside vga_timing?
@@ -120,21 +135,6 @@ void frame_clock_logic(uint16_t x, uint16_t y, bool active)
   }
 }
 
-#ifdef LITEX_INTEGRATION
-pixel_t render_pixel_interactive(uint16_t x, uint16_t y, uint1_t reset, uint1_t vsync, uint1_t button)
-{
-///////////////////////////////////////////////////////////
-vsync = ((x == FRAME_WIDTH-1) & (y == FRAME_HEIGHT-1)); //FIXME: pass correct argument!
-///////////////////////////////////////////////////////////
-
-  // Use VGA timing to derive frame clock
-  frame_clock_logic(x, y, !vsync);
-
-  // Render the pixel at x,y pos given buffered state
-  return render_pixel(x, y);
-}
-
-#else
 /////////////////////////////
 // Hardware access
 /////////////////////////////
@@ -185,7 +185,6 @@ void pixel_logic()
   // Drive output signals/registers
   pmod_register_outputs(vga_signals, color);
 }
-#endif //LITEX_INTEGRATION
 
 // Per next state frame comb. logic
 MAIN_MHZ(frame_logic, FRAME_CLK_MHZ)
@@ -212,4 +211,7 @@ void frame_logic()
   state = full_update(state, ui.reset_pressed | power_on_reset, ui.jump_pressed);
   power_on_reset = 0;
 }
+#endif //LITEX_INTEGRATION
+
+
 
