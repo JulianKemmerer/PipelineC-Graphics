@@ -334,8 +334,8 @@ color_t traceray(uint16_t pix_x, uint16_t pix_y, uint32_t frame, ray_t acamera, 
   float y = pix_y;
   ray.origin.x = (double)frame * (double)0.01;
   ray.origin.z = (double)-20.0 - (double)frame * (double)0.05;
-  ray.direction.x = ((double)x - ((double)FRAME_WIDTH / (double)2.0)) * ((double)5.0 / (double)FRAME_HEIGHT);
-  ray.direction.y = ((double)y - ((double)FRAME_HEIGHT / (double)2.0)) * ((double)-5.0 / (double)FRAME_HEIGHT) - (double)2.0;
+  ray.direction.x = ((double)x - (double)FRAME_WIDTH / (double)2.0) * ((double)5.0 / (double)FRAME_HEIGHT);
+  ray.direction.y = ((double)y - (double)FRAME_HEIGHT / (double)2.0) * ((double)-5.0 / (double)FRAME_HEIGHT) - (double)2.0;
   ray.direction.z = (double)5.0;
   ray.direction = normalize_vec(ray.direction);
   return trace0(ray, aplane, asphere);
