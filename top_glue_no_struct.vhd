@@ -32,11 +32,10 @@ port map(
     pixel_logic_x => video_x,
     pixel_logic_y => video_y,
     pixel_logic_latency => to_unsigned(pixel_logic_latency, 16),
-    pixel_logic_return_output.color.a => pixel_a,
-    pixel_logic_return_output.color.r => pixel_r,
-    pixel_logic_return_output.color.g => pixel_g,
-    pixel_logic_return_output.color.b => pixel_b,
-    pixel_logic_return_output.frame_clock(0) => frame_clock,
+    pixel_logic_return_output.a => pixel_a,
+    pixel_logic_return_output.r => pixel_r,
+    pixel_logic_return_output.g => pixel_g,
+    pixel_logic_return_output.b => pixel_b,
     frame_logic_reset_pressed => reset,
     frame_logic_jump_pressed => jump_pressed
 );
