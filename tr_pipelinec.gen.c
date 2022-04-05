@@ -12,6 +12,8 @@
 
 
 
+
+
 //extern int FRAME_WIDTH;
 //extern int FRAME_HEIGHT;
 typedef struct pixel_t { uint8_t a; uint8_t b; uint8_t g; uint8_t r; } pixel_t;
@@ -162,389 +164,226 @@ uint16_t hashf(float_type f)
   return hash16(((u << 9) | (u >> 23)) ^ (u >> 7));
 }
 
-typedef struct material_t { color diffuse_color; color reflect_color; } material_t;
-typedef struct sphere_t { object_coord_t center; material_t material; color_type heat; object_coord_t yvel; } sphere_t;
-typedef struct plane_t { object_coord_t center; material_t material; color color1; color color2; } plane_t;
-typedef struct scene_t { sphere_t sphere; plane_t plane; object_coord_t camera; color fog; uint16_t frame; uint16_t scorebar; } scene_t;
-typedef struct scene_colors_t { material_t sphere; material_t plane; color plane_color1; color plane_color2; color fog; } scene_colors_t;
-typedef struct full_state_t { scene_t scene; color gold_color; color gold_reflect_color; color lava_color; coord_type plane_y; coord_type sphere_x; coord_type sphere_z; coord_type sphere_y; color_type heat; coord_type camera_y; coord_type camera_z; coord_type plane_x; coord_type sphere_xvel; coord_type sphere_yvel; color diffuse_color; color reflect_color; uint16_t scorebar; uint16_t score; bool won; bool lose; } full_state_t;
+typedef struct scene_t { uint16_t frame; } scene_t;
+typedef struct full_state_t { scene_t scene; } full_state_t;
+typedef struct color_t { float r; float g; float b; } color_t;
+typedef struct vec_t { float x; float y; float z; } vec_t;
+typedef struct plane_t { vec_t origin; vec_t normal; } plane_t;
+typedef struct ray_t { vec_t origin; vec_t direction; } ray_t;
+typedef struct sphere_t { vec_t center; float radius; } sphere_t;
 // Scene helper func declared before use in funcs below but after the scene_t struct definition
 #include "get_scene.h"
-#define K_gold_color	(fixed3_make(fixed_make_from_double(((double)1.2 * (double).15) * (double)243. / (double)256.), fixed_make_from_double(((double)1.2 * (double).15) * (double)201. / (double)256.), fixed_make_from_double(((double)1.2 * (double).15) * (double)104. / (double)256.)))
-#define K_gold_reflect_color	(fixed3_make(fixed_make_from_double((double)1.5 * ((double)1. - (double).15) * (double)243. / (double)256.), fixed_make_from_double((double)1.5 * ((double)1. - (double).15) * (double)201. / (double)256.), fixed_make_from_double((double)1.5 * ((double)1. - (double).15) * (double)104. / (double)256.)))
-#define K_lava_color	(fixed3_make(fixed_make_from_double((double)255. / (double)256. * (double)2.0), fixed_make_from_double((double)70. / (double)256. * (double)1.5), fixed_make_from_double((double)32. / (double)256. * (double)1.5)))
-#define K_plane_color1	(fixed3_make(fixed_make_from_double((double).8), fixed_make_from_double((double).8), fixed_make_from_double((double).8)))
-#define K_plane_color2	(fixed3_make(fixed_make_from_double((double).1), fixed_make_from_double((double).0), fixed_make_from_double((double).0)))
-#define K_floor_difusse	(fixed3_make(fixed_make_from_double((double)1.), fixed_make_from_double((double)1.), fixed_make_from_double((double)1.)))
-#define K_floor_reflect	(fixed3_make(fixed_make_from_double((double).25), fixed_make_from_double((double).25), fixed_make_from_double((double).25)))
-#define K_fog_color	(fixed3_make(fixed_make_from_double((double).01), fixed_make_from_double((double).01), fixed_make_from_double((double).1)))
-#define K_plane_center_start	(fixed3_make(fixed_make_from_double(((double)-110.)), fixed_make_from_double((double)0.), fixed_make_from_double((double)0.)))
-#define K_sphere_center_start	(fixed3_make(fixed_make_from_double((double)-20.), fixed_make_from_double((double)40.), fixed_make_from_double(((double)-32.))))
-#define K_camera_pos_start	(fixed3_make(fixed_make_from_double((double)0.), fixed_make_from_double((double)30.), fixed_make_from_double((double)30.)))
-#define VECTOR_NURMAL_UPWARDS	{(double)0., (double)1., (double)0.}
-#define hole_t coord_type
-hole_t plane_has_hole(hole_t x, hole_t z)
+float fmuladd(float a, float b, float c)
 {
-  hole_t ret = fixed_make_from_double((double)1.);
-  x = fixed_shr(x, 4);
-  z = fixed_shr(z, 5);
-  int16_t ix = round16(x);
-  int16_t iz = round16(z);
-  hole_t fracx = fixed_sub(fixed_make_from_short(ix), x);
-  hole_t fracz = fixed_sub(fixed_make_from_short(iz), z);
-  uint16_t hx = hash16(ix) >> 5;
-  uint16_t hz = hash16(iz) >> 5;
+  return a * b + c;
+}
+
+float dot_product(vec_t a, vec_t b)
+{
+  return fmuladd(a.z, b.z, fmuladd(a.x, b.x, a.y * b.y));
+}
+
+vec_t add(vec_t a, vec_t b)
+{
+  vec_t r;
+  r.x = a.x + b.x;
+  r.y = a.y + b.y;
+  r.z = a.z + b.z;
+  return r;
+}
+
+vec_t subtract(vec_t a, vec_t b)
+{
+  vec_t r;
+  r.x = a.x - b.x;
+  r.y = a.y - b.y;
+  r.z = a.z - b.z;
+  return r;
+}
+
+vec_t scalar_mul(vec_t a, float m)
+{
+  vec_t r;
+  r.x = m * a.x;
+  r.y = m * a.y;
+  r.z = m * a.z;
+  return r;
+}
+
+vec_t normalize_vec(vec_t v)
+{
+  return scalar_mul(v, inversesqrt(dot_product(v, v)));
+}
+
+vec_t reflect(vec_t I, vec_t N)
+{
+  return subtract(I, scalar_mul(N, dot_product(I, N) * (double)2.0));
+}
+
+typedef struct plane_intersect_ret_t { vec_t intersection; bool cond; } plane_intersect_ret_t;
+plane_intersect_ret_t plane_intersect(plane_t p, ray_t r)
+{
+  plane_intersect_ret_t ret;
+  ret.cond = 0;
+  float denom = dot_product(p.normal, r.direction);
   
-  if((hx ^ hz) < ix + 600) {
+  if(float_to_uint(denom) != 0) {
+    vec_t p0r0 = subtract(p.origin, r.origin);
+    float t = dot_product(p0r0, p.normal) / denom;
+    ret.intersection = add(r.origin, scalar_mul(r.direction, t));
+    ret.cond = (t >= (double)0.0);
+  }
+  return ret;
+}
+
+typedef struct sphere_intersect_ret_t { vec_t intersection; vec_t normal; bool cond; } sphere_intersect_ret_t;
+sphere_intersect_ret_t sphere_intersect(sphere_t s, ray_t r)
+{
+  sphere_intersect_ret_t ret;
+  ret.cond = 0;
+  vec_t c0r0 = subtract(s.center, r.origin);
+  float tca = dot_product(r.direction, c0r0);
+  
+  if(tca >= (double)0.0) {
+    float d2 = dot_product(c0r0, c0r0);
+    d2 = d2 - tca * tca;
+    float radius2 = s.radius * s.radius;
     
-    if((((ix & 0x240) == 0x240)!=0) | ((((ix & ~0x7FF) != 0))!=0)) ret = fixed_make_from_double((double)0.);
-    else {
-      bool fx = (hx & 1) != 0;
-      bool fz = ((hz >> 1) & 1) != 0;
-      bool hard = (ix & 0x200) != 0;
-      {
-        hole_t ax = fixed_abs(fracx);
-        hole_t az = fixed_abs(fracz);
-        
-        if(hard) ret = fixed_sub(fixed_max(ax, az), fixed_make_from_double((double).3));
-        else ret = fixed_sub((fixed_add(ax, az)), fixed_make_from_double((double).4));
-      }
+    if(d2 <= radius2) {
+      float thc = ((double)1.0 / inversesqrt(radius2 - d2));
+      float t0 = tca - thc;
+      float t1 = tca + thc;
+      t0 = (t0 >= t1) ? t1 : t0;
+      ret.intersection = add(r.origin, scalar_mul(r.direction, t0));
+      vec_t normal = subtract(ret.intersection, s.center);
+      ret.normal = normalize_vec(normal);
+      ret.cond = 1;
     }
   }
   return ret;
 }
 
-scene_colors_t scene_colors(scene_t scene)
+color_t trace1(ray_t ray, plane_t aplane)
 {
-  scene_colors_t r;
-  r.sphere = scene.sphere.material;
-  r.plane = scene.plane.material;
-  r.plane_color1 = scene.plane.color1;
-  r.plane_color2 = scene.plane.color2;
-  r.fog = scene.fog;
-  return r;
-}
-
-typedef struct point_and_dir { vec3 orig; vec3 dir; } point_and_dir;
-typedef struct hit_out { float_type dist; float_type borderdist; point_and_dir hit; } hit_out;
-hit_out sphere_hit(bool hit, vec3 center, point_and_dir hitin, float t, float diff)
-{
-  hit_out hitout;
-  hitout.dist = hit ? t : BIG_FLOAT;
-  {
-    hitout.hit.orig = float3_add(hitin.orig, float3_mul_float(hitin.dir, hitout.dist));
-    hitout.hit.dir = normalize(float3_sub(hitout.hit.orig, center));
-  }
-  hitout.borderdist = diff;
-  return hitout;
-}
-
-hit_out ray_sphere_intersect(vec3 center, point_and_dir hitin)
-{
-  float diff;
-  float t = BIG_FLOAT;
-  bool nothit;
-  vec3 rc = float3_sub(hitin.orig, center);
-  float b = dot(rc, hitin.dir);
-  float c = dot(rc, rc) - (double)4.5 * (double)4.5;
-  diff = b * b - c;
-  nothit = is_negative(diff);
+  color_t c;
+  plane_intersect_ret_t plint = plane_intersect(aplane, ray);
+  vec_t plane_intersection = plint.intersection;
+  bool plane_intersects = plint.cond;
   
-  if(nothit == 0) {
-    t = -(b + sqrt(diff));
-    nothit = is_negative(t);
-    
-    if(nothit) diff = -diff;
+  if((!plane_intersects) != 0 | (float_abs(plane_intersection.z) > (double)20.0) != 0 | (float_abs(plane_intersection.x) > (double)20.0) != 0) {
+    c.r = (double)0.0;
+    c.g = (double)0.0;
+    c.b = ray.direction.y <= (double)1.0 ? ray.direction.y * ray.direction.y : (double)1.0;
   }
-  return sphere_hit(nothit == 0, center, hitin, t, diff);
-}
-
-hit_out ray_plane_intersect(plane_t plane, point_and_dir hitin)
-{
-  hit_out hitout;
-  hitout.dist = BIG_FLOAT;
-  hitout.borderdist = (double)0.;
-  vec3 plane_center = object_coord_to_float3(plane.center);
-  float_type d;
-  vec3 pt;
-  hole_t hole_margin = fixed_make_from_int(0);
-  vec3 o;
-  
-  if(hitin.dir.y != (double)0.) {
-    d = float_fast_div_u(hitin.orig.y - plane_center.y, -hitin.dir.y);
-    pt = float3_add(hitin.orig, float3_mul_float(hitin.dir, d));
+  else {
+    uint3_t plx = (int32_t)float_abs(plane_intersection.x + (double)20.0);
+    uint3_t plz = (int32_t)float_abs(plane_intersection.z + (double)20.0);
+    bool checker = ((plx & 4) ^ (plz & 4)) != 4;
     
-    if(d > (double)1.e-3) {
-      o = float3_sub(pt, plane_center);
-      hole_margin = plane_has_hole(fixed_make_from_float(o.x), fixed_make_from_float(o.z));
-      
-      if(!fixed_is_negative(hole_margin)) {
-        hitout.dist = d;
-        hitout.hit.orig = pt;
-        vec3 N = VECTOR_NURMAL_UPWARDS;
-        hitout.hit.dir = N;
-      }
-      hitout.borderdist = fixed_to_float(hole_margin);
+    if(checker) {
+      c.r = (double)1.0;
+      c.g = (double)1.0;
+      c.b = (double)0.6;
     }
+    else {
+      c.r = (double)0.2;
+      c.g = (double)0.1;
+      c.b = (double)0.1;
+    }
+    float intensity = (double)1.0 - ((double)1.0 / inversesqrt(plane_intersection.x * plane_intersection.x + plane_intersection.z * plane_intersection.z)) * (double)0.025;
+    c.r = c.r * intensity;
+    c.g = c.g * intensity;
+    c.b = c.b * intensity;
   }
-  return hitout;
-}
-
-color sphere_effect(hit_out hit, material_t hit_material)
-{
-  color rcolor = hit_material.diffuse_color;
-  return rcolor;
-}
-
-color plane_effect(hit_out hit)
-{
-  scene_t scene = get_scene();
-  scene_colors_t colors = scene_colors(scene);
-  plane_t plane = scene.plane;
-  color rcolor = colors.plane.diffuse_color;
-  vec3 plane_center = object_coord_to_float3(plane.center);
-  float_type hitx = hit.hit.orig.x - plane_center.x;
-  float_type hitz = hit.hit.orig.z - plane_center.z;
-  float_type ox = float_shift(hitx, (-3));
-  float_type oz = float_shift(hitz, (-3));
-  int16_t ix = round16(fixed_make_from_float(ox));
-  int16_t iz = round16(fixed_make_from_float(oz));
-  #define bk	(fixed_make_from_double((double).3))
-  color color2 = fixed3_make((ix & 0x400) != 0 ? bk : colors.plane_color2.x, (ix & 0x200) != 0 ? bk : colors.plane_color2.y, (ix & 0x100) != 0 ? bk : colors.plane_color2.z);
-  rcolor = ((ix ^ iz) & 1) ? colors.plane_color1 : color2;
-  
-  if(hit.borderdist < (double).1) {
-    rcolor = colors.plane.diffuse_color;
-  }
-  return rcolor;
-}
-
-color background_color(float_type dir_y)
-{
-  color_type y = is_negative(dir_y) ? fixed_make_from_double((double)0.) : fixed_make_from_float(dir_y * dir_y);
-  return fixed3_make_from_fixed(y);
-}
-
-color_type light_intensity(vec3 hit)
-{
-  coord_type lz = fixed_mul((fixed_sub(fixed_make_from_float(hit.z), fixed_make_from_double(((double)-10.)))), fixed_make_from_double((double)1. / (double)16.));
-  coord_type lx = fixed_mul(fixed_make_from_float(hit.x), fixed_make_from_double((double)1. / (double)16.));
-  coord_type dl = fixed_add(fixed_add(fixed_mul(lx, lx), fixed_make_from_double((double)1.)), fixed_mul(lz, lz));
-  return fixed_add(fixed_make_from_float(inversesqrt(fixed_to_float(dl))), fixed_make_from_double((double).2));
-}
-
-color cast_ray_nested(point_and_dir hitin)
-{
-  scene_t scene = get_scene();
-  scene_colors_t colors = scene_colors(scene);
-  material_t hit_material;
-  hit_material = colors.sphere;
-  hit_out hitout = ray_sphere_intersect(object_coord_to_float3(scene.sphere.center), hitin);
-  hit_out hitplane = ray_plane_intersect(scene.plane, hitin);
-  
-  if(hitplane.dist < hitout.dist) {
-    hitout = hitplane;
-    hit_material = colors.plane;
-    hit_material.diffuse_color = plane_effect(hitplane);
-  }
-  color rcolor = fixed3_make_from_fixed(fixed_make_from_double((double)0.));
-  
-  if(hitout.dist >= float_shift((double)1., (9))) rcolor = background_color(hitin.dir.y);
-  else rcolor = fixed3_mul_fixed(hit_material.diffuse_color, light_intensity(hitout.hit.orig));
-  return rcolor;
-}
-
-color shade(color background, vec3 dir, hit_out hit, material_t hit_material, color_type minfog)
-{
-  scene_t scene = get_scene();
-  scene_colors_t colors = scene_colors(scene);
-  color rcolor = background;
-  float_type fogmix = float_shift(hit.dist, -(9));
-  
-  if(fogmix < (double)1.) {
-    point_and_dir hitreflect;
-    hitreflect.orig = hit.hit.orig;
-    hitreflect.dir = reflect(dir, hit.hit.dir);
-    color reflect_color = cast_ray_nested(hitreflect);
-    color diffuse_color = fixed3_mul_fixed(hit_material.diffuse_color, light_intensity(hit.hit.orig));
-    color comb_color = fixed3_add(diffuse_color, fixed3_mul(reflect_color, hit_material.reflect_color));
-    rcolor = color_select(color_max(fixed_make_from_float(fogmix), minfog), colors.fog, comb_color);
-  }
-  return rcolor;
-}
-
-bool is_star(float_type x, float_type y)
-{
-  return ((hashf(x) >> 2) & (hashf(y) >> 2)) > 0x3E00;
-}
-
-color cast_ray(point_and_dir hitin)
-{
-  scene_t scene = get_scene();
-  scene_colors_t colors = scene_colors(scene);
-  bool has_star = is_star(hitin.dir.x, hitin.dir.y);
-  color sky = has_star ? fixed3_make_from_fixed(fixed_make_from_double((double).35)) : background_color(hitin.dir.y);
-  float_type ys = float_abs(float_shift(hitin.dir.y, 1));
-  color_type mix = ys < (double)1. ? fixed_sub(fixed_make_from_int(1), fixed_make_from_float(ys)) : fixed_make_from_int(0);
-  color bfog = color_select(mix, colors.fog, sky);
-  material_t hit_material;
-  hit_out hitsphere = ray_sphere_intersect(object_coord_to_float3(scene.sphere.center), hitin);
-  hit_material = colors.sphere;
-  
-  if(!is_negative(hitsphere.borderdist)) {
-    hit_material.diffuse_color = sphere_effect(hitsphere, hit_material);
-  }
-  hit_out hitplane = ray_plane_intersect(scene.plane, hitin);
-  bool planehit = hitplane.dist < hitsphere.dist;
-  
-  if(planehit) {
-    hit_material = colors.plane;
-    hit_material.diffuse_color = plane_effect(hitplane);
-  }
-  hit_out hitout = planehit ? hitplane : hitsphere;
-  return shade(bfog, hitin.dir, hitout, hit_material, planehit ? mix : fixed_make_from_double((double)0.));
-}
-
-color render_pixel_internal(screen_coord_t x, screen_coord_t y)
-{
-  scene_t scene = get_scene();
-  scene_colors_t colors = scene_colors(scene);
-  point_and_dir hitin;
-  hitin.orig = object_coord_to_float3(scene.camera);
-  vec3 camera_dir = {fixed_to_float(x), fixed_to_float(y), (double)-1.};
-  hitin.dir = normalize(camera_dir);
-  color c = cast_ray(hitin);
   return c;
 }
 
-pixel_t render_pixel(uint16_t i, uint16_t j)
+color_t trace0(ray_t ray, plane_t aplane, sphere_t asphere)
 {
-  scene_t scene = get_scene();
-  int16_t cx = i << 1;
-  cx = cx - (FRAME_WIDTH + 1);
-  int16_t cy = j << 1;
-  cy = (FRAME_HEIGHT + 1) - cy;
-  screen_coord_t x = fixed_shr(fixed_make_from_short(cx), (FRAME_WIDTH < 1024 ? 10 : 11));
-  screen_coord_t y = fixed_shr(fixed_make_from_short(cy), (FRAME_WIDTH < 1024 ? 10 : 11));
-  pixel_t pix;
-  #define score_factor	((1 << 11) * (FRAME_WIDTH - 2 * 10) / 15000)
-  uint16_t scorebar = score_factor * scene.scorebar >> 11;
+  color_t c;
+  sphere_intersect_ret_t spint = sphere_intersect(asphere, ray);
+  vec_t sphere_intersection = spint.intersection;
+  vec_t sphere_normal = spint.normal;
+  ray_t ray_to_trace;
   
-  if(((((((i >= 10)!=0) & ((i < 10 + scorebar)!=0))!=0) & ((j > 10)!=0))!=0) & ((j < 2 * 10)!=0)) {
-    pix.r = 0;
-    pix.g = 200;
-    pix.b = 0;
+  if(spint.cond) {
+    ray_t ray2;
+    float dp = dot_product(ray.direction, sphere_normal);
+    ray2.direction = subtract(ray.direction, scalar_mul(sphere_normal, (dp * (double)2.0)));
+    ray2.origin = sphere_intersection;
+    ray_to_trace = ray2;
   }
   else {
-    color c = render_pixel_internal(x, y);
-    uint9_t r = fixed_to_short(fixed_shl((c.x), (8)));
-    uint9_t g = fixed_to_short(fixed_shl((c.y), (8)));
-    uint9_t b = fixed_to_short(fixed_shl((c.z), (8)));
-    pix.r = (r >= 256) ? 255 : r;
-    pix.g = (g >= 256) ? 255 : g;
-    pix.b = (b >= 256) ? 255 : b;
+    ray_to_trace = ray;
   }
-  return pix;
+  c = trace1(ray_to_trace, aplane);
+  
+  if(spint.cond) {
+    c.r = ((c.r) * ((double)0.3) + ((double)1.0 - ((double)0.3))) * (double)0.5;
+    c.g = (double)0.0;
+    c.b = ((c.b) * ((double)0.3) + ((double)1.0 - ((double)0.3)));
+  }
+  return c;
 }
 
-full_state_t reset_state(uint16_t score)
+color_t traceray(uint16_t pix_x, uint16_t pix_y, uint32_t frame, ray_t acamera, plane_t aplane, sphere_t asphere)
 {
-  full_state_t state;
-  material_t gold;
-  gold.diffuse_color = K_gold_color;
-  gold.reflect_color = K_gold_reflect_color;
-  material_t floor_material;
-  floor_material.diffuse_color = K_floor_difusse;
-  floor_material.reflect_color = K_floor_reflect;
-  state.scene.plane.center = K_plane_center_start;
-  state.scene.plane.material = floor_material;
-  state.scene.plane.color1 = K_plane_color1;
-  state.scene.plane.color2 = K_plane_color2;
-  state.scene.sphere.center = K_sphere_center_start;
-  state.scene.sphere.material = gold;
-  state.scene.sphere.heat = fixed_make_from_double((double)0.);
-  state.scene.camera = K_camera_pos_start;
-  state.scene.frame = 0;
-  state.scene.scorebar = 0;
-  state.scene.fog = K_fog_color;
-  state.plane_y = state.scene.plane.center.y;
-  state.sphere_x = state.scene.sphere.center.x;
-  state.sphere_z = state.scene.sphere.center.z;
-  state.gold_color = gold.diffuse_color;
-  state.gold_reflect_color = gold.reflect_color;
-  state.lava_color = K_lava_color;
-  state.sphere_y = state.scene.sphere.center.y;
-  state.heat = state.scene.sphere.heat;
-  state.camera_y = state.scene.camera.y;
-  state.camera_z = state.scene.camera.z;
-  state.plane_x = fixed_make_from_double(((double)-110.));
-  state.sphere_xvel = fixed_make_from_double((double)0.);
-  state.sphere_yvel = fixed_make_from_double((double)0.);
-  state.won = 0;
-  state.score = score;
-  return state;
+  ray_t ray;
+  ray.origin = acamera.origin;
+  float x = pix_x;
+  float y = pix_y;
+  ray.origin.x = (double)frame * (double)0.01;
+  ray.origin.z = (double)-20.0 - (double)frame * (double)0.05;
+  ray.direction.x = ((double)x - ((double)FRAME_WIDTH / (double)2.0)) * ((double)5.0 / (double)FRAME_HEIGHT);
+  ray.direction.y = ((double)y - ((double)FRAME_HEIGHT / (double)2.0)) * ((double)-5.0 / (double)FRAME_HEIGHT) - (double)2.0;
+  ray.direction.z = (double)5.0;
+  ray.direction = normalize_vec(ray.direction);
+  return trace0(ray, aplane, asphere);
+}
+
+typedef struct animation_pos_t { ray_t camera; plane_t plane; sphere_t sphere; uint32_t frame; float sphere_vel; } animation_pos_t;
+animation_pos_t animation(uint32_t frame)
+{
+  animation_pos_t positions;
+  positions.camera.origin.x = (double)0.0;
+  positions.camera.origin.y = (double)15.0;
+  positions.camera.origin.z = (double)0.0;
+  positions.camera.direction.x = (double)0.0;
+  positions.camera.direction.y = (double)0.0;
+  positions.camera.direction.z = (double)10.0;
+  positions.plane.origin.x = (double)0.0;
+  positions.plane.origin.y = (double)0.0;
+  positions.plane.origin.z = (double)0.0;
+  positions.plane.normal.x = (double)0.0;
+  positions.plane.normal.y = (double)1.0;
+  positions.plane.normal.z = (double)0.0;
+  positions.sphere.center.x = (double)3.0;
+  positions.sphere.center.y = (double)6.0;
+  positions.sphere.center.z = (double)-10.0;
+  positions.sphere.radius = (double)2.5;
+  positions.sphere.center.x = (double)frame * (double)0.05;
+  positions.camera.origin.z = (double)frame * (double)0.1 - (double)10.0;
+  return positions;
 }
 
 full_state_t full_update(full_state_t state, bool reset, bool button_state)
 {
-  uint16_t score = state.score;
-  
-  if(reset) score = 0;
-  state.plane_x = fixed_add(state.plane_x, state.sphere_xvel);
-  state.sphere_yvel = fixed_add(state.sphere_yvel, fixed_make_from_double((double).1));
-  state.sphere_y = fixed_sub(state.sphere_y, state.sphere_yvel);
-  coord_type underground = fixed_sub((fixed_sub(state.sphere_y, fixed_make_from_double((double)4.5))), fixed_make_from_double((double)0.));
-  
-  if(state.won) state.sphere_yvel = fixed_shr(underground, 4);
-  
-  if(fixed_is_negative(underground)) {
-    state.sphere_xvel = fixed_sub(state.sphere_xvel, fixed_make_from_double((double)0.03));
-    coord_type coord_x = fixed_sub(state.sphere_x, state.plane_x);
-    coord_type coord_z = fixed_sub(state.sphere_z, state.plane_x);
-    bool half_up = fixed_gt(state.sphere_y, state.plane_y);
-    
-    if(((half_up)!=0) & ((state.won == 0)!=0)) {
-      
-      if(fixed_gt(state.sphere_yvel, fixed_make_from_double((double)0.))) state.heat = fixed_sub(fixed_make_from_int(0), fixed_shr(state.sphere_xvel, 1));
-      
-      if(fixed_gt(plane_has_hole(coord_x, coord_z), fixed_make_from_double((double)-.05))) {
-        state.score = state.score + 1;
-        
-        if(((state.score >= 15000)!=0) & ((state.won != 1)!=0)) state.won = 1;
-        
-        if(button_state) {
-          state.sphere_yvel = fixed_make_from_double((double)-2.);
-          state.sphere_xvel = fixed_make_from_double((double)-0.5);
-        }
-        else state.sphere_yvel = fixed_make_from_double((double)-.03);
-      }
-    }
-    else {
-      state.camera_z = fixed_sub(state.camera_z, fixed_shr(underground, 4));
-    }
-  }
-  state.heat = fixed_sub(state.heat, fixed_shr(state.heat, 4));
-  state.camera_y = fixed_add(state.camera_y, fixed_shr(fixed_sub(state.sphere_y, state.camera_y), 5));
-  state.lose = ((fixed_is_negative(underground))!=0) & (((-fixed_to_short(underground) >> 10))!=0);
-  state.diffuse_color = color_select(state.heat, state.lava_color, state.gold_color);
-  state.reflect_color = fixed3_mul_fixed(state.gold_reflect_color, (fixed_sub(fixed_make_from_double((double)1.), fixed_shr(state.heat, 2))));
-  state.scorebar = state.won ? 0 : state.score;
-  
-  if(state.lose) reset = 1;
-  
-  if(reset) state = reset_state(score);
-  state.scene.sphere.center.y = state.sphere_y;
-  state.scene.sphere.heat = state.heat;
-  state.scene.camera.y = state.camera_y;
-  state.scene.camera.z = state.camera_z;
-  state.scene.plane.center.x = state.plane_x;
-  state.scene.plane.center.z = state.plane_x;
-  state.scene.sphere.material.diffuse_color = state.diffuse_color;
-  state.scene.sphere.material.reflect_color = state.reflect_color;
-  state.scene.sphere.yvel = fixed3_make_from_fixed(state.sphere_yvel);
-  state.scene.scorebar = state.scorebar;
   state.scene.frame = state.scene.frame + 1;
+  
+  if(reset) state.scene.frame = 0;
   return state;
+}
+
+pixel_t render_pixel(uint16_t x, uint16_t y)
+{
+  scene_t scene = get_scene();
+  animation_pos_t animation_pos = animation(scene.frame);
+  color_t c = traceray(x, y, scene.frame, animation_pos.camera, animation_pos.plane, animation_pos.sphere);
+  pixel_t p;
+  p.r = (int32_t)(c.r * (double)255.0);
+  p.g = (int32_t)(c.g * (double)255.0);
+  p.b = (int32_t)(c.b * (double)255.0);
+  return p;
 }
 
 
