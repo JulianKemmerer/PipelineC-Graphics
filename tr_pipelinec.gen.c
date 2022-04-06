@@ -12,6 +12,8 @@
 
 
 
+
+
 //extern int FRAME_WIDTH;
 //extern int FRAME_HEIGHT;
 typedef struct pixel_t { uint8_t a; uint8_t b; uint8_t g; uint8_t r; } pixel_t;
@@ -169,7 +171,6 @@ typedef struct vec_t { float x; float y; float z; } vec_t;
 typedef struct plane_t { vec_t origin; vec_t normal; } plane_t;
 typedef struct ray_t { vec_t origin; vec_t direction; } ray_t;
 typedef struct sphere_t { vec_t center; float radius; } sphere_t;
-// Scene helper func declared before use in funcs below but after the scene_t struct definition
 #include "get_scene.h"
 float fmuladd(float a, float b, float c)
 {
@@ -248,7 +249,7 @@ sphere_intersect_ret_t sphere_intersect(sphere_t s, ray_t r)
     float radius2 = s.radius * s.radius;
     
     if(d2 <= radius2) {
-      float thc = ((double)1.0 / inversesqrt(radius2 - d2));
+      float thc = sqrt(radius2 - d2);
       float t0 = tca - thc;
       float t1 = tca + thc;
       t0 = (t0 >= t1) ? t1 : t0;
@@ -269,26 +270,26 @@ color_t trace1(ray_t ray, plane_t aplane)
   bool plane_intersects = plint.cond;
   
   if((!plane_intersects) != 0 | (float_abs(plane_intersection.z) > (double)20.0) != 0 | (float_abs(plane_intersection.x) > (double)20.0) != 0) {
-    c.r = (double)0.0;
-    c.g = (double)0.0;
     c.b = ray.direction.y <= (double)1.0 ? ray.direction.y * ray.direction.y : (double)1.0;
+    c.r = c.b;
+    c.g = c.r;
   }
   else {
-    uint3_t plx = (int16_t)float_abs(plane_intersection.x + (double)20.0);
-    uint3_t plz = (int16_t)float_abs(plane_intersection.z + (double)20.0);
+    int6_t plx = float_abs(plane_intersection.x + (double)20.0);
+    int6_t plz = float_abs(plane_intersection.z + (double)20.0);
     bool checker = ((plx & 4) ^ (plz & 4)) != 4;
     
     if(checker) {
       c.r = (double)1.0;
       c.g = (double)1.0;
-      c.b = (double)0.6;
+      c.b = (double)1.0;
     }
     else {
       c.r = (double)0.2;
       c.g = (double)0.1;
       c.b = (double)0.1;
     }
-    float intensity = (double)1.0 - ((double)1.0 / inversesqrt(plane_intersection.x * plane_intersection.x + plane_intersection.z * plane_intersection.z)) * (double)0.025;
+    float intensity = (double)1.0 - sqrt(plane_intersection.x * plane_intersection.x + plane_intersection.z * plane_intersection.z) * (double)0.025;
     c.r = c.r * intensity;
     c.g = c.g * intensity;
     c.b = c.b * intensity;
@@ -317,24 +318,30 @@ color_t trace0(ray_t ray, plane_t aplane, sphere_t asphere)
   c = trace1(ray_to_trace, aplane);
   
   if(spint.cond) {
-    c.r = ((c.r) * ((double)0.3) + ((double)1.0 - ((double)0.3))) * (double)0.5;
-    c.g = (double)0.0;
-    c.b = ((c.b) * ((double)0.3) + ((double)1.0 - ((double)0.3)));
+    c.r = ((c.r) * ((double)0.85) + ((double)1.0 - ((double)0.85))) * ((double)243. / (double)256.);
+    c.g = ((c.g) * ((double)0.85) + ((double)1.0 - ((double)0.85))) * ((double)201. / (double)256.);
+    c.b = ((c.b) * ((double)0.85) + ((double)1.0 - ((double)0.85))) * ((double)104. / (double)256.);
   }
   return c;
 }
 
-color_t traceray(uint16_t pix_x, uint16_t pix_y, uint32_t frame, ray_t acamera, plane_t aplane, sphere_t asphere)
+color_t traceray(uint16_t i, uint16_t j, uint32_t frame, ray_t acamera, plane_t aplane, sphere_t asphere)
 {
   ray_t ray;
   ray.origin = acamera.origin;
-  float x = pix_x;
-  float y = pix_y;
-  ray.origin.x = (double)frame * (double)0.01;
-  ray.origin.z = (double)-20.0 - (double)frame * (double)0.05;
-  ray.direction.x = ((double)x - ((double)FRAME_WIDTH / (double)2.0)) * ((double)5.0 / (double)FRAME_HEIGHT);
-  ray.direction.y = ((double)y - ((double)FRAME_HEIGHT / (double)2.0)) * ((double)-5.0 / (double)FRAME_HEIGHT) - (double)2.0;
-  ray.direction.z = (double)5.0;
+  int16_t cx = i << 1;
+  cx = cx - (FRAME_WIDTH + 1);
+  int16_t cy = j << 1;
+  cy = (FRAME_HEIGHT + 1) - cy;
+  #define aspect	((FRAME_HEIGHT * 16) / (FRAME_WIDTH * 9))
+  #define scale	((double)1. / (float)FRAME_WIDTH)
+  float x = (float)cx * (float)scale * (float)aspect;
+  float y = (float)cy * scale;
+  ray.origin.x = (float)frame * (double)0.01;
+  ray.origin.z = (double)-20.0 - (float)frame * (double)0.05;
+  ray.direction.x = x;
+  ray.direction.y = y;
+  ray.direction.z = (double)1.0;
   ray.direction = normalize_vec(ray.direction);
   return trace0(ray, aplane, asphere);
 }
@@ -359,14 +366,14 @@ animation_pos_t animation(uint32_t frame)
   positions.sphere.center.y = (double)6.0;
   positions.sphere.center.z = (double)-10.0;
   positions.sphere.radius = (double)2.5;
-  positions.sphere.center.x = (double)frame * (double)0.05;
-  positions.camera.origin.z = (double)frame * (double)0.1 - (double)10.0;
+  positions.sphere.center.x = (float)frame * (double)0.05;
+  positions.camera.origin.z = (float)frame * (double)0.1 - (double)10.0;
   return positions;
 }
 
 full_state_t full_update(full_state_t state, bool reset, bool button_state)
 {
-  state.scene.frame = state.scene.frame + 1;
+  state.scene.frame = (state.scene.frame + 1) & 0xFF;
   
   if(reset) state.scene.frame = 0;
   return state;
@@ -378,9 +385,9 @@ pixel_t render_pixel(uint16_t x, uint16_t y)
   animation_pos_t animation_pos = animation(scene.frame);
   color_t c = traceray(x, y, scene.frame, animation_pos.camera, animation_pos.plane, animation_pos.sphere);
   pixel_t p;
-  p.r = (int32_t)(c.r * (double)255.0);
-  p.g = (int32_t)(c.g * (double)255.0);
-  p.b = (int32_t)(c.b * (double)255.0);
+  p.r = (int16_t)(c.r * (double)255.0);
+  p.g = (int16_t)(c.g * (double)255.0);
+  p.b = (int16_t)(c.b * (double)255.0);
   return p;
 }
 

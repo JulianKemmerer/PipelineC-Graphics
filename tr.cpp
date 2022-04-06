@@ -16,7 +16,7 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 */
 
 //#define ALTERNATE_UI 3 //level of graphics detail
-#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702)
+//#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702)
 //#define DITHER
 
 
@@ -751,7 +751,7 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
   screen_coord_t x = fixed_shr(cx, SCR_CSHIFT);
   screen_coord_t y = fixed_shr(cy, SCR_CSHIFT);
   const float aspect = (float)(FRAME_HEIGHT*16)/(float)(FRAME_WIDTH*9);
-  x = x * aspect; //aspect ratio correction
+  x = x * screen_coord_t(aspect); //aspect ratio correction
 
   pixel_t pix; //ignores alpha
 

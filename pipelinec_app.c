@@ -1,7 +1,8 @@
 #define CCOMPILE
 #ifdef __PIPELINEC__
 //#pragma PART "LFE5U-85F-6BG381C" // An ECP5U 85F part
-#pragma PART "xc7a35ticsg324-1l" // Arty
+#pragma PART "xc7a35ticsg324-1l" // Arty 35t
+//#pragma PART "xc7a100tcsg324-1" // Arty 100t
 #define LITEX_INTEGRATION //TEMP
 #include "pipelinec_app_vgaconfig.h"
 

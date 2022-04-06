@@ -7,29 +7,11 @@ struct full_state_t { scene_t scene; };
 #ifdef __PIPELINEC__
 #include "get_scene.h"
 #endif
-/*
-#ifndef __PIPELINEC__
-#define FP_ABS_MASK 0x7FFFFFFF
-#define RSQRT_MAGIC 0x5f3759df
-#endif
 
-// Config
-
-// From https://github.com/tomverbeure/rt/blob/ab0af1f9dfa09f676546dfc3bb8bb202aa4a0c36/src/main.c
-
-// https://en.wikipedia.org/wiki/Fast_inverse_square_root
-INLINE float float_rsqrt( float number ) //reports 16.56753756689143 MHz
-{
-  //FIXME: should use more precision (another newton iteration?)
-  float x2 = number * 0.5;
-  float conv_f = uint_to_float(RSQRT_MAGIC - (float_to_uint(number) >> 1));
-  return conv_f*((float)1.5 - x2*conv_f*conv_f);
-}
-*/
-#define float_rsqrt inversesqrt
+#define PIPELINEC_SUGAR
 #define FABS(x) float_abs(x)//uint_to_float(float_to_uint(x) & FP_ABS_MASK)
-#define RSQRT(x) float_rsqrt(x)
-#define SQRT(x) ((float)1.0/RSQRT(x))
+#define RSQRT(x) inversesqrt(x)
+#define SQRT(x) sqrt(x) //((float)1.0/RSQRT(x))
 
 struct color_t {
     float   r;
@@ -187,20 +169,20 @@ INLINE color_t trace1(ray_t ray, plane_t aplane) //reports 4.44389142684466 MHz
     bool plane_intersects = plint.cond;
 
     if ((!plane_intersects) != 0 | (FABS(plane_intersection.z) > 20.0) != 0 | (FABS(plane_intersection.x) > 20.0) != 0){
-        c.r = 0.0;
-        c.g = 0.0;
         c.b = ray.direction.y <= 1.0 ? ray.direction.y*ray.direction.y : (float)1.0;
+        c.r = c.b;
+        c.g = c.r;
     }
     else
     {
-      uint3_t plx = (int32_t)FABS(plane_intersection.x+20.0); //it's unclear how to cast float to integer (not bitwise)
-      uint3_t plz = (int32_t)FABS(plane_intersection.z+20.0); //
+      int6_t plx = (int32_t)FABS(plane_intersection.x+20.0); //it's unclear how to cast float to integer (not bitwise)
+      int6_t plz = (int32_t)FABS(plane_intersection.z+20.0); //
 	    bool checker = (( plx & 4 ) ^ (plz & 4)) != 4;
 
 	    if(checker){
         c.r = 1.0;
         c.g = 1.0;
-        c.b = 0.6;
+        c.b = 1.0;
 	    }
 	    else {
         c.r = 0.2;
@@ -208,19 +190,6 @@ INLINE color_t trace1(ray_t ray, plane_t aplane) //reports 4.44389142684466 MHz
         c.b = 0.1;
 	    }
 
-
-      /*
-      Materials:
-       N = vec3{0,1,0} //for PLANE
-       N = (hit - s.center).normalize(); for SPHERE
-
-      dir = original ray direction
-
-        vec3 light_dir      = (light.position - hit).normalize();
-
-       specular_light_intensity += std::pow(std::max(0.f, -reflect(-light_dir, N)*dir), material.specular_exponent)*light.intensity;
-
-      */
       float intensity = (float)1.0-SQRT(plane_intersection.x*plane_intersection.x + plane_intersection.z*plane_intersection.z)*0.025;
       c.r = c.r * intensity; 
       c.g = c.g * intensity; 
@@ -230,7 +199,7 @@ INLINE color_t trace1(ray_t ray, plane_t aplane) //reports 4.44389142684466 MHz
     return c;
 }
 
-#define ALPHA_K ((float)0.3)
+#define ALPHA_K ((float)0.85)
 #define ALPHA_COLOR(c) ((c) * ALPHA_K + (1.0-ALPHA_K))
 
 INLINE color_t trace0(ray_t ray, plane_t aplane, sphere_t asphere) 
@@ -238,7 +207,6 @@ INLINE color_t trace0(ray_t ray, plane_t aplane, sphere_t asphere)
     color_t c;
 
     sphere_intersect_ret_t spint = sphere_intersect(asphere, ray);
-    //float sphere_t = spint.t;
     vec_t sphere_intersection = spint.intersection;
     vec_t sphere_normal = spint.normal;
     ray_t ray_to_trace;
@@ -259,30 +227,41 @@ INLINE color_t trace0(ray_t ray, plane_t aplane, sphere_t asphere)
         
     if(spint.cond)
     {
-      c.r = ALPHA_COLOR(c.r)*0.5;
-      c.g = 0.0; //ALPHA_COLOR(c.g)*0.0;
-      c.b = ALPHA_COLOR(c.b);
+      c.r = ALPHA_COLOR(c.r)*(243./256.);
+      c.g = ALPHA_COLOR(c.g)*(201./256.);
+      c.b = ALPHA_COLOR(c.b)*(104./256.);
     }
 
     return c;
 }
 
-/*INLINE*/ color_t traceray(uint16_t pix_x, uint16_t pix_y, uint32_t frame, ray_t acamera, plane_t aplane, sphere_t asphere)
+/*INLINE*/ color_t traceray(uint16_t i, uint16_t j, uint32_t frame, ray_t acamera, plane_t aplane, sphere_t asphere)
 {
   ray_t ray;
   ray.origin = acamera.origin;
-  float x = (float)pix_x;
-  float y = (float)pix_y;
 
+#ifndef PIPELINEC_SUGAR
+  int16_t cx = (i<<1)-FRAME_WIDTH-1;
+  int16_t cy = -((j<<1)-FRAME_HEIGHT-1);
+#else
+  int16_t cx = i << 1;
+  cx = cx - (FRAME_WIDTH + 1);
+  int16_t cy = j << 1;
+  cy = (FRAME_HEIGHT + 1) - cy;
+#endif
 
+  static const float aspect = (float)(FRAME_HEIGHT*16)/(float)(FRAME_WIDTH*9);
+  static const float scale = 1./(float)FRAME_WIDTH;
+  float x = (float)cx*scale*aspect;
+  float y = (float)cy*scale;
+  
   //movement
   ray.origin.x = (float)frame*0.01;
   ray.origin.z = (float)-20.0-(float)frame*0.05;
 
-  ray.direction.x = (x - (float)FRAME_WIDTH/2.0)*(5.0 / (float)FRAME_HEIGHT);
-  ray.direction.y = (y - (float)FRAME_HEIGHT/2.0)*(-5.0 / (float)FRAME_HEIGHT) - 2.0;
-
-  ray.direction.z = 5.0;
+  ray.direction.x = x;
+  ray.direction.y = y;
+  ray.direction.z = 1.0;
   ray.direction = normalize_vec(ray.direction);
 
   return trace0(ray, aplane, asphere);
@@ -328,7 +307,7 @@ INLINE animation_pos_t animation(uint32_t frame)
 #ifndef __PIPELINEC__
 full_state_t full_update(full_state_t state, bool reset, bool button_state)
 {
-  state.scene.frame = state.scene.frame+1;
+  state.scene.frame = (state.scene.frame+1)&0xFF;
   if(reset) state.scene.frame = 0;
   return state;
 }
@@ -346,6 +325,7 @@ pixel_t render_pixel(uint16_t x, uint16_t y)
 }
 
 #else
+/*
 // Animation logic for this demo
 INLINE uint32_t frame_counter(vga_signals_t vga)
 {
@@ -381,9 +361,7 @@ void app()
                       frame, animation_pos.camera, 
                       animation_pos.plane, animation_pos.sphere);
   
-  /*color_t c = traceray_trace1_only(vga_signals.pos.x, vga_signals.pos.y, 
-                animation_state.frame, animation_state.camera,animation_state.plane);
-  */
+  //color_t c = traceray_trace1_only(vga_signals.pos.x, vga_signals.pos.y,  animation_state.frame, animation_state.camera,animation_state.plane);
   
   // Convert 0.0->1.0 color to 8b,0-255 int
   pixel_t p;
@@ -394,4 +372,5 @@ void app()
   // Drive output signals/registers
   vga_pmod_register_outputs(vga_signals, p);
 }
+*/
 #endif

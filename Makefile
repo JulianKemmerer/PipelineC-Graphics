@@ -6,8 +6,7 @@ FRAME_HEIGHT?=480
 VERILATOR?=verilator
 VERILATOR_CFLAGS+=-CFLAGS -DUSE_VERILATOR -CFLAGS -DFRAME_WIDTH=$(FRAME_WIDTH) -CFLAGS -DFRAME_HEIGHT=$(FRAME_HEIGHT) -LDFLAGS $(shell sdl2-config --libs)
 CFLEX_C?=python3 ../CflexHDL/cflexparser/cflexc.py
-#PIPELINEC_ROOT?=../PipelineC
-PIPELINEC_ROOT?=../pipelinec-branch
+PIPELINEC_ROOT?=../PipelineC
 PIPELINEC?=$(PIPELINEC_ROOT)/src/pipelinec
 INCLUDE+=-I$(PIPELINEC_ROOT) -I../CflexHDL/include
 PIPELINEC_MAIN?=./pipelinec_app.c
