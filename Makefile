@@ -38,22 +38,23 @@ tr_gen: tr_pipelinec.gen.c simulator_main.cpp
 
 ./build/top/top.v: $(PIPELINEC_MAIN) pipelinec_app.c tr_pipelinec.gen.c
 	rm -Rf ./build
-	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_vgaconfig.h
-	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_vgaconfig.h
+	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_config.h
+	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_config.h
+	echo "#define USE_VERILATOR" >> pipelinec_app_config.h
 	#clang $(INCLUDE) -E -D__PIPELINEC__ $(PIPELINEC_MAIN) > $(PIPELINEC_MAIN).gen
 	$(PIPELINEC) $(PIPELINEC_MAIN) --out_dir ./build --comb --sim --verilator
 
 ./synth/top/top.v: pipelinec_app.c tr_pipelinec.gen.c
 	#rm -Rf ./synth
-	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_vgaconfig.h
-	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_vgaconfig.h
+	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_config.h
+	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_config.h
 	$(PIPELINEC) ./pipelinec_app.c --out_dir ./synth --comb #delete --comb for full pipelining (~10% more resources and slower)
 	@echo FLOAT USAGE:
 	grep -v fixed_make_from_float synth/float_module_instances.log
 
 ./fullsynth/top/top.v: pipelinec_app.c tr_pipelinec.gen.c
-	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_vgaconfig.h
-	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_vgaconfig.h
+	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_config.h
+	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_config.h
 	$(PIPELINEC) ./pipelinec_app.c --out_dir ./fullsynth
 
 compile: ./build/top/top.v
@@ -102,8 +103,8 @@ litex: $(BOARD)
 
 ./vhd/all_vhdl_files/top.vhd: pipelinec_litex.c tr_pipelinec.gen.c top_glue_no_struct.vhd
 	rm -Rf ./vhd
-	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_vgaconfig.h
-	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_vgaconfig.h
+	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_config.h
+	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_config.h
 	$(PIPELINEC) pipelinec_litex.c --out_dir ./vhd # "try --coarse --start 75 / "--comb --sim" also works! with no glitches
 	mkdir -p ./vhd/all_vhdl_files/
 	cp `cat ./vhd/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed

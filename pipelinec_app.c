@@ -4,7 +4,9 @@
 //#pragma PART "xc7a35ticsg324-1l" // Arty 35t
 #pragma PART "xc7a100tcsg324-1" // Arty 100t
 
-#include "pipelinec_app_vgaconfig.h"
+// Temp config work around since no preprocessor commmand line args
+// https://github.com/JulianKemmerer/PipelineC/issues/56
+#include "pipelinec_app_config.h"
 
 #include "compiler.h"
 #include "wire.h"
@@ -19,8 +21,8 @@
 // Set app to run at pixel clock
 #ifndef LITEX_INTEGRATION
 // See top level IO wiring + DVI/VGA resolution timing logic in
-#include "vga/vga_pmod.c"
-//#include "dvi/dvi_pmod.c"
+//#include "vga/vga_pmod.c"
+#include "dvi/dvi_pmod.c"
 // Access to board buttons and switches
 #include "../PipelineC/examples/arty/src/buttons/buttons.c"
 #else
