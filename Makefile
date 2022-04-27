@@ -84,7 +84,7 @@ cxxrtl: ./cxxrtl_build/cxxrtl_top
 arty: compile
 	#FIXME: unify builr and vhd directories
 	mkdir -p ./vhd/all_vhdl_files/
-	cp `cat ./build/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
+	cp `cat ./fullsynth/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
 	cp top_glue_no_struct.vhd ./vhd/all_vhdl_files/
 	python3 ./litex_soc.py $(BOARD) --cpu-type=None
 	openFPGALoader -b $(BOARD) ./build/digilent_arty/gateware/digilent_arty.bit
@@ -92,7 +92,7 @@ arty: compile
 de0nano: compile
 	#FIXME: unify builr and vhd directories
 	mkdir -p ./vhd/all_vhdl_files/
-	cp `cat ./build/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
+	cp `cat ./fullsynth/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
 	cp top_glue_no_struct.vhd ./vhd/all_vhdl_files/
 	python3 ./litex_soc.py $(BOARD) --cpu-type=None
 	openFPGALoader -b $(BOARD) ./build/terasic_de0nano/gateware/terasic_de0nano.rbf
