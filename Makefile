@@ -52,7 +52,7 @@ tr_gen: tr_pipelinec.gen.c simulator_main.cpp
 	@echo FLOAT USAGE:
 	grep -v fixed_make_from_float synth/float_module_instances.log
 
-./fullsynth/top/top.v: pipelinec_app.c tr_pipelinec.gen.c
+./fullsynth/top/top.vhd: pipelinec_app.c tr_pipelinec.gen.c
 	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_config.h
 	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_config.h
 	$(PIPELINEC) ./pipelinec_app.c --out_dir ./fullsynth
@@ -61,7 +61,7 @@ compile: ./build/top/top.v
 
 synth: ./synth/top/top.v
 
-fullsynth: ./fullsynth/top/top.v
+fullsynth: ./fullsynth/top/top.vhd
 
 verilator: obj_dir/Vtop
 	./obj_dir/Vtop
@@ -81,7 +81,7 @@ cxxrtl_top: ./synth/top/top.v
 cxxrtl: ./cxxrtl_build/cxxrtl_top
 	./cxxrtl_build/cxxrtl_top
 
-arty: compile
+arty: fullsynth
 	#FIXME: unify builr and vhd directories
 	mkdir -p ./vhd/all_vhdl_files/
 	cp `cat ./fullsynth/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
@@ -89,7 +89,7 @@ arty: compile
 	python3 ./litex_soc.py $(BOARD) --cpu-type=None
 	openFPGALoader -b $(BOARD) ./build/digilent_arty/gateware/digilent_arty.bit
 
-de0nano: compile
+de0nano: fullsynth
 	#FIXME: unify builr and vhd directories
 	mkdir -p ./vhd/all_vhdl_files/
 	cp `cat ./fullsynth/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed

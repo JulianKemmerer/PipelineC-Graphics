@@ -14,7 +14,7 @@
 #include "intN_t.h"
 #include "float_e_m_t_helper.h" // Variable mantissa sizes
 
-// Temp config work around since no preprocessor commmand line args
+// Temp config work around since no preprocessor command line args
 // https://github.com/JulianKemmerer/PipelineC/issues/56
 #include "pipelinec_app_config.h"
 

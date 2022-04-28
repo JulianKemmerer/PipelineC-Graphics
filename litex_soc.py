@@ -1,5 +1,5 @@
 # Integration of graphics generators into LiteX, supporting DVI output or a VGA pmod
-# Only requirement is a verilog module called "top" with the needed arguments
+# Only requirement is a VHDL module called "top_glue_no_struct" with the needed arguments
 #
 # Copyright (c) 2022 Victor Suarez Rovere <suarezvictor@gmail.com>
 # code portions from LiteX framework (C) Enjoy-Digital https://github.com/enjoy-digital/litex
@@ -14,7 +14,7 @@ from litex.soc.integration.builder import *
 from litex.soc.integration.soc_core import *
 from litex.build.generic_platform import *
 
-DVI = True
+DVI = False # False = Use PMOD VGA on pmod B & C
 
 class GraphicsGenerator(Module):
     def __init__(self, button):
@@ -26,25 +26,25 @@ class GraphicsGenerator(Module):
         framedisplay = Module()
         self.return_output_a = Signal(8)
         """
-		port(
-		videoclk : in std_logic;
-		video_x : in unsigned(15 downto 0);
-		video_y : in unsigned(15 downto 0);
-		vsync : in unsigned(0 downto 0);
-		reset : in unsigned(0 downto 0);
-		jump_pressed : in unsigned(0 downto 0);
-		pixel_a : out unsigned(7 downto 0);
-		pixel_r : out unsigned(7 downto 0);
-		pixel_g : out unsigned(7 downto 0);
-		pixel_b : out unsigned(7 downto 0)
-		);
+        port(
+        videoclk : in std_logic;
+        video_active : in std_logic;
+        video_x : in unsigned(15 downto 0);
+        video_y : in unsigned(15 downto 0);
+        reset : in unsigned(0 downto 0);
+        jump_pressed : in unsigned(0 downto 0);
+        pixel_a : out unsigned(7 downto 0);
+        pixel_r : out unsigned(7 downto 0);
+        pixel_g : out unsigned(7 downto 0);
+        pixel_b : out unsigned(7 downto 0)
+        );
         """
         framedisplay.specials += Instance("top_glue_no_struct", #FIXME: figure out how to avoid the glue and access the output structure
           i_videoclk = ClockSignal("sys"), #results in "hdmi" (or corresponding video) clock
+          i_video_active = vtg_sink.de, # Data enable / active
           i_video_x = vtg_sink.hcount,
           i_video_y = vtg_sink.vcount,
           i_reset = ResetSignal("sys"),
-          i_vsync = ~vtg_sink.vsync,
           i_jump_pressed = button,
           o_pixel_a = self.return_output_a, #FIXME: just Signal(8)
           o_pixel_b = source.r,
@@ -128,7 +128,7 @@ class _CRG_arty(Module):
 
 def build_arty(args):
 	from litex_boards.platforms import arty as board
-	platform = board.Platform(variant="a7-35", toolchain="vivado") #or a7-35
+	platform = board.Platform(variant="a7-35", toolchain="vivado") # a7-35 or a7-100 
 	#platform = board.Platform(toolchain="yosys+nextpnr") #brings errors about usage of DSP48E1 (* operator) and of ODDR
 	sys_clk_freq = int(100e6)
 	soc = SoCCore(platform, sys_clk_freq, **soc_core_argdict(args))
