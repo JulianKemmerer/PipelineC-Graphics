@@ -20,6 +20,9 @@ end top_glue_no_struct;
 
 architecture arch of top_glue_no_struct is 
 
+-- Unused
+signal vga_timing : vga_signals_t;
+
 begin
 
 top_inst : entity work.top 
@@ -36,7 +39,7 @@ port map(
     vga_return_output.color.r => pixel_r,
     vga_return_output.color.g => pixel_g,
     vga_return_output.color.b => pixel_b,
-    vga_return_output.vga_timing => open
+    vga_return_output.vga_timing => vga_timing -- Unused but cannot be OPEN
 );
 
 end arch;
