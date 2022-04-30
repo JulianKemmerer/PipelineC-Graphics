@@ -14,7 +14,7 @@ from litex.soc.integration.builder import *
 from litex.soc.integration.soc_core import *
 from litex.build.generic_platform import *
 
-DVI = False # False = Use PMOD VGA on pmod B & C
+DVI = False # False = Use PMOD B+C VGA
 
 class GraphicsGenerator(Module):
     def __init__(self, button):
@@ -28,7 +28,6 @@ class GraphicsGenerator(Module):
         """
         port(
         videoclk : in std_logic;
-        video_active : in std_logic;
         video_x : in unsigned(15 downto 0);
         video_y : in unsigned(15 downto 0);
         reset : in unsigned(0 downto 0);
@@ -41,7 +40,6 @@ class GraphicsGenerator(Module):
         """
         framedisplay.specials += Instance("top_glue_no_struct", #FIXME: figure out how to avoid the glue and access the output structure
           i_videoclk = ClockSignal("sys"), #results in "hdmi" (or corresponding video) clock
-          i_video_active = vtg_sink.de, # Data enable / active
           i_video_x = vtg_sink.hcount,
           i_video_y = vtg_sink.vcount,
           i_reset = ResetSignal("sys"),
@@ -49,7 +47,7 @@ class GraphicsGenerator(Module):
           o_pixel_a = self.return_output_a, #FIXME: just Signal(8)
           o_pixel_b = source.r,
           o_pixel_g = source.g,
-          o_pixel_r = source.b #FIXME: why colors inverted?
+          o_pixel_r = source.b #FIXME: why colors inverted? Different PMOD versions?
         )
     
         self.framedisplay = framedisplay 
