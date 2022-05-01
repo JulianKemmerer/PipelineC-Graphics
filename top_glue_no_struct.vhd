@@ -1,3 +1,5 @@
+-- Wrap PipelineC top level VHDL module in another VHDL module that does not use structs
+-- This is so the VHDL can be instantiated directly in Verilog (which does not support structs)
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -23,7 +25,7 @@ begin
 
 top_inst : entity work.top 
 port map(
-    clk_25p0 => videoclk,
+    pixel_clock(0) => videoclk,
     buttons_module_btn(0) => jump_pressed(0),
     buttons_module_btn(1) => '0',
     buttons_module_btn(2) => '0',

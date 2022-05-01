@@ -80,8 +80,8 @@ uint1_t frame_clock;
 #pragma ASYNC_WIRE frame_clock
 CLK_MHZ(frame_clock, FRAME_CLK_MHZ)
 
-// Helper func to drive frame clock with isolated static frame_clock_reg
-// Maybe include inside vga_timing?
+// Helper func to drive frame clock from isolated static frame_clock_reg
+// Running on pixel clock, maybe include inside vga_timing?
 void frame_clock_logic(uint16_t x, uint16_t y, bool active)
 {
   // Need to make ~50% duty cycle frame clock
@@ -105,7 +105,7 @@ void frame_clock_logic(uint16_t x, uint16_t y, bool active)
   }
 }
 
-// Per frame next state comb. logic
+// Per frame next state comb. logic runnning on frame clock
 MAIN_MHZ(frame_logic, FRAME_CLK_MHZ)
 void frame_logic()
 {
@@ -123,7 +123,20 @@ void frame_logic()
   power_on_reset = 0;
 }
 
-// Logic running at pixel clock, mostly render_pixel pipeline
+// Make pixel clock look like its user generated internally
+// so that, regardless of frequency, the name is always the same
+uint1_t pixel_clock;
+#include "clock_crossing/pixel_clock.h"
+#pragma ASYNC_WIRE pixel_clock
+CLK_MHZ(pixel_clock, PIXEL_CLK_MHZ)
+// Connect constant name top level port to internal pixel_clock
+MAIN_MHZ(pixel, PIXEL_CLK_MHZ) 
+void pixel(uint1_t clock) // top level port is "pixel_clock"
+{
+  WIRE_WRITE(uint1_t, pixel_clock, clock)
+}
+
+// Logic running on pixel clock, mostly render_pixel pipeline
 MAIN_MHZ(pixel_logic, PIXEL_CLK_MHZ)
 void pixel_logic()
 {
