@@ -28,6 +28,7 @@ run: tr_sim
 tr_pipelinec.gen.c: $(RTCODE) tr_pipelinec.cpp
 	clang -DPARSING -E -DRTCODE=\"$(RTCODE)\" tr_pipelinec.cpp > tr_pipelinec.E.cpp
 	$(CFLEX_C) tr_pipelinec.E.cpp > tr_pipelinec.gen.c
+	patch -p1 tr_pipelinec.gen.c < get_scene.patch
 
 gen: tr_gen
 	./tr_gen
