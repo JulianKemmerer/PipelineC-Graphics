@@ -295,7 +295,7 @@ color_basic_t sphere_effect(IN(hit_out) hit, IN(material_t) hit_material)
   IN(sphere_t) s = scene.sphere;
   uint16_t frame = scene.frame;
 
-  uint8_t tick  = frame>>2;
+  uint8_t tick  = frame>>1;
   if((tick & 0x3F) != 0 || ((hash16(tick)>>13) & 1) != 0)
   {
     //eyeballs
@@ -748,10 +748,12 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
   int16_t cy = j << 1;
   cy = (FRAME_HEIGHT + 1) - cy;
 #endif
-  screen_coord_t x = fixed_shr(cx, SCR_CSHIFT);
-  screen_coord_t y = fixed_shr(cy, SCR_CSHIFT);
-  const float aspect = (float)(FRAME_HEIGHT*16)/(float)(FRAME_WIDTH*9);
-  x = x * screen_coord_t(aspect); //aspect ratio correction
+  const float W = (float)FRAME_WIDTH;
+  const float H = (float)FRAME_HEIGHT;
+  static const screen_coord_t ax = 1024.*(16./9.)/W;
+  static const screen_coord_t ay = 1024./H;
+  screen_coord_t x = fixed_shr(cx, 10+1) * ax;
+  screen_coord_t y = fixed_shr(cy, 10+1) * ay;
 
   pixel_t pix; //ignores alpha
 
