@@ -5,10 +5,11 @@
 # code portions from LiteX framework (C) Enjoy-Digital https://github.com/enjoy-digital/litex
 
 import sys
+import os
 
 from migen import *
 from litex.soc.cores.clock import *
-from litex.soc.cores.video import VideoTimingGenerator, video_timing_layout, video_data_layout
+from litex.soc.cores.video import VideoTimingGenerator, video_timing_layout, video_data_layout, video_timings
 from litex.soc.interconnect import stream
 from litex.soc.integration.builder import *
 from litex.soc.integration.soc_core import *
@@ -25,19 +26,6 @@ class GraphicsGenerator(Module):
 
         framedisplay = Module()
         self.return_output_a = Signal(8)
-        """
-        port(
-        videoclk : in std_logic;
-        video_x : in unsigned(15 downto 0);
-        video_y : in unsigned(15 downto 0);
-        reset : in unsigned(0 downto 0);
-        jump_pressed : in unsigned(0 downto 0);
-        pixel_a : out unsigned(7 downto 0);
-        pixel_r : out unsigned(7 downto 0);
-        pixel_g : out unsigned(7 downto 0);
-        pixel_b : out unsigned(7 downto 0)
-        );
-        """
         framedisplay.specials += Instance("top_glue_no_struct", #FIXME: figure out how to avoid the glue and access the output structure
           i_videoclk = ClockSignal("sys"), #results in "hdmi" (or corresponding video) clock
           i_video_x = vtg_sink.hcount,
@@ -72,7 +60,7 @@ def add_video_custom_generator(soc, name="video", phy=None, timings="800x600@60H
     ]
 
 
-def build_de0nano(args):
+def build_de0nano(args, timings):
 	from litex_boards.platforms import de0nano as board
 	sys.path.append("../cflexhdl/external/litex-boards")
 	from terasic_de0nano import VideoHDMIPHY, _CRG
@@ -99,9 +87,18 @@ def build_de0nano(args):
 	soc.submodules.videophy = VideoHDMIPHY(soc.platform.request("gpdi"), clock_domain = soc.video_clock_domain)
 	return soc
 
+def get_video_timings():
+	timings_sel = "{W}x{H}@{FPS}Hz".format(W = os.environ["FRAME_WIDTH"], H = os.environ["FRAME_HEIGHT"], FPS = os.environ["FRAME_FPS"])
+	timings = video_timings[timings_sel]
+	if timings_sel == "640x480@60Hz":
+	    timings["pix_clk"] = 25e6 #fix default 25.18MHz
+	if timings_sel == "1920x1080@60Hz":
+	    timings["pix_clk"] = 150e6 #fix default 148.5MHz
+	return timings
+
 
 class _CRG_arty(Module):
-    def __init__(self, platform, sys_clk_freq, with_rst=True):
+    def __init__(self, platform, sys_clk_freq, video_clock, with_rst=True):
         self.rst = Signal()
         self.clock_domains.cd_sys       = ClockDomain()
 
@@ -111,7 +108,6 @@ class _CRG_arty(Module):
         pll.register_clkin(platform.request("clk100"), 100e6)
         pll.create_clkout(self.cd_sys,       sys_clk_freq)
 
-        video_clock = 25e6 #"800x600@75Hz" =>  49.5e6, "640x480@60Hz" => 25.175e6 "800x600@60Hz"  => 40e6, 1280x720@60Hz(RB) => 61.9e6 1024 46.42e6
         if DVI:
             self.clock_domains.cd_hdmi   = ClockDomain()
             self.clock_domains.cd_hdmi5x = ClockDomain()
@@ -124,13 +120,13 @@ class _CRG_arty(Module):
         platform.add_false_path_constraints(self.cd_sys.clk, pll.clkin) # Ignore sys_clk to pll.clkin path created by SoC's rst.
 
 
-def build_arty(args):
+def build_arty(args, timings):
 	from litex_boards.platforms import arty as board
 	platform = board.Platform(variant="a7-35", toolchain="vivado") # a7-35 or a7-100 
 	#platform = board.Platform(toolchain="yosys+nextpnr") #brings errors about usage of DSP48E1 (* operator) and of ODDR
 	sys_clk_freq = int(100e6)
 	soc = SoCCore(platform, sys_clk_freq, **soc_core_argdict(args))
-	soc.submodules.crg = _CRG_arty(platform, sys_clk_freq, False)
+	soc.submodules.crg = _CRG_arty(platform, sys_clk_freq, timings["pix_clk"], False)
 	soc.button = soc.platform.request('user_btn', 0)
 
 	if DVI:
@@ -145,7 +141,7 @@ def build_arty(args):
 			Subsignal("clk_p",   Pins("pmodc:6"), IOStandard("TMDS_33")),
 			Subsignal("clk_n",   Pins("pmodc:7"), IOStandard("TMDS_33")))])
 		soc.submodules.videophy = VideoS7HDMIPHY(platform.request("hdmi_out"), clock_domain="hdmi")
-		add_video_custom_generator(soc, phy=soc.videophy, timings="640x480@60Hz", clock_domain="hdmi")
+		add_video_custom_generator(soc, phy=soc.videophy, timings=timings, clock_domain="hdmi")
 	else:
 		from litex.soc.cores.video import VideoVGAPHY
 		platform.add_extension([("vga", 0, #PMOD VGA on pmod B & C
@@ -156,12 +152,11 @@ def build_arty(args):
 			Subsignal("b", Pins("J17 J18 K15 J15")), #pmodb.4-7
 			IOStandard("LVCMOS33"))])
 		soc.submodules.videophy = VideoVGAPHY(platform.request("vga"), clock_domain="vga")
-		add_video_custom_generator(soc, phy=soc.videophy, timings="640x480@60Hz", clock_domain="vga")
+		add_video_custom_generator(soc, phy=soc.videophy, timings=timings, clock_domain="vga")
 	return soc #TODO: review code on pipelinec-graphics repo
 
 
 if __name__ == "__main__":
-	import sys
 	boardname = sys.argv[1]
 	sys.argv = sys.argv[1:] #remove first argument
 
@@ -170,10 +165,10 @@ if __name__ == "__main__":
 	soc_core_args(parser)
 	args = parser.parse_args()
 
-	if boardname == "de0nano": soc = build_de0nano(args)
-	if boardname == "arty": soc = build_arty(args)
+	timings = get_video_timings()
+	if boardname == "de0nano": soc = build_de0nano(args, timings)
+	if boardname == "arty": soc = build_arty(args, timings)
 
-	#add_video_custom_generator(soc, phy=soc.videophy, timings="640x480@60Hz", clock_domain=soc.video_clock_domain)
 	soc.platform.add_source_dir("./vhd/all_vhdl_files", recursive=False)
 
 

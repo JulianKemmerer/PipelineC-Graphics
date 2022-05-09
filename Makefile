@@ -3,6 +3,7 @@
 
 FRAME_WIDTH?=640
 FRAME_HEIGHT?=480
+FRAME_FPS?=60
 VERILATOR?=verilator
 VERILATOR_CFLAGS+=-CFLAGS -DUSE_VERILATOR -CFLAGS -DFRAME_WIDTH=$(FRAME_WIDTH) -CFLAGS -DFRAME_HEIGHT=$(FRAME_HEIGHT) -LDFLAGS $(shell sdl2-config --libs)
 CFLEX_C?=python3 ../CflexHDL/cflexparser/cflexc.py
@@ -41,6 +42,7 @@ tr_gen: tr_pipelinec.gen.c simulator_main.cpp
 	rm -Rf ./build
 	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_config.h
 	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_config.h
+	echo "#define FRAME_FPS" $(FRAME_FPS) >> pipelinec_app_config.h
 	echo "#define USE_VERILATOR" >> pipelinec_app_config.h
 	#clang $(INCLUDE) -E -D__PIPELINEC__ $(PIPELINEC_MAIN) > $(PIPELINEC_MAIN).gen
 	$(PIPELINEC) $(PIPELINEC_MAIN) --out_dir ./build --comb --sim --verilator
@@ -49,6 +51,7 @@ tr_gen: tr_pipelinec.gen.c simulator_main.cpp
 	#rm -Rf ./synth
 	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_config.h
 	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_config.h
+	echo "#define FRAME_FPS" $(FRAME_FPS) >> pipelinec_app_config.h
 	$(PIPELINEC) ./pipelinec_app.c --out_dir ./synth --comb #delete --comb for full pipelining (~10% more resources and slower)
 	@echo FLOAT USAGE:
 	grep -v fixed_make_from_float synth/float_module_instances.log
@@ -56,6 +59,7 @@ tr_gen: tr_pipelinec.gen.c simulator_main.cpp
 ./fullsynth/top/top.vhd: pipelinec_app.c tr_pipelinec.gen.c
 	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_config.h
 	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_config.h
+	echo "#define FRAME_FPS" $(FRAME_FPS) >> pipelinec_app_config.h
 	$(PIPELINEC) ./pipelinec_app.c --out_dir ./fullsynth
 
 compile: ./build/top/top.v
@@ -87,7 +91,7 @@ arty: fullsynth
 	mkdir -p ./vhd/all_vhdl_files/
 	cp `cat ./fullsynth/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
 	cp top_glue_no_struct.vhd ./vhd/all_vhdl_files/
-	python3 ./litex_soc.py $(BOARD) --cpu-type=None
+	FRAME_WIDTH=$(FRAME_WIDTH) FRAME_HEIGHT=$(FRAME_HEIGHT) FRAME_FPS=$(FRAME_FPS) python3 ./litex_soc.py $(BOARD) --cpu-type=None
 	openFPGALoader -b $(BOARD) ./build/digilent_arty/gateware/digilent_arty.bit
 
 de0nano: fullsynth
