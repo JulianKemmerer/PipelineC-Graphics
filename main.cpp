@@ -180,9 +180,9 @@ int main()
 		 fb_update(); //once by line
       }
       verilator_output(g_top);
-      g_top->clk = 0;
+      g_top->pixel_clock = 0;
       g_top->eval();
-      g_top->clk = 1;
+      g_top->pixel_clock = 1;
       g_top->eval();
       
       // Or raw C code running?
