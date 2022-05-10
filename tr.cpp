@@ -335,8 +335,8 @@ color_basic_t plane_effect(IN(hit_out) hit)
 
   float_type hitx = hit.hit.orig.x - plane_center.x;
   float_type hitz = hit.hit.orig.z - plane_center.z;
-  float_type ox = float_shift(hitx, FLOOR_SHIFT); //FIXME: same coordinates in this game
-  float_type oz = float_shift(hitz, FLOOR_SHIFT);
+  float_type ox = float_shift(hitx, -FLOOR_SHIFT); //FIXME: same coordinates in this game
+  float_type oz = float_shift(hitz, -FLOOR_SHIFT);
   
   int16_t ix = round16(ox);
   int16_t iz = round16(oz);
@@ -615,8 +615,8 @@ color_basic_t background_color_alt(screen_coord_t x, screen_coord_t y, uint16_t 
 
   if(z < 4)
   {
-    int16_t cy = (int16_t) fixed_shl(y*z, SCR_CSHIFT-1);
-    int16_t cx = (int16_t) fixed_shl(x*z, SCR_CSHIFT-1) + star_vel(off, cy & 7); //add some movement
+    int16_t cy = (int16_t) fixed_shl(y*z, 9);
+    int16_t cx = (int16_t) fixed_shl(x*z, 9) + star_vel(off, cy & 7); //add some movement
     uint16_t pix_hash = hash16(cx ^ hash16(cy)); //FIXME: pixel hash shold be part of the scene
     if((pix_hash & 0xFFC0) == 0) //add star
       c = color_basic_t(fixed_shr(((pix_hash<<2) + frame) & 0x7F, 9) + STAR_INTENSITY);
@@ -630,27 +630,27 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
 #warning check why fixed types can't be left uninitialized
   coord_type inv_y = 0.;
   
-  uint16_t u;
-  uint16_t v;
+  uint8_t ux;
+  uint8_t uz;
   bool drawfog = false;
 
-  if (y != 0. && fixed_sign(y) == fixed_sign(py))
+  if (y != 0. && fixed_is_negative(y) == fixed_is_negative(py)) //FIXME: floor is not drawn correctly
   {
-    inv_y = fixed_shr(py, FLOOR_SHIFT)/y;
+    inv_y = fixed_shl(py, FLOOR_SHIFT)/y;
 
     coord_type ix = inv_y*x-px;
     coord_type iz = inv_y + pz;
 
-    u = fixed_asshort(ix, FLOOR_SHIFT); //TODO: this is just for testing an internal bit, can access it directly
-    v = fixed_asshort(iz, FLOOR_SHIFT);
-
     hole_t hole_d = plane_has_hole(ix, coord_type(0)-iz);
 
-	if(!(hole_d < 0)) //internal area
+	if(!fixed_is_negative(hole_d)) //internal area
     {
-      if((((int16_t)inv_y) >> 9) == 0)
+      //if((short(inv_y) >> 10) == 0)
+      if(inv_y < 512)
       {
-        c = ((u ^ v) & 1) ? K_plane_color2 : K_plane_color1;
+        ux = (short)ix;
+        uz = (short)iz;
+        c = ((ux ^ uz)>>FLOOR_SHIFT) & 1 ? K_plane_color2 : K_plane_color1;
         if(hole_d < HOLE_BORDER)
           c = K_floor_difusse;
       }
@@ -697,8 +697,8 @@ color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y)
   if(drawfloor)
   {
 #ifdef PIPELINEC_SUGAR
-	float FRAME_HEIGHT_FLOAT = FRAME_HEIGHT;
-	float CAMERA_FACTOR = -2.*CAMERA_Z/FRAME_HEIGHT_FLOAT;
+	const float FRAME_HEIGHT_FLOAT = FRAME_HEIGHT;
+	const float CAMERA_FACTOR = -2.*CAMERA_Z/FRAME_HEIGHT_FLOAT;
 #else
 	static const float CAMERA_FACTOR = -2.*CAMERA_Z/FRAME_HEIGHT;
 #endif

@@ -44,7 +44,7 @@
 #define SPHERE_X (-20.)
 #define CAMERA_Z 30. //start pos
 #define SCORE_MARGINS 10
-#define FLOOR_SHIFT (-3)
+#define FLOOR_SHIFT 3
 #define FLOOR_X (-110.)
 #define FLOOR_Y 0.
 #define FLOOR_Z 0.
