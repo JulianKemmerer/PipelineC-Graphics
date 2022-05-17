@@ -912,7 +912,7 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
         if(state.score >= MAXSCORE && state.won!=true)
            state.won = true;
 #ifdef GOD_MODE
-        button_state = state.sphere_xvel < -XVEL_CONSTANT*20 || is_negative(state.sphere_yvel);
+        button_state = state.sphere_xvel < -XVEL_CONSTANT*20 || fixed_is_negative(state.sphere_yvel);
 #elif defined(NON_INTERACTIVE)
         button_state = true;
 #endif
