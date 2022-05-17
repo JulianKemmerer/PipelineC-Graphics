@@ -15,7 +15,8 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 
 */
 
-#define NON_INTERACTIVE
+//#define NON_INTERACTIVE
+#define GOD_MODE
 #define BLINKY
 //#define ALTERNATE_UI 3 //level of graphics detail
 //#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702)
@@ -28,10 +29,21 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 #undef HEAT_CONSTANT
 #endif
 
+#ifdef GOD_MODE
+#define SCORE_STEP 3
+#elif defined(NON_INTERACTIVE)
+#define SCORE_STEP 0
+#else
+#define SCORE_STEP 1
+#endif
+
 #ifdef NON_INTERACTIVE
 #undef HOLE_BORDER
 #undef BLINKY
+#undef HEAT_CONSTANT
+#define GOD_MODE
 #endif
+
 
 typedef coord_type hole_t;
 
@@ -865,9 +877,6 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
 {
   uint16_t score = state.score;
   if(reset) score = 0;
-#ifdef NON_INTERACTIVE
-  button_state = true;
-#endif  
 
   state.plane_x = state.plane_x + state.sphere_xvel;
 
@@ -894,14 +903,19 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
 #warning implement unary -
 #endif
 
-#ifndef NON_INTERACTIVE
+#ifndef GOD_MODE
       //TODO: if the plane has a hole can be calculated at rendering time and reused!
       if(plane_has_hole(coord_x, coord_z) > -HOLE_GUARD_MARGIN) // > about -.1 gives margin for the ball size
 #endif
       {
-        state.score = state.score+1;
+        state.score = state.score+SCORE_STEP;
         if(state.score >= MAXSCORE && state.won!=true)
            state.won = true;
+#ifdef GOD_MODE
+        button_state = state.sphere_xvel < -XVEL_CONSTANT*20 || is_negative(state.sphere_yvel);
+#elif defined(NON_INTERACTIVE)
+        button_state = true;
+#endif
         if(button_state)
         {
           state.sphere_yvel = -JUMP_CONSTANT;
