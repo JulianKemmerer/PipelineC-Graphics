@@ -894,8 +894,10 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
 #warning implement unary -
 #endif
 
+#ifndef NON_INTERACTIVE
       //TODO: if the plane has a hole can be calculated at rendering time and reused!
       if(plane_has_hole(coord_x, coord_z) > -HOLE_GUARD_MARGIN) // > about -.1 gives margin for the ball size
+#endif
       {
         state.score = state.score+1;
         if(state.score >= MAXSCORE && state.won!=true)
