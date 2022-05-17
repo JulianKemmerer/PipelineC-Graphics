@@ -15,6 +15,8 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 
 */
 
+#define NON_INTERACTIVE
+#define BLINKY
 //#define ALTERNATE_UI 3 //level of graphics detail
 //#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702)
 //#define DITHER
@@ -26,6 +28,10 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 #undef HEAT_CONSTANT
 #endif
 
+#ifdef NON_INTERACTIVE
+#undef HOLE_BORDER
+#undef BLINKY
+#endif
 
 typedef coord_type hole_t;
 
@@ -268,8 +274,10 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(point_and_dir) hitin)
     if (d>EPS) //strict gt
     {
        o = pt - plane_center;
+#ifndef NON_INTERACTIVE       
        hole_margin = plane_has_hole(hole_t(o.x), hole_t(o.z));
        if(!fixed_is_negative(hole_margin))
+#endif       
        {
           hitout.dist = d;
 #ifdef ANTIALIAS
@@ -285,7 +293,6 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(point_and_dir) hitin)
   return hitout;
 }
 
-#define BLINKY
 color_basic_t sphere_effect(IN(hit_out) hit, IN(material_t) hit_material)
 {
   color_basic_t rcolor = hit_material.diffuse_color;
@@ -641,9 +648,10 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
     coord_type ix = inv_y*x-px;
     coord_type iz = inv_y + pz;
 
+#ifndef NON_INTERACTIVE
     hole_t hole_d = plane_has_hole(ix, coord_type(0)-iz);
-
 	if(!fixed_is_negative(hole_d)) //internal area
+#else	
     {
       //if((short(inv_y) >> 10) == 0)
       if(inv_y < 512)
@@ -651,11 +659,14 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
         ux = (short)ix;
         uz = (short)iz;
         c = ((ux ^ uz)>>FLOOR_SHIFT) & 1 ? K_plane_color2 : K_plane_color1;
+#ifdef HOLE_BORDER
         if(hole_d < HOLE_BORDER)
           c = K_floor_difusse;
+#endif          
       }
       drawfog = true;
     }
+#endif
   }
   else
     drawfog = true;
@@ -854,6 +865,9 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
 {
   uint16_t score = state.score;
   if(reset) score = 0;
+#ifdef NON_INTERACTIVE
+  button_state = true;
+#endif  
 
   state.plane_x = state.plane_x + state.sphere_xvel;
 
