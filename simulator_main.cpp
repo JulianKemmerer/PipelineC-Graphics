@@ -26,6 +26,7 @@ There's no game nor render logic in this source, all that is defined by the HDL 
 #define FRAME_WIDTH 400
 #define FRAME_HEIGHT 300
 #endif
+#define FRAME_FPS 60
 
 int FRAME_WIDTH = _FRAME_WIDTH;
 int FRAME_HEIGHT = _FRAME_HEIGHT;
@@ -50,7 +51,7 @@ const scene_t& get_scene() { return state.scene; }
 
 #define WIRE_WRITE(a,b,c) memcpy((a*)&c, &b, sizeof(c));
 
-#define FRAME_PITCH 2048
+#define FRAME_PITCH 4096
 //struct pixel_t { uint8_t a, b, g, r; };
 pixel_t pixelbuf[FRAME_PITCH*FRAME_PITCH];
 
@@ -76,16 +77,18 @@ inline uint64_t higres_ticks_freq() { return SDL_GetPerformanceFrequency(); }
 
 unsigned frame = 0;
 uint64_t t0;
+double total_energy_time = 0;
 #ifdef POWER_BENCH
 double total_energy = 0;
-double total_energy_time = 0;
+bool power_enabled = false;
 #endif
 void dump_stats()
 {
     float elapsed = (float)(higres_ticks()-t0)/higres_ticks_freq();
-    printf("Resolution: %dx%d, FPS: %f\n", FRAME_WIDTH, FRAME_HEIGHT, frame/elapsed);
+    float fps = frame/elapsed;
+    printf("Resolution: %dx%d, FPS: %f\n", FRAME_WIDTH, FRAME_HEIGHT, fps);
 #ifdef POWER_BENCH
-    printf("Energy %.2fJ, Time %.2fs, Average power: %.2fW\n", total_energy, total_energy_time, total_energy / total_energy_time);
+    printf("Energy %.2fJ, Time %.2fs, Average power: %.2fW (%.2fW adjusted to %.1f FPS)\n", total_energy, total_energy_time, total_energy / total_energy_time, (FRAME_FPS/fps) * total_energy / total_energy_time, float(FRAME_FPS));
 #endif
 }
 
@@ -248,8 +251,11 @@ int main()
 
       fb_update();
       ++frame;
+      
+      if(power_enabled && frame > 1000)
+        break;
 
-      if((frame % 60) == 0)
+      if((frame % int(FRAME_FPS)) == 0)
         dump_stats();
 #endif
 
@@ -262,9 +268,21 @@ int main()
 }
 
 
+#ifdef POWER_BENCH
+#include "power.cpp"
+
+#include <iostream>
+#include <atomic>
+#include <condition_variable>
+#include <thread>
+#include <chrono>
+using namespace std::chrono_literals;
+#endif
+
 SDL_Window* win = NULL;
 SDL_Renderer* renderer = NULL;
 SDL_Texture* texture = NULL;
+
 
 bool fb_init(unsigned width, unsigned height)
 {
@@ -287,7 +305,8 @@ bool fb_init(unsigned width, unsigned height)
 
     bool fullscreen = (dm.w == width && dm.h == height);
 #ifdef POWER_BENCH
-    fullscreen = false; //do not use vsync
+    power_enabled = power_init();
+    //fullscreen = fullscreen && !power_enabled;
 #endif
     if(fullscreen)
       SDL_SetWindowFullscreen(win, SDL_WINDOW_FULLSCREEN);
@@ -322,17 +341,6 @@ bool fb_should_quit()
     return false;
 }
 
-#ifdef POWER_BENCH
-#include "power.cpp"
-
-#include <iostream>
-#include <atomic>
-#include <condition_variable>
-#include <thread>
-#include <chrono>
-using namespace std::chrono_literals;
-#endif
-
 void fb_update()
 {
   SDL_UpdateTexture(texture, NULL, pixelbuf, FRAME_PITCH*sizeof(pixel_t));
@@ -340,40 +348,44 @@ void fb_update()
   SDL_RenderCopy(renderer, texture, NULL, NULL);
   SDL_RenderPresent(renderer);
   
+  static uint64_t t0 = higres_ticks();
+  static uint64_t tickf = higres_ticks_freq();
+  uint64_t t1 = higres_ticks();
+  uint64_t dticks = t1 - t0;
+  double dt = double(dticks) / tickf;
+  total_energy_time += dt;
+
 #ifdef POWER_BENCH
-  static bool power_enabled = power_init();
+  static std::condition_variable cv;
+  static std::mutex cv_m;
+  static std::atomic<int> i{0};
+  static auto t = std::chrono::system_clock::now();
+  std::unique_lock<std::mutex> lk(cv_m);
+  t += 1000000us/FRAME_FPS;
+
   if(power_enabled)
   {
 
     static unsigned long e0 = get_package_energy();
-    static uint64_t t0 = higres_ticks();
     static double unit = get_energy_unit();
-    static uint64_t tickf = higres_ticks_freq();
   
     unsigned long e1 = get_package_energy();
-    uint64_t t1 = higres_ticks();
     unsigned long energy = e1 - e0;
-    uint64_t dticks = t1 - t0;
-    double dt = double(dticks) / tickf;
     total_energy += energy*unit;
-    total_energy_time += dt;
     //printf("package energy: %f watts, FPS %g\n", energy*unit/dt, 1./dt);
 
-    static std::condition_variable cv;
-    static std::mutex cv_m;
-    static std::atomic<int> i{0};
-    std::unique_lock<std::mutex> lk(cv_m);
-    static auto t = std::chrono::system_clock::now();
-    t += 1000000us/60;
     cv.wait_until(lk, t, [](){return false;});
 
     e0 = get_package_energy(); //skips energy for just waiting
     //e0 = e1;
-    t0 = t1;
   }
   else
+  {
+    cv.wait_until(lk, t, [](){return false;});
+  }
 #endif
-    SDL_RenderPresent(renderer);
+
+  t0 = t1;
 }
 
 void fb_deinit()
