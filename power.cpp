@@ -42,12 +42,18 @@ unsigned long get_package_energy() {
     return data;
 }
 
+bool power_init()
+{
+  const short cpuid = 0;
+  msr_file = open_msr(cpuid);
+  return msr_file >= 0;
+}
 
+#ifndef POWER_BENCH
 int main()
 {
-  short cpuid = 0;
-  msr_file = open_msr(cpuid);
-  if(msr_file < 0)
+  
+  if(!power_init())
   {
     perror("Cannot open MSR file. Try using sudo and have the msr module loaded. Error");
     exit(1);
@@ -67,6 +73,4 @@ int main()
   }
   return 0;
 }
-
-
-
+#endif
