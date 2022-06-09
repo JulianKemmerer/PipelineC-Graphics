@@ -109,7 +109,7 @@ bool fb_init(unsigned hres, unsigned vres)
     }
 
     sdl_renderer = SDL_CreateRenderer(sdl_window, -1,
-        SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+        SDL_RENDERER_ACCELERATED /*| SDL_RENDERER_PRESENTVSYNC*/);
     if (!sdl_renderer) {
         printf("Renderer creation failed: %s\n", SDL_GetError());
         return false;
@@ -147,7 +147,24 @@ void fb_deinit()
     SDL_DestroyWindow(sdl_window);
     SDL_Quit();
 }
-
+void fb_save_texture(int frame)
+{
+  char fname[20];
+  snprintf(fname, sizeof(fname), "frame%d.ppm", frame);
+  FILE *fp = fopen(fname, "wb");
+  //printf("File: %s (fd %p)\n", fname, fp);
+  
+  fprintf(fp, "P6\n%d %d\n255\n", FRAME_WIDTH, FRAME_HEIGHT);
+  const pixel_t *pix = pixelbuf[0];
+  while(pix != pixelbuf[0] + FRAME_HEIGHT*FRAME_WIDTH)
+  {
+    uint8_t color[]={pix->r, pix->g, pix->b};
+    fwrite(color, 1, sizeof(color), fp);
+    ++pix;
+  }
+  fclose(fp);
+  printf("Saved frame %d\n", frame);
+}
 // Application 'app()' func under test to run (instead of verilator model)
 
 // Main loop doing per clock:
@@ -178,6 +195,13 @@ int main()
          if(fb_should_quit()) exit(1);
          //printf("frame %d, y %d\n", frame, g_top->dvi_y);
 		 fb_update(); //once by line
+		 if(g_top->dvi_y == 0)
+		 {
+		   static int frame = 0;
+		   fb_save_texture(frame);
+		   if(++frame == 1000)
+		     break;
+		 }
       }
       verilator_output(g_top);
       g_top->pixel_clock = 0;
