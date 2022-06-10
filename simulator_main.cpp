@@ -44,6 +44,7 @@ const scene_t& get_scene();
 #include "fixed_type.h"
 #include "tr_pipelinec.gen.c" //generated source
 #endif
+#undef float //just in case
 
 static full_state_t state;
 const scene_t& get_scene() { return state.scene; }
@@ -343,6 +344,8 @@ bool fb_should_quit()
 
 void fb_update()
 {
+  //return; //uncomment to skip video output
+  
   SDL_UpdateTexture(texture, NULL, pixelbuf, FRAME_PITCH*sizeof(pixel_t));
   SDL_RenderClear(renderer);
   SDL_RenderCopy(renderer, texture, NULL, NULL);

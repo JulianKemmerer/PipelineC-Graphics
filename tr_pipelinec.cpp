@@ -49,9 +49,9 @@ inline color_type color_max(color_type a, color_type b) { return a>b?a:b; }
 
 #define assert(x)
 
-inline float is_negative(float x) { return float_to_uint(x)&0x80000000; }
-inline float float_abs(float x) { return uint_to_float(float_to_uint(x)&0x7FFFFFFF); }
-inline float inversesqrt( float number ) //should one more newton iteration
+inline float_type is_negative(float_type x) { return float_to_uint(x)&0x80000000; }
+inline float_type float_abs(float_type x) { return uint_to_float(float_to_uint(x)&0x7FFFFFFF); }
+inline float_type inversesqrt( float_type number ) //should one more newton iteration
 {
 #if 1
   // https://en.wikipedia.org/wiki/Fast_inverse_square_root
@@ -63,9 +63,9 @@ inline float inversesqrt( float number ) //should one more newton iteration
 #endif
 }
 
-inline float sqrt(float x) { return x*inversesqrt(x); }
+inline float_type sqrt(float_type x) { return x*inversesqrt(x); }
 
-inline float float_fast_reciprocal_u(float x)
+inline float_type float_fast_reciprocal_u(float_type x)
 {
 #ifdef PARSING
 #warning use below implementation with shifted constant for hardware
@@ -76,7 +76,7 @@ inline float float_fast_reciprocal_u(float x)
 #else
   //https://stackoverflow.com/questions/9939322/fast-1-x-division-reciprocal
   const uint32_t K = 0x7EF127EA;
-  float f = uint_to_float(K - float_to_uint(x));
+  float_type f = uint_to_float(K - float_to_uint(x));
   // Efficient Iterative Approximation Improvement in horner polynomial form.
   return f * (2. - x*f);     // Single iteration, Err = -3.36e-3 * 2^(-flr(log2(x)))
 #endif
@@ -88,15 +88,15 @@ inline float_type float_fast_div_u(float_type a, float_type b)
   return a*float_fast_reciprocal_u(b); //actually faster!
 }
 
-inline float float_max(float a, float b) { return a>b?a:b; }
-inline float float_min(float a, float b) { return a<b?a:b; }
-static const float BIG_FLOAT = 1.0e23;
+inline float float_max(float_type a, float_type b) { return a>b?a:b; }
+inline float float_min(float_type a, float_type b) { return a<b?a:b; }
+static const float_type BIG_FLOAT = 1.0e23;
 
 typedef float2 vec2;
 typedef float3 vec3;
 typedef float4 vec4;
 
-inline float dot(vec3 a, vec3 b) { return a.x*b.x+a.y*b.y+a.z*b.z; }
+inline float_type dot(vec3 a, vec3 b) { return a.x*b.x+a.y*b.y+a.z*b.z; }
 
 inline vec3 reflect(vec3 I, vec3 N) { return I - N*float_shift(dot(I,N),1); }
 inline vec3 normalize(vec3 v) { return v*inversesqrt(dot(v, v)); }
@@ -105,7 +105,7 @@ inline vec3 normalize(vec3 v) { return v*inversesqrt(dot(v, v)); }
 #define fixed_asshort(x, s) (short)fixed_shl((x), (s))
 
 //template<class F, class T> T float_select(const F& x, const T& a, const T& b) { return b+(a-b)*x; }
-inline vec3 float_select(float x, vec3 a, vec3 b) { return b+(a-b)*x; }
+inline vec3 float_select(float_type x, vec3 a, vec3 b) { return b+(a-b)*x; }
 
 /*
 uint16_t CLOG2(uint16_t v)

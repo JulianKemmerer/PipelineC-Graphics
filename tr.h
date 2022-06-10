@@ -50,7 +50,7 @@
 #define FLOOR_Z 0.
 
 #ifdef GAME_MODE
-//#define CIRCLE_SIZE .3
+#define CIRCLE_SIZE .3
 #define RHOMBUS_SIZE .4
 #define SQUARE_SIZE .3
 #define GRAVITY_CONSTANT .1//.1

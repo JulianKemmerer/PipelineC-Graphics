@@ -197,17 +197,15 @@ hit_out sphere_hit(bool hit, IN(vec3) center, IN(point_and_dir) hitin, float t, 
 
 hit_out ray_sphere_intersect(IN(vec3) center, IN(point_and_dir) hitin)
 {
-  float diff;
-  float t = RAY_NOINT;
-  bool nothit;
 #ifndef SPHERE_MOTIONBLUR
-  vec3  rc = hitin.orig - center;
-  float b =  dot(rc,hitin.dir);
-  float c =  dot(rc,rc) - SPHERE_RADIUS*SPHERE_RADIUS;
-  diff = b*b - c; //aab = A*A - B;
-
-  nothit = is_negative(diff);
-  if(nothit == false)
+  vec3 rc = hitin.orig - center;
+  float b =  dot(rc, hitin.dir);
+  float c =  dot(rc, rc) - SPHERE_RADIUS*SPHERE_RADIUS;
+  float diff = b*b - c;
+  bool nothit = is_negative(diff);
+  
+  float t = RAY_NOINT;
+  if(!nothit)
   {
     t = -(b + sqrt(diff));
     nothit = is_negative(t);
@@ -263,7 +261,7 @@ diff = B;
 	}
 #endif
 
-  return sphere_hit(nothit == false, center, hitin, t, diff);
+  return sphere_hit(!nothit, center, hitin, t, diff);
 }
 
 hit_out ray_plane_intersect(IN(plane_t) plane, IN(point_and_dir) hitin)
@@ -318,7 +316,7 @@ color_basic_t sphere_effect(IN(hit_out) hit, IN(material_t) hit_material)
   if((tick & 0x3F) != 0 || ((hash16(tick)>>13) & 1) != 0)
   {
     //eyeballs
-    float_type dy = (hit.hit.dir.y-float_shift(float_type(s.center.y),-6)*1.5); //FIXME: optimize constants 1.5, 1.25
+    float_type dy = (hit.hit.dir.y-float_shift(float_type(s.center.y),-6)/* *1.5*/ ); //FIXME: optimize constants 1.5, 1.25
     float_type dx = float_shift(float_abs(hit.hit.dir.z-hit.hit.dir.x)-.6, -1)*1.25;
     float_type d = dx*dx+dy*dy;
     coord_type mindist = fixed_shr(s.heat, 4) + .25*.25;
@@ -780,8 +778,7 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
 
   pixel_t pix; //ignores alpha
 
-  //TODO: GPU score
-  static const uint16_t score_factor = (1<<11)*(FRAME_WIDTH-2*SCORE_MARGINS)/MAXSCORE;
+  static const uint16_t score_factor = 2048*(FRAME_WIDTH-2*SCORE_MARGINS)/MAXSCORE;
   uint16_t scorebar = score_factor*scene.scorebar >> 11;
   if(i >= SCORE_MARGINS && i < SCORE_MARGINS + scorebar && j > SCORE_MARGINS && j < 2*SCORE_MARGINS)
   {
@@ -912,7 +909,7 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
         if(state.score >= MAXSCORE && state.won!=true)
            state.won = true;
 #ifdef GOD_MODE
-        button_state = state.sphere_xvel < -XVEL_CONSTANT*20 || fixed_is_negative(state.sphere_yvel);
+        button_state = state.sphere_xvel < -XVEL_CONSTANT*20. || fixed_is_negative(state.sphere_yvel);
 #elif defined(NON_INTERACTIVE)
         button_state = true;
 #endif

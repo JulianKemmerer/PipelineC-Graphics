@@ -31,6 +31,10 @@ tr_pipelinec.gen.c: $(RTCODE) tr_pipelinec.cpp
 	$(CFLEX_C) tr_pipelinec.E.cpp > tr_pipelinec.gen.c
 	patch -p1 tr_pipelinec.gen.c < get_scene.patch
 
+metrics.c: tr_pipelinec.gen.c
+	clang -E -include float_type.h -include fixed_type.h tr_pipelinec.gen.c > metrics.c
+	$(CFLEX_C) metrics.c
+
 gen: tr_gen
 	./tr_gen
 
@@ -76,6 +80,11 @@ obj_dir/Vtop: ./main.cpp compile
 	cp ./main.cpp ./obj_dir
 	make CXXFLAGS="-DUSE_VERILATOR -I../../PipelineC/ -I../build/verilator -I.." -C ./obj_dir -f Vtop.mk
 
+video: frames.mp4
+
+frames.mp4:
+	ffmpeg -framerate 60 -i frame%d.ppm -c:v libx264 -crf 25 -vf "format=yuv420p" -movflags +faststart frames.mp4
+    
 cxxrtl_top: ./synth/top/top.v
 	mkdir -p cxxrtl_build && cd cxxrtl_build
 	ghdl -i --std=08 `cat ../synth/vhdl_files.txt`
