@@ -22,7 +22,7 @@ typedef float_type screen_coord_t;
 typedef float_type color_type;
 typedef float3 color;
 inline int16_t round16(float_type x) { return x+0.5; }
-#define fixed_is_negative(x) ((x)<0)
+#define fixed_is_negative(x) ((x)<fixed_type(0))
 #define fixed_convert(t, x, shift) float_shift(x, shift)
 #else
 //color in fixed types (slower)
@@ -90,7 +90,7 @@ inline float_type float_fast_div_u(float_type a, float_type b)
 
 inline float float_max(float_type a, float_type b) { return a>b?a:b; }
 inline float float_min(float_type a, float_type b) { return a<b?a:b; }
-static const float_type BIG_FLOAT = 1.0e23;
+static const float_type BIG_FLOAT = 1.0e23f;
 
 typedef float2 vec2;
 typedef float3 vec3;

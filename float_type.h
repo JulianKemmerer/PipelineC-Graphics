@@ -14,10 +14,11 @@ inline float float_shift(float x, int shift) { return shift > 0 ? x * (1<<shift)
 //correct float_shift implementation in hardware just adds the shift to exponent
 //inline float float_shift(float x, int shift) { fp_tlayout conv; conv.f = x; conv.exp+=shift; return conv.f; }
 
-#include "custom_float.h" //may redefine float
 
 #endif
 #endif
+
+#include "custom_float.h" //may redefine float
 
 #ifndef __PIPELINEC__
 typedef float float_type;
