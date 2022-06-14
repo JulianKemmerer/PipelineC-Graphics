@@ -18,7 +18,7 @@ typedef uint16_t uint12_t;
 typedef uint16_t uint9_t;
 typedef uint8_t uint1_t;
 typedef uint8_t uint3_t;
-typedef int32_t int22_t;
+typedef int32_t int26_t;
 typedef int16_t int9_t;
 typedef int8_t int6_t;
 

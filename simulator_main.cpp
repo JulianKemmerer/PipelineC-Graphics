@@ -89,9 +89,10 @@ void dump_stats()
 {
     float elapsed = (float)(higres_ticks()-t0)/higres_ticks_freq();
     float fps = frame/elapsed;
-    printf("Resolution: %dx%d, FPS: %f\n", FRAME_WIDTH, FRAME_HEIGHT, fps);
+    printf("Resolution: %dx%d, FPS: %.1f\n", FRAME_WIDTH, FRAME_HEIGHT, fps);
 #ifdef POWER_BENCH
-    printf("Energy %.2fJ, Time %.2fs, Average power: %.2fW (%.2fW adjusted to %.1f FPS)\n", total_energy, total_energy_time, total_energy / total_energy_time, (FRAME_FPS/fps) * total_energy / total_energy_time, float(FRAME_FPS));
+    if(power_enabled)
+      printf("Energy %.2fJ, Time %.2fs, Average power: %.2fW (%.2fW adjusted to %.1f FPS)\n", total_energy, total_energy_time, total_energy / total_energy_time, (FRAME_FPS/fps) * total_energy / total_energy_time, float(FRAME_FPS));
 #endif
 }
 
@@ -192,7 +193,9 @@ int main()
 #else
       if(fb_should_quit())
         break;
-
+      /*if(frame == 25)
+      --frame;
+      else*/
       #pragma omp parallel for
       for(int y = 0; y < FRAME_HEIGHT; ++y)
       {
@@ -255,7 +258,7 @@ int main()
       fb_update();
 #ifdef DUMP_FRAMES      
       fb_save_texture(frame);
-#endif      
+#endif
       ++frame;
       
       if(power_enabled && frame >= FRAME_FPS*30)

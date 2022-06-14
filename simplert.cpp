@@ -104,7 +104,7 @@ color_basic_t S0(vec3 o,vec3 d){
      static const color_basic_t c1 = {1.,.3,.3};
      static const color_basic_t c2 = {1.,1.,1.};
      color_basic_t fcolor = (round16(h.x)^round16(h.y))&1?c1:c2;
-     fixed_type bc = (b*.2+.1);
+     fixed_type bc = (b*.5+.1);
      col = fcolor*bc;
   }
   else
@@ -130,7 +130,7 @@ color_basic_t S(vec3 o,vec3 d){
   t = r1.t;
   n = r1.n;
 
-  if(!m) // m==0
+  if(m==0)
   {
   //No sphere found and the ray goes upward: Generate a sky color  
   fixed_type u = fixed_type(1.)-fixed_type(d.z);
@@ -164,12 +164,12 @@ color_basic_t S(vec3 o,vec3 d){
     p=p*p;
   }
 
-  if(m&1){   //m == 1
+  if(m==1){   //m == 1
      h=h*.2; //No sphere was hit and the ray was going downward: Generate a floor color
      static const color_basic_t c1 = {1.,.3,.3};
      static const color_basic_t c2 = {1.,1.,1.};
      color_basic_t fcolor = (round16(h.x)^round16(h.y))&1?c1:c2;
-     fixed_type bc = (b*.2+.1);
+     fixed_type bc = (b*.5+.1);
      col = fcolor*bc;
   }
   else
@@ -185,7 +185,9 @@ color_basic_t S(vec3 o,vec3 d){
 color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y)
 {
   vec3 orig{10., -20., 10.};
-  vec3 camera_dir{float_type(x), 1., float_type(y)};
+  IN(scene_t) scene = get_scene();
+  float_type camera_pos = scene.frame*.01 + .1;
+  vec3 camera_dir{float_type(x), camera_pos, float_type(y)};
   return S(orig, normalize(camera_dir));
 }
 
@@ -222,14 +224,11 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j)
   return pix;
 }
 
-full_state_t reset_state(uint16_t score)
-{
-    full_state_t state;
-    return state;
-}
-
 full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_state)
 {
+  state.scene.frame = state.scene.frame + 1;
+  if(reset)
+    state.scene.frame = 0;
   return state;
 }
 

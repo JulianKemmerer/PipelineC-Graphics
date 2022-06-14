@@ -4,8 +4,8 @@
 #define __FIXED_TYPE__
 
 #define FIXED_FRACTIONBITS 10
-#define FIXED_TOTALBITS 22 //uncommed for more precise simulation (22 seems minimum for 1080p)
-#define fixed_basetype int22_t
+#define FIXED_TOTALBITS 26 //uncommed for more precise simulation
+#define fixed_basetype int26_t
 
 #ifndef __PIPELINEC__
 #warning: precision of fixed should be correctly defined
@@ -115,8 +115,8 @@ inline bool fixed_is_negative(fixed x) { return x.f < 0; }
 #warning implement unary -
 inline fixed fixed_abs(fixed x) { return fixed_is_negative(x) ? fixed(0)-x : x; }
 
-inline fixed fixed_min(fixed a, fixed b) { return a>b?a:b; }
-inline fixed fixed_max(fixed a, fixed b) { return a<b?a:b; }
+inline fixed fixed_min(fixed a, fixed b) { return a<b?a:b; }
+inline fixed fixed_max(fixed a, fixed b) { return a>b?a:b; }
 
 
 #else //CCOMPILE = true

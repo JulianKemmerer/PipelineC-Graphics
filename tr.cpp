@@ -18,6 +18,7 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 //#define NON_INTERACTIVE
 #define GOD_MODE
 #define BLINKY
+#define SOFT_SHADOW
 //#define ALTERNATE_UI 3 //level of graphics detail
 //#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702)
 //#define DITHER
@@ -151,10 +152,10 @@ inline scene_colors_t scene_colors(uint2_t channel)
 #ifndef ALTERNATE_UI
 
 #ifdef ANTIALIAS
-float_type calc_accdist(IN(point_and_dir) hitin, IN(hit_out) hitout)
+float calc_accdist(IN(point_and_dir) hitin, IN(hit_out) hitout)
 {
-  float_type din = hitin.dist + hitout.dist;
-  float_type d = float_shift(din, -(ANTIALIAS+6));
+  float din = hitin.dist + hitout.dist;
+  float d = float_shift(din, -(ANTIALIAS+6));
   return d;
 }
 #endif
@@ -165,16 +166,16 @@ struct point_and_dir
 {
   vec3 orig, dir;
 #ifdef ANTIALIAS
-  float_type dist; //FIXME: move appropiately
+  float dist; //FIXME: move appropiately
 #endif
 };
 
 struct hit_out
 {
-  float_type dist, borderdist;
+  float dist, borderdist;
   point_and_dir hit;
 #ifdef ANTIALIAS
-  float_type accdist;
+  float accdist;
 #endif
 };
 
@@ -217,21 +218,21 @@ hit_out ray_sphere_intersect(IN(vec3) center, IN(point_and_dir) hitin)
 	vec3  rc = hitin.orig - center;
 	vec3 ro = hitin.orig;
 	vec3 rd = hitin.dir;
-        float_type ve_y(s.yvel*4);
-        //vec3 ve(0., float_type(s.yvel), 0); //velocity vector
+        float ve_y(s.yvel*4);
+        //vec3 ve(0., float(s.yvel), 0); //velocity vector
 
         //motion blur formula from https://www.shadertoy.com/view/MdB3Dw
-	float_type A = dot(rc,rd);
-	float_type B = dot(rc,rc) - SPHERE_RADIUS*SPHERE_RADIUS;
-	float_type C = ve_y*ve_y;
-	float_type D = rc.y*ve_y;
-	float_type E = rd.y*ve_y;
-	//float_type C = dot(ve,ve);
-	//float_type D = dot(rc,ve);
-	//float_type E = dot(rd,ve);
-	float_type aab = A*A - B;
-	float_type eec = E*E - C;
-	float_type aed = A*E - D;
+	float A = dot(rc,rd);
+	float B = dot(rc,rc) - SPHERE_RADIUS*SPHERE_RADIUS;
+	float C = ve_y*ve_y;
+	float D = rc.y*ve_y;
+	float E = rd.y*ve_y;
+	//float C = dot(ve,ve);
+	//float D = dot(rc,ve);
+	//float E = dot(rd,ve);
+	float aab = A*A - B;
+	float eec = E*E - C;
+	float aed = A*E - D;
 	diff = aed*aed - eec*aab;
 		
 	if(diff > 0.)
@@ -270,7 +271,7 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(point_and_dir) hitin)
   hitout.dist = RAY_NOINT;
   hitout.borderdist = /*-EPS*/0.;
   vec3 plane_center = object_coord_to_float3(plane.center);
-  float_type d;
+  float d;
   vec3 pt;
   hole_t hole_margin = 0; //FIXME: parser needs initialization
   vec3 o;
@@ -297,7 +298,7 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(point_and_dir) hitin)
           vec3 N = VECTOR_NURMAL_UPWARDS;
           hitout.hit.dir = N; //points upwards
       }
-      hitout.borderdist = float_type(hole_margin);
+      hitout.borderdist = float(hole_margin);
     }
   }
   return hitout;
@@ -316,9 +317,9 @@ color_basic_t sphere_effect(IN(hit_out) hit, IN(material_t) hit_material)
   if((tick & 0x3F) != 0 || ((hash16(tick)>>13) & 1) != 0)
   {
     //eyeballs
-    float_type dy = (hit.hit.dir.y-float_shift(float_type(s.center.y),-6)*1.5); //FIXME: optimize constants 1.5, 1.25
-    float_type dx = float_shift(float_abs(hit.hit.dir.z-hit.hit.dir.x)-.6, -1)*1.25;
-    float_type d = dx*dx+dy*dy;
+    float dy = (hit.hit.dir.y-float_shift(float(s.center.y),-6)*1.5); //FIXME: optimize constants 1.5, 1.25
+    float dx = float_shift(float_abs(hit.hit.dir.z-hit.hit.dir.x)-.6, -1)*1.25;
+    float d = dx*dx+dy*dy;
     coord_type mindist = fixed_shr(s.heat, 4) + .25*.25;
     if(coord_type(d) < mindist)
       rcolor = d < .15*.15 ? color_basic_t(0.) : color_basic_t(1.2);
@@ -329,15 +330,41 @@ color_basic_t sphere_effect(IN(hit_out) hit, IN(material_t) hit_material)
 }
 
 #ifdef ANTIALIAS
-inline color_type plane_alpha(float_type borderdist, float_type dist_z)
+inline color_type plane_alpha(float borderdist, float dist_z)
 {
   return color_type(borderdist/dist_z); //float_shift(borderdist/dist_z, -1);
 }
 
-float_type triang(float_type x )
+float triang(float x )
 {
-  float_type h = x-float_type(int(x));
+  float h = x-float(int(x));
   return float_abs(h-.5);
+}
+#endif
+
+#ifdef SOFT_SHADOW
+color_type sphere_shadow(float x, float y, float z)
+{
+  color_type r = 1.;
+#if ALTERTNATE_UI > 4
+  y = y * .25;
+  float d = x*x+z*z - (y*y+SPHERE_RADIUS*SPHERE_RADIUS);
+  if(is_negative(d))
+    r = .5;
+#else
+  if(!is_negative(y))
+  {
+    float yy = y*y;
+    float c = x*x+yy+z*z - SPHERE_RADIUS*SPHERE_RADIUS;
+    float v = (c - yy)*inversesqrt(yy);
+
+    const float SHADOW_K = .5;
+    r = v*SHADOW_K+.5;
+    if(r < 0.) r = 0.;
+    if(r > 1.-AMBIENT_INTENSITY) r = 1-AMBIENT_INTENSITY;
+  }
+#endif     
+  return r;
 }
 #endif
 
@@ -350,10 +377,10 @@ color_basic_t plane_effect(IN(hit_out) hit)
   color_basic_t rcolor = colors.plane.diffuse_color;
   vec3 plane_center = object_coord_to_float3(plane.center);
 
-  float_type hitx = hit.hit.orig.x - plane_center.x;
-  float_type hitz = hit.hit.orig.z - plane_center.z;
-  float_type ox = float_shift(hitx, -FLOOR_SHIFT); //FIXME: same coordinates in this game
-  float_type oz = float_shift(hitz, -FLOOR_SHIFT);
+  float hitx = hit.hit.orig.x - plane_center.x;
+  float hitz = hit.hit.orig.z - plane_center.z;
+  float ox = float_shift(hitx, -FLOOR_SHIFT); //FIXME: same coordinates in this game
+  float oz = float_shift(hitz, -FLOOR_SHIFT);
   
   int16_t ix = round16(ox);
   int16_t iz = round16(oz);
@@ -373,10 +400,9 @@ color_basic_t plane_effect(IN(hit_out) hit)
 #ifdef ANTIALIAS
   color_basic_t rcolor2 = !(cx == cz) ? colors.plane_color1 : color2;
 
-
-  float_type hitdist = hit.accdist;
-  float_type opax = float_shift(triang(ox), -1)/hitdist;
-  float_type opaz = float_shift(triang(oz), -2)/hitdist;
+  float hitdist = hit.accdist;
+  float opax = float_shift(triang(ox), -1)/hitdist;
+  float opaz = float_shift(triang(oz), -2)/hitdist;
 
 
   if(opax > 1.) opax = 1.; if(opax < -1.) opax = -1.;
@@ -398,7 +424,7 @@ color_basic_t plane_effect(IN(hit_out) hit)
 #ifndef ANTIALIAS
     rcolor = colors.plane.diffuse_color;
 #else
-    float_type dh = HOLE_BORDER-hit.borderdist;
+    float dh = HOLE_BORDER-hit.borderdist;
     if(dh < hit.accdist)
     {
       color_type opacity = plane_alpha(dh, hit.accdist);
@@ -413,7 +439,7 @@ color_basic_t plane_effect(IN(hit_out) hit)
   return rcolor;
 }
 
-color_basic_t background_color(float_type dir_y)
+color_basic_t background_color(float dir_y)
 {
   color_type y = is_negative(dir_y) ? color_type(0.) : color_type(dir_y*dir_y);
   return color_basic_t(y);
@@ -423,15 +449,15 @@ color_type light_intensity(IN(vec3) hit)
 {
 #if 0
   //this float version takes 2148 FPGA cells
-  float_type lz = hit.z-LIGHT_Z;
-  float_type dl = hit.x*hit.x + LIGHT_Y*LIGHT_Y + lz*lz;
+  float lz = hit.z-LIGHT_Z;
+  float dl = hit.x*hit.x + LIGHT_Y*LIGHT_Y + lz*lz;
   return color_type(inversesqrt(dl)*LIGHT_Y) + AMBIENT_INTENSITY;
 #else
   //light_intensity optimized for fixe points
   coord_type lz = (coord_type(hit.z)-LIGHT_Z)*coord_type(1./LIGHT_Y);
   coord_type lx = coord_type(hit.x)*coord_type(1./LIGHT_Y);
   coord_type dl = lx*lx + 1. + lz*lz;
-  return color_type(inversesqrt(float_type(dl))) + AMBIENT_INTENSITY; //FIXME: implement RSQRT for fixed points
+  return color_type(inversesqrt(float(dl))) + AMBIENT_INTENSITY; //FIXME: implement RSQRT for fixed points
 #endif
 }
 
@@ -482,7 +508,7 @@ color_basic_t shade(IN(color_basic_t) background, IN(vec3) dir, IN(hit_out) hit,
   IN(scene_colors_t) colors = scene_colors(scene);
   color_basic_t rcolor = background;
 
-  float_type fogmix = float_shift(hit.dist, -DIST_SHIFT); //no need to accumulated dist
+  float fogmix = float_shift(hit.dist, -DIST_SHIFT); //no need to accumulated dist
   if (fogmix < 1.)
   {
     point_and_dir hitreflect;
@@ -500,7 +526,7 @@ color_basic_t shade(IN(color_basic_t) background, IN(vec3) dir, IN(hit_out) hit,
   return rcolor;
 }
 
-bool is_star(float_type x, float_type y)
+bool is_star(float x, float y)
 {
   return ((hashf(x)>>2) & (hashf(y)>>2)) > 0x3E00;
 }
@@ -513,7 +539,7 @@ color_basic_t cast_ray(IN(point_and_dir) hitin)
   bool has_star = is_star(hitin.dir.x, hitin.dir.y);
   color_basic_t sky = has_star ? color_basic_t(STAR_INTENSITY) : background_color(hitin.dir.y);
 
-  float_type ys = float_abs(float_shift(hitin.dir.y, 1));
+  float ys = float_abs(float_shift(hitin.dir.y, 1));
   color_type mix = ys<1. ? color_type(1)-color_type(ys): color_type(0);
   color_basic_t bfog = color_select(mix, colors.fog, sky);
 
@@ -533,7 +559,14 @@ color_basic_t cast_ray(IN(point_and_dir) hitin)
   if (planehit)
   {
     hit_material = colors.plane;  //FIXME: needed?
-    hit_material.diffuse_color = plane_effect(hitplane);
+    color pcolor = plane_effect(hitplane);
+#ifdef SOFT_SHADOW
+    float sx = hitplane.hit.orig.x - SPHERE_X;
+    float sy = (float)scene.sphere.center.y;
+    float sz = hitplane.hit.orig.z - SPHERE_Z;
+    pcolor = pcolor*sphere_shadow(sx, sy, sz); 
+#endif
+    hit_material.diffuse_color = pcolor;
   }
 
 #ifdef MOTION_BLUR
@@ -553,7 +586,7 @@ color_basic_t cast_ray(IN(point_and_dir) hitin)
 #ifndef RT_SMALL_UI
    color_basic_t planecolor = shade(bfog, hitin.dir, hitplane, mix); //FIXME: bfog
 
-   float_type sphere_plane_dist = hitplane.dist - hitsphere.dist;
+   float sphere_plane_dist = hitplane.dist - hitsphere.dist;
    if(is_negative(sphere_plane_dist)) //&& hitplane.dist < hitsphere.dist
    {
 #ifdef ANTIALIAS
@@ -572,10 +605,10 @@ color_basic_t cast_ray(IN(point_and_dir) hitin)
 #endif //RT_SMALL_UI
    {
      color_basic_t spherecolor = shade(scene, colors, bfog, hitin.dir, hitsphere, 0.);
-     float_type aaradius = float_shift(hitsphere.dist, ANTIALIAS-13);
-     float_type opacity = hitsphere.borderdist*aaradius;
+     float aaradius = float_shift(hitsphere.dist, ANTIALIAS-13);
+     float opacity = hitsphere.borderdist*aaradius;
 
-     float_type da = sphere_plane_dist*aaradius; //FIXME: this shouldn't compresses in y axis when plane is near to the horizontal
+     float da = sphere_plane_dist*aaradius; //FIXME: this shouldn't compresses in y axis when plane is near to the horizontal
      if(da < 1.) //sphere & floor intersection
        opacity = opacity*da;
 
@@ -603,7 +636,7 @@ color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y)
 
   point_and_dir hitin;
   hitin.orig = object_coord_to_float3(scene.camera);
-  vec3 camera_dir = {float_type(x), float_type(y), float_type(-1.)};
+  vec3 camera_dir = {float(x), float(y), float(-1.)};
   hitin.dir = normalize(camera_dir);
 #ifdef ANTIALIAS
   hitin.dist = 0.; //start dist
@@ -982,8 +1015,8 @@ void main()
 
   state.scene.frame = int(u_time*60.);
   scene_colors_t colors = scene_colors(state.scene);
-  float_type x = gl_FragCoord.x/u_resolution.x-.5;
-  float_type y = (gl_FragCoord.y-u_resolution.y/2.)/u_resolution.x;
+  float x = gl_FragCoord.x/u_resolution.x-.5;
+  float y = (gl_FragCoord.y-u_resolution.y/2.)/u_resolution.x;
   outColor = vec4(render_pixel_internal(x, y, state.scene, colors), 1.);
 }
 #endif
