@@ -3,26 +3,34 @@
 
 #include "tr.h"
 
-int16_t T(vec3 o,vec3 d,float& t,vec3& n){ 
- t=BIG_FLOAT;
- int16_t m=0;
+struct hitout
+{
+ float t;
+ vec3 n;
+ int16_t m;
+};
+
+hitout T(vec3 o,vec3 d){ 
+hitout r;
+ r.t=BIG_FLOAT;
+ r.m=0;
  float p=-o.z/d.z;
   if(.01<p)
   {
-   t=p;
-   static const vec3 N = {0.,0.,1.};
-   n=N;
-   m=1;
+   r.t=p;
+   /*static const*/ vec3 N = {0.,0.,1.};
+   r.n=N;
+   r.m=1;
    }
 
   
  { 
     
     // There is a sphere but does the ray hits it ?
-    static const vec3 spos = {0.,-10.,-2*SPHERE_RADIUS};
-    vec3 p=o+spos;
-    float b=dot(p,d);
-    float c=dot(p,p)-SPHERE_RADIUS*SPHERE_RADIUS;
+    /*static const*/ vec3 spos = {0.,-10.,-2.*SPHERE_RADIUS};
+    vec3 pv=o+spos;
+    float b=dot(pv,d);
+    float c=dot(pv,pv)-SPHERE_RADIUS*SPHERE_RADIUS;
     float q=b*b-c;
  
     //Does the ray hit the sphere ?
@@ -31,41 +39,45 @@ int16_t T(vec3 o,vec3 d,float& t,vec3& n){
        //It does, compute the distance camera-sphere
        float s=-b-sqrt(q);
          
-       if(s<t && s>.01)
+       if(s<r.t && s>.01)
        {
          // So far this is the minimum distance, save it. And also
          // compute the bouncing ray vector into 'n'  
-         t=s;
-         n=normalize(p+d*t);
-         m=2;
+         r.t=s;
+         r.n=normalize(pv+d*r.t);
+         r.m=2;
         }
      }
  }
- return m;
+ return r;
 }
 
 // (S)ample the world and return the pixel color for
 // a ray passing by point o (Origin) and d (Direction)
-color_basic_t S(vec3 o,vec3 d){
+color_basic_t S0(vec3 o,vec3 d){
   float t;
   vec3 n;
+  color_basic_t col = {.7,.6,1.}; //sky color
 
   //Search for an intersection ray Vs World.
-  int16_t m=T(o,d,t,n);
+  hitout r1 = T(o,d);
+  int16_t m=r1.m;
+  t = r1.t;
+  n = r1.n;
 
   if(!m) // m==0
   {
   //No sphere found and the ray goes upward: Generate a sky color  
   fixed_type u = fixed_type(1.)-fixed_type(d.z);
   u = u*u;
-  color_basic_t cb = {.7,.6,1.};
-  return cb*u*u;
+  col = col*u*u;
   }
-
+  else
+  {
   //A sphere was maybe hit.
 
   vec3 h=o+d*t;                    // h = intersection coordinate
-  static const vec3 ld = {9.,9.,16.};
+  /*static const*/ vec3 ld = {9.,9.,16.};
   vec3 l=normalize(ld+h*-1.);  // 'l' = direction to light (random delta for shadows).
   vec3 r=d+n*(dot(n,d)*-2.);               // r = The half-vector
 
@@ -73,9 +85,11 @@ color_basic_t S(vec3 o,vec3 d){
   float b=dot(l,n);
 
   //Calculate illumination factor (lambertian coefficient > 0 or in shadow)?
-  if(is_negative(b)||T(h,l,t,n))
+  hitout r2 = T(h,l);
+  if(is_negative(b)||r2.m)
+  {
      b=0.;
-
+  }
   // Calculate the color 'p' with diffuse and specular component 
   color_type p=0.;
   if(b>0.)
@@ -91,14 +105,82 @@ color_basic_t S(vec3 o,vec3 d){
      static const color_basic_t c2 = {1.,1.,1.};
      color_basic_t fcolor = (round16(h.x)^round16(h.y))&1?c1:c2;
      fixed_type bc = (b*.2+.1);
-     return fcolor*bc;
+     col = fcolor*bc;
   }
-
-  //m == 2 A sphere was hit. Cast an ray bouncing from the sphere surface.
-  color_basic_t cp = {p,p,p};
-  return cp+S(h,r)*fixed_type(.5); //Attenuate color by 50% since it is bouncing (* .5)
+  else
+  {
+    //m == 2 A sphere was hit. Cast an ray bouncing from the sphere surface.
+    color_basic_t pcol = {p,p,p};
+    col = pcol;
+   }
+  }
+  return col;
 }
 
+// (S)ample the world and return the pixel color for
+// a ray passing by point o (Origin) and d (Direction)
+color_basic_t S(vec3 o,vec3 d){
+  float t;
+  vec3 n;
+  color_basic_t col = {.7,.6,1.}; //sky color
+
+  //Search for an intersection ray Vs World.
+  hitout r1 = T(o,d);
+  int16_t m=r1.m;
+  t = r1.t;
+  n = r1.n;
+
+  if(!m) // m==0
+  {
+  //No sphere found and the ray goes upward: Generate a sky color  
+  fixed_type u = fixed_type(1.)-fixed_type(d.z);
+  u = u*u;
+  col = col*u*u;
+  }
+  else
+  {
+  //A sphere was maybe hit.
+
+  vec3 h=o+d*t;                    // h = intersection coordinate
+  /*static const*/ vec3 ld = {9.,9.,16.};
+  vec3 l=normalize(ld+h*-1.);  // 'l' = direction to light (random delta for shadows).
+  vec3 r=d+n*(dot(n,d)*-2.);               // r = The half-vector
+
+  //Calculated the lambertian factor
+  float b=dot(l,n);
+
+  //Calculate illumination factor (lambertian coefficient > 0 or in shadow)?
+  hitout r2 = T(h,l);
+  if(is_negative(b)||r2.m)
+  {
+     b=0.;
+  }
+  // Calculate the color 'p' with diffuse and specular component 
+  color_type p=0.;
+  if(b>0.)
+  {
+    p=(color_type)dot(l,r);
+    p=p*p;
+    p=p*p;
+  }
+
+  if(m&1){   //m == 1
+     h=h*.2; //No sphere was hit and the ray was going downward: Generate a floor color
+     static const color_basic_t c1 = {1.,.3,.3};
+     static const color_basic_t c2 = {1.,1.,1.};
+     color_basic_t fcolor = (round16(h.x)^round16(h.y))&1?c1:c2;
+     fixed_type bc = (b*.2+.1);
+     col = fcolor*bc;
+  }
+  else
+  {
+    //m == 2 A sphere was hit. Cast an ray bouncing from the sphere surface.
+    color_basic_t pcol = {p,p,p};
+    col = pcol+S0(h,r)*fixed_type(.5);
+   }
+  }
+  return col;
+}
 
 color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y)
 {
