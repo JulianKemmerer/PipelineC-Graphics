@@ -4,6 +4,8 @@
 #define __FIXED_TYPE__
 
 #define FIXED_FRACTIONBITS 10
+#define FIXED_TOTALBITS 22 //uncommed for more precise simulation (22 seems minimum for 1080p)
+#define fixed_basetype int22_t
 
 #ifndef __PIPELINEC__
 #warning: precision of fixed should be correctly defined
@@ -15,10 +17,6 @@
 #define CCOMPILE
 #endif
 
-#warning determine correct base type
-//typedef int32_t fixed_basetype;
-//typedef int16_t fixed_basetype;
-#define fixed_basetype int22_t
 
 #ifndef CCOMPILE
 
@@ -41,12 +39,12 @@ public:
 #else //not FIXED_EMULATE_WITH_FLOAT
 public:
 
-#if 1//def NO_BIT_EXACT
+#ifndef FIXED_TOTALBITS//def NO_BIT_EXACT
   //U f;
   fixed_basetype f;
 #else
   //U f:Q+INT+1; //+1 for sign
-  fixed_basetype f:22;
+  fixed_basetype f:FIXED_TOTALBITS;
 #endif
 
 public:
@@ -76,7 +74,7 @@ public:
     bool operator == (fixed_t b) const { return f == b.f; }
     bool operator != (fixed_t b) const { return f != b.f; }
 
-#endif
+#endif //FIXED_EMULATE_WITH_FLOAT
 };
 
 typedef fixed_t<FIXED_FRACTIONBITS> fixed; //main fixed type name
@@ -108,8 +106,6 @@ public:
     fixed3 operator - (fixed3 v) const { fixed3 r = { x-v.x, y-v.y, z-v.z }; return r;  }
 };
 
-inline int16_t round16(fixed a) { return int16_t(a+.5); }
-
 fixed fixed_shr(fixed a, shift_t shift) { return a >> shift; }
 fixed fixed_shl(fixed a, shift_t shift) { return a << shift; }
 
@@ -130,7 +126,11 @@ inline fixed fixed_max(fixed a, fixed b) { return a<b?a:b; }
 #ifndef __PIPELINEC__
 #warning merge pipelineC implementation
 
+#ifdef FIXED_TOTALBITS
+typedef struct { fixed_basetype f:FIXED_TOTALBITS; } fixed;
+#else
 typedef struct { fixed_basetype f; } fixed;
+#endif
 
 inline constexpr fixed fixed_make_from_int(int a) { const fixed r = {fixed_basetype(a << FIXED_FRACTIONBITS)}; return r; }
 inline constexpr fixed fixed_make_from_short(short a) { const fixed r = {fixed_basetype(a << FIXED_FRACTIONBITS)}; return r; }

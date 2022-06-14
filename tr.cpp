@@ -59,7 +59,7 @@ hole_t plane_has_hole(hole_t x, hole_t z)
   hole_t fracz = hole_t(iz)-z;
   uint16_t hx = hash16(ix) >> 5;
   uint16_t hz = hash16(iz) >> 5;
-  if((hx ^ hz) < ix+600)
+  if((hx ^ hz) < int16_t(ix+600))
   {
 #ifndef SHADER //this simplifies automatic conversion to C
     if((ix & 0x240)==0x240 || ((ix & ~0x7FF) != 0) )
@@ -316,7 +316,7 @@ color_basic_t sphere_effect(IN(hit_out) hit, IN(material_t) hit_material)
   if((tick & 0x3F) != 0 || ((hash16(tick)>>13) & 1) != 0)
   {
     //eyeballs
-    float_type dy = (hit.hit.dir.y-float_shift(float_type(s.center.y),-6)/* *1.5*/ ); //FIXME: optimize constants 1.5, 1.25
+    float_type dy = (hit.hit.dir.y-float_shift(float_type(s.center.y),-6)*1.5); //FIXME: optimize constants 1.5, 1.25
     float_type dx = float_shift(float_abs(hit.hit.dir.z-hit.hit.dir.x)-.6, -1)*1.25;
     float_type d = dx*dx+dy*dy;
     coord_type mindist = fixed_shr(s.heat, 4) + .25*.25;

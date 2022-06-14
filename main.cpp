@@ -195,7 +195,7 @@ int main()
          if(fb_should_quit()) exit(1);
          //printf("frame %d, y %d\n", frame, g_top->dvi_y);
 		 fb_update(); //once by line
-		 if(g_top->dvi_y == 0)
+		 if((g_top->dvi_y % (FRAME_HEIGHT/8)) == 0)
 		 {
 		   static int frame = 0;
 		   fb_save_texture(frame);

@@ -96,9 +96,8 @@ public:
     vec operator - (vec v) const { vec r = { x-v.x, y-v.y, z-v.z }; return r;  }
 };
 
-#warning this is a ugly hack!
-#define float2 float3
-#define float4 float3
+struct float2;
+struct float3;
 
 #else //not CUSTOM_FLOAT_MANTISSA
 //#define float double //change float type

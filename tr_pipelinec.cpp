@@ -21,7 +21,6 @@ typedef float_type screen_coord_t;
 #warning simulation using all floats!
 typedef float_type color_type;
 typedef float3 color;
-inline int16_t round16(float_type x) { return x+0.5; }
 #define fixed_is_negative(x) ((x)<fixed_type(0))
 #define fixed_convert(t, x, shift) float_shift(x, shift)
 #else
@@ -121,7 +120,11 @@ uint16_t CLOG2(uint16_t v)
   return r+1;
 }
 */
-
+#ifndef PARSING
+inline int16_t round16(float_type x) { return lround(x); } //FIXME: unify implementations
+#else
+inline int16_t round16(fixed_type x) { return int16_t(x+.5); }
+#endif
 inline uint16_t hash16(uint16_t v) { return v * uint32_t(0x9E37u); } //16x16bits
 inline uint16_t hashf(float_type f) { uint32_t u = float_to_uint(f); return hash16(((u<<9)|(u>>23))^(u>>7)); }
 

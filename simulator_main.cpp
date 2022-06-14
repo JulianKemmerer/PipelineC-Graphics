@@ -18,6 +18,7 @@ There's no game nor render logic in this source, all that is defined by the HDL 
 */
 #define POWER_BENCH
 //#define GATEWARE_VGA
+//#define DUMP_FRAMES
 #include <SDL2/SDL.h>
 
 #define sqrt _sqrt //avoid library conflict
@@ -71,6 +72,7 @@ bool fb_init(unsigned hres, unsigned vres);
 void fb_update();
 bool fb_should_quit();
 void fb_deinit();
+void fb_save_texture(int frame);
 inline void fb_setpixel_raw(pixel_t *p, uint8_t r, uint8_t g, uint8_t b) { p->a = 0xFF; p->b = b; p->g = g; p->r = r; }
 inline void fb_setpixel(unsigned x, unsigned y, uint8_t r, uint8_t g, uint8_t b) { fb_setpixel_raw(&pixelbuf[y*FRAME_PITCH+x], r, g, b); }
 inline uint64_t higres_ticks() { return SDL_GetPerformanceCounter(); }
@@ -251,13 +253,17 @@ int main()
 #endif
 
       fb_update();
+#ifdef DUMP_FRAMES      
+      fb_save_texture(frame);
+#endif      
       ++frame;
       
-      if(power_enabled && frame > 1000)
+      if(power_enabled && frame >= FRAME_FPS*30)
         break;
 
       if((frame % int(FRAME_FPS)) == 0)
         dump_stats();
+        
 #endif
 
 
@@ -398,6 +404,29 @@ void fb_deinit()
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(win);
     SDL_Quit();
+}
+
+void fb_save_texture(int frame)
+{
+  char fname[20];
+  snprintf(fname, sizeof(fname), "frame%d.ppm", frame);
+  FILE *fp = fopen(fname, "wb");
+  //printf("File: %s (fd %p)\n", fname, fp);
+  
+  fprintf(fp, "P6\n%d %d\n255\n", FRAME_WIDTH, FRAME_HEIGHT);
+  const pixel_t *pix = pixelbuf;
+  for(int y = 0; y < FRAME_HEIGHT; ++y)
+  {
+    for(int x = 0; x < FRAME_WIDTH; ++x)
+    {
+      uint8_t color[]={pix->r, pix->g, pix->b};
+      fwrite(color, 1, sizeof(color), fp);
+      ++pix;
+    }
+    pix += FRAME_PITCH - FRAME_WIDTH;
+  }
+  fclose(fp);
+  printf("Saved frame %d\n", frame);
 }
 
 unsigned buttons_pressed()
