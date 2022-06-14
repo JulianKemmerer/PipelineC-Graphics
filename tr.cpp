@@ -360,8 +360,8 @@ color_type sphere_shadow(float x, float y, float z)
 
     const float SHADOW_K = .5;
     r = v*SHADOW_K+.5;
-    if(r < 0.) r = 0.;
-    if(r > 1.-AMBIENT_INTENSITY) r = 1-AMBIENT_INTENSITY;
+    if(r < 0) r = 0;
+    if(r > 1.) r = 1.;
   }
 #endif     
   return r;
@@ -457,7 +457,7 @@ color_type light_intensity(IN(vec3) hit)
   coord_type lz = (coord_type(hit.z)-LIGHT_Z)*coord_type(1./LIGHT_Y);
   coord_type lx = coord_type(hit.x)*coord_type(1./LIGHT_Y);
   coord_type dl = lx*lx + 1. + lz*lz;
-  return color_type(inversesqrt(float(dl))) + AMBIENT_INTENSITY; //FIXME: implement RSQRT for fixed points
+  return color_type(inversesqrt(float(dl))); //FIXME: implement RSQRT for fixed points
 #endif
 }
 
@@ -518,7 +518,14 @@ color_basic_t shade(IN(color_basic_t) background, IN(vec3) dir, IN(hit_out) hit,
     hitreflect.dist = hit.dist; //to accumulate distance
 #endif
     color_basic_t reflect_color = cast_ray_nested(hitreflect);
-    color_basic_t diffuse_color = hit_material.diffuse_color * light_intensity(hit.hit.orig);
+    color_type li = light_intensity(hit.hit.orig);
+#ifdef SOFT_SHADOW
+    float sx = hit.hit.orig.x - SPHERE_X;
+    float sy = (float)scene.sphere.center.y;
+    float sz = hit.hit.orig.z - SPHERE_Z;
+    li = li*sphere_shadow(sx, sy, sz);
+#endif
+    color_basic_t diffuse_color = hit_material.diffuse_color * (li + AMBIENT_INTENSITY);
     color_basic_t comb_color = diffuse_color + reflect_color*hit_material.reflect_color;
     rcolor = color_select(color_max(color_type(fogmix), minfog), colors.fog, comb_color);
   }
@@ -559,14 +566,7 @@ color_basic_t cast_ray(IN(point_and_dir) hitin)
   if (planehit)
   {
     hit_material = colors.plane;  //FIXME: needed?
-    color pcolor = plane_effect(hitplane);
-#ifdef SOFT_SHADOW
-    float sx = hitplane.hit.orig.x - SPHERE_X;
-    float sy = (float)scene.sphere.center.y;
-    float sz = hitplane.hit.orig.z - SPHERE_Z;
-    pcolor = pcolor*sphere_shadow(sx, sy, sz); 
-#endif
-    hit_material.diffuse_color = pcolor;
+    hit_material.diffuse_color = plane_effect(hitplane);
   }
 
 #ifdef MOTION_BLUR
