@@ -346,17 +346,15 @@ float triang(float x )
 color_type sphere_shadow(float x, float y, float z)
 {
   color_type r = 1.;
-#if ALTERTNATE_UI > 4
-  y = y * .25;
-  float d = x*x+z*z - (y*y+SPHERE_RADIUS*SPHERE_RADIUS);
-  if(is_negative(d))
-    r = .5;
-#else
   if(!is_negative(y))
   {
+    float d = x*x+z*z - SPHERE_RADIUS*SPHERE_RADIUS;
+#if ALTERTNATE_UI > 4
+    if(is_negative(c))
+      r = .5;
+#else
     const float SHADOW_K = .6;
-    float c = x*x+z*z - SPHERE_RADIUS*SPHERE_RADIUS;
-    float v = c*float_fast_reciprocal_u(y)*SHADOW_K;
+    float v = d*float_fast_reciprocal_u(y)*SHADOW_K;
 
     r = color_type(v)+.5;
     if(fixed_is_negative(r)) r = 0.;
@@ -364,8 +362,8 @@ color_type sphere_shadow(float x, float y, float z)
 #if SOFT_SHADOW > 1
     r=r*r*(color_type(3.)-(r+r)); //smooths it
 #endif
+#endif
   }
-#endif     
   return r;
 }
 #endif
@@ -926,13 +924,12 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
     coord_type coord_x = state.sphere_x - state.plane_x;
     coord_type coord_z = state.sphere_z - state.plane_x; //z=x
 
+
     bool half_up = state.sphere_y > state.plane_y;
     if(half_up && state.won == false)
     {
 #ifdef HEAT_CONSTANT
-      if(state.sphere_yvel>0.)
-        state.heat = fixed_type(0)-fixed_shr(state.sphere_xvel, HEAT_CONSTANT);
-#warning implement unary -
+      state.heat = state.heat + HEAT_CONSTANT;
 #endif
 
 #ifndef GOD_MODE
@@ -962,16 +959,16 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
       state.camera_z = state.camera_z-fixed_shr(underground, ZOOMOUT_CONSTANT); //lose => fadeout
     }
   }
+  state.camera_y = state.camera_y + fixed_shr(state.sphere_y - state.camera_y, 5);
 
 #ifdef HEAT_CONSTANT
-  state.heat = state.heat - (color_type)fixed_shr(state.heat, 4);
+  state.heat = state.heat - (color_type)fixed_shr(state.heat, 4); //cools down
 #endif
-  state.camera_y = state.camera_y + fixed_shr(state.sphere_y - state.camera_y, 5);
 
   //write all outputs
   state.lose = fixed_is_negative(underground) && (-int16_t(underground) >> 10); //underground < -2048.
 
-#if HEAT_CONSTANT // && ALTERNATE_UI > 1
+#ifdef HEAT_CONSTANT // && ALTERNATE_UI > 1
   state.diffuse_color = color_select(state.heat, state.lava_color, state.gold_color);
   state.reflect_color = state.gold_reflect_color*(color_type(1.) - fixed_shr(state.heat, 2));
 #else
