@@ -2,7 +2,7 @@
 extern int FRAME_WIDTH;
 extern int FRAME_HEIGHT;
 
-struct pixel_t { uint8_t a, b, g, r; };
+struct pixel_t { uint8_t b, g, r, a; }; //this matches linux framebuffer
 
 #include "float_type.h"
 #ifndef PARSING //only on faster simulation
