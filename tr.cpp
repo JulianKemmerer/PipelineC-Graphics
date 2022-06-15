@@ -360,9 +360,9 @@ color_type sphere_shadow(float x, float y, float z)
     float v = (c - yy)*inversesqrt(yy)*SHADOW_K;
 
     r = v+.5;
-    if(r < 0) r = 0;
+    if(fixed_is_negative(r)) r = 0.;
     if(r > 1.) r = 1.;
-    r=r*r*(color_type(3.)-r*2.); //smooths it
+    r=r*r*(color_type(3.)-(r+r)); //smooths it
   }
 #endif     
   return r;
