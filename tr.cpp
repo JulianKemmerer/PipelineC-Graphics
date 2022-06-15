@@ -354,12 +354,11 @@ color_type sphere_shadow(float x, float y, float z)
 #else
   if(!is_negative(y))
   {
-    float yy = y*y;
-    float c = x*x+yy+z*z - SPHERE_RADIUS*SPHERE_RADIUS;
     const float SHADOW_K = .6;
-    float v = (c - yy)*inversesqrt(yy)*SHADOW_K;
+    float c = x*x+z*z - SPHERE_RADIUS*SPHERE_RADIUS;
+    float v = c*float_fast_reciprocal_u(y)*SHADOW_K;
 
-    r = v+.5;
+    r = color_type(v)+.5;
     if(fixed_is_negative(r)) r = 0.;
     if(r > 1.) r = 1.;
     r=r*r*(color_type(3.)-(r+r)); //smooths it
