@@ -353,7 +353,7 @@ color_type sphere_shadow(float x, float y, float z)
 {
   color_type r = 1.;
   float d = x*x+z*z;
-  if(!is_negative(y) && d < SPHERE_RADIUS*SPHERE_RADIUS*4)
+  if(!is_negative(y) && d < SPHERE_RADIUS*SPHERE_RADIUS*4.)
   {
     d = d - SPHERE_RADIUS*SPHERE_RADIUS;
 #if ALTERTNATE_UI > 4
