@@ -19,6 +19,7 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 #define GOD_MODE
 #define BLINKY
 #define SOFT_SHADOW 1 //2 for smoother border transition
+//#define LEVELS
 //#define ALTERNATE_UI 3 //level of graphics detail
 //#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702)
 //#define DITHER
@@ -60,8 +61,16 @@ hole_t plane_has_hole(hole_t x, hole_t z)
   hole_t fracz = hole_t(iz)-z;
   uint16_t hx = hash16(ix) >> 5;
   uint16_t hz = hash16(iz) >> 5;
+
   if((hx ^ hz) < int16_t(ix+600))
   {
+  hole_t ax = fixed_abs(fracx);
+  hole_t az = fixed_abs(fracz);
+#ifdef RHOMBUS_SIZE
+  ret = (ax + az) - hole_t(RHOMBUS_SIZE); 
+#endif
+
+#ifdef LEVELS
 #ifndef SHADER //this simplifies automatic conversion to C
     if((ix & 0x240)==0x240 || ((ix & ~0x7FF) != 0) )
      ret = 0.; //no hole
@@ -77,18 +86,15 @@ hole_t plane_has_hole(hole_t x, hole_t z)
       else
 #endif
       {
-        hole_t ax = fixed_abs(fracx);
-        hole_t az = fixed_abs(fracz);
-#ifdef RHOMBUS_SIZE
+#ifdef SQUARE_SIZE
         if(hard) //rhombus or squares
           ret = fixed_max(ax, az) - hole_t(SQUARE_SIZE);
-        else
-          ret = (ax + az) - hole_t(RHOMBUS_SIZE); 
 #else
         ret = fixed_max(ax, az) - SQUARE_SIZE;
 #endif
       }
     }
+#endif //levels
   }
   return ret;
 }
@@ -346,14 +352,15 @@ float triang(float x )
 color_type sphere_shadow(float x, float y, float z)
 {
   color_type r = 1.;
-  if(!is_negative(y))
+  float d = x*x+z*z;
+  if(!is_negative(y) && d < SPHERE_RADIUS*SPHERE_RADIUS*4)
   {
-    float d = x*x+z*z - SPHERE_RADIUS*SPHERE_RADIUS;
+    d = d - SPHERE_RADIUS*SPHERE_RADIUS;
 #if ALTERTNATE_UI > 4
     if(is_negative(c))
       r = .5;
 #else
-    const float SHADOW_K = .6;
+    const float SHADOW_K = .5;
     float v = d*float_fast_reciprocal_u(y)*SHADOW_K;
 
     r = color_type(v)+.5;
@@ -386,7 +393,7 @@ color_basic_t plane_effect(IN(hit_out) hit)
   int16_t iz = round16(oz);
 
   static const color_type bk = .3; 
-#ifndef COLOR_DECOMP
+#if !defined(COLOR_DECOMP) && defined(LEVELS)
   color_basic_t color2 = {
     (ix & 0x400)!=0 ? bk : colors.plane_color2.r,
     (ix & 0x200)!=0 ? bk : colors.plane_color2.g,

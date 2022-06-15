@@ -186,7 +186,8 @@ color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y)
 {
   vec3 orig{10., -20., 10.};
   IN(scene_t) scene = get_scene();
-  float_type camera_pos = scene.frame*.01 + .1;
+  float_type camera_pos = scene.frame;
+  camera_pos = camera_pos*.01 + .1;
   vec3 camera_dir{float_type(x), camera_pos, float_type(y)};
   return S(orig, normalize(camera_dir));
 }

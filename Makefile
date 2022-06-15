@@ -80,10 +80,12 @@ obj_dir/Vtop: ./main.cpp compile
 	cp ./main.cpp ./obj_dir
 	make CXXFLAGS="-DUSE_VERILATOR -I../../PipelineC/ -I../build/verilator -I.." -C ./obj_dir -f Vtop.mk
 
-video: frames.mp4
-
-frames.mp4:
-	ffmpeg -framerate 60 -i frame%d.ppm -c:v libx264 -crf 25 -vf "format=yuv420p" -movflags +faststart frames.mp4
+video: #frames0.ppm
+	rm -f frames.mp4
+	ffmpeg -framerate 60 -i frame%d.ppm -c:v libx264 -crf 20 -vf "format=yuv420p" -movflags +faststart -r 60 frames.mp4
+	#mogrify -format png frame*.ppm
+	
+frames0.ppm: gen
     
 cxxrtl_top: ./synth/top/top.v
 	mkdir -p cxxrtl_build && cd cxxrtl_build

@@ -4,7 +4,7 @@
 #define GAME_MODE
 
 #ifdef GAME_MODE
-#define HEAT_CONSTANT 1
+#define HEAT_CONSTANT .1
 #define STAR_INTENSITY .35
 #define HOLE_BORDER .1
 #else

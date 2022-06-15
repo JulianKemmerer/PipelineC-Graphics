@@ -4,8 +4,13 @@
 #define __FIXED_TYPE__
 
 #define FIXED_FRACTIONBITS 10
+#ifdef LEVELS
 #define FIXED_TOTALBITS 26 //uncommed for more precise simulation
 #define fixed_basetype int26_t
+#else
+#define FIXED_TOTALBITS 22 //uncommed for more precise simulation
+#define fixed_basetype int22_t
+#endif
 
 #ifndef __PIPELINEC__
 #warning: precision of fixed should be correctly defined
