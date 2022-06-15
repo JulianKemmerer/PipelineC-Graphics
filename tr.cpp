@@ -18,7 +18,7 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 //#define NON_INTERACTIVE
 #define GOD_MODE
 #define BLINKY
-#define SOFT_SHADOW
+#define SOFT_SHADOW 1 //2 for smoother border transition
 //#define ALTERNATE_UI 3 //level of graphics detail
 //#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702)
 //#define DITHER
@@ -361,7 +361,9 @@ color_type sphere_shadow(float x, float y, float z)
     r = color_type(v)+.5;
     if(fixed_is_negative(r)) r = 0.;
     if(r > 1.) r = 1.;
+#if SOFT_SHADOW > 1
     r=r*r*(color_type(3.)-(r+r)); //smooths it
+#endif
   }
 #endif     
   return r;
