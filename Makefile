@@ -103,7 +103,7 @@ arty: fullsynth
 	cp `cat ./fullsynth/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
 	cp top_glue_no_struct.vhd ./vhd/all_vhdl_files/
 	FRAME_WIDTH=$(FRAME_WIDTH) FRAME_HEIGHT=$(FRAME_HEIGHT) FRAME_FPS=$(FRAME_FPS) python3 ./litex_soc.py $(BOARD) --cpu-type=None
-	openFPGALoader -b $(BOARD) ./build/digilent_arty/gateware/digilent_arty.bit
+	openFPGALoader -b $(BOARD) --freq 30e6 ./build/digilent_arty/gateware/digilent_arty.bit
 
 de0nano: fullsynth
 	#FIXME: unify builr and vhd directories

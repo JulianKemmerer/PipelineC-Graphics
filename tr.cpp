@@ -15,10 +15,10 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 
 */
 
-//#define NON_INTERACTIVE
 #define GOD_MODE
-#define BLINKY
-#define SOFT_SHADOW 1 //2 for smoother border transition
+//#define NON_INTERACTIVE
+//#define BLINKY
+//#define SOFT_SHADOW 1 //2 for smoother border transition
 //#define LEVELS
 //#define ALTERNATE_UI 3 //level of graphics detail
 //#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702)
@@ -32,6 +32,7 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 #endif
 
 #ifdef GOD_MODE
+#define NON_INTERACTIVE
 #define SCORE_STEP 3
 #elif defined(NON_INTERACTIVE)
 #define SCORE_STEP 0
@@ -550,12 +551,16 @@ color_basic_t cast_ray(IN(point_and_dir) hitin)
   IN(scene_t) scene = get_scene();
   IN(scene_colors_t) colors = scene_colors(scene);
   
+  float ys = float_abs(float_shift(hitin.dir.y, 1));
+#ifndef RT_SMALL_UI
   bool has_star = is_star(hitin.dir.x, hitin.dir.y);
   color_basic_t sky = has_star ? color_basic_t(STAR_INTENSITY) : background_color(hitin.dir.y);
-
-  float ys = float_abs(float_shift(hitin.dir.y, 1));
   color_type mix = ys<1. ? color_type(1)-color_type(ys): color_type(0);
   color_basic_t bfog = color_select(mix, colors.fog, sky);
+#else
+  color_basic_t bfog(ys);
+  color_type mix = 1.;
+#endif
 
   material_t hit_material;
   hit_out hitsphere = ray_sphere_intersect(object_coord_to_float3(scene.sphere.center), hitin);

@@ -33,9 +33,9 @@ class GraphicsGenerator(Module):
           i_reset = ResetSignal("sys"),
           i_jump_pressed = button,
           o_pixel_a = self.return_output_a, #FIXME: just Signal(8)
-          o_pixel_b = source.r,
+          o_pixel_r = source.r,
           o_pixel_g = source.g,
-          o_pixel_r = source.b #FIXME: why colors inverted? Different PMOD versions?
+          o_pixel_b = source.b
         )
     
         self.framedisplay = framedisplay 
@@ -132,12 +132,12 @@ def build_arty(args, timings):
 	if DVI:
 		from litex.soc.cores.video import VideoS7HDMIPHY
 		platform.add_extension([("hdmi_out", 0, #DVI pmod breakout on pmod C (seems not working in others than C)
-			Subsignal("data0_p", Pins("pmodc:0"), IOStandard("TMDS_33")),
-			Subsignal("data0_n", Pins("pmodc:1"), IOStandard("TMDS_33")),
+			Subsignal("data2_p", Pins("pmodc:0"), IOStandard("TMDS_33")), #outputs 2-1-0 inverted, maybe the custom adaptor has wrong wirings?
+			Subsignal("data2_n", Pins("pmodc:1"), IOStandard("TMDS_33")),
 			Subsignal("data1_p", Pins("pmodc:2"), IOStandard("TMDS_33")),
 			Subsignal("data1_n", Pins("pmodc:3"), IOStandard("TMDS_33")),
-			Subsignal("data2_p", Pins("pmodc:4"), IOStandard("TMDS_33")),
-			Subsignal("data2_n", Pins("pmodc:5"), IOStandard("TMDS_33")),
+			Subsignal("data0_p", Pins("pmodc:4"), IOStandard("TMDS_33")),
+			Subsignal("data0_n", Pins("pmodc:5"), IOStandard("TMDS_33")),
 			Subsignal("clk_p",   Pins("pmodc:6"), IOStandard("TMDS_33")),
 			Subsignal("clk_n",   Pins("pmodc:7"), IOStandard("TMDS_33")))])
 		soc.submodules.videophy = VideoS7HDMIPHY(platform.request("hdmi_out"), clock_domain="hdmi")

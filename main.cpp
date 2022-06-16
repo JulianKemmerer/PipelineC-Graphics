@@ -29,11 +29,6 @@ $ ./sim
 // VGA timing logic, frame size const, etc
 #include "wire.h"
 #include "uintN_t.h"
-/*
-typedef struct pixel_t{
- uint8_t a, b, g, r; 
-}pixel_t;
-*/
 #include "vga/vga_timing.h"
 
 
@@ -69,8 +64,6 @@ int main()
 
 bool fb_should_quit();
 void fb_update();
-//struct pixel_t;
-//void fb_setpixel(pixel_t *p, uint8_t r, uint8_t g, uint8_t b);
 inline void fb_setpixel(unsigned x, unsigned y, uint8_t r, uint8_t g, uint8_t b);
 inline uint64_t higres_ticks();
 inline uint64_t higres_ticks_freq();
@@ -85,7 +78,6 @@ inline uint64_t higres_ticks_freq();
 #define WINDOW_TITLE "Compiled C Code Framebuffer"
 #endif
 #include <SDL2/SDL.h>
-//struct pixel_t { uint8_t a, b, g, r; };
 inline void fb_setpixel(pixel_t *p, uint8_t r, uint8_t g, uint8_t b) { p->a = 0xFF; p->b = b; p->g = g; p->r = r; }
 pixel_t pixelbuf[FRAME_HEIGHT][FRAME_WIDTH];
 inline void fb_setpixel(unsigned x, unsigned y, uint8_t r, uint8_t g, uint8_t b) { fb_setpixel(&pixelbuf[y][x], r, g, b); }
@@ -158,7 +150,7 @@ void fb_save_texture(int frame)
   const pixel_t *pix = pixelbuf[0];
   while(pix != pixelbuf[0] + FRAME_HEIGHT*FRAME_WIDTH)
   {
-    uint8_t color[]={pix->r, pix->g, pix->b};
+    uint8_t color[]={pix->r, pix->g, pix->b}; //FIXME: maybe already mapped as such
     fwrite(color, 1, sizeof(color), fp);
     ++pix;
   }

@@ -96,6 +96,7 @@ typedef float3 vec3;
 typedef float4 vec4;
 
 inline float_type dot(vec3 a, vec3 b) { return a.x*b.x+a.y*b.y+a.z*b.z; }
+inline float_type dot2(vec2 a, vec2 b) { return a.x*b.x+a.y*b.y; }
 
 inline vec3 reflect(vec3 I, vec3 N) { return I - N*float_shift(dot(I,N),1); }
 inline vec3 normalize(vec3 v) { return v*inversesqrt(dot(v, v)); }
