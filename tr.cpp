@@ -17,7 +17,6 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 
 #define GOD_MODE
 //#define NON_INTERACTIVE
-//#define BLINKY
 //#define SOFT_SHADOW 1 //2 for smoother border transition
 //#define LEVELS
 //#define ALTERNATE_UI 3 //level of graphics detail
@@ -31,8 +30,9 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 #undef HEAT_CONSTANT
 #endif
 
+#define BLINKY
 #ifdef GOD_MODE
-#define NON_INTERACTIVE
+//#define NON_INTERACTIVE
 #define SCORE_STEP 3
 #elif defined(NON_INTERACTIVE)
 #define SCORE_STEP 0
