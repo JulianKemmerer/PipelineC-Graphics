@@ -25,10 +25,17 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 
 
 #include "tr.h"
+#ifndef SHADER
+typedef coord_type hole_t; //TODO: move
+#else
+scene_t get_scene();
+#endif
 
-#if defined(ALTERNATE_UI) and ALTERNATE_UI < 2
+
+#if defined(ALTERNATE_UI) && ALTERNATE_UI < 2
 #undef HEAT_CONSTANT
 #endif
+
 
 #define BLINKY
 #ifdef GOD_MODE
@@ -48,7 +55,7 @@ $ LIBGL_ALWAYS_SOFTWARE=1 ./glslViewer -I../../../include/ rt.frag
 #endif
 
 
-typedef coord_type hole_t;
+
 
 hole_t plane_has_hole(hole_t x, hole_t z)
 {
@@ -102,7 +109,6 @@ hole_t plane_has_hole(hole_t x, hole_t z)
 
 
 #ifndef COLOR_DECOMP
-#warning integrate this in scene struct
 inline scene_colors_t scene_colors(IN(scene_t) scene)
 {
   scene_colors_t r;
@@ -115,7 +121,6 @@ inline scene_colors_t scene_colors(IN(scene_t) scene)
 }
 
 #else
-#warning integrate this in scene struct
 inline scene_colors_t scene_colors(uint2_t channel)
 {
   IN(scene_t) scene = get_scene();
@@ -186,7 +191,7 @@ struct hit_out
 #endif
 };
 
-#warning: this seems to add cells to synth, FIXME: inline and define 'hit_out hitout;' at top
+//#warning: this seems to add cells to synth, FIXME: inline and define 'hit_out hitout;' at top
 hit_out sphere_hit(bool hit, IN(vec3) center, IN(point_and_dir) hitin, float t, float diff)
 {
   hit_out hitout;
@@ -276,7 +281,7 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(point_and_dir) hitin)
 {
   hit_out hitout;
   hitout.dist = RAY_NOINT;
-  hitout.borderdist = /*-EPS*/0.;
+  hitout.borderdist = 0.;
   vec3 plane_center = object_coord_to_float3(plane.center);
   float d;
   vec3 pt;
@@ -314,6 +319,7 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(point_and_dir) hitin)
 color_basic_t sphere_effect(IN(hit_out) hit, IN(material_t) hit_material)
 {
   color_basic_t rcolor = hit_material.diffuse_color;
+#ifndef SHADER
 #ifdef BLINKY
   IN(scene_t) scene = get_scene();
   IN(scene_colors_t) colors = scene_colors(scene);
@@ -332,6 +338,7 @@ color_basic_t sphere_effect(IN(hit_out) hit, IN(material_t) hit_material)
       rcolor = d < .15*.15 ? color_basic_t(0.) : color_basic_t(1.2);
 
   }
+#endif
 #endif
   return rcolor;
 }
@@ -404,9 +411,9 @@ color_basic_t plane_effect(IN(hit_out) hit)
  color_basic_t color2 = colors.plane_color2;
 #endif
 
-  rcolor = ((ix ^ iz) & 1) ? colors.plane_color1 : color2;
+  rcolor = ((ix ^ iz) & 1) != 0 ? colors.plane_color1 : color2;
 #ifdef ANTIALIAS
-  color_basic_t rcolor2 = !(cx == cz) ? colors.plane_color1 : color2;
+  color_basic_t rcolor2 = (cx != cz) ? colors.plane_color1 : color2;
 
   float hitdist = hit.accdist;
   float opax = float_shift(triang(ox), -1)/hitdist;
@@ -500,8 +507,8 @@ color_basic_t cast_ray_nested(IN(point_and_dir) hitin)
 #endif
   
 
-  color_basic_t rcolor(0.);
-#warning solve need to initialize
+  color_basic_t rcolor = color_basic_t(0.);
+//#warning solve need to initialize
   if (hitout.dist >= float_shift(1., DIST_SHIFT))
     rcolor = background_color(hitin.dir.y); //has other direction
   else
@@ -558,7 +565,7 @@ color_basic_t cast_ray(IN(point_and_dir) hitin)
   color_type mix = ys<1. ? color_type(1)-color_type(ys): color_type(0);
   color_basic_t bfog = color_select(mix, colors.fog, sky);
 #else
-  color_basic_t bfog(ys);
+  color_basic_t bfog = color_basic_t(ys);
   color_type mix = 1.;
 #endif
 
@@ -591,7 +598,7 @@ color_basic_t cast_ray(IN(point_and_dir) hitin)
 
 #ifndef ANTIALIAS
    hit_out hitout = planehit ? hitplane : hitsphere;
-   return shade(bfog, hitin.dir, hitout, hit_material, planehit ? mix : color_type(0.)); //no fog for sphere
+   color_basic_t rcolor = shade(bfog, hitin.dir, hitout, hit_material, planehit ? mix : color_type(0.)); //no fog for sphere
 #else
    color_basic_t rcolor;
 
@@ -630,10 +637,9 @@ color_basic_t cast_ray(IN(point_and_dir) hitin)
      rcolor = float_select(color_type(opacity), spherecolor, planecolor);
    }
 
+#endif //ANTIALIAS
    return rcolor;
-#endif
 }
-
 
 #ifdef _DEBUG
 void perf_clear();
@@ -653,10 +659,7 @@ color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y)
 #ifdef ANTIALIAS
   hitin.dist = 0.; //start dist
 #endif
-  color_basic_t c = cast_ray(hitin);
-
-
-  return c;
+  return cast_ray(hitin);
 }
 
 #else // ALTERNATE_UI = true
@@ -689,7 +692,7 @@ color_basic_t background_color_alt(screen_coord_t x, screen_coord_t y, uint16_t 
 color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px, coord_type py, coord_type pz, color_basic_t c)
 {
 
-#warning check why fixed types can't be left uninitialized
+//#warning check why fixed types cannot be left uninitialized
   coord_type inv_y = 0.;
   
   uint8_t ux;
@@ -737,7 +740,7 @@ color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y)
   IN(scene_colors_t) colors = scene_colors(scene);
 
     coord_type dz = coord_type(scene.camera.z-SPHERE_Z);
-	coord_type dx = coord_type(x*dz - (scene.sphere.center.x/*-scene.camera.x*/));
+	coord_type dx = coord_type(x*dz - (scene.sphere.center.x)); //-scene.camera.x
 	coord_type dy = coord_type(y*dz - (scene.sphere.center.y-scene.camera.y));
 #if ALTERNATE_UI > 1
   color_basic_t c = background_color_alt(x, y, scene.frame, -(int16_t)scene.plane.center.x, dz*coord_type(.5/CAMERA_Z));
@@ -753,7 +756,7 @@ color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y)
 		//inside bounding box
 		if(dx*dx + dy*dy < SPHERE_R*SPHERE_R)
         {
-          c = /*K_gold_color*/scene.sphere.material.diffuse_color;
+          c = scene.sphere.material.diffuse_color; //K_gold_color
           //else c.b = 1.; //uncomment to display bounding box
           drawfloor = scene.sphere.center.y + dy < FLOOR_Y;
         }
@@ -769,7 +772,7 @@ color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y)
 	static const float CAMERA_FACTOR = -2.*CAMERA_Z/FRAME_HEIGHT;
 #endif
 	c = render_floor_alt(x, y,
-		scene.plane.center.x/*-scene.camera.x*/,
+		scene.plane.center.x, //-scene.camera.x
 		scene.camera.y*coord_type(CAMERA_FACTOR),
 		scene.plane.center.z-scene.camera.z, c);
 
@@ -793,87 +796,10 @@ inline uint9_t dither(uint8_t x, uint8_t y, uint9_t v)
 }
 #endif
 
-#ifndef SHADER
-inline pixel_t render_pixel(uint16_t i, uint16_t j
-#ifdef COLOR_DECOMP
-, uint2_t channel, pixel_t pix_in
-#endif
-)
-{
-  IN(scene_t) scene = get_scene();
-#ifdef _DEBUG
-  perf_clear();
-#endif
-
-#ifndef PIPELINEC_SUGAR
-  int16_t cx = (i<<1)-FRAME_WIDTH-1;
-  int16_t cy = -((j<<1)-FRAME_HEIGHT-1);
-#else
-  int16_t cx = i << 1;
-  cx = cx - (FRAME_WIDTH + 1);
-  int16_t cy = j << 1;
-  cy = (FRAME_HEIGHT + 1) - cy;
-#endif
-  const float W = (float)FRAME_WIDTH;
-  const float H = (float)FRAME_HEIGHT;
-  static const screen_coord_t ax = 1024.*(16./9.)/W;
-  static const screen_coord_t ay = 1024./H;
-  screen_coord_t x = fixed_shr(cx, 10+1) * ax;
-  screen_coord_t y = fixed_shr(cy, 10+1) * ay;
-
-  pixel_t pix; //ignores alpha
-
-  static const uint16_t score_factor = 2048*(FRAME_WIDTH-2*SCORE_MARGINS)/MAXSCORE;
-  uint16_t scorebar = score_factor*scene.scorebar >> 11;
-  if(i >= SCORE_MARGINS && i < SCORE_MARGINS + scorebar && j > SCORE_MARGINS && j < 2*SCORE_MARGINS)
-  {
-    pix.r = 0; pix.g = 200; pix.b = 0; //    pix = color(0., 200./255., 0.);
-  }
-  else
-  {
-#ifndef COLOR_DECOMP
-#ifdef ALTERNATE_UI
-	color c = render_pixel_internal_alt(x, y);
-	///*if((i ^ j) & (1<<7))*/ if(cx>0) c = render_pixel_internal(x, y, scene, scene_colors(scene)); //uncomment for checkerboard
-#else
-	color c = render_pixel_internal(x, y);
-#endif
-    uint9_t r = fixed_asshort(c.r, 8);
-    uint9_t g = fixed_asshort(c.g, 8);
-    uint9_t b = fixed_asshort(c.b, 8);
-#ifdef DITHER
-    r = dither(i^j, i, r);
-    g = dither(i+j, j, g);
-    b = dither(i, j, b); //i+j, i or i, j or j, i
-#endif
-    pix.r = (r >= 256) ? uint8_t(255):uint8_t(r);
-    pix.g = (g >= 256) ? uint8_t(255):uint8_t(g);
-    pix.b = (b >= 256) ? uint8_t(255):uint8_t(b);
-#else
-    pix = pix_in;
-    color_type c = render_pixel_internal(x, y, scene, scene_colors(scene, channel));
-    uint9_t c9 = fixed_asshort(c, 8);
-    uint8_t c8 = (uint8_t) ((c9 & ~0xFF) ? (uint8_t)0xFF:(uint8_t)c9);
-    if(channel == 0)
-      pix.r = c8;
-    else if(channel == 1)
-      pix.g = c8;
-    else
-      pix.b = c8;
-#endif
-  }
-
-#ifdef _DEBUG
-  perf_render_dump();
-#endif
-  return pix;
-}
-#endif
 
 full_state_t reset_state(uint16_t score)
 {
     full_state_t state;
-    
     material_t gold;
     gold.diffuse_color = K_gold_color;
     gold.reflect_color = K_gold_reflect_color;
@@ -895,17 +821,17 @@ full_state_t reset_state(uint16_t score)
     state.scene.scorebar = 0;
     state.scene.fog = K_fog_color;
 
-    state.plane_y    = (coord_type) state.scene.plane.center.y;
-    state.sphere_x   = (coord_type) state.scene.sphere.center.x;
-    state.sphere_z   = (coord_type) state.scene.sphere.center.z;
+    state.plane_y    = coord_type(state.scene.plane.center.y);
+    state.sphere_x   = coord_type(state.scene.sphere.center.x);
+    state.sphere_z   = coord_type(state.scene.sphere.center.z);
     state.gold_color = gold.diffuse_color;
     state.gold_reflect_color = gold.reflect_color;
     state.lava_color = K_lava_color;
 
-    state.sphere_y = (coord_type) state.scene.sphere.center.y;
+    state.sphere_y = coord_type(state.scene.sphere.center.y);
     state.heat     = state.scene.sphere.heat;
-    state.camera_y = (coord_type) state.scene.camera.y;
-    state.camera_z = (coord_type) state.scene.camera.z;
+    state.camera_y = coord_type(state.scene.camera.y);
+    state.camera_z = coord_type(state.scene.camera.z);
     state.plane_x  = coord_type(FLOOR_X);
     state.sphere_xvel = 0.;
     state.sphere_yvel = 0.;
@@ -974,11 +900,11 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
   state.camera_y = state.camera_y + fixed_shr(state.sphere_y - state.camera_y, 5);
 
 #ifdef HEAT_CONSTANT
-  state.heat = state.heat - (color_type)fixed_shr(state.heat, 4); //cools down
+  state.heat = state.heat - color_type(fixed_shr(state.heat, 4)); //cools down
 #endif
 
   //write all outputs
-  state.lose = fixed_is_negative(underground) && (-int16_t(underground) >> 10); //underground < -2048.
+  state.lose = fixed_is_negative(underground) && ((-int16_t(underground) >> 10) != 0); //underground < -2048.
 
 #ifdef HEAT_CONSTANT // && ALTERNATE_UI > 1
   state.diffuse_color = color_select(state.heat, state.lava_color, state.gold_color);
@@ -1008,7 +934,7 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
   state.scene.plane.center.z = state.plane_x;
   state.scene.sphere.material.diffuse_color = state.diffuse_color;
   state.scene.sphere.material.reflect_color = state.reflect_color;
-  state.scene.sphere.yvel = coord_type(state.sphere_yvel); //FIXME: is the cast needed?
+  state.scene.sphere.yvel = state.sphere_yvel;
   state.scene.scorebar = state.scorebar; //FIXME: move to state update function to make this function wires-only
   state.scene.frame = state.scene.frame + 1;
   
@@ -1017,18 +943,97 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
 
 
 
-#ifdef SHADER
-void main()
-{
-  full_state_t state = reset_state();
-  state.scene.sphere.center.y /= (u_time+1.);
-  state.scene.plane.center.z = state.scene.plane.center.x = -u_time*60.; //TEST MOVEMENT
 
-  state.scene.frame = int(u_time*60.);
-  scene_colors_t colors = scene_colors(state.scene);
-  float x = gl_FragCoord.x/u_resolution.x-.5;
-  float y = (gl_FragCoord.y-u_resolution.y/2.)/u_resolution.x;
-  outColor = vec4(render_pixel_internal(x, y, state.scene, colors), 1.);
+#ifdef SHADER
+scene_t get_scene()
+{
+  full_state_t s = reset_state(0);
+  return s.scene;
 }
 #endif
+
+#ifndef SHADER
+inline pixel_t render_pixel(uint16_t i, uint16_t j
+#ifdef COLOR_DECOMP
+, uint2_t channel, pixel_t pix_in
+#endif
+)
+{
+  IN(scene_t) scene = get_scene();
+#ifdef _DEBUG
+  perf_clear();
+#endif
+
+#ifndef PIPELINEC_SUGAR
+  int16_t cx = (i<<1)-FRAME_WIDTH-1;
+  int16_t cy = -((j<<1)-FRAME_HEIGHT-1);
+#else
+  int16_t cx = i << 1;
+  cx = cx - (FRAME_WIDTH + 1);
+  int16_t cy = j << 1;
+  cy = (FRAME_HEIGHT + 1) - cy;
+#endif
+  const float W = (float)FRAME_WIDTH;
+  const float H = (float)FRAME_HEIGHT;
+  static const screen_coord_t ax = 1024.*(16./9.)/W;
+  static const screen_coord_t ay = 1024./H;
+  screen_coord_t x = fixed_shr(cx, 10+1) * ax;
+  screen_coord_t y = fixed_shr(cy, 10+1) * ay;
+
+  pixel_t pix; //ignores alpha
+
+  static const uint16_t score_factor = 2048*(FRAME_WIDTH-2*SCORE_MARGINS)/MAXSCORE;
+  uint16_t scorebar = score_factor*scene.scorebar >> 11;
+  if(i >= SCORE_MARGINS && i < SCORE_MARGINS + scorebar && j > SCORE_MARGINS && j < 2*SCORE_MARGINS)
+  {
+    pix.r = 0; pix.g = 200; pix.b = 0; //    pix = color(0., 200./255., 0.);
+  }
+  else
+  {
+#ifndef COLOR_DECOMP
+#ifdef ALTERNATE_UI
+	color c = render_pixel_internal_alt(x, y);
+	///*if((i ^ j) & (1<<7))*/ if(cx>0) c = render_pixel_internal(x, y, scene, scene_colors(scene)); //uncomment for checkerboard
+#else
+	color c = render_pixel_internal(x, y);
+#endif
+    uint9_t r = fixed_asshort(c.r, 8);
+    uint9_t g = fixed_asshort(c.g, 8);
+    uint9_t b = fixed_asshort(c.b, 8);
+#ifdef DITHER
+    r = dither(i^j, i, r);
+    g = dither(i+j, j, g);
+    b = dither(i, j, b); //i+j, i or i, j or j, i
+#endif
+    pix.r = (r >= 256) ? uint8_t(255):uint8_t(r);
+    pix.g = (g >= 256) ? uint8_t(255):uint8_t(g);
+    pix.b = (b >= 256) ? uint8_t(255):uint8_t(b);
+#else //not COLOR_DECOMP
+    pix = pix_in;
+    color_type c = render_pixel_internal(x, y, scene, scene_colors(scene, channel));
+    uint9_t c9 = fixed_asshort(c, 8);
+    uint8_t c8 = (uint8_t) ((c9 & ~0xFF) ? (uint8_t)0xFF:(uint8_t)c9);
+    if(channel == 0)
+      pix.r = c8;
+    else if(channel == 1)
+      pix.g = c8;
+    else
+      pix.b = c8;
+#endif //COLOR_DECOMP
+  }
+
+#ifdef _DEBUG
+  perf_render_dump();
+#endif
+  return pix;
+}
+
+#else //SHADER
+
+vec3 frag_render(float t, float x, float y, float mx, float my)
+{
+  return render_pixel_internal((x-.5)*(16./9.)/(4./3.), y-.5);
+}
+
+#endif //SHADER
 

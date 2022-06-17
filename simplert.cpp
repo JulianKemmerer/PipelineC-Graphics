@@ -199,18 +199,25 @@ color_basic_t S(vec3 o,vec3 d){
   return col;
 }
 
-color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y)
+color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y, float t)
 {
   vec3 orig = {10., -20., 10.};
-#ifndef SHADER
-  IN(scene_t) scene = get_scene();
-  float camera_pos = scene.frame;
-  camera_pos = camera_pos*.01 + .1;
-#else
   float camera_pos = 1.;
-#endif
+
+#if 0
   vec3 camera_dir = {float(x), camera_pos, float(y)};
   return S(orig, normalize(camera_dir));
+#else
+ vec3 c = vec3(0.);
+ int i;
+ for(i=0; i</*123*5*/17; ++i)
+ {
+   camera_pos += .01;
+    vec3 camera_dir = {float(x), camera_pos, float(y+float(int(t)&1)*.1)};
+   c += S(orig, normalize(camera_dir));
+ }
+ return c/float(i);
+#endif
 }
 
 #ifndef SHADER
@@ -235,7 +242,9 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j)
 
   pixel_t pix; //ignores alpha
   {
-	color c = render_pixel_internal(x, y);
+    IN(scene_t) scene = get_scene();
+    float t = scene.frame;
+    color c = render_pixel_internal(x, y, t);
     uint9_t r = fixed_asshort(c.r, 8);
     uint9_t g = fixed_asshort(c.g, 8);
     uint9_t b = fixed_asshort(c.b, 8);
@@ -266,7 +275,7 @@ vec3 frag_render(float t, float x, float y, float mx, float my)
   vec3 color = vec3(a, my, fract(t));
   return color;
 #else
- return render_pixel_internal(x-.5, y-.5);
+ return render_pixel_internal(x-.5, y-.5, t);
 #endif
 }
 #endif //SHADER

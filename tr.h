@@ -74,7 +74,7 @@
 #define EPS 1.e-3
 
 #define PIPELINEC_SUGAR
-#warning PIPELINEC_SUGAR shouldn't be a need
+//#warning PIPELINEC_SUGAR shouldn't be a need
 
 struct material_t {
     color diffuse_color;
@@ -100,7 +100,7 @@ struct sphere_t {
     object_coord_t center;
     material_t material;
     color_type heat;
-    object_coord_t yvel;
+    coord_type yvel;
 };
 
 struct plane_t {
