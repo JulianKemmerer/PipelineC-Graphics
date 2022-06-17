@@ -319,7 +319,6 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(point_and_dir) hitin)
 color_basic_t sphere_effect(IN(hit_out) hit, IN(material_t) hit_material)
 {
   color_basic_t rcolor = hit_material.diffuse_color;
-#ifndef SHADER
 #ifdef BLINKY
   IN(scene_t) scene = get_scene();
   IN(scene_colors_t) colors = scene_colors(scene);
@@ -327,7 +326,7 @@ color_basic_t sphere_effect(IN(hit_out) hit, IN(material_t) hit_material)
   uint16_t frame = scene.frame;
 
   uint8_t tick  = frame>>1;
-  if((tick & 0x3F) != 0 || ((hash16(tick)>>13) & 1) != 0)
+  if((tick & 0x3F) != 1 || ((hash16(tick)>>13) & 1) != 0)
   {
     //eyeballs
     float dy = (hit.hit.dir.y-float_shift(float(s.center.y),-6)*1.5); //FIXME: optimize constants 1.5, 1.25
@@ -338,7 +337,6 @@ color_basic_t sphere_effect(IN(hit_out) hit, IN(material_t) hit_material)
       rcolor = d < .15*.15 ? color_basic_t(0.) : color_basic_t(1.2);
 
   }
-#endif
 #endif
   return rcolor;
 }
