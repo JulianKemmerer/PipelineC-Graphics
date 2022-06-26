@@ -9,7 +9,6 @@
 
 // Common PipelineC includes
 #include "compiler.h"
-#include "wire.h"
 #include "uintN_t.h"
 #include "intN_t.h"
 #include "float_e_m_t_helper.h" // Variable mantissa sizes
@@ -23,8 +22,8 @@
 #pragma FUNC_WIRES reset_state 
 #pragma FUNC_WIRES reset_state0
 
-// Access to board buttons (TODO: not actually Arty specific)
-#include "../PipelineC/examples/arty/src/buttons/buttons.c"
+// Access to board buttons
+#include "buttons/buttons.c"
 
 // Litex provides its own external VGA timing
 // and uses generic external VGA output
@@ -58,10 +57,8 @@ inline user_input_t get_user_input()
   // For now only exists in hardware
   #ifdef __PIPELINEC__
   // Read buttons wire/board IO port
-  uint4_t btns;
-  WIRE_READ(uint4_t, btns, buttons) // btns = buttons
-  //uint4_t sws;
-  //WIRE_READ(uint4_t, sws, switches)
+  uint4_t btns = buttons;
+  //uint4_t sws = switches;
   // Select which buttons and switches do what?
   i.jump_pressed = btns >> 0;
   i.reset_pressed = btns >> 3;
@@ -76,8 +73,6 @@ inline user_input_t get_user_input()
 // Define the user created frame clock
 #define FRAME_CLK_MHZ 6e-5 // 60Hz
 uint1_t frame_clock;
-#include "clock_crossing/frame_clock.h"
-#pragma ASYNC_WIRE frame_clock
 CLK_MHZ(frame_clock, FRAME_CLK_MHZ)
 
 // Helper func to drive frame clock from isolated static frame_clock_reg
@@ -87,7 +82,7 @@ void frame_clock_logic(uint16_t x, uint16_t y, bool active)
   // Need to make ~50% duty cycle frame clock
   static uint1_t frame_clock_reg;
   // Drive clock from register
-  WIRE_WRITE(uint1_t, frame_clock, frame_clock_reg)
+  frame_clock = frame_clock_reg;
 
   // Falling edge mid frame (does not update state)
   if( active & 
@@ -113,7 +108,7 @@ void frame_logic()
   static uint1_t power_on_reset = 1;
 
   // Drive scene from register
-  WIRE_WRITE(full_state_t, state_wire, state)
+  state_wire = state;
 
   // Read user input
   user_input_t ui = get_user_input();
@@ -126,14 +121,12 @@ void frame_logic()
 // Make pixel clock look like its user generated internally
 // so that, regardless of frequency, the name is always the same
 uint1_t pixel_clock;
-#include "clock_crossing/pixel_clock.h"
-#pragma ASYNC_WIRE pixel_clock
 CLK_MHZ(pixel_clock, PIXEL_CLK_MHZ)
 // Connect constant name top level port to internal pixel_clock
 MAIN_MHZ(pixel, PIXEL_CLK_MHZ) 
 void pixel(uint1_t clock) // top level port is "pixel_clock"
 {
-  WIRE_WRITE(uint1_t, pixel_clock, clock)
+  pixel_clock = clock;
 }
 
 // Logic running on pixel clock, mostly render_pixel pipeline

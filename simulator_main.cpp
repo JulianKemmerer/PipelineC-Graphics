@@ -52,9 +52,6 @@ const scene_t& get_scene();
 static full_state_t state;
 const scene_t& get_scene() { return state.scene; }
 
-
-#define WIRE_WRITE(a,b,c) memcpy((a*)&c, &b, sizeof(c));
-
 #define FRAME_PITCH 4096
 //struct pixel_t { uint8_t a, b, g, r; };
 pixel_t pixelbuf[FRAME_PITCH*FRAME_PITCH];

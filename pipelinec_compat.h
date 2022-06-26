@@ -22,7 +22,6 @@ typedef int32_t int20_t, int21_t, int22_t, int26_t;
 typedef int16_t int9_t;
 typedef int8_t int6_t;
 
-//#define WIRE_READ(t, lhs, rhs) lhs=rhs
 #define MAIN_MHZ
 
 #endif
