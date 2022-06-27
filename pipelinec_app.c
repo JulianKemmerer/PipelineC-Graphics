@@ -41,10 +41,6 @@
 #include "fixed_type.h"
 #include "tr_pipelinec.gen.c"
 
-/* Add to tr_pipelinec.gen.c after generating code
-// Scene helper func declared before use in funcs below but after the scene_t struct definition
-#include "get_scene.h" */
-
 // User input
 typedef struct user_input_t
 {
@@ -101,14 +97,12 @@ void frame_clock_logic(uint16_t x, uint16_t y, bool active)
 }
 
 // Per frame next state comb. logic runnning on frame clock
+full_state_t state; // The state register, shared global register
+#pragma ASYNC_WIRE state // Async to pixel clock domain where read
 MAIN_MHZ(frame_logic, FRAME_CLK_MHZ)
 void frame_logic()
 {
-  static full_state_t state; // The state registers
   static uint1_t power_on_reset = 1;
-
-  // Drive scene from register
-  state_wire = state;
 
   // Read user input
   user_input_t ui = get_user_input();

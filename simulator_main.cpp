@@ -34,10 +34,6 @@ There's no game nor render logic in this source, all that is defined by the HDL 
 int FRAME_WIDTH = _FRAME_WIDTH;
 int FRAME_HEIGHT = _FRAME_HEIGHT;
 
-struct scene_t;
-const scene_t& get_scene();
-
-
 #include "pipelinec_compat.h"
 #include "float_type.h"
 
@@ -48,9 +44,6 @@ const scene_t& get_scene();
 #include "tr_pipelinec.gen.c" //generated source
 #endif
 #undef float //just in case
-
-static full_state_t state;
-const scene_t& get_scene() { return state.scene; }
 
 #define FRAME_PITCH 4096
 //struct pixel_t { uint8_t a, b, g, r; };

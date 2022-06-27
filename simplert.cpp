@@ -242,7 +242,7 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j)
 
   pixel_t pix; //ignores alpha
   {
-    IN(scene_t) scene = get_scene();
+    IN(scene_t) scene = state.scene;
     float t = scene.frame;
     color c = render_pixel_internal(x, y, t);
     uint9_t r = fixed_asshort(c.r, 8);

@@ -4,9 +4,6 @@ struct scene_t { uint16_t frame; };
 struct full_state_t { scene_t scene; };
 
 #define INLINE inline
-#ifdef __PIPELINEC__
-#include "get_scene.h"
-#endif
 
 #define PIPELINEC_SUGAR
 #define FABS(x) float_abs(x)//uint_to_float(float_to_uint(x) & FP_ABS_MASK)
@@ -314,7 +311,7 @@ full_state_t full_update(full_state_t state, bool reset, bool button_state)
 
 pixel_t render_pixel(uint16_t x, uint16_t y)
 {
-  scene_t scene = get_scene();
+  scene_t scene = state.scene;
   animation_pos_t animation_pos = animation(scene.frame);
   color_t c = traceray(x, y, scene.frame, animation_pos.camera, animation_pos.plane, animation_pos.sphere);
   pixel_t p;

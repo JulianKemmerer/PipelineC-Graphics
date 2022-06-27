@@ -32,7 +32,6 @@ run: tr_sim
 tr_pipelinec.gen.c: $(RTCODE) tr_pipelinec.cpp
 	clang -DPARSING -E -DRTCODE=\"$(RTCODE)\" tr_pipelinec.cpp > tr_pipelinec.E.cpp
 	$(CFLEX_C) tr_pipelinec.E.cpp > tr_pipelinec.gen.c
-	patch -p1 tr_pipelinec.gen.c < get_scene.patch
 
 metrics.c: tr_pipelinec.gen.c
 	clang -E -include float_type.h -include fixed_type.h tr_pipelinec.gen.c > metrics.c
@@ -42,7 +41,7 @@ gen: tr_gen
 	./tr_gen
 
 tr_gen: tr_pipelinec.gen.c simulator_main.cpp
-	clang $(INCLUDE) -x c++ -Dget_scene=scene_t -DCCOMPILE -DFRAME_WIDTH=$(FRAME_WIDTH) -DFRAME_HEIGHT=$(FRAME_HEIGHT) -include pipelinec_compat.h -include float_type.h -include fixed_type.h -c tr_pipelinec.gen.c -o tr_pipelinec.gen.o
+	clang $(INCLUDE) -x c++ -DCCOMPILE -DFRAME_WIDTH=$(FRAME_WIDTH) -DFRAME_HEIGHT=$(FRAME_HEIGHT) -include pipelinec_compat.h -include float_type.h -include fixed_type.h -c tr_pipelinec.gen.c -o tr_pipelinec.gen.o
 	$(CLANGXX) -DCCOMPILE -D_FRAME_WIDTH=$(FRAME_WIDTH) -D_FRAME_HEIGHT=$(FRAME_HEIGHT) $(INCLUDE) -O3 $(OMP_FLAGS) -ffast-math `sdl2-config --cflags --libs` simulator_main.cpp -o tr_gen
 
 ./build/top/top.v: $(PIPELINEC_MAIN) pipelinec_app.c tr_pipelinec.gen.c
