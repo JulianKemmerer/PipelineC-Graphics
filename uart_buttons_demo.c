@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 
   // Open output file
   FILE * fp = fopen(file_name, "wb");
-  if(fp==NULL)
+  if(fp == NULL)
   {
     printf("Open error!");
     exit(-1);
@@ -31,11 +31,10 @@ int main(int argc, char **argv)
   while(frame < n_frames)
   {
     // Read 1 byte
-    size_t n_bytes = uart_read(&the_byte, 1); 
-    if(n_bytes!=1) continue;
+    uart_read(&the_byte, 1);
     // Write 1 byte
-    n_bytes = fwrite(&the_byte, 1, 1, fp);
-    if(n_bytes!=1)
+    size_t n_bytes = fwrite(&the_byte, 1, 1, fp);
+    if(n_bytes != 1)
     {
       printf("Write error!");
       exit(-1);
