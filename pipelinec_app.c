@@ -47,7 +47,6 @@ uint1_t frame_clock;
 CLK_MHZ(frame_clock, FRAME_CLK_MHZ)
 uint1_t frame_clock_rising_edge;
 uint1_t frame_clock_falling_edge;
-
 // Helper func to drive frame clock from isolated static frame_clock_reg
 // Running on pixel clock, maybe include inside vga_timing?
 void frame_clock_logic(uint16_t x, uint16_t y, bool active)
@@ -77,7 +76,7 @@ void frame_clock_logic(uint16_t x, uint16_t y, bool active)
   }
 }
 
-// UART module that augments buttons behavior
+// UART modules that augment buttons behavior
 // Run uart at pixel clock to avoid multiple clocks
 #define UART_CLK_MHZ PIXEL_CLK_MHZ
 #include "uart/uart_mac.c"
@@ -87,12 +86,14 @@ uint4_t uart_buttons;
 MAIN_MHZ(uart_buttons_rx, UART_CLK_MHZ)
 void uart_buttons_rx()
 {
+  static uint4_t uart_buttons_reg;
+  uart_buttons = uart_buttons_reg;
   // Always ready for incoming uart bytes
   uart_rx_mac_out_ready = 1;
   // Overwrite buffer as they arrive
   if(uart_rx_mac_word_out.valid)
   {
-    uart_buttons = uart_rx_mac_word_out.data;
+    uart_buttons_reg = uart_rx_mac_word_out.data;
   }
 }
 // Capture stable button value in time for frame clock rising edge
@@ -103,10 +104,12 @@ uint4_t buttons_or_uart;
 MAIN_MHZ(uart_buttons_tx, UART_CLK_MHZ)
 void uart_buttons_tx()
 {
+  static uint4_t buttons_or_uart_reg;
+  buttons_or_uart = buttons_or_uart_reg;
   // Upon rising edge of frame clock, 
   // transmit the buttons_or_uart state that was stable and used by full_update
   uart_tx_mac_word_in.valid = frame_clock_rising_edge;
-  uart_tx_mac_word_in.data = buttons_or_uart;
+  uart_tx_mac_word_in.data = buttons_or_uart_reg;
   // TODO if !uart_tx_mac_in_ready then overflow/error
   
   // Upon falling edge of frame clock sample the button state
@@ -115,7 +118,7 @@ void uart_buttons_tx()
   {
     // OR of current buttons or current and uart state
     // is what game logic samples for use
-    buttons_or_uart = buttons | uart_buttons;
+    buttons_or_uart_reg = buttons | uart_buttons;
   }  
 }
 
@@ -141,20 +144,21 @@ inline user_input_t get_user_input()
   return i;
 }
 
-
 // Per frame next state comb. logic runnning on frame clock
-full_state_t state; // The state register, shared global register
+full_state_t state; // The state wire, shared global wire
 #pragma ASYNC_WIRE state // Async to pixel clock domain where read
 MAIN_MHZ(frame_logic, FRAME_CLK_MHZ)
 void frame_logic()
 {
   static uint1_t power_on_reset = 1;
+  static full_state_t state_reg; // The state register
+  state = state_reg; // Drives state wire directly
 
   // Read user input
   user_input_t ui = get_user_input();
 
   // Normal next state update
-  state = full_update(state, ui.reset_pressed | power_on_reset, ui.jump_pressed);
+  state_reg = full_update(state_reg, ui.reset_pressed | power_on_reset, ui.jump_pressed);
   power_on_reset = 0;
 }
 
