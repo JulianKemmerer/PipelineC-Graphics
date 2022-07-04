@@ -8,7 +8,7 @@
 int main(int argc, char **argv) 
 {
   // Settings
-  int n_sec = 10;
+  int n_sec = 20;
   int n_frames = n_sec * 60;
   char file_name[] = "buttons-recorded.bin";
 
