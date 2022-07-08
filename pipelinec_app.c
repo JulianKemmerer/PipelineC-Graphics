@@ -39,6 +39,7 @@
 // Include the code for ray tracer
 #include "pipelinec_compat.h"
 #include "fixed_type.h"
+#define get_scene() state.scene
 #include "tr_pipelinec.gen.c"
 
 // Define the user created frame clock

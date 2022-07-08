@@ -21,13 +21,14 @@ HOW TO PLAY:
 #include "tr.h"
 
 typedef coord_type hole_t; //TODO: move
+#define get_scene() state.scene
 
 
 #define BLINKY
 #define SCORE_STEP 1
 
 
-static full_state_t state;
+full_state_t state;
 
 hole_t plane_has_hole(hole_t x, hole_t z)
 {
@@ -153,7 +154,7 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(point_and_dir) hitin)
 color_basic_t sphere_effect(IN(hit_out) hit, IN(material_t) hit_material)
 {
   color_basic_t rcolor = hit_material.diffuse_color;
-  IN(scene_t) scene = state.scene;
+  IN(scene_t) scene = get_scene();
   IN(scene_colors_t) colors = scene_colors(scene);
   IN(sphere_t) s = scene.sphere;
   uint16_t frame = scene.frame;
@@ -177,7 +178,7 @@ color_basic_t sphere_effect(IN(hit_out) hit, IN(material_t) hit_material)
 
 color_basic_t plane_effect(IN(hit_out) hit)
 {
-  IN(scene_t) scene = state.scene;
+  IN(scene_t) scene = get_scene();
   IN(scene_colors_t) colors = scene_colors(scene);
   IN(plane_t) plane = scene.plane; 
 
@@ -222,7 +223,7 @@ color_type light_intensity(IN(vec3) hit)
 
 color_basic_t cast_ray_nested(IN(point_and_dir) hitin)
 {
-  IN(scene_t) scene = state.scene;
+  IN(scene_t) scene = get_scene();
   IN(scene_colors_t) colors = scene_colors(scene);
 
   material_t hit_material;
@@ -251,7 +252,7 @@ color_basic_t cast_ray_nested(IN(point_and_dir) hitin)
 
 color_basic_t shade(IN(color_basic_t) background, IN(vec3) dir, IN(hit_out) hit, IN(material_t) hit_material, color_type minfog)
 {
-  IN(scene_t) scene = state.scene;
+  IN(scene_t) scene = get_scene();
   IN(scene_colors_t) colors = scene_colors(scene);
   color_basic_t rcolor = background;
 
@@ -278,7 +279,7 @@ bool is_star(float x, float y)
 
 color_basic_t cast_ray(IN(point_and_dir) hitin)
 {
-  IN(scene_t) scene = state.scene;
+  IN(scene_t) scene = get_scene();
   IN(scene_colors_t) colors = scene_colors(scene);
   
   float ys = float_abs(float_shift(hitin.dir.y, 1));
@@ -311,7 +312,7 @@ color_basic_t cast_ray(IN(point_and_dir) hitin)
 
 color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y)
 {
-  IN(scene_t) scene = state.scene;
+  IN(scene_t) scene = get_scene();
   IN(scene_colors_t) colors = scene_colors(scene);
 
   point_and_dir hitin;
@@ -452,7 +453,7 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
 inline pixel_t render_pixel(uint16_t i, uint16_t j
 )
 {
-  IN(scene_t) scene = state.scene;
+  IN(scene_t) scene = get_scene();
 
   int16_t cx = i << 1;
   cx = cx - (FRAME_WIDTH + 1);

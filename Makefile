@@ -20,7 +20,7 @@ all: run
 
 sim: run
 
-tr.cpp:
+tr.cpp: tr_base.cpp tr.h
 	unifdefall tr_base.cpp  > tr.cpp || true
 
 tr_sim: $(RTCODE) simulator_main.cpp tr_pipelinec.cpp
@@ -41,7 +41,7 @@ gen: tr_gen
 	./tr_gen
 
 tr_gen: tr_pipelinec.gen.c simulator_main.cpp
-	clang $(INCLUDE) -x c++ -DCCOMPILE -DFRAME_WIDTH=$(FRAME_WIDTH) -DFRAME_HEIGHT=$(FRAME_HEIGHT) -include pipelinec_compat.h -include float_type.h -include fixed_type.h -c tr_pipelinec.gen.c -o tr_pipelinec.gen.o
+	clang $(INCLUDE) -x c++ -Dget_scene=scene_t -DCCOMPILE -DFRAME_WIDTH=$(FRAME_WIDTH) -DFRAME_HEIGHT=$(FRAME_HEIGHT) -include pipelinec_compat.h -include float_type.h -include fixed_type.h -c tr_pipelinec.gen.c -o tr_pipelinec.gen.o
 	$(CLANGXX) -DCCOMPILE -D_FRAME_WIDTH=$(FRAME_WIDTH) -D_FRAME_HEIGHT=$(FRAME_HEIGHT) $(INCLUDE) -O3 $(OMP_FLAGS) -ffast-math `sdl2-config --cflags --libs` simulator_main.cpp -o tr_gen
 
 ./build/top/top.v: $(PIPELINEC_MAIN) pipelinec_app.c tr_pipelinec.gen.c
@@ -133,7 +133,7 @@ vhd: ./vhd/all_vhdl_files/top.vhd
 	
 
 clean:
-	rm -Rf *.o tr_sim tr_gen vhd build cxxrtl_build obj_dir synth fullsynth tr_pipelinec.gen.c tr_pipelinec.E.cpp
+	rm -Rf tr.cpp tr_pipelinec.gen.c *.o tr_sim tr_gen vhd build cxxrtl_build obj_dir synth fullsynth tr_pipelinec.gen.c tr_pipelinec.E.cpp
 
 
 pipelinec-synth: #synth and load with pipelinec (NOTE: fixed 1080p PLLs)

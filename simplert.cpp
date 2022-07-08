@@ -4,6 +4,7 @@
 
 #ifndef SHADER
 #include "tr.h"
+full_state_t state;
 #else
 #define int16_t int
 #define BIG_FLOAT 1.e23
@@ -264,7 +265,7 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
   return state;
 }
 
-#else //not shader
+#else //shader
 vec3 frag_render(float t, float x, float y, float mx, float my)
 {
 #if 0
@@ -278,6 +279,13 @@ vec3 frag_render(float t, float x, float y, float mx, float my)
  return render_pixel_internal(x-.5, y-.5, t);
 #endif
 }
+
+out vec4 outColor;
+void main() {
+  vec3 c = frag_render(u_time, gl_FragCoord.x/u_resolution.x, gl_FragCoord.y/u_resolution.y, u_mouse.x/u_resolution.x, u_mouse.y/u_resolution.y);
+  outColor = vec4(c, 1.0);
+}
+
 #endif //SHADER
 
 

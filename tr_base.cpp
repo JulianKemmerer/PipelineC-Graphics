@@ -22,7 +22,9 @@ HOW TO PLAY:
 
 #ifndef SHADER
 typedef coord_type hole_t; //TODO: move
+#define get_scene() state.scene
 #else
+scene_t get_scene();
 #define hole_t coord_type //TODO: move
 #endif
 
@@ -47,7 +49,7 @@ typedef coord_type hole_t; //TODO: move
 #define GOD_MODE
 #endif
 
-static full_state_t state;
+full_state_t state;
 
 hole_t plane_has_hole(hole_t x, hole_t z)
 {
@@ -312,7 +314,7 @@ color_basic_t sphere_effect(IN(hit_out) hit, IN(material_t) hit_material)
 {
   color_basic_t rcolor = hit_material.diffuse_color;
 #ifdef BLINKY
-  IN(scene_t) scene = state.scene;
+  IN(scene_t) scene = get_scene();
   IN(scene_colors_t) colors = scene_colors(scene);
   IN(sphere_t) s = scene.sphere;
   uint16_t frame = scene.frame;
@@ -375,7 +377,7 @@ color_type sphere_shadow(float x, float y, float z)
 
 color_basic_t plane_effect(IN(hit_out) hit)
 {
-  IN(scene_t) scene = state.scene;
+  IN(scene_t) scene = get_scene();
   IN(scene_colors_t) colors = scene_colors(scene);
   IN(plane_t) plane = scene.plane; 
 
@@ -468,7 +470,7 @@ color_type light_intensity(IN(vec3) hit)
 
 color_basic_t cast_ray_nested(IN(point_and_dir) hitin)
 {
-  IN(scene_t) scene = state.scene;
+  IN(scene_t) scene = get_scene();
   IN(scene_colors_t) colors = scene_colors(scene);
 
 #ifdef RT_SMALL_UI
@@ -509,7 +511,7 @@ color_basic_t cast_ray_nested(IN(point_and_dir) hitin)
 
 color_basic_t shade(IN(color_basic_t) background, IN(vec3) dir, IN(hit_out) hit, IN(material_t) hit_material, color_type minfog)
 {
-  IN(scene_t) scene = state.scene;
+  IN(scene_t) scene = get_scene();
   IN(scene_colors_t) colors = scene_colors(scene);
   color_basic_t rcolor = background;
 
@@ -545,7 +547,7 @@ bool is_star(float x, float y)
 
 color_basic_t cast_ray(IN(point_and_dir) hitin)
 {
-  IN(scene_t) scene = state.scene;
+  IN(scene_t) scene = get_scene();
   IN(scene_colors_t) colors = scene_colors(scene);
   
   float ys = float_abs(float_shift(hitin.dir.y, 1));
@@ -639,7 +641,7 @@ void perf_gameplay_dump();
 
 color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y)
 {
-  IN(scene_t) scene = state.scene;
+  IN(scene_t) scene = get_scene();
   IN(scene_colors_t) colors = scene_colors(scene);
 
   point_and_dir hitin;
@@ -726,7 +728,7 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
 
 color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y)
 {
-  IN(scene_t) scene = state.scene;
+  IN(scene_t) scene = get_scene();
   IN(scene_colors_t) colors = scene_colors(scene);
 
     coord_type dz = coord_type(scene.camera.z-SPHERE_Z);
@@ -938,7 +940,7 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
 #endif
 )
 {
-  IN(scene_t) scene = state.scene;
+  IN(scene_t) scene = get_scene();
 #ifdef _DEBUG
   perf_clear();
 #endif
@@ -1007,5 +1009,15 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
   return pix;
 }
 
+#else
+scene_t get_scene()
+{
+  full_state_t s = reset_state(0);
+  //simulate frame advances
+  int maxt = int(u_time*60);
+  for(int i=0; i < maxt % 300; ++i)
+    s = full_update(s, false, false);
+  return s.scene;
+}
 #endif //SHADER
 

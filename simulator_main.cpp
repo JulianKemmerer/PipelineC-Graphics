@@ -34,6 +34,7 @@ There's no game nor render logic in this source, all that is defined by the HDL 
 int FRAME_WIDTH = _FRAME_WIDTH;
 int FRAME_HEIGHT = _FRAME_HEIGHT;
 
+
 #include "pipelinec_compat.h"
 #include "float_type.h"
 
@@ -173,14 +174,29 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j, IN(Scene) scene)
 */
 
 
-#ifdef MOTION_BLUR
 #include <unistd.h>
-#endif
+#include <fcntl.h>
+#include <sys/ioctl.h>
 
 int main()
 {
     if(!fb_init(FRAME_WIDTH, FRAME_HEIGHT))
         return 1;
+        
+    int outfd = -1;
+    {
+      int nbytes = 0;
+      if(ioctl(0, FIONREAD, &nbytes) == 0 && nbytes == 0)
+      {
+        printf("creating output file\n");
+        outfd = open("buttons-out.bin", O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH);
+        if(outfd < 0)
+        {
+            perror("cannot open output file");
+            return 1;
+        }
+      }
+    }
 
 #ifndef GATEWARE_VGA
     state = full_update(state, true, false); //reset state
@@ -252,7 +268,14 @@ int main()
       }
 
 #ifndef GATEWARE_VGA
-      state = full_update(state, false, buttons_pressed() & 1);
+      uint8_t buttons = 0;
+      int nbytes;
+      if(ioctl(0, FIONREAD, &nbytes) == 0 && nbytes > 0)
+		read(0, &buttons, sizeof(buttons));
+
+      buttons |= buttons_pressed();
+      write(outfd, &buttons, sizeof(buttons));
+      state = full_update(state, false, buttons & 1);
 #endif
 
       fb_update();
@@ -260,9 +283,11 @@ int main()
       fb_save_texture(frame);
 #endif
       ++frame;
-      
+     
+#ifdef POWER_BENCH
       if(power_enabled && frame >= FRAME_FPS*30)
         break;
+#endif
 
       if((frame % int(FRAME_FPS)) == 0)
         dump_stats();
@@ -273,6 +298,7 @@ int main()
     }
     dump_stats();
 
+    close(outfd);
     fb_deinit();
     return 0;
 }
@@ -441,6 +467,7 @@ bool fb_init(unsigned width, unsigned height)
       SDL_SetWindowFullscreen(win, SDL_WINDOW_FULLSCREEN);
 
     SDL_ShowCursor(SDL_DISABLE);
+    fullscreen = true;
     renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE | (fullscreen ? SDL_RENDERER_PRESENTVSYNC: 0));
     if (!renderer)
       return false;
