@@ -477,9 +477,9 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
   else
   {
 	color c = render_pixel_internal(x, y);
-    uint9_t r = fixed_asshort(c.r, 8);
-    uint9_t g = fixed_asshort(c.g, 8);
-    uint9_t b = fixed_asshort(c.b, 8);
+    uint16_t r = (uint16_t)fixed_asshort(c.r, 8);
+    uint16_t g = (uint16_t)fixed_asshort(c.g, 8);
+    uint16_t b = (uint16_t)fixed_asshort(c.b, 8);
     pix.r = (r >= 256) ? uint8_t(255):uint8_t(r);
     pix.g = (g >= 256) ? uint8_t(255):uint8_t(g);
     pix.b = (b >= 256) ? uint8_t(255):uint8_t(b);

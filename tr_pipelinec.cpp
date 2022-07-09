@@ -22,7 +22,11 @@ typedef float_type screen_coord_t;
 typedef float_type color_type;
 typedef float3 color;
 #define fixed_is_negative(x) ((x)<fixed_type(0))
-#define fixed_convert(t, x, shift) float_shift(x, shift)
+#define fixed_convert(t, x, shift) (t)float_shift(x, shift)
+
+#define fixed_asinteger(x, s) fixed_convert(int, x, s)
+#define fixed_asshort(x, s) fixed_convert(short, x, s)
+
 #else
 //color in fixed types (slower)
 #include "fixed_type.h"
@@ -99,9 +103,6 @@ inline float_type dot(vec3 a, vec3 b) { return a.x*b.x+a.y*b.y+a.z*b.z; }
 
 inline vec3 reflect(vec3 I, vec3 N) { return I - N*float_shift(dot(I,N),1); }
 inline vec3 normalize(vec3 v) { return v*inversesqrt(dot(v, v)); }
-
-#define fixed_asinteger(x, s) (int)fixed_shl((x), (s))
-#define fixed_asshort(x, s) (short)fixed_shl((x), (s))
 
 //template<class F, class T> T float_select(const F& x, const T& a, const T& b) { return b+(a-b)*x; }
 inline vec3 float_select(float_type x, vec3 a, vec3 b) { return b+(a-b)*x; }

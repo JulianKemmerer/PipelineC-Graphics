@@ -123,6 +123,8 @@ inline fixed fixed_abs(fixed x) { return fixed_is_negative(x) ? fixed(0)-x : x; 
 inline fixed fixed_min(fixed a, fixed b) { return a<b?a:b; }
 inline fixed fixed_max(fixed a, fixed b) { return a>b?a:b; }
 
+#define fixed_asinteger(x, s) (int)((x.f) >> (FIXED_FRACTIONBITS-(s)))
+#define fixed_asshort(x, s) (short)((x.f) >> (FIXED_FRACTIONBITS-(s)))
 
 #else //CCOMPILE = true
 
@@ -244,6 +246,8 @@ inline fixed fixed_div(fixed a, fixed b) { fixed r = { (a.f<<FIXED_FRACTIONBITS)
 
 #endif
 
+
 #endif //CCOMPILE
+
 
 #endif //__FIXED_TYPE__

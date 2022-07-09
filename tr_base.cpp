@@ -978,9 +978,9 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
 #else
 	color c = render_pixel_internal(x, y);
 #endif
-    uint9_t r = fixed_asshort(c.r, 8);
-    uint9_t g = fixed_asshort(c.g, 8);
-    uint9_t b = fixed_asshort(c.b, 8);
+    uint16_t r = (uint16_t)fixed_asshort(c.r, 8);
+    uint16_t g = (uint16_t)fixed_asshort(c.g, 8);
+    uint16_t b = (uint16_t)fixed_asshort(c.b, 8);
 #ifdef DITHER
     r = dither(i^j, i, r);
     g = dither(i+j, j, g);
@@ -992,7 +992,7 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
 #else //not COLOR_DECOMP
     pix = pix_in;
     color_type c = render_pixel_internal(x, y, scene, scene_colors(scene, channel));
-    uint9_t c9 = fixed_asshort(c, 8);
+    uint16_t c9 = (uint16_t)fixed_asshort(c, 8);
     uint8_t c8 = (uint8_t) ((c9 & ~0xFF) ? (uint8_t)0xFF:(uint8_t)c9);
     if(channel == 0)
       pix.r = c8;
