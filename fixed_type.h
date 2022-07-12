@@ -5,12 +5,14 @@
 
 #define FIXED_FRACTIONBITS 10
 #ifdef LEVELS
-#define FIXED_TOTALBITS 26 //uncommed for more precise simulation
-#define fixed_basetype int26_t
+#define FIXED_INTBITS 16
+typedef int26_t fixed_basetype;
 #else
-#define FIXED_TOTALBITS 22 //uncommed for more precise simulation
-#define fixed_basetype int22_t
+#define FIXED_INTBITS 12
+typedef int22_t fixed_basetype;
 #endif
+
+#define FIXED_TOTALBITS (FIXED_INTBITS+FIXED_FRACTIONBITS)
 
 #ifndef __PIPELINEC__
 #warning: precision of fixed should be correctly defined
@@ -28,9 +30,10 @@
 //inline fixed_basetype fixed_div_impl(fixed_basetype a, fixed_basetype b, unsigned Q);
 
 
-template<unsigned Q/*, unsigned INT=32-Q-1, class U=int*/>
+template<unsigned Q, unsigned INTBITS>
 class fixed_t
 {
+    typedef fixed_basetype base_type;
 #ifdef FIXED_EMULATE_WITH_FLOAT
     float f;
 public:
@@ -46,10 +49,10 @@ public:
 
 #ifndef FIXED_TOTALBITS//def NO_BIT_EXACT
   //U f;
-  fixed_basetype f;
+  base_type f;
 #else
   //U f:Q+INT+1; //+1 for sign
-  fixed_basetype f:FIXED_TOTALBITS;
+  base_type f:FIXED_TOTALBITS;
 #endif
 
 public:
@@ -82,7 +85,7 @@ public:
 #endif //FIXED_EMULATE_WITH_FLOAT
 };
 
-typedef fixed_t<FIXED_FRACTIONBITS> fixed; //main fixed type name
+typedef fixed_t<FIXED_FRACTIONBITS, FIXED_INTBITS> fixed; //main fixed type name
 
 class fixed3
 {
