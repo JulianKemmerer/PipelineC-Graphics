@@ -12,7 +12,7 @@
 
 #if !defined(PARSING) && !defined(__PIPELINEC__) && defined(CCOMPILE)
 #define CUSTOM_FLOAT_MANTISSA 14 //uncomment to use less precision floats
-#define CUSTOM_FLOAT_EXP 8 //min viable 5
+#define CUSTOM_FLOAT_EXP 8 //min viable 6, but 8 provides faster simulation
 #endif
 #ifdef CUSTOM_FLOAT_MANTISSA
 
@@ -22,8 +22,8 @@ template <unsigned T> float float_exp_adjust(uint32_t a)
  fp_tlayout normal;
  normal.i = a;
  int exp = normal.exp - BIAS;
- if(exp > (1<<T)-1) { exp = (1<<T)-1; normal.mantissa = -1; }
- if(exp < -(1<<T)) { exp = -(1<<T); normal.mantissa = 0; }
+ if(exp > (1<<T)/2-1) { exp = (1<<T)/2-1; normal.mantissa = -1; }
+ if(exp < -(1<<T)/2) { exp = -(1<<T)/2; normal.mantissa = 0; }
  normal.exp = exp + BIAS;
  return normal.f;
 }
