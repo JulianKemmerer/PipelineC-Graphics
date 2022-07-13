@@ -6,10 +6,10 @@
 #define FIXED_FRACTIONBITS 10
 #ifdef LEVELS
 #define FIXED_INTBITS 16
-typedef int26_t fixed_basetype;
+#define fixed_basetype int26_t
 #else
 #define FIXED_INTBITS 12
-typedef int22_t fixed_basetype;
+#define fixed_basetype int22_t
 #endif
 
 #define FIXED_TOTALBITS (FIXED_INTBITS+FIXED_FRACTIONBITS)
