@@ -18,7 +18,7 @@ There's no game nor render logic in this source, all that is defined by the HDL 
 */
 //#define LINUX_FB "/dev/fb0"
 
-#define POWER_BENCH
+//#define POWER_BENCH
 //#define GATEWARE_VGA
 //#define DUMP_FRAMES
 #include <SDL2/SDL.h>
@@ -78,6 +78,11 @@ double total_rendering_time = 0;
 double total_energy = 0;
 bool power_enabled = false;
 #endif
+
+#include <iostream>
+void perf_render_dump();
+void perf_clear();
+
 void dump_stats()
 {
     float elapsed = (float)(higres_ticks()-t0)/higres_ticks_freq();
@@ -132,13 +137,37 @@ inline void vga_register_outputs(vga_signals_t vga, pixel_t c)
 #endif
 }
 
-#ifdef _DEBUG
-perfcount currentperf, fixedperf, fixed32perf, colorperf, screen_coord_perf;
-template<> perfcount *float_type::perf = &currentperf;
-template<> perfcount *coord_type::perf = &fixedperf;
-template<> perfcount *fixed32_t::perf = &fixed32perf;
-template<> perfcount *color_type::perf = &colorperf;
-template<> perfcount *screen_coord_t::perf = &screen_coord_perf;
+#ifdef FP_DEBUG
+perfcount currentperf, fixedperf/*, colorperf, screen_coord_perf*/;
+template<> perfcount *float_narrow::perf = &currentperf;
+perfcount *fixed_perf = &fixedperf;
+//template<> perfcount *fixed::perf = &fixedperf;
+//template<> perfcount *color_type::perf = &colorperf;
+//template<> perfcount *screen_coord_t::perf = &screen_coord_perf;
+
+void perfcount::clear()
+{
+  memset(this, 0, sizeof(*this));
+}
+
+void perfcount::dump()
+{
+    /*if(mul)*/ printf("MUL: %d\n", mul);
+    if(add) printf("ADD: %d\n", add);
+    if(fmuladd) printf("FMULADD: %d\n", fmuladd);
+    if(sub) printf("SUB: %d\n", sub);
+    if(div) printf("DIV: %d\n", div);
+    if(unary_minus) printf("UNARY MINUS: %d\n", unary_minus);
+    if(cmp) printf("CMP: %d\n", cmp);
+    if(inttofp) printf("INT TO FP: %d\n", inttofp);
+    if(fptoint) printf("FP TO INT: %d\n", fptoint);
+    if(inttofix) printf("INT TO FIX: %d\n", inttofix);
+    if(fixtoint) printf("FIX TO INT: %d\n", fixtoint);
+    if(fptofix) printf("FP TO FIX: %d\n", fptofix);
+    if(fixtofp) printf("FIX TO FP: %d\n", fixtofp);
+    printf("\n");
+}
+
 #endif
 
 /*
@@ -204,6 +233,7 @@ int main()
     t0 = higres_ticks();
     for(;;)
     {
+
 #ifdef GATEWARE_VGA
       app();
 #else
@@ -212,11 +242,14 @@ int main()
       /*if(frame == 25)
       --frame;
       else*/
+#ifndef FP_DEBUG
       #pragma omp parallel for
+#endif
       for(int y = 0; y < FRAME_HEIGHT; ++y)
       {
         for(int x = 0; x < FRAME_WIDTH; ++x)
         {
+      perf_clear();
 #ifdef MOTION_BLUR
          current_blur_x=x; current_blur_y=y;
 #endif
@@ -229,6 +262,7 @@ int main()
           c = render_pixel(x, y, 1, c);
           c = render_pixel(x, y, 2, c);
 #endif
+      perf_render_dump();
 
         //while(frame == 26) { if(fb_should_quit()) exit(0); }
 
@@ -467,7 +501,7 @@ bool fb_init(unsigned width, unsigned height)
       SDL_SetWindowFullscreen(win, SDL_WINDOW_FULLSCREEN);
 
     SDL_ShowCursor(SDL_DISABLE);
-    fullscreen = true;
+    //fullscreen = true;
     renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE | (fullscreen ? SDL_RENDERER_PRESENTVSYNC: 0));
     if (!renderer)
       return false;
@@ -600,94 +634,98 @@ void fb_save_texture(int frame)
 
 void perf_clear()
 {
-#ifdef _DEBUG
-  float_type::perf->clear();
-  coord_type::perf->clear();
-  fixed32_t::perf->clear();
-  screen_coord_t::perf->clear();
-  color_type::perf->clear();
+#ifdef FP_DEBUG
+  float_narrow::perf->clear();
+  //coord_type::perf->clear();
+  fixed_perf->clear();
+  //screen_coord_t::perf->clear();
+  //color_type::perf->clear();
 #endif
 }
 
 void perf_render_dump()
 {
-#ifdef _DEBUG
+#ifdef FP_DEBUG
   static perfcount max;
-  if(float_type::perf->mul > max.mul)
+  if(float_narrow::perf->mul > max.mul)
   {
-    max = *float_type::perf;
-    std::cout << "Rendering fp32 resources" << std::endl;
+    max = *float_narrow::perf;
+    std::cout << "Rendering floating point operations:" << std::endl;
     max.dump();
-  }
+  }/*
   static perfcount fixedmax;
   if(coord_type::perf->mul > fixedmax.mul)
   {
     fixedmax = *coord_type::perf;
-    std::cout << "Rendering fixed point resources" << std::endl;
+    std::cout << "Rendering fixed point operations" << std::endl;
     fixedmax.dump();
   }
-  static perfcount fixed32max;
-  if(fixed32_t::perf->mul > fixed32max.mul)
+  */
+  static perfcount fixedmax;
+  if(fixed_perf->mul > fixedmax.mul)
   {
-    fixed32max = *fixed32_t::perf;
-    std::cout << "Rendering fixed32 resources" << std::endl;
-    fixed32max.dump();
+    fixedmax = *fixed_perf;
+    std::cout << "Rendering fixed point operations" << std::endl;
+    fixedmax.dump();
   }
+  /*
   static perfcount screencoordmax;
   if(screen_coord_t::perf->mul > screencoordmax.mul)
   {
     screencoordmax = *screen_coord_t::perf;
-    std::cout << "Rendering screencoord fixpoint resources" << std::endl;
+    std::cout << "Rendering screencoord fixpoint operations" << std::endl;
     screencoordmax.dump();
   }
   static perfcount colormax;
   if(color_type::perf->mul > colormax.mul)
   {
     colormax = *color_type::perf;
-    std::cout << "Rendering color fixpoint resources" << std::endl;
+    std::cout << "Rendering color fixpoint operations" << std::endl;
     colormax.dump();
-  }
+  }*/
 #endif
 }
 
-void perf_gameplay_dump() //FIXME: unify
+void perf_gameplay_dump()
 {
-#ifdef _DEBUG
+#ifdef FP_DEBUG
   static perfcount max;
-  if(float_type::perf->mul > max.mul)
+  if(float_narrow::perf->mul > max.mul)
   {
-    max = *float_type::perf;
-    std::cout << "Gameplay fp32 resources" << std::endl;
+    max = *float_narrow::perf;
+    std::cout << "Gameplay fp32 operations" << std::endl;
     max.dump();
   }
+  /*
   static perfcount fixedmax;
   if(coord_type::perf->mul > fixedmax.mul)
   {
      fixedmax = *coord_type::perf;
-     std::cout << "Gameplay fixed point resources" << std::endl;
+     std::cout << "Gameplay fixed point operations" << std::endl;
      fixedmax.dump();
-  }
-  static perfcount fixed32max;
-  if(fixed32_t::perf->mul > fixed32max.mul)
+  }*/
+  static perfcount fixedmax;
+  if(fixed_perf->mul > fixedmax.mul)
   {
-    fixed32max = *fixed32_t::perf;
-    std::cout << "Gameplay fixed32 resources" << std::endl;
-    fixed32max.dump();
+    fixedmax = *fixed_perf;
+    std::cout << "Gameplay fixed point operations" << std::endl;
+    fixedmax.dump();
   }
+  /*
   static perfcount colormax;
   if(color_type::perf->mul > colormax.mul)
   {
     colormax = *color_type::perf;
-    std::cout << "Gameplay color fixpoint resources" << std::endl;
+    std::cout << "Gameplay color fixpoint operations" << std::endl;
     colormax.dump();
   }
   static perfcount screencoordmax;
   if(screen_coord_t::perf->mul > screencoordmax.mul)
   {
     screencoordmax = *screen_coord_t::perf;
-    std::cout << "Gameplay screencoord fixpoint resources" << std::endl;
+    std::cout << "Gameplay screencoord fixpoint operations" << std::endl;
     screencoordmax.dump();
-  }
+  }*/
 #endif
 }
 

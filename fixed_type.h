@@ -14,10 +14,6 @@
 
 #define FIXED_TOTALBITS (FIXED_INTBITS+FIXED_FRACTIONBITS)
 
-#ifndef __PIPELINEC__
-#warning: precision of fixed should be correctly defined
-#endif
-
 //#define FIXED_EMULATE_WITH_FLOAT
 
 #ifndef __cplusplus
@@ -176,8 +172,12 @@ int16_t fixed_to_short(fixed a) { return (int16_t)(a.f >> FIXED_FRACTIONBITS); }
 
 #endif
 
-inline fixed fixed_mul(fixed left, fixed right) { fixed r = { (fixed_basetype)((left.f * right.f)>>FIXED_FRACTIONBITS) }; return r; }
-inline fixed fixed_mul_short(fixed left, short right) { fixed r = { left.f * (fixed_basetype)right}; return r; }
+#ifdef FP_DEBUG
+extern perfcount *fixed_perf;
+#endif
+
+inline fixed fixed_mul(fixed left, fixed right) { fixed r = { (fixed_basetype)((left.f * right.f)>>FIXED_FRACTIONBITS) }; LOG_PERF2(fixed_perf, mul); return r; }
+inline fixed fixed_mul_short(fixed left, short right) { fixed r = { left.f * (fixed_basetype)right}; LOG_PERF2(fixed_perf, mul); return r; }
 inline fixed fixed_shl_signed_char(fixed left, shift_t right) { fixed r; r.f = (fixed_basetype)left.f<<right; return r; }
 inline fixed fixed_shr_signed_char(fixed left, shift_t right) { fixed r; r.f = (fixed_basetype)left.f>>right; return r; }
 
@@ -201,14 +201,14 @@ inline fixed fixed_mul(fixed left, fixed right) { fixed r = { left.f * right.f};
 #endif //FIXED_EMULATE_WITH_FLOAT
 
 //this is equivalent with ints or floats
-inline fixed fixed_add(fixed left, fixed right) { fixed r = { left.f + right.f}; return r; }
-inline fixed fixed_sub(fixed left, fixed right) { fixed r = { left.f - right.f}; return r; }
-inline bool fixed_lt(fixed left, fixed right) { return left.f < right.f; }
-inline bool fixed_gt(fixed left, fixed right) { return left.f > right.f; }
-inline bool fixed_lte(fixed left, fixed right) { return left.f <= right.f; }
-inline bool fixed_gte(fixed left, fixed right) { return left.f >= right.f; }
-inline bool fixed_eq(fixed left, fixed right) { return left.f == right.f; }
-inline bool fixed_neq(fixed left, fixed right) { return left.f != right.f; }
+inline fixed fixed_add(fixed left, fixed right) { fixed r = { left.f + right.f}; LOG_PERF2(fixed_perf, add); return r; }
+inline fixed fixed_sub(fixed left, fixed right) { fixed r = { left.f - right.f}; LOG_PERF2(fixed_perf, sub); return r; }
+inline bool fixed_lt(fixed left, fixed right) { LOG_PERF2(fixed_perf, cmp); return left.f < right.f; }
+inline bool fixed_gt(fixed left, fixed right) { LOG_PERF2(fixed_perf, cmp); return left.f > right.f; }
+inline bool fixed_lte(fixed left, fixed right) { LOG_PERF2(fixed_perf, cmp); return left.f <= right.f; }
+inline bool fixed_gte(fixed left, fixed right) { LOG_PERF2(fixed_perf, cmp); return left.f >= right.f; }
+inline bool fixed_eq(fixed left, fixed right) { LOG_PERF2(fixed_perf, cmp); return left.f == right.f; }
+inline bool fixed_neq(fixed left, fixed right) { LOG_PERF2(fixed_perf, cmp); return left.f != right.f; }
 
 typedef struct fixed3 { fixed x, y, z; } fixed3;
 inline fixed3 fixed3_make(fixed x, fixed y, fixed z) { fixed3 r = {x, y, z}; return r; } //constructor

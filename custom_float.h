@@ -4,11 +4,7 @@
 #ifndef __CUSTOM_FLOAT_H
 #define __CUSTOM_FLOAT_H
 
-#ifdef _DEBUG
-#define LOG_PERF(m) ++perf->m
-#else
-#define LOG_PERF(m)
-#endif
+#include "typesperf.h"
 
 #if !defined(PARSING) && !defined(__PIPELINEC__) && defined(CCOMPILE)
 #define CUSTOM_FLOAT_MANTISSA 14 //uncomment to use less precision floats
@@ -41,9 +37,8 @@ class fp_t
   float f;
 
 public:
-#ifdef _DEBUG
+#ifdef FP_DEBUG
   static perfcount *perf;
-  friend std::ostream& operator << (std::ostream& s, const fp_t& f);
 #endif
 
   explicit fp_t(float a=0) : f(float_exp_adjust<EXP>(float_to_uint(a) & assignmask)) { }
@@ -78,9 +73,9 @@ public:
 
   /*explicit*/ operator float () const { return f; }
 
-#warning this is used jist for adjusting exponent
-  fp_t operator / (int a) const { return (*this) / float(a); } //FIXME: this is used jist for adjusting exponent
-  fp_t operator * (int a) const { return (*this) * float(a); } //FIXME: this is used jist for adjusting exponent
+#warning this is used just for adjusting exponent
+  fp_t operator / (int a) const { return (*this) / float(a); } //FIXME: this is used just for adjusting exponent
+  fp_t operator * (int a) const { return (*this) * float(a); } //FIXME: this is used just for adjusting exponent
 
 };
 

@@ -633,11 +633,6 @@ color_basic_t cast_ray(IN(point_and_dir) hitin)
    return rcolor;
 }
 
-#ifdef _DEBUG
-void perf_clear();
-void perf_render_dump();
-void perf_gameplay_dump();
-#endif
 
 color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y)
 {
@@ -908,9 +903,6 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
 
   state.scorebar = state.won ? 0 : state.score;
 
-#ifdef _DEBUG
-  perf_gameplay_dump();
-#endif
 
   if(state.lose)
      reset = true;
@@ -941,9 +933,6 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
 )
 {
   IN(scene_t) scene = get_scene();
-#ifdef _DEBUG
-  perf_clear();
-#endif
 
 #ifndef PIPELINEC_SUGAR
   int16_t cx = (i<<1)-FRAME_WIDTH-1;
@@ -1003,9 +992,6 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
 #endif //COLOR_DECOMP
   }
 
-#ifdef _DEBUG
-  perf_render_dump();
-#endif
   return pix;
 }
 
