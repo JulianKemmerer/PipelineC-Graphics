@@ -16,7 +16,7 @@ HOW TO PLAY:
 //#define ALTERNATE_UI 3 //level of graphics detail
 //#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702)
 //#define DITHER
-#define ANTIALIAS 7 //default 6, smooth 4
+//#define ANTIALIAS 7 //default 6, smooth 4
 
 #include "tr.h"
 
