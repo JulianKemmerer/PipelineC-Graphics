@@ -16,7 +16,7 @@ HOW TO PLAY:
 //#define ALTERNATE_UI 3 //level of graphics detail
 //#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702)
 //#define DITHER
-//#define ANTIALIAS 7 //default 6, smooth 4
+//#define ANTIALIAS 6 //default 6, smooth 4
 
 #include "tr.h"
 
@@ -152,8 +152,7 @@ inline scene_colors_t scene_colors(uint2_t channel)
   }
   return r;
 }
-#endif
-
+#endif //COLOR_DECOMP
 
 #ifndef ALTERNATE_UI
 
@@ -409,21 +408,36 @@ color_basic_t plane_effect(IN(hit_out) hit)
   color_basic_t rcolor2 = ((ix ^ iz) & 1) == 0 ? colors.plane_color1 : color2;
 
   float hitdist = hit.accdist;
-  float opax = float_shift(triang(ox), -1)/hitdist;
-  float opaz = float_shift(triang(oz), -2)/hitdist;
+  float opax = triang(ox)/float_shift(hitdist, 1);
+  float opaz = triang(oz)/float_shift(hitdist, 1);
 
 
   if(opax > 1.) opax = 1.; if(opax < -1.) opax = -1.;
   if(opaz > 1.) opaz = 1.; if(opaz < -1.) opaz = -1.;
 
-  fixed_type opa = fixed_type(opaz*opax+.5);
+  float_type opa = opaz*opax+.5;
 
   if(is_negative(opa))
+  {
     rcolor = rcolor2;
+    //rcolor.x = 1.;
+  }
   else if(opa > 1.)
+  {
     rcolor = rcolor;
+    //rcolor.y = 1.;
+  }
   else
-    rcolor = float_select(color_type(opa), rcolor, rcolor2);
+  {
+    //rcolor = color_select(color_type(opa), rcolor, rcolor2);
+    float r = opa*float(rcolor.x)-(opa-1.)*float(rcolor2.x);
+    float g = opa*float(rcolor.y)-(opa-1.)*float(rcolor2.y);
+    float b = opa*float(rcolor.z)-(opa-1.)*float(rcolor2.z);
+    rcolor.x = color_type(r);
+    rcolor.y = color_type(g);
+    rcolor.z = color_type(b);
+    //rcolor.z = 1.;
+  }
 #endif
 
 #ifdef HOLE_BORDER
@@ -436,7 +450,7 @@ color_basic_t plane_effect(IN(hit_out) hit)
     if(dh < hit.accdist)
     {
       color_type opacity = plane_alpha(dh, hit.accdist);
-      rcolor = float_select(opacity, colors.plane.diffuse_color, rcolor); //border inside floor
+      rcolor = color_select(opacity, colors.plane.diffuse_color, rcolor); //border inside floor
     }
     else
       rcolor = colors.plane.diffuse_color;
@@ -572,48 +586,32 @@ color_basic_t cast_ray(IN(point_and_dir) hitin)
 #ifndef RT_SMALL_UI
   hit_out hitplane = ray_plane_intersect(scene.plane, hitin);
 #else
-  hit_out hitplane; hitplane.dist = BIG_FLOAT;
+  hit_out hitplane; hitplane.dist = RAY_NOINT;
 #endif
   material_t planematerial;
   planematerial = colors.plane;  //FIXME: needed?
   planematerial.diffuse_color = plane_effect(hitplane);
-
-  
-
-#ifdef MOTION_BLUR
-  {
-     //FIXME: this is duplicated 
-     register_dist(hitsphere.borderdist*.1*.5); //FIXME: blur sphere
-  }
-#warning MOTION_BLUR
-#endif
-
 #ifndef ANTIALIAS
   bool planehit =  hitplane.dist < hitsphere.dist;
   material_t hit_material;
-  if (/*!is_negative(hitsphere.borderdist)*/!planehit)
-    hit_material = sphere_material;
-  else /*if (planehit)*/
-    hit_material = planematerial;
+  hit_material = planehit ? planematerial : sphere_material;
 
    hit_out hitout = planehit ? hitplane : hitsphere;
-   color_basic_t rcolor = shade(bfog, hitin.dir, hitout, hit_material, planehit ? mix : color_type(0.)); //no fog for sphere
-#else
-   color_basic_t rcolor;
+   color_type c = planehit ? mix : color_type(0.);
+   color_basic_t rcolor = shade(bfog, hitin.dir, hitout, hit_material, c); //no fog for sphere
+#else //ANTIALIAS=true
+//#warning why non default constructor?
+   color_basic_t rcolor = color_basic_t(0.);
 
 #ifndef RT_SMALL_UI
    color_basic_t planecolor = shade(bfog, hitin.dir, hitplane, planematerial, mix); //FIXME: bfog
 
    float sphere_plane_dist = hitplane.dist - hitsphere.dist;
-#if 1//def ANTIALIAS
-     if(hitplane.dist != RAY_NOINT && hitplane.borderdist < hitplane.accdist)
-     {
-       color_type planeopacity = plane_alpha(hitplane.borderdist, hitplane.accdist);
-       planecolor = float_select(planeopacity, planecolor, bfog); //border next to hole
-     }
-#else
-     rcolor = is_negative(hitplane.borderdist) ? background : planecolor; //hitplane.dist == RAY_NOINT
-#endif
+   if(hitplane.dist != RAY_NOINT && hitplane.borderdist < hitplane.accdist)
+   {
+     color_type planeopacity = plane_alpha(hitplane.borderdist, hitplane.accdist);
+     planecolor = color_select(planeopacity, planecolor, bfog); //border next to hole
+   }
 
    if(is_negative(sphere_plane_dist))
    {
@@ -628,7 +626,7 @@ color_basic_t cast_ray(IN(point_and_dir) hitin)
      float opacity = hitsphere.borderdist*aaradius;
 
      float da = sphere_plane_dist*aaradius; //FIXME: this shouldn't compresses in y axis when plane is near to the horizontal
-     if(da > 0. && da < 1.) //sphere & floor intersection
+     if(da >= 0. && da < 1.) //sphere & floor intersection
      {
        opacity = opacity*da;
      }
@@ -636,7 +634,7 @@ color_basic_t cast_ray(IN(point_and_dir) hitin)
      if(opacity > 1.) opacity = 1.;
      if(is_negative(opacity)) opacity = 0.; //FIXME: define clamp function
 
-     rcolor = float_select(color_type(opacity), spherecolor, planecolor);
+     rcolor = color_select(color_type(opacity), spherecolor, planecolor);
    }
 
 #endif //ANTIALIAS
