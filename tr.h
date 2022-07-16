@@ -27,7 +27,7 @@
 #endif
 
 #ifdef ANTIALIAS
-#define SPHERE_MOTIONBLUR
+//#define SPHERE_MOTIONBLUR
 #endif
 
 #define MAXSCORE 15000

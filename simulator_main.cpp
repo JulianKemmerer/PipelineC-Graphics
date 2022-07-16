@@ -39,6 +39,7 @@ int FRAME_HEIGHT = _FRAME_HEIGHT;
 #include "float_type.h"
 
 #ifndef CCOMPILE
+#undef FP_DEBUG
 #include "tr_pipelinec.cpp" //original source
 #else
 #include "fixed_type.h"
@@ -501,7 +502,7 @@ bool fb_init(unsigned width, unsigned height)
       SDL_SetWindowFullscreen(win, SDL_WINDOW_FULLSCREEN);
 
     SDL_ShowCursor(SDL_DISABLE);
-    //fullscreen = true;
+    fullscreen = true; //unncoment to limit FPS 
     renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE | (fullscreen ? SDL_RENDERER_PRESENTVSYNC: 0));
     if (!renderer)
       return false;
