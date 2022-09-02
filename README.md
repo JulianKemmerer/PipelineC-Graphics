@@ -10,7 +10,7 @@ Work contained in these repositories is experimental and in active development. 
 
 A fully working interactive raytraced game written in C and translated to a circuit. No CPU is used, and the few resources used run at an outstanding power efficiency. Check out a [demo video](https://www.youtube.com/watch?v=F8jlJapQbFY) of gameplay on real hardware!
 
-A detailed article describing this work will be released soon!
+A detailed article describing this work is [here](https://github.com/JulianKemmerer/PipelineC-Graphics/blob/main/doc/Sphery-vs-Shapes.pdf)
 
 # Contact
 
