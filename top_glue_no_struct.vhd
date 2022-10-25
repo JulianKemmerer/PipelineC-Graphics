@@ -35,7 +35,9 @@ port map(
     vga_return_output.a => pixel_a,
     vga_return_output.r => pixel_r,
     vga_return_output.g => pixel_g,
-    vga_return_output.b => pixel_b
+    vga_return_output.b => pixel_b,
+    uart_module_data_in(0) => '0' --FIXME: export to LiteX SoC design
+    --uart_module_return_output(0) => ... 
 );
 
 end arch;
