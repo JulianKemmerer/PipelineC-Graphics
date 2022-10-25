@@ -17,6 +17,7 @@ HOW TO PLAY:
 //#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702)
 //#define DITHER
 //#define ANTIALIAS 6 //default 6, smooth 4
+#define SCREEN_ASPECT 16./9. //or for example 10./9. 
 
 #include "tr.h"
 
@@ -952,7 +953,7 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
 #endif
   const float W = (float)FRAME_WIDTH;
   const float H = (float)FRAME_HEIGHT;
-  static const screen_coord_t ax = 1024.*(16./9.)/W;
+  static const screen_coord_t ax = 1024.*(SCREEN_ASPECT)/W;
   static const screen_coord_t ay = 1024./H;
   screen_coord_t x = fixed_shr(cx, 10+1) * ax;
   screen_coord_t y = fixed_shr(cy, 10+1) * ay;
