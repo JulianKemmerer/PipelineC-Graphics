@@ -8,9 +8,10 @@ Work contained in these repositories is experimental and in active development. 
 
 # Sphery vs. Shapes:
 
-A fully working interactive raytraced game written in C and translated to a circuit. No CPU is used, and the few resources used run at an outstanding power efficiency. Check out a [demo video](https://www.youtube.com/watch?v=F8jlJapQbFY) of gameplay on real hardware!
+A fully working interactive raytraced game written in C and translated to a circuit. No CPU is used, and the few resources used run at an outstanding power efficiency. Check out a [demo video](https://youtu.be/hn3sr3VMJQU) of gameplay on real hardware!
+![image](https://user-images.githubusercontent.com/8551129/197263472-bcde79f4-2efe-42c0-ae0b-16fe6aaf9331.png)
 
-A detailed article describing this work will be released soon!
+A detailed article describing this work is [here](https://github.com/JulianKemmerer/PipelineC-Graphics/blob/main/doc/Sphery-vs-Shapes.pdf)
 
 # Contact
 
