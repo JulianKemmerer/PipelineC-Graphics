@@ -1,8 +1,10 @@
 // Set the target FPGA part
 //#pragma PART "LFE5U-85F-6BG381C" // An ECP5U 85F part
-#pragma PART "xc7a35ticsg324-1l" // Arty 35t
+//#pragma PART "xc7a35ticsg324-1l" // Arty 35t
 //#pragma PART "xc7a100tcsg324-1" // Arty 100t
-#define LITEX_INTEGRATION
+//#define LITEX_INTEGRATION
+#define POCKET_INTEGRATION
+#pragma PART "5CEBA4F23C8" // Analogue Pocket
 
 // CflexHDL compile setting
 #define CCOMPILE
@@ -30,6 +32,10 @@
 #ifdef LITEX_INTEGRATION
 #include "vga/external_vga_timing.c"
 #include "vga/external_vga_output.c"
+#elif defined(POCKET_INTEGRATION)
+// Pocket build generates timing internally
+// But has non-pmod generic external vga output
+#include "vga/external_vga_output.c"
 #else
 // Otherwise default to Arty video output w/ pmod
 //#include "vga/vga_pmod.c"
@@ -45,7 +51,7 @@
 // Define the user created frame clock
 #define FRAME_CLK_MHZ 6e-5 // 60Hz
 uint1_t frame_clock;
-CLK_MHZ(frame_clock, FRAME_CLK_MHZ)
+DECL_OUTPUT(uint1_t, frame_clock)
 uint1_t frame_clock_rising_edge;
 uint1_t frame_clock_falling_edge;
 // Helper func to drive frame clock from isolated static frame_clock_reg
@@ -76,6 +82,27 @@ void frame_clock_logic(uint16_t x, uint16_t y, bool active)
     frame_clock_rising_edge = 1;
   }
 }
+
+// Pocket flow cannot use CLK_MHZ to declare user clocks
+// Since Quartus not able to constrain user generated clocks see issues:
+// https://github.com/JulianKemmerer/PipelineC/issues/138
+// https://github.com/JulianKemmerer/PipelineC/issues/137
+#ifndef POCKET_INTEGRATION
+CLK_MHZ(frame_clock, FRAME_CLK_MHZ)
+
+// Make pixel clock look like its user generated internally
+// so that, regardless of frequency, the name is always the same
+// This does not seem to work with 
+uint1_t pixel_clock;
+CLK_MHZ(pixel_clock, PIXEL_CLK_MHZ)
+// Connect constant name top level port to internal pixel_clock
+MAIN_MHZ(pixel, PIXEL_CLK_MHZ) 
+#pragma FUNC_WIRES pixel
+void pixel(uint1_t clock) // top level port is "pixel_clock"
+{
+  pixel_clock = clock;
+}
+#endif //ifndef POCKET_INTEGRATION
 
 // UART modules that augment buttons behavior
 // Run uart at pixel clock to avoid multiple clocks
@@ -163,17 +190,6 @@ void frame_logic()
   power_on_reset = 0;
 }
 
-// Make pixel clock look like its user generated internally
-// so that, regardless of frequency, the name is always the same
-uint1_t pixel_clock;
-CLK_MHZ(pixel_clock, PIXEL_CLK_MHZ)
-// Connect constant name top level port to internal pixel_clock
-MAIN_MHZ(pixel, PIXEL_CLK_MHZ) 
-void pixel(uint1_t clock) // top level port is "pixel_clock"
-{
-  pixel_clock = clock;
-}
-
 // Logic running on pixel clock, mostly render_pixel pipeline
 MAIN_MHZ(pixel_logic, PIXEL_CLK_MHZ)
 void pixel_logic()
@@ -191,4 +207,3 @@ void pixel_logic()
   // Drive output signals/registers
   pmod_register_outputs(vga_signals, color);
 }
-
