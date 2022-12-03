@@ -1,10 +1,10 @@
 // Set the target FPGA part
 //#pragma PART "LFE5U-85F-6BG381C" // An ECP5U 85F part
 //#pragma PART "xc7a35ticsg324-1l" // Arty 35t
-//#pragma PART "xc7a100tcsg324-1" // Arty 100t
+#pragma PART "xc7a100tcsg324-1" // Arty 100t
 //#define LITEX_INTEGRATION
-#define POCKET_INTEGRATION
-#pragma PART "5CEBA4F23C8" // Analogue Pocket
+//#define POCKET_INTEGRATION
+//#pragma PART "5CEBA4F23C8" // Analogue Pocket
 
 // CflexHDL compile setting
 #define CCOMPILE
@@ -173,7 +173,7 @@ inline user_input_t get_user_input()
 }
 
 // Per frame next state comb. logic runnning on frame clock
-full_state_t state; // The state wire, shared global wire
+volatile full_state_t state; // The state wire, shared global wire
 #pragma ASYNC_WIRE state // Async to pixel clock domain where read
 MAIN_MHZ(frame_logic, FRAME_CLK_MHZ)
 void frame_logic()
