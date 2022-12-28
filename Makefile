@@ -12,6 +12,7 @@ PIPELINEC?=$(PIPELINEC_ROOT)/src/pipelinec
 INCLUDE+=-I$(PIPELINEC_ROOT) -I../CflexHDL/include
 PIPELINEC_MAIN?=./pipelinec_app.c
 BOARD?=arty
+VALENTYUSB=../OrangeCrab-test-sw/hw/deps/valentyusb
 OMP_FLAGS=-fopenmp=libiomp5
 CLANGXX?=clang++-14
 RTCODE?=tr.cpp
@@ -99,12 +100,14 @@ cxxrtl_top: ./synth/top/top.v
 cxxrtl: ./cxxrtl_build/cxxrtl_top
 	./cxxrtl_build/cxxrtl_top
 
-arty: fullsynth
+./build/digilent_arty/gateware/digilent_arty.bit: fullsynth
 	#FIXME: unify builr and vhd directories
 	mkdir -p ./vhd/all_vhdl_files/
 	cp `cat ./fullsynth/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
 	cp top_glue_no_struct.vhd ./vhd/all_vhdl_files/
 	FRAME_WIDTH=$(FRAME_WIDTH) FRAME_HEIGHT=$(FRAME_HEIGHT) FRAME_FPS=$(FRAME_FPS) python3 ./litex_soc.py $(BOARD) --cpu-type=None
+
+arty: ./build/digilent_arty/gateware/digilent_arty.bit
 	openFPGALoader -b $(BOARD) --freq 30e6 ./build/digilent_arty/gateware/digilent_arty.bit
 
 de0nano: fullsynth
@@ -141,4 +144,12 @@ pipelinec-synth: #synth and load with pipelinec (NOTE: fixed 1080p PLLs)
 	vivado arty.xpr -mode batch -source gen_bit.tcl 
 	vivado arty.xpr -mode batch -source load_bit.tcl
 
+orangecrab: ./build/gsd_orangecrab/gateware/gsd_orangecrab.dfu
+	dfu-util -a 0 -D $<
+  
+./build/gsd_orangecrab/gateware/gsd_orangecrab.dfu: gsd_orangecrab.py
+	PYTHONPATH=$(VALENTYUSB) ./gsd_orangecrab.py --device=85F --uart-name=usb_acm --build
+	cp ./build/gsd_orangecrab/gateware/gsd_orangecrab.bit $@
+	dfu-suffix -v 1209 -p 5bf0 -a $@
+	echo Press button before upload! 
 
