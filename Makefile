@@ -1,5 +1,4 @@
-#current working command:
-#$ make clean litex PIPELINEC_MAIN=pipelinec_litex.c
+SHELL := /bin/bash
 
 FRAME_WIDTH?=640
 FRAME_HEIGHT?=480
@@ -11,11 +10,14 @@ PIPELINEC_ROOT?=../PipelineC
 PIPELINEC?=$(PIPELINEC_ROOT)/src/pipelinec
 INCLUDE+=-I$(PIPELINEC_ROOT) -I../CflexHDL/include
 PIPELINEC_MAIN?=./pipelinec_app.c
-BOARD?=arty
+#BOARD?=gsd_orangecrab
+BOARD?=digilent_arty
 VALENTYUSB=../OrangeCrab-test-sw/hw/deps/valentyusb
 OMP_FLAGS=-fopenmp=libiomp5
 CLANGXX?=clang++-14
 RTCODE?=tr.cpp
+
+GATEWAREDIR=./build/$(BOARD)/gateware
 
 all: run
 
@@ -100,17 +102,17 @@ cxxrtl_top: ./synth/top/top.v
 cxxrtl: ./cxxrtl_build/cxxrtl_top
 	./cxxrtl_build/cxxrtl_top
 
-./build/digilent_arty/gateware/digilent_arty.bit: fullsynth
+$(GATEWAREDIR)/digilent_arty.bit: fullsynth ./litex_soc.py
 	#FIXME: unify builr and vhd directories
 	mkdir -p ./vhd/all_vhdl_files/
 	cp `cat ./fullsynth/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
 	cp top_glue_no_struct.vhd ./vhd/all_vhdl_files/
 	FRAME_WIDTH=$(FRAME_WIDTH) FRAME_HEIGHT=$(FRAME_HEIGHT) FRAME_FPS=$(FRAME_FPS) python3 ./litex_soc.py $(BOARD) --cpu-type=None
 
-arty: ./build/digilent_arty/gateware/digilent_arty.bit
-	openFPGALoader -b $(BOARD) --freq 30e6 ./build/digilent_arty/gateware/digilent_arty.bit
+digilent_arty: $(GATEWAREDIR)/digilent_arty.bit
+	openFPGALoader -b arty --freq 30e6 $<
 
-de0nano: fullsynth
+de0nano: fullsynth ./litex_soc.py
 	#FIXME: unify builr and vhd directories
 	mkdir -p ./vhd/all_vhdl_files/
 	cp `cat ./fullsynth/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
@@ -118,9 +120,7 @@ de0nano: fullsynth
 	python3 ./litex_soc.py $(BOARD) --cpu-type=None
 	openFPGALoader -b $(BOARD) ./build/terasic_de0nano/gateware/terasic_de0nano.rbf
 
-litex: $(BOARD)
-
-
+load: $(BOARD)
 
 ./vhd/all_vhdl_files/top.vhd: pipelinec_litex.c tr_pipelinec.gen.c top_glue_no_struct.vhd
 	rm -Rf ./vhd
@@ -131,8 +131,8 @@ litex: $(BOARD)
 	cp `cat ./vhd/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
 	cp top_glue_no_struct.vhd ./vhd/all_vhdl_files/
 
-vhd: ./vhd/all_vhdl_files/top.vhd
-	python3 ./litex_soc.py $(BOARD) --cpu-type=None
+#vhd: ./vhd/all_vhdl_files/top.vhd ./litex_soc.py
+#	python3 ./litex_soc.py $(BOARD) --cpu-type=None
 	
 
 clean:
@@ -144,12 +144,20 @@ pipelinec-synth: #synth and load with pipelinec (NOTE: fixed 1080p PLLs)
 	vivado arty.xpr -mode batch -source gen_bit.tcl 
 	vivado arty.xpr -mode batch -source load_bit.tcl
 
-orangecrab: ./build/gsd_orangecrab/gateware/gsd_orangecrab.dfu
+gsd_orangecrab: ./build/gsd_orangecrab/gateware/gsd_orangecrab.dfu
+	read -t 10 -p "Activate bootloader before upload (press board's button for 1 second)"
 	dfu-util -a 0 -D $<
-  
-./build/gsd_orangecrab/gateware/gsd_orangecrab.dfu: gsd_orangecrab.py
-	PYTHONPATH=$(VALENTYUSB) ./gsd_orangecrab.py --device=85F --uart-name=usb_acm --build
-	cp ./build/gsd_orangecrab/gateware/gsd_orangecrab.bit $@
+
+./vhd/all_vhdl_files/top.v: ./fullsynth/top/top.vhd
+	mkdir -p ./vhd/all_vhdl_files/
+	cp `cat ./fullsynth/vhdl_files.txt` ./vhd/all_vhdl_files/
+	cd ./vhd/all_vhdl_files && ghdl -i --std=08 `cat ../../fullsynth/vhdl_files.txt` && ghdl -m --std=08 top && yosys -g -m ghdl -p "ghdl --std=08 top; write_verilog top.v" #TODO: opt pass?
+
+$(GATEWAREDIR)/gsd_orangecrab.dfu: ./vhd/all_vhdl_files/top.v ./litex_soc.py
+	PYTHONPATH=$(VALENTYUSB) FRAME_WIDTH=$(FRAME_WIDTH) FRAME_HEIGHT=$(FRAME_HEIGHT) FRAME_FPS=$(FRAME_FPS) python3 ./litex_soc.py $(BOARD) --cpu-type=None
+	yosys -l $(GATEWAREDIR)/gsd_orangecrab.rpt -p "read_verilog ./vhd/all_vhdl_files/top.v; opt; flatten; read_verilog $(GATEWAREDIR)/gsd_orangecrab.v; synth_ecp5 -abc9 -top gsd_orangecrab; write_json $(GATEWAREDIR)/gsd_orangecrab.json" #from LiteX is like this $(GATEWAREDIR)/gsd_orangecrab.ys, we need opt; flatten; for reducing memory usage
+	nextpnr-ecp5 --json $(GATEWAREDIR)/gsd_orangecrab.json --lpf $(GATEWAREDIR)/gsd_orangecrab.lpf --textcfg $(GATEWAREDIR)/gsd_orangecrab.config --85k --package CSFBGA285 --speed 8 --timing-allow-fail --seed 1 
+	ecppack --bootaddr 0 --compress  $(GATEWAREDIR)/gsd_orangecrab.config --svf $(GATEWAREDIR)/gsd_orangecrab.svf --bit $(GATEWAREDIR)/gsd_orangecrab.bit	
+	cp $(GATEWAREDIR)/gsd_orangecrab.bit $@
 	dfu-suffix -v 1209 -p 5bf0 -a $@
-	echo Press button before upload! 
 

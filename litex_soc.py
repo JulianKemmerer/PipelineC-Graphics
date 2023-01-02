@@ -14,11 +14,13 @@ from litex.soc.interconnect import stream
 from litex.soc.integration.builder import *
 from litex.soc.integration.soc_core import *
 from litex.build.generic_platform import *
+from litex.gen import LiteXModule
 
-DVI = False # False = Use PMOD B+C VGA
+DVI = True # False = Use PMOD B+C VGA
+VHDL = True
 
 class GraphicsGenerator(Module):
-    def __init__(self, button):
+    def __init__(self, button, use_glue=False):
         self.enable   = Signal(reset=1)
         self.vtg_sink = vtg_sink   = stream.Endpoint(video_timing_layout)
         self.source   = source = stream.Endpoint(video_data_layout)
@@ -26,21 +28,32 @@ class GraphicsGenerator(Module):
 
         framedisplay = Module()
         self.return_output_a = Signal(8)
-        framedisplay.specials += Instance("top_glue_no_struct", #FIXME: figure out how to avoid the glue and access the output structure
-          i_videoclk = ClockSignal("sys"), #results in "hdmi" (or corresponding video) clock
-          i_video_x = vtg_sink.hcount,
-          i_video_y = vtg_sink.vcount,
-          i_reset = ResetSignal("sys"),
-          i_jump_pressed = button,
-          o_pixel_a = self.return_output_a, #FIXME: just Signal(8)
-          o_pixel_r = source.r,
-          o_pixel_g = source.g,
-          o_pixel_b = source.b
-        )
+        if use_glue:
+          #FIXME: use a dict with string as below, so glue code can be avoided (only needed to access .xxx fields)
+          framedisplay.specials += Instance("top_glue_no_struct", #FIXME: figure out how to avoid the glue and access the output structure
+           i_videoclk = ClockSignal("sys"), #results in "hdmi" (or corresponding video) clock
+            i_video_x = vtg_sink.hcount,
+            i_video_y = vtg_sink.vcount,
+            i_reset = ResetSignal("sys"),
+            i_jump_pressed = button,
+            o_pixel_a = self.return_output_a, #FIXME: just Signal(8)
+            o_pixel_r = source.r,
+            o_pixel_g = source.g,
+            o_pixel_b = source.b
+          )
+        else:
+          framedisplay_signals = {
+            "i_pixel_clock": ClockSignal("sys"), #results in "hdmi" (or corresponding video) clock
+            "i_ext_vga_x": vtg_sink.hcount,
+            "i_ext_vga_y": vtg_sink.vcount,
+            "i_buttons_module_btn": button,
+            "o_dvi_red_DEBUG_return_output": source.r,
+            "o_dvi_green_DEBUG_return_output": source.g,
+            "o_dvi_blue_DEBUG_return_output": source.b }
+          framedisplay.specials += Instance("top", **framedisplay_signals)
     
         self.framedisplay = framedisplay 
         self.submodules += framedisplay
-
 
 def add_video_custom_generator(soc, name="video", phy=None, timings="800x600@60Hz", clock_domain="sys"):
     # Video Timing Generator.
@@ -49,7 +62,7 @@ def add_video_custom_generator(soc, name="video", phy=None, timings="800x600@60H
     vtg = ClockDomainsRenamer(clock_domain)(vtg)
     setattr(soc.submodules, f"{name}_vtg", vtg)
 
-    graphics = GraphicsGenerator(soc.button)
+    graphics = GraphicsGenerator(soc.button, VHDL)
     graphics = ClockDomainsRenamer(clock_domain)(graphics)
     setattr(soc.submodules, name, graphics)
 
@@ -94,6 +107,8 @@ def get_video_timings():
 	    timings["pix_clk"] = 25e6 #fix default 25.18MHz
 	if timings_sel == "1920x1080@60Hz":
 	    timings["pix_clk"] = 150e6 #fix default 148.5MHz
+	if timings_sel == "1280x720@60Hz":
+	    timings["pix_clk"] = 72e6 #fix default 74.25MHz
 	return timings
 
 
@@ -121,7 +136,7 @@ class _CRG_arty(Module):
 
 
 def build_arty(args, timings):
-	from litex_boards.platforms import arty as board
+	from litex_boards.platforms import digilent_arty as board
 	platform = board.Platform(variant="a7-35", toolchain="vivado") # a7-35 or a7-100 
 	#platform = board.Platform(toolchain="yosys+nextpnr") #brings errors about usage of DSP48E1 (* operator) and of ODDR
 	sys_clk_freq = int(100e6)
@@ -156,6 +171,124 @@ def build_arty(args, timings):
 	return soc #TODO: review code on pipelinec-graphics repo
 
 
+from migen.genlib.misc import WaitTimer
+from migen.genlib.resetsync import AsyncResetSynchronizer
+
+class _CRGECP5(LiteXModule):
+    def __init__(self, platform, sys_clk_freq, video_clock, with_usb_pll=True):
+        self.rst = Signal()
+        self.cd_por      = ClockDomain()
+        self.cd_sys      = ClockDomain()
+
+        # # #
+
+        self.stop  = Signal()
+        self.reset = Signal()
+
+        # Clk / Rst
+        clk48 = platform.request("clk48")
+        platform.usr_btn = rst_n = platform.request("usr_btn", loose=True)
+        if rst_n is None:
+          print("rst_n INEXISTENT")
+          quit()
+          rst_n = 1
+
+        # Power on reset
+        por_count = Signal(16, reset=2**16-1)
+        por_done  = Signal()
+        self.comb += self.cd_por.clk.eq(clk48)
+        self.comb += por_done.eq(por_count == 0)
+        self.sync.por += If(~por_done, por_count.eq(por_count - 1))
+
+        # PLL
+        self.pll = pll = ECP5PLL()
+        self.comb += pll.reset.eq(~por_done | ~rst_n | self.rst)
+        pll.register_clkin(clk48, 48e6)
+        pll.create_clkout(self.cd_sys, sys_clk_freq)
+
+        # USB PLL
+        if with_usb_pll:
+            self.cd_usb_12 = ClockDomain()
+            self.cd_usb_48 = ClockDomain()
+            usb_pll = ECP5PLL()
+            self.submodules += usb_pll
+            self.comb += usb_pll.reset.eq(~por_done)
+            usb_pll.register_clkin(clk48, 48e6)
+            usb_pll.create_clkout(self.cd_usb_48, 48e6)
+            usb_pll.create_clkout(self.cd_usb_12, 12e6)
+            
+            
+        # Video PLL
+        vga_pll = ECP5PLL()
+        self.submodules += vga_pll
+        self.comb += vga_pll.reset.eq(~por_done)
+        vga_pll.register_clkin(clk48, 48e6)
+        if DVI:
+            self.cd_hdmi   = ClockDomain()
+            self.cd_hdmi5x = ClockDomain()
+            vga_pll.create_clkout(self.cd_hdmi,     video_clock, margin=1e-2)
+            vga_pll.create_clkout(self.cd_hdmi5x, 5*video_clock, margin=1e-2) #ECP5 max: 400MHz
+        else: 
+            self.cd_vga  = ClockDomain()
+            vga_pll.create_clkout(self.cd_vga, video_clock)
+        
+
+        # FPGA Reset (press usr_btn for 1 second to fallback to bootloader)
+        reset_timer = WaitTimer(int(48e6))
+        reset_timer = ClockDomainsRenamer("por")(reset_timer)
+        self.submodules += reset_timer
+        self.comb += reset_timer.wait.eq(~rst_n)
+        self.comb += platform.request("rst_n").eq(~reset_timer.done)
+
+def build_orangecrab(args, timings):
+	from litex_boards.platforms import gsd_orangecrab as board
+	revision="0.2"
+	device="85F"
+	sdram_device="MT41K64M16"
+	toolchain="trellis"
+
+	platform = board.Platform(revision=revision, device=device ,toolchain=toolchain)
+	#from litex.build.yosys_wrapper import YosysWrapper
+	#YosysWrapper._default_template =  [] #see .ys file for default, [] to skip JSON build
+
+	sys_clk_freq=int(48e6)
+	kwargs = soc_core_argdict(args)
+	kwargs["uart_name"] = "usb_acm" #set this to get USB ACM serial
+    #platform.add_extension(gsd_orangecrab.feather_serial) #rx=GPIO:0 & tx=GPIO:1
+	soc = SoCCore(platform, sys_clk_freq, **kwargs)
+	soc.submodules.crg = _CRGECP5(platform, sys_clk_freq, timings["pix_clk"])
+	soc.button = ~platform.usr_btn
+
+	if DVI:
+		from litex.soc.cores.video import VideoHDMIPHY
+		#https://github.com/machdyne/ddmi/"
+		#(PMPOD UP 1-4) D2- D1- D0- C- G +V"
+        #               D2+ D1+ D0+ C+ G +V"
+		platform.add_extension([("hdmi_out", 0, #can use GND and just 4 more wires
+			Subsignal("data2_p", Pins("R17"), IOStandard("LVCMOS33")), #SCK
+			#Subsignal("data2_n", Pins("??"), IOStandard("LVCMOS33")),
+			Subsignal("data1_p", Pins("N16"), IOStandard("LVCMOS33")), #MOSI
+			#Subsignal("data1_n", Pins("??"), IOStandard("LVCMOS33")),
+			Subsignal("data0_p", Pins("N15"), IOStandard("LVCMOS33")), #MISO
+			#Subsignal("data0_n", Pins("??"), IOStandard("LVCMOS33")),
+			Subsignal("clk_p",   Pins("C10"), IOStandard("LVCMOS33")), #SDA
+			#Subsignal("clk_n",   Pins("??"), IOStandard("LVCMOS33"))
+			)])
+		soc.submodules.videophy = VideoHDMIPHY(platform.request("hdmi_out"), clock_domain="hdmi")
+		add_video_custom_generator(soc, phy=soc.videophy, timings=timings, clock_domain="hdmi")
+	else:
+		from litex.soc.cores.video import VideoVGAPHY
+		platform.add_extension([("vga", 0, #for PMOD VGA
+		    Subsignal("hsync", Pins("N15")), #MISO
+		    Subsignal("vsync", Pins("N16")), #MOSI
+		    Subsignal("b", Pins("R17")), #SCK
+		    Subsignal("g", Pins("C10")), #SDA
+		    Subsignal("r", Pins("C9")), #SCL
+		    IOStandard("LVCMOS33"))])
+		soc.submodules.videophy = VideoVGAPHY(platform.request("vga"), clock_domain="vga")
+		add_video_custom_generator(soc, phy=soc.videophy, timings=timings, clock_domain="vga")
+	return soc
+
 if __name__ == "__main__":
 	boardname = sys.argv[1]
 	sys.argv = sys.argv[1:] #remove first argument
@@ -166,14 +299,21 @@ if __name__ == "__main__":
 	args = parser.parse_args()
 
 	timings = get_video_timings()
+	run = True
 	if boardname == "de0nano": soc = build_de0nano(args, timings)
-	if boardname == "arty": soc = build_arty(args, timings)
-
-	soc.platform.add_source_dir("./vhd/all_vhdl_files", recursive=False)
+	if boardname == "digilent_arty": soc = build_arty(args, timings)
+	if boardname == "gsd_orangecrab":
+		VHDL=False
+		run=False
+		soc = build_orangecrab(args, timings)
+	if VHDL:
+		soc.platform.add_source_dir("./vhd/all_vhdl_files", recursive=False)
+	else:
+		soc.platform.add_source("./vhd/all_vhdl_files/top_verilog.v")
 
 
 	builder = Builder(soc)
-	builder.build(run=True)
+	builder.build(run=run)
 
 
 
