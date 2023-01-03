@@ -13,6 +13,12 @@ A fully working interactive raytraced game written in C and translated to a circ
 
 A detailed article describing this work is [here](https://github.com/JulianKemmerer/PipelineC-Graphics/blob/main/doc/Sphery-vs-Shapes.pdf)
 
+
+# Supported boards
+
+Boards supported are the [Digilent Arty-100T](https://digilent.com/reference/programmable-logic/arty-a7/start) and the [OrangeCrab 85F v0.2](https://1bitsquared.com/products/orangecrab).
+After selecting the device, use `make load` for the Arty or `BOARD=gsd_orangecrab make load` for the OrangeCrab. The device is set as a #pragma in pipelinec_app.c (uncomment xc7a100tcsg324-1 or LFE5U-85F-6BG381C respectively)
+
 # Contact
 
 Twitter: 
