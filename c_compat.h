@@ -38,7 +38,7 @@ inline float3 float3_add(float3 left, float3 right) { float3 r = { left.x + righ
 inline float3 float3_sub(float3 left, float3 right) { float3 r = { left.x - right.x, left.y - right.y, left.z - right.z }; return r; }
 inline float3 float3_mul(float3 left, float3 right) { float3 r = { left.x * right.x, left.y * right.y, left.z * right.z }; return r; }
 inline float3 float3_mul_float(float3 left, float_type right) { float3 r = { left.x * right, left.y * right, left.z * right }; return r; }
-
+inline float3 float3_sub_float(float3 left, float_type right) { float3 r = { left.x - right, left.y - right, left.z - right }; return r; }
 
 #else // CCOMPILE = false
 
