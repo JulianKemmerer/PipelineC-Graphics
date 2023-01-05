@@ -56,7 +56,7 @@ tr_gen: tr_pipelinec.gen.c simulator_main.cpp
 	#clang $(INCLUDE) -E -D__PIPELINEC__ $(PIPELINEC_MAIN) > $(PIPELINEC_MAIN).gen
 	$(PIPELINEC) $(PIPELINEC_MAIN) --out_dir ./build --comb --sim --verilator
 
-./synth/top/top.v: pipelinec_app.c tr_pipelinec.gen.c
+./synth/top/top.v: pipelinec_app.c tr_pipelinec.gen.c #FIXME: this verilog generation is duplicated
 	#rm -Rf ./synth
 	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_config.h
 	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_config.h
@@ -69,7 +69,7 @@ tr_gen: tr_pipelinec.gen.c simulator_main.cpp
 	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_config.h
 	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_config.h
 	echo "#define FRAME_FPS" $(FRAME_FPS) >> pipelinec_app_config.h
-	$(PIPELINEC) ./pipelinec_app.c --out_dir ./fullsynth
+	$(PIPELINEC) ./pipelinec_app.c --coarse --out_dir ./fullsynth #--coarse needed for ECP5, maybe ok for Arty
 
 compile: ./build/top/top.v
 
@@ -106,7 +106,6 @@ $(GATEWAREDIR)/digilent_arty.bit: fullsynth ./litex_soc.py
 	#FIXME: unify builr and vhd directories
 	mkdir -p ./vhd/all_vhdl_files/
 	cp `cat ./fullsynth/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
-	cp top_glue_no_struct.vhd ./vhd/all_vhdl_files/
 	FRAME_WIDTH=$(FRAME_WIDTH) FRAME_HEIGHT=$(FRAME_HEIGHT) FRAME_FPS=$(FRAME_FPS) python3 ./litex_soc.py $(BOARD) --cpu-type=None
 
 digilent_arty: $(GATEWAREDIR)/digilent_arty.bit
@@ -116,7 +115,6 @@ de0nano: fullsynth ./litex_soc.py
 	#FIXME: unify builr and vhd directories
 	mkdir -p ./vhd/all_vhdl_files/
 	cp `cat ./fullsynth/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
-	cp top_glue_no_struct.vhd ./vhd/all_vhdl_files/
 	python3 ./litex_soc.py $(BOARD) --cpu-type=None
 	openFPGALoader -b $(BOARD) ./build/terasic_de0nano/gateware/terasic_de0nano.rbf
 
@@ -129,7 +127,6 @@ load: $(BOARD)
 	$(PIPELINEC) pipelinec_litex.c --out_dir ./vhd # "try --coarse --start 75 / "--comb --sim" also works! with no glitches
 	mkdir -p ./vhd/all_vhdl_files/
 	cp `cat ./vhd/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
-	cp top_glue_no_struct.vhd ./vhd/all_vhdl_files/
 
 #vhd: ./vhd/all_vhdl_files/top.vhd ./litex_soc.py
 #	python3 ./litex_soc.py $(BOARD) --cpu-type=None

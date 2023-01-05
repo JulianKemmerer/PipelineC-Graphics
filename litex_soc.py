@@ -20,38 +20,25 @@ DVI = True # False = Use PMOD B+C VGA
 VHDL = True
 
 class GraphicsGenerator(Module):
-    def __init__(self, button, use_glue=False):
+    def __init__(self, button):
         self.enable   = Signal(reset=1)
         self.vtg_sink = vtg_sink   = stream.Endpoint(video_timing_layout)
         self.source   = source = stream.Endpoint(video_data_layout)
         self.comb += vtg_sink.connect(source, keep={"valid", "ready", "last", "de", "hsync", "vsync"}),
 
         framedisplay = Module()
-        self.return_output_a = Signal(8)
-        if use_glue:
-          #FIXME: use a dict with string as below, so glue code can be avoided (only needed to access .xxx fields)
-          framedisplay.specials += Instance("top_glue_no_struct", #FIXME: figure out how to avoid the glue and access the output structure
-           i_videoclk = ClockSignal("sys"), #results in "hdmi" (or corresponding video) clock
-            i_video_x = vtg_sink.hcount,
-            i_video_y = vtg_sink.vcount,
-            i_reset = ResetSignal("sys"),
-            i_jump_pressed = button,
-            o_pixel_a = self.return_output_a, #FIXME: just Signal(8)
-            o_pixel_r = source.r,
-            o_pixel_g = source.g,
-            o_pixel_b = source.b
-          )
-        else:
-          framedisplay_signals = {
-            "i_pixel_clock": ClockSignal("sys"), #results in "hdmi" (or corresponding video) clock
-            "i_ext_vga_x": vtg_sink.hcount,
-            "i_ext_vga_y": vtg_sink.vcount,
-            "i_buttons_module_btn": button,
-            "o_dvi_red_DEBUG_return_output": source.r,
-            "o_dvi_green_DEBUG_return_output": source.g,
-            "o_dvi_blue_DEBUG_return_output": source.b }
-          framedisplay.specials += Instance("top", **framedisplay_signals)
-    
+        framedisplay_signals = {
+          "i_pixel_clock": ClockSignal("sys"),
+          "i_ext_vga_x": vtg_sink.hcount,
+          "i_ext_vga_y": vtg_sink.vcount,
+          #"i_buttons_module_btn[3]": ResetSignal("sys"),
+          "i_buttons_module_btn": button,
+          "o_dvi_red_DEBUG_return_output": source.r,
+          "o_dvi_green_DEBUG_return_output": source.g,
+          "o_dvi_blue_DEBUG_return_output": source.b,
+          }
+        framedisplay.specials += Instance("top", **framedisplay_signals)
+
         self.framedisplay = framedisplay 
         self.submodules += framedisplay
 
@@ -62,7 +49,7 @@ def add_video_custom_generator(soc, name="video", phy=None, timings="800x600@60H
     vtg = ClockDomainsRenamer(clock_domain)(vtg)
     setattr(soc.submodules, f"{name}_vtg", vtg)
 
-    graphics = GraphicsGenerator(soc.button, VHDL)
+    graphics = GraphicsGenerator(soc.button)
     graphics = ClockDomainsRenamer(clock_domain)(graphics)
     setattr(soc.submodules, name, graphics)
 
@@ -147,12 +134,12 @@ def build_arty(args, timings):
 	if DVI:
 		from litex.soc.cores.video import VideoS7HDMIPHY
 		platform.add_extension([("hdmi_out", 0, #DVI pmod breakout on pmod C (seems not working in others than C)
-			Subsignal("data2_p", Pins("pmodc:0"), IOStandard("TMDS_33")), #outputs 2-1-0 inverted, maybe the custom adaptor has wrong wirings?
-			Subsignal("data2_n", Pins("pmodc:1"), IOStandard("TMDS_33")),
+			Subsignal("data0_p", Pins("pmodc:0"), IOStandard("TMDS_33")),
+			Subsignal("data0_n", Pins("pmodc:1"), IOStandard("TMDS_33")),
 			Subsignal("data1_p", Pins("pmodc:2"), IOStandard("TMDS_33")),
 			Subsignal("data1_n", Pins("pmodc:3"), IOStandard("TMDS_33")),
-			Subsignal("data0_p", Pins("pmodc:4"), IOStandard("TMDS_33")),
-			Subsignal("data0_n", Pins("pmodc:5"), IOStandard("TMDS_33")),
+			Subsignal("data2_p", Pins("pmodc:4"), IOStandard("TMDS_33")),
+			Subsignal("data2_n", Pins("pmodc:5"), IOStandard("TMDS_33")),
 			Subsignal("clk_p",   Pins("pmodc:6"), IOStandard("TMDS_33")),
 			Subsignal("clk_n",   Pins("pmodc:7"), IOStandard("TMDS_33")))])
 		soc.submodules.videophy = VideoS7HDMIPHY(platform.request("hdmi_out"), clock_domain="hdmi")
