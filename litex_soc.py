@@ -162,7 +162,7 @@ class _CRG_arty(Module):
 
 def build_arty(args, timings):
 	from litex_boards.platforms import digilent_arty as board
-	platform = board.Platform(variant="a7-35", toolchain="vivado") # a7-35 or a7-100 
+	platform = board.Platform(variant="a7-100", toolchain="vivado") # a7-35 or a7-100 
 	#platform = board.Platform(toolchain="yosys+nextpnr") #brings errors about usage of DSP48E1 (* operator) and of ODDR
 	sys_clk_freq = int(100e6)
 	soc = SoCCore(platform, sys_clk_freq, **soc_core_argdict(args))
