@@ -14,12 +14,15 @@ A fully working interactive raytraced game written in C and translated to a circ
 A detailed article describing this work is [here](https://github.com/JulianKemmerer/PipelineC-Graphics/blob/main/doc/Sphery-vs-Shapes.pdf)
 
 
-# Supported boards
+# Building
 
 Boards supported are the [Digilent Arty-100T](https://digilent.com/reference/programmable-logic/arty-a7/start) and the [OrangeCrab 85F v0.2](https://1bitsquared.com/products/orangecrab).<br>
+<br>
 For the Arty: `make clean BOARD=digilent_arty FRAME_WIDTH=1920 FRAME_HEIGHT=1080 load`<br>
-For the OrangeCrab: `make clean BOARD=gsd_orangecrab load` (default 640x480 resolution)<br>
-You need to select DVI=True or DVI=False in litex_soc.py to use a VGA PMOD or output digital video, respectively
+For the OrangeCrab: `make clean BOARD=gsd_orangecrab load` (default 640x480 resolution, uses open source toolchain for synthesis)<br>
+You need to select `DVI=True` or `DVI=False` in [litex_soc.py](https://github.com/JulianKemmerer/PipelineC-Graphics/blob/main/litex_soc.py#L19) to output digital video or analog video with a VGA PMOD<br>
+<br>
+Full pipelining can take some hours, for faster processing you can try simulation options like `make sim`, `make gen`, or `make verilator`
 # Contact
 
 Twitter: 
