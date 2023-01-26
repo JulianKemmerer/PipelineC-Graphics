@@ -16,9 +16,10 @@ A detailed article describing this work is [here](https://github.com/JulianKemme
 
 # Supported boards
 
-Boards supported are the [Digilent Arty-100T](https://digilent.com/reference/programmable-logic/arty-a7/start) and the [OrangeCrab 85F v0.2](https://1bitsquared.com/products/orangecrab).
-After selecting the device, use `make load` for the Arty or `BOARD=gsd_orangecrab make load` for the OrangeCrab. The device is set as a #pragma in pipelinec_app.c (uncomment xc7a100tcsg324-1 or LFE5U-85F-6BG381C respectively)
-
+Boards supported are the [Digilent Arty-100T](https://digilent.com/reference/programmable-logic/arty-a7/start) and the [OrangeCrab 85F v0.2](https://1bitsquared.com/products/orangecrab).<br>
+For the Arty: `make clean BOARD=digilent_arty FRAME_WIDTH=1920 FRAME_HEIGHT=1080 load`<br>
+For the OrangeCrab: `make clean BOARD=gsd_orangecrab load` (default 640x480 resolution)<br>
+You need to select DVI=True or DVI=False in litex_soc.py to use a VGA PMOD or output digital video, respectively
 # Contact
 
 Twitter: 
