@@ -104,7 +104,7 @@ cxxrtl_top: ./synth/top/top.v
 cxxrtl: ./cxxrtl_build/cxxrtl_top
 	./cxxrtl_build/cxxrtl_top
 
-$(GATEWAREDIR)/digilent_arty.bit: ./fullsynth/top/top-arty.vhd ./litex_soc.py
+$(GATEWAREDIR)/digilent_arty.bit: ./fullsynth/top/top-digilent_arty.vhd ./litex_soc.py
 	#FIXME: unify builr and vhd directories
 	mkdir -p ./vhd/all_vhdl_files/
 	cp `cat ./fullsynth/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
