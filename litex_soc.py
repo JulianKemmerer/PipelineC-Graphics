@@ -27,17 +27,52 @@ class GraphicsGenerator(Module):
         self.comb += vtg_sink.connect(source, keep={"valid", "ready", "last", "de", "hsync", "vsync"}),
 
         framedisplay = Module()
-        framedisplay_signals = {
-          "i_pixel_clock": ClockSignal("sys"),
-          "i_ext_vga_x": vtg_sink.hcount,
-          "i_ext_vga_y": vtg_sink.vcount,
-          #"i_buttons_module_btn[3]": ResetSignal("sys"),
-          "i_buttons_module_btn": button,
-          "o_dvi_red_DEBUG_return_output": source.r,
-          "o_dvi_green_DEBUG_return_output": source.g,
-          "o_dvi_blue_DEBUG_return_output": source.b,
-          }
-        framedisplay.specials += Instance("top", **framedisplay_signals)
+        if True:
+          framedisplay_signals = {
+            "i_pixel_clock": ClockSignal("sys"),
+           "i_ext_vga_x": vtg_sink.hcount,
+           "i_ext_vga_y": vtg_sink.vcount,
+            #"i_buttons_module_btn[3]": ResetSignal("sys"),
+            "i_buttons_module_btn": button,
+            "o_dvi_red_DEBUG_return_output": source.r,
+            "o_dvi_green_DEBUG_return_output": source.g,
+            "o_dvi_blue_DEBUG_return_output": source.b,
+            }
+          framedisplay.specials += Instance("top", **framedisplay_signals)
+        else:
+          """
+          module M_frame_display__display (
+          input  [10:0] in_pix_x,
+          input  [10:0] in_pix_y,
+          input  [0:0] in_pix_active,
+          input  [0:0] in_pix_vblank,
+          input  [0:0] in_vga_hs,
+          input  [0:0] in_vga_vs,
+          output  [5:0] out_pix_r,
+          output  [5:0] out_pix_g,
+          output  [5:0] out_pix_b,
+          output out_done,
+          input reset,
+          output out_clock,
+          input clock
+          );
+          """
+          framedisplay.specials += Instance("M_frame_display__display",
+            i_in_pix_x = vtg_sink.hcount,
+            i_in_pix_y = vtg_sink.vcount,
+            i_in_pix_active = vtg_sink.de,
+            i_in_pix_vblank = vtg_sink.vsync,
+            #i_in_vga_hs = vtg_sink.hsync,
+            #i_in_vga_vs = vtg_sink.vsync,
+            o_out_pix_r = source.r[2:8],
+            o_out_pix_g = source.g[2:8],
+            o_out_pix_b = source.b[2:8],
+            #o_out_done = self.done,
+            i_reset = ResetSignal("sys"),
+            #o_out_clock = self.out_clock,
+            i_clock = ClockSignal("sys") #results in "hdmi" clock
+          )
+        
 
         self.framedisplay = framedisplay 
         self.submodules += framedisplay
@@ -96,6 +131,9 @@ def get_video_timings():
 	    timings["pix_clk"] = 150e6 #fix default 148.5MHz
 	if timings_sel == "1280x720@60Hz":
 	    timings["pix_clk"] = 72e6 #fix default 74.25MHz
+	#if timings_sel == "1024x768@60Hz":
+	#    timings["pix_clk"] = 52.5e6 #fix default 65MHz see https://github.com/JulianKemmerer/PipelineC/issues/152
+	print("pixel clock", timings["pix_clk"]) 
 	return timings
 
 
@@ -296,7 +334,7 @@ if __name__ == "__main__":
 	if VHDL:
 		soc.platform.add_source_dir("./vhd/all_vhdl_files", recursive=False)
 	else:
-		soc.platform.add_source("./vhd/all_vhdl_files/top_verilog.v")
+		soc.platform.add_source("./vhd/all_vhdl_files/top.v")
 
 
 	builder = Builder(soc)

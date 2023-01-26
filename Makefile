@@ -10,8 +10,8 @@ PIPELINEC_ROOT?=../PipelineC
 PIPELINEC?=$(PIPELINEC_ROOT)/src/pipelinec
 INCLUDE+=-I$(PIPELINEC_ROOT) -I../CflexHDL/include
 PIPELINEC_MAIN?=./pipelinec_app.c
-#BOARD?=gsd_orangecrab
-BOARD?=digilent_arty
+BOARD?=gsd_orangecrab
+#BOARD?=digilent_arty
 VALENTYUSB=../OrangeCrab-test-sw/hw/deps/valentyusb
 OMP_FLAGS=-fopenmp=libiomp5
 CLANGXX?=clang++-14
@@ -43,39 +43,41 @@ metrics.c: tr_pipelinec.gen.c
 gen: tr_gen
 	./tr_gen
 
+pipelinec_app_config.h:
+	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_config.h
+	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_config.h
+	echo "#define FRAME_FPS" $(FRAME_FPS) >> pipelinec_app_config.h
+
 tr_gen: tr_pipelinec.gen.c simulator_main.cpp
 	clang $(INCLUDE) -x c++ -Dget_scene=scene_t -DCCOMPILE -DFRAME_WIDTH=$(FRAME_WIDTH) -DFRAME_HEIGHT=$(FRAME_HEIGHT) -include pipelinec_compat.h -include float_type.h -include fixed_type.h -c tr_pipelinec.gen.c -o tr_pipelinec.gen.o
 	$(CLANGXX) -DCCOMPILE -D_FRAME_WIDTH=$(FRAME_WIDTH) -D_FRAME_HEIGHT=$(FRAME_HEIGHT) $(INCLUDE) -O3 $(OMP_FLAGS) -ffast-math `sdl2-config --cflags --libs` simulator_main.cpp -o tr_gen
 
 ./build/top/top.v: $(PIPELINEC_MAIN) pipelinec_app.c tr_pipelinec.gen.c
 	rm -Rf ./build
-	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_config.h
-	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_config.h
-	echo "#define FRAME_FPS" $(FRAME_FPS) >> pipelinec_app_config.h
 	echo "#define USE_VERILATOR" >> pipelinec_app_config.h
 	#clang $(INCLUDE) -E -D__PIPELINEC__ $(PIPELINEC_MAIN) > $(PIPELINEC_MAIN).gen
 	$(PIPELINEC) $(PIPELINEC_MAIN) --out_dir ./build --comb --sim --verilator
 
 ./synth/top/top.v: pipelinec_app.c tr_pipelinec.gen.c #FIXME: this verilog generation is duplicated
 	#rm -Rf ./synth
-	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_config.h
-	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_config.h
-	echo "#define FRAME_FPS" $(FRAME_FPS) >> pipelinec_app_config.h
 	$(PIPELINEC) ./pipelinec_app.c --out_dir ./synth --comb #delete --comb for full pipelining (~10% more resources and slower)
 	@echo FLOAT USAGE:
 	grep -v fixed_make_from_float synth/float_module_instances.log
 
-./fullsynth/top/top.vhd: pipelinec_app.c tr_pipelinec.gen.c
-	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_config.h
-	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_config.h
-	echo "#define FRAME_FPS" $(FRAME_FPS) >> pipelinec_app_config.h
-	$(PIPELINEC) ./pipelinec_app.c --coarse --out_dir ./fullsynth #--coarse needed for ECP5, maybe ok for Arty
+./fullsynth/top/top-digilent_arty.vhd: pipelinec_app_config.h pipelinec_app.c tr_pipelinec.gen.c
+	echo \#pragma PART "xc7a100tcsg324-1" >> pipelinec_app_config.h # Arty 35t
+	$(PIPELINEC) ./pipelinec_app.c --hier_mult .9375 --out_dir ./fullsynth
+
+./fullsynth/top/top-gsd_orangecrab.vhd: pipelinec_app_config.h pipelinec_app.c tr_pipelinec.gen.c
+	echo \#pragma PART "LFE5U-85F-6BG381C" >> pipelinec_app_config.h # An ECP5U 85F part (OrgangeCrab 85F) 
+	$(PIPELINEC) ./pipelinec_app.c --coarse --sweep --start 70 --out_dir ./fullsynth
+	cp ./fullsynth/top/top.vhd ./fullsynth/top/top-$(BOARD).vhd
+
+./fullsynth/top/top.vhd: ./fullsynth/top/top-$(BOARD).vhd
 
 compile: ./build/top/top.v
 
 synth: ./synth/top/top.v
-
-fullsynth: ./fullsynth/top/top.vhd
 
 verilator: obj_dir/Vtop
 	./obj_dir/Vtop
@@ -102,7 +104,7 @@ cxxrtl_top: ./synth/top/top.v
 cxxrtl: ./cxxrtl_build/cxxrtl_top
 	./cxxrtl_build/cxxrtl_top
 
-$(GATEWAREDIR)/digilent_arty.bit: fullsynth ./litex_soc.py
+$(GATEWAREDIR)/digilent_arty.bit: ./fullsynth/top/top-arty.vhd ./litex_soc.py
 	#FIXME: unify builr and vhd directories
 	mkdir -p ./vhd/all_vhdl_files/
 	cp `cat ./fullsynth/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
@@ -111,7 +113,7 @@ $(GATEWAREDIR)/digilent_arty.bit: fullsynth ./litex_soc.py
 digilent_arty: $(GATEWAREDIR)/digilent_arty.bit
 	openFPGALoader -b arty --freq 30e6 $<
 
-de0nano: fullsynth ./litex_soc.py
+de0nano: ./fullsynth/top/top.vhd ./litex_soc.py
 	#FIXME: unify builr and vhd directories
 	mkdir -p ./vhd/all_vhdl_files/
 	cp `cat ./fullsynth/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
@@ -120,20 +122,11 @@ de0nano: fullsynth ./litex_soc.py
 
 load: $(BOARD)
 
-./vhd/all_vhdl_files/top.vhd: pipelinec_litex.c tr_pipelinec.gen.c top_glue_no_struct.vhd
-	rm -Rf ./vhd
-	echo "#define FRAME_WIDTH" $(FRAME_WIDTH) > pipelinec_app_config.h
-	echo "#define FRAME_HEIGHT" $(FRAME_HEIGHT) >> pipelinec_app_config.h
-	$(PIPELINEC) pipelinec_litex.c --out_dir ./vhd # "try --coarse --start 75 / "--comb --sim" also works! with no glitches
-	mkdir -p ./vhd/all_vhdl_files/
-	cp `cat ./vhd/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
-
-#vhd: ./vhd/all_vhdl_files/top.vhd ./litex_soc.py
-#	python3 ./litex_soc.py $(BOARD) --cpu-type=None
 	
 
 clean:
-	rm -Rf tr.cpp tr_pipelinec.gen.c *.o tr_sim tr_gen vhd build cxxrtl_build obj_dir synth fullsynth tr_pipelinec.gen.c tr_pipelinec.E.cpp
+	rm -Rf tr.cpp tr_pipelinec.gen.c *.o tr_sim tr_gen vhd build cxxrtl_build obj_dir synth \
+	fullsynth tr_pipelinec.gen.c tr_pipelinec.E.cpp pipelinec_app_config.h
 
 
 pipelinec-synth: #synth and load with pipelinec (NOTE: fixed 1080p PLLs)
@@ -141,7 +134,7 @@ pipelinec-synth: #synth and load with pipelinec (NOTE: fixed 1080p PLLs)
 	vivado arty.xpr -mode batch -source gen_bit.tcl 
 	vivado arty.xpr -mode batch -source load_bit.tcl
 
-gsd_orangecrab: ./build/gsd_orangecrab/gateware/gsd_orangecrab.dfu
+gsd_orangecrab: $(GATEWAREDIR)/gsd_orangecrab.dfu
 	read -t 10 -p "Activate bootloader before upload (press board's button for 1 second)"
 	dfu-util -a 0 -D $<
 

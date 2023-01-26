@@ -1,10 +1,5 @@
 // Set the target FPGA part
-//#pragma PART "LFE5U-85F-6BG381C" // An ECP5U 85F part
-//#pragma PART "xc7a35ticsg324-1l" // Arty 35t
-#pragma PART "xc7a100tcsg324-1" // Arty 100t
-//#define LITEX_INTEGRATION
-//#define POCKET_INTEGRATION
-//#pragma PART "5CEBA4F23C8" // Analogue Pocket
+#define LITEX_INTEGRATION
 
 // CflexHDL compile setting
 #define CCOMPILE
