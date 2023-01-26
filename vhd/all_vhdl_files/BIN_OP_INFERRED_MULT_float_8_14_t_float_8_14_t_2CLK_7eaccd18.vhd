@@ -1,0 +1,837 @@
+-- Timing params:
+--   Fixed?: False
+--   Pipeline Slices: [0.3050595945950183]
+--   Input regs?: False
+--   Output regs?: False
+library std;
+use std.textio.all;
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+use ieee.float_pkg.all;
+use work.c_structs_pkg.all;
+-- Submodules: 31
+entity BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_2CLK_7eaccd18 is
+port(
+ clk : in std_logic;
+ left : in std_logic_vector(22 downto 0);
+ right : in std_logic_vector(22 downto 0);
+ return_output : out std_logic_vector(22 downto 0));
+end BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_2CLK_7eaccd18;
+architecture arch of BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_2CLK_7eaccd18 is
+-- Types and such
+-- Declarations
+attribute mark_debug : string;
+constant PIPELINE_LATENCY : integer := 2;
+-- All of the wires/regs in function
+-- Stage 0
+signal REG_STAGE0_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond : unsigned(0 downto 0);
+signal REG_STAGE0_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond : unsigned(0 downto 0);
+signal REG_STAGE0_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue : unsigned(0 downto 0);
+signal REG_STAGE0_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond : unsigned(0 downto 0);
+signal REG_STAGE0_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond : unsigned(0 downto 0);
+signal REG_STAGE0_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond : unsigned(0 downto 0);
+signal REG_STAGE0_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left : unsigned(8 downto 0);
+signal COMB_STAGE0_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond : unsigned(0 downto 0);
+signal COMB_STAGE0_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond : unsigned(0 downto 0);
+signal COMB_STAGE0_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue : unsigned(0 downto 0);
+signal COMB_STAGE0_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond : unsigned(0 downto 0);
+signal COMB_STAGE0_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond : unsigned(0 downto 0);
+signal COMB_STAGE0_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond : unsigned(0 downto 0);
+signal COMB_STAGE0_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left : unsigned(8 downto 0);
+-- Stage 1
+signal REG_STAGE1_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond : unsigned(0 downto 0);
+signal REG_STAGE1_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond : unsigned(0 downto 0);
+signal REG_STAGE1_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output : unsigned(0 downto 0);
+signal REG_STAGE1_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond : unsigned(0 downto 0);
+signal REG_STAGE1_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond : unsigned(0 downto 0);
+signal REG_STAGE1_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left : unsigned(8 downto 0);
+signal COMB_STAGE1_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond : unsigned(0 downto 0);
+signal COMB_STAGE1_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond : unsigned(0 downto 0);
+signal COMB_STAGE1_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output : unsigned(0 downto 0);
+signal COMB_STAGE1_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond : unsigned(0 downto 0);
+signal COMB_STAGE1_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond : unsigned(0 downto 0);
+signal COMB_STAGE1_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left : unsigned(8 downto 0);
+-- Each function instance gets signals
+-- BIN_OP_XOR[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066]
+signal BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_left : unsigned(0 downto 0);
+signal BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_right : unsigned(0 downto 0);
+signal BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_return_output : unsigned(0 downto 0);
+
+-- BIN_OP_EQ[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95]
+signal BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95_left : unsigned(8 downto 0);
+signal BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95_right : unsigned(7 downto 0);
+signal BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95_return_output : unsigned(0 downto 0);
+
+-- BIN_OP_EQ[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80]
+signal BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80_left : unsigned(8 downto 0);
+signal BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80_right : unsigned(7 downto 0);
+signal BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80_return_output : unsigned(0 downto 0);
+
+-- BIN_OP_OR[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5]
+signal BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_left : unsigned(0 downto 0);
+signal BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_right : unsigned(0 downto 0);
+signal BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_return_output : unsigned(0 downto 0);
+
+-- z_exponent_MUX[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c]
+signal z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond : unsigned(0 downto 0);
+signal z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue : unsigned(7 downto 0);
+signal z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iffalse : unsigned(7 downto 0);
+signal z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output : unsigned(7 downto 0);
+
+-- z_mantissa_MUX[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c]
+signal z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond : unsigned(0 downto 0);
+signal z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue : unsigned(13 downto 0);
+signal z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iffalse : unsigned(13 downto 0);
+signal z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output : unsigned(13 downto 0);
+
+-- z_sign_MUX[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c]
+signal z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond : unsigned(0 downto 0);
+signal z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue : unsigned(0 downto 0);
+signal z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iffalse : unsigned(0 downto 0);
+signal z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output : unsigned(0 downto 0);
+
+-- BIN_OP_EQ[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc]
+signal BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc_left : unsigned(8 downto 0);
+signal BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc_right : unsigned(0 downto 0);
+signal BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc_return_output : unsigned(0 downto 0);
+
+-- BIN_OP_EQ[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce]
+signal BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce_left : unsigned(8 downto 0);
+signal BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce_right : unsigned(0 downto 0);
+signal BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce_return_output : unsigned(0 downto 0);
+
+-- BIN_OP_OR[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5]
+signal BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_left : unsigned(0 downto 0);
+signal BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_right : unsigned(0 downto 0);
+signal BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_return_output : unsigned(0 downto 0);
+
+-- z_exponent_MUX[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7]
+signal z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond : unsigned(0 downto 0);
+signal z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iftrue : unsigned(7 downto 0);
+signal z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iffalse : unsigned(7 downto 0);
+signal z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output : unsigned(7 downto 0);
+
+-- z_mantissa_MUX[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7]
+signal z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond : unsigned(0 downto 0);
+signal z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iftrue : unsigned(13 downto 0);
+signal z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iffalse : unsigned(13 downto 0);
+signal z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output : unsigned(13 downto 0);
+
+-- z_sign_MUX[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7]
+signal z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond : unsigned(0 downto 0);
+signal z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iftrue : unsigned(0 downto 0);
+signal z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iffalse : unsigned(0 downto 0);
+signal z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output : unsigned(0 downto 0);
+
+-- BIN_OP_INFERRED_MULT[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec]
+signal BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_left : unsigned(14 downto 0);
+signal BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_right : unsigned(14 downto 0);
+signal BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_return_output : unsigned(29 downto 0);
+
+-- z_mantissa_MUX[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d]
+signal z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_cond : unsigned(0 downto 0);
+signal z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_iftrue : unsigned(13 downto 0);
+signal z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_iffalse : unsigned(13 downto 0);
+signal z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_return_output : unsigned(13 downto 0);
+
+-- BIN_OP_PLUS[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e]
+signal BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e_left : unsigned(8 downto 0);
+signal BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e_right : unsigned(8 downto 0);
+signal BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e_return_output : unsigned(9 downto 0);
+
+-- BIN_OP_PLUS[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68]
+signal BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left : unsigned(8 downto 0);
+signal BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_right : unsigned(0 downto 0);
+signal BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_return_output : unsigned(9 downto 0);
+
+-- BIN_OP_MINUS[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149]
+signal BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149_left : unsigned(8 downto 0);
+signal BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149_right : unsigned(6 downto 0);
+signal BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149_return_output : unsigned(8 downto 0);
+
+function float_8_14_t_13_0( x : std_logic_vector) return unsigned is
+--variable x : std_logic_vector(22 downto 0);
+  variable return_output : unsigned(13 downto 0);
+begin
+return_output := unsigned(std_logic_vector(x(13 downto 0)));
+return return_output;
+end function;
+
+function float_8_14_t_21_14( x : std_logic_vector) return unsigned is
+--variable x : std_logic_vector(22 downto 0);
+  variable return_output : unsigned(7 downto 0);
+begin
+return_output := unsigned(std_logic_vector(x(21 downto 14)));
+return return_output;
+end function;
+
+function float_8_14_t_22_22( x : std_logic_vector) return unsigned is
+--variable x : std_logic_vector(22 downto 0);
+  variable return_output : unsigned(0 downto 0);
+begin
+for i in 0 to return_output'length-1 loop
+        return_output(i) := x(22- i);
+      end loop;
+return return_output;
+end function;
+
+function uint1_uint14( x : unsigned;
+ y : unsigned) return unsigned is
+
+  --variable x : unsigned(0 downto 0);
+  --variable y : unsigned(13 downto 0);
+  variable return_output : unsigned(14 downto 0);
+
+begin
+
+    return_output := unsigned(std_logic_vector(x)) & unsigned(std_logic_vector(y));
+    return return_output;
+
+end function;
+
+function uint30_29_29( x : unsigned) return unsigned is
+--variable x : unsigned(29 downto 0);
+  variable return_output : unsigned(0 downto 0);
+begin
+for i in 0 to return_output'length-1 loop
+        return_output(i) := x(29- i);
+      end loop;
+return return_output;
+end function;
+
+function uint30_28_15( x : unsigned) return unsigned is
+--variable x : unsigned(29 downto 0);
+  variable return_output : unsigned(13 downto 0);
+begin
+return_output := unsigned(std_logic_vector(x(28 downto 15)));
+return return_output;
+end function;
+
+function uint30_27_14( x : unsigned) return unsigned is
+--variable x : unsigned(29 downto 0);
+  variable return_output : unsigned(13 downto 0);
+begin
+return_output := unsigned(std_logic_vector(x(27 downto 14)));
+return return_output;
+end function;
+
+function uint9_7_0( x : unsigned) return unsigned is
+--variable x : unsigned(8 downto 0);
+  variable return_output : unsigned(7 downto 0);
+begin
+return_output := unsigned(std_logic_vector(x(7 downto 0)));
+return return_output;
+end function;
+
+function float_uint8_uint14( sign : unsigned;
+ exponent : unsigned;
+ mantissa : unsigned) return std_logic_vector is
+
+  --variable sign : unsigned(0 downto 0);
+  --variable exponent : unsigned(7 downto 0);
+  --variable mantissa : unsigned(13 downto 0);
+  variable return_output : std_logic_vector(22 downto 0);
+
+begin
+
+    return_output := std_logic_vector(sign) & std_logic_vector(exponent) & std_logic_vector(mantissa);
+    return return_output;
+
+end function;
+
+
+begin
+
+-- SUBMODULE INSTANCES 
+-- BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066
+BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066 : entity work.BIN_OP_XOR_uint1_t_uint1_t_0CLK_de264c78 port map (
+BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_left,
+BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_right,
+BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_return_output);
+
+-- BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95
+BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95 : entity work.BIN_OP_EQ_uint9_t_uint8_t_0CLK_de264c78 port map (
+BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95_left,
+BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95_right,
+BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95_return_output);
+
+-- BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80
+BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80 : entity work.BIN_OP_EQ_uint9_t_uint8_t_0CLK_de264c78 port map (
+BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80_left,
+BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80_right,
+BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80_return_output);
+
+-- BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5
+BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5 : entity work.BIN_OP_OR_uint1_t_uint1_t_0CLK_de264c78 port map (
+BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_left,
+BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_right,
+BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_return_output);
+
+-- z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c
+z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c : entity work.MUX_uint1_t_uint8_t_uint8_t_0CLK_de264c78 port map (
+z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond,
+z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue,
+z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iffalse,
+z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output);
+
+-- z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c
+z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c : entity work.MUX_uint1_t_uint14_t_uint14_t_0CLK_de264c78 port map (
+z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond,
+z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue,
+z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iffalse,
+z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output);
+
+-- z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c
+z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c : entity work.MUX_uint1_t_uint1_t_uint1_t_0CLK_de264c78 port map (
+z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond,
+z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue,
+z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iffalse,
+z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output);
+
+-- BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc
+BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc : entity work.BIN_OP_EQ_uint9_t_uint1_t_0CLK_de264c78 port map (
+BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc_left,
+BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc_right,
+BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc_return_output);
+
+-- BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce
+BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce : entity work.BIN_OP_EQ_uint9_t_uint1_t_0CLK_de264c78 port map (
+BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce_left,
+BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce_right,
+BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce_return_output);
+
+-- BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5
+BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5 : entity work.BIN_OP_OR_uint1_t_uint1_t_0CLK_de264c78 port map (
+BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_left,
+BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_right,
+BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_return_output);
+
+-- z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7
+z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7 : entity work.MUX_uint1_t_uint8_t_uint8_t_0CLK_de264c78 port map (
+z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond,
+z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iftrue,
+z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iffalse,
+z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output);
+
+-- z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7
+z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7 : entity work.MUX_uint1_t_uint14_t_uint14_t_0CLK_de264c78 port map (
+z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond,
+z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iftrue,
+z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iffalse,
+z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output);
+
+-- z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7
+z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7 : entity work.MUX_uint1_t_uint1_t_uint1_t_1CLK_3cb0a365 port map (
+clk,
+z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond,
+z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iftrue,
+z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iffalse,
+z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output);
+
+-- BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec
+BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec : entity work.BIN_OP_INFERRED_MULT_uint15_t_uint15_t_2CLK_d9e4e3ca port map (
+clk,
+BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_left,
+BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_right,
+BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_return_output);
+
+-- z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d
+z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d : entity work.MUX_uint1_t_uint14_t_uint14_t_0CLK_de264c78 port map (
+z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_cond,
+z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_iftrue,
+z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_iffalse,
+z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_return_output);
+
+-- BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e
+BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e : entity work.BIN_OP_PLUS_uint9_t_uint9_t_0CLK_de264c78 port map (
+BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e_left,
+BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e_right,
+BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e_return_output);
+
+-- BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68
+BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68 : entity work.BIN_OP_PLUS_uint9_t_uint1_t_0CLK_de264c78 port map (
+BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left,
+BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_right,
+BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_return_output);
+
+-- BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149
+BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149 : entity work.BIN_OP_MINUS_uint9_t_uint7_t_0CLK_de264c78 port map (
+BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149_left,
+BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149_right,
+BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149_return_output);
+
+
+
+-- Combinatorial process for pipeline stages
+process (
+ -- Inputs
+ left,
+ right,
+ -- Registers
+ -- Stage 0
+ REG_STAGE0_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond,
+ REG_STAGE0_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond,
+ REG_STAGE0_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue,
+ REG_STAGE0_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond,
+ REG_STAGE0_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond,
+ REG_STAGE0_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond,
+ REG_STAGE0_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left,
+ -- Stage 1
+ REG_STAGE1_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond,
+ REG_STAGE1_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond,
+ REG_STAGE1_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output,
+ REG_STAGE1_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond,
+ REG_STAGE1_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond,
+ REG_STAGE1_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left,
+ -- All submodule outputs
+ BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_return_output,
+ BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95_return_output,
+ BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80_return_output,
+ BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_return_output,
+ z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output,
+ z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output,
+ z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output,
+ BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc_return_output,
+ BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce_return_output,
+ BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_return_output,
+ z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output,
+ z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output,
+ z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output,
+ BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_return_output,
+ z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_return_output,
+ BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e_return_output,
+ BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_return_output,
+ BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149_return_output)
+is 
+ -- All of the wires in function
+ variable VAR_CLOCK_ENABLE : unsigned(0 downto 0);
+ variable VAR_left : std_logic_vector(22 downto 0);
+ variable VAR_right : std_logic_vector(22 downto 0);
+ variable VAR_return_output : std_logic_vector(22 downto 0);
+ variable VAR_x_mantissa : unsigned(13 downto 0);
+ variable VAR_float_8_14_t_13_0_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l12_c16_ba0a_return_output : unsigned(13 downto 0);
+ variable VAR_x_exponent_wide : unsigned(8 downto 0);
+ variable VAR_x_exponent_wide_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l14_c3_61c8 : unsigned(8 downto 0);
+ variable VAR_float_8_14_t_21_14_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l14_c21_8581_return_output : unsigned(7 downto 0);
+ variable VAR_x_sign : unsigned(0 downto 0);
+ variable VAR_float_8_14_t_22_22_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l16_c12_5250_return_output : unsigned(0 downto 0);
+ variable VAR_y_mantissa : unsigned(13 downto 0);
+ variable VAR_float_8_14_t_13_0_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l19_c16_dccc_return_output : unsigned(13 downto 0);
+ variable VAR_y_exponent_wide : unsigned(8 downto 0);
+ variable VAR_y_exponent_wide_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l21_c3_69b8 : unsigned(8 downto 0);
+ variable VAR_float_8_14_t_21_14_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l21_c21_917d_return_output : unsigned(7 downto 0);
+ variable VAR_y_sign : unsigned(0 downto 0);
+ variable VAR_float_8_14_t_22_22_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l23_c12_17dc_return_output : unsigned(0 downto 0);
+ variable VAR_z_mantissa : unsigned(13 downto 0);
+ variable VAR_z_exponent : unsigned(7 downto 0);
+ variable VAR_z_sign : unsigned(0 downto 0);
+ variable VAR_BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_left : unsigned(0 downto 0);
+ variable VAR_BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_right : unsigned(0 downto 0);
+ variable VAR_BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_return_output : unsigned(0 downto 0);
+ variable VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95_left : unsigned(8 downto 0);
+ variable VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95_right : unsigned(7 downto 0);
+ variable VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95_return_output : unsigned(0 downto 0);
+ variable VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_left : unsigned(0 downto 0);
+ variable VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80_left : unsigned(8 downto 0);
+ variable VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80_right : unsigned(7 downto 0);
+ variable VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80_return_output : unsigned(0 downto 0);
+ variable VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_right : unsigned(0 downto 0);
+ variable VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_return_output : unsigned(0 downto 0);
+ variable VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue : unsigned(7 downto 0);
+ variable VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iffalse : unsigned(7 downto 0);
+ variable VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output : unsigned(7 downto 0);
+ variable VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output : unsigned(7 downto 0);
+ variable VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond : unsigned(0 downto 0);
+ variable VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue : unsigned(13 downto 0);
+ variable VAR_z_mantissa_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l37_c5_e041 : unsigned(13 downto 0);
+ variable VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iffalse : unsigned(13 downto 0);
+ variable VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output : unsigned(13 downto 0);
+ variable VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output : unsigned(13 downto 0);
+ variable VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond : unsigned(0 downto 0);
+ variable VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue : unsigned(0 downto 0);
+ variable VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iffalse : unsigned(0 downto 0);
+ variable VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output : unsigned(0 downto 0);
+ variable VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output : unsigned(0 downto 0);
+ variable VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond : unsigned(0 downto 0);
+ variable VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc_left : unsigned(8 downto 0);
+ variable VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc_right : unsigned(0 downto 0);
+ variable VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc_return_output : unsigned(0 downto 0);
+ variable VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_left : unsigned(0 downto 0);
+ variable VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce_left : unsigned(8 downto 0);
+ variable VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce_right : unsigned(0 downto 0);
+ variable VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce_return_output : unsigned(0 downto 0);
+ variable VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_right : unsigned(0 downto 0);
+ variable VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_return_output : unsigned(0 downto 0);
+ variable VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iftrue : unsigned(7 downto 0);
+ variable VAR_z_exponent_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l42_c5_e74d : unsigned(7 downto 0);
+ variable VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iffalse : unsigned(7 downto 0);
+ variable VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond : unsigned(0 downto 0);
+ variable VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iftrue : unsigned(13 downto 0);
+ variable VAR_z_mantissa_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l43_c5_8416 : unsigned(13 downto 0);
+ variable VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iffalse : unsigned(13 downto 0);
+ variable VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_return_output : unsigned(13 downto 0);
+ variable VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond : unsigned(0 downto 0);
+ variable VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iftrue : unsigned(0 downto 0);
+ variable VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iffalse : unsigned(0 downto 0);
+ variable VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond : unsigned(0 downto 0);
+ variable VAR_aux : unsigned(0 downto 0);
+ variable VAR_aux2_x : unsigned(14 downto 0);
+ variable VAR_aux2_y : unsigned(14 downto 0);
+ variable VAR_aux2 : unsigned(29 downto 0);
+ variable VAR_BIAS : unsigned(6 downto 0);
+ variable VAR_uint1_uint14_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l57_c14_99cd_return_output : unsigned(14 downto 0);
+ variable VAR_uint1_uint14_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l58_c14_1a79_return_output : unsigned(14 downto 0);
+ variable VAR_BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_left : unsigned(14 downto 0);
+ variable VAR_BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_right : unsigned(14 downto 0);
+ variable VAR_BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_return_output : unsigned(29 downto 0);
+ variable VAR_uint30_29_29_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l61_c11_f79a_return_output : unsigned(0 downto 0);
+ variable VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_iftrue : unsigned(13 downto 0);
+ variable VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_iffalse : unsigned(13 downto 0);
+ variable VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_cond : unsigned(0 downto 0);
+ variable VAR_uint30_28_15_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l66_c20_e072_return_output : unsigned(13 downto 0);
+ variable VAR_uint30_27_14_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l71_c20_e96c_return_output : unsigned(13 downto 0);
+ variable VAR_exponent_sum : unsigned(8 downto 0);
+ variable VAR_exponent_sum_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c13_a7ef_0 : unsigned(8 downto 0);
+ variable VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e_left : unsigned(8 downto 0);
+ variable VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e_right : unsigned(8 downto 0);
+ variable VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e_return_output : unsigned(9 downto 0);
+ variable VAR_exponent_sum_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c5_37d6 : unsigned(8 downto 0);
+ variable VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left : unsigned(8 downto 0);
+ variable VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_right : unsigned(0 downto 0);
+ variable VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_return_output : unsigned(9 downto 0);
+ variable VAR_BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149_left : unsigned(8 downto 0);
+ variable VAR_BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149_right : unsigned(6 downto 0);
+ variable VAR_BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149_return_output : unsigned(8 downto 0);
+ variable VAR_uint9_7_0_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l84_c18_f768_return_output : unsigned(7 downto 0);
+ variable VAR_float_uint8_uint14_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l89_c10_8ebf_return_output : std_logic_vector(22 downto 0);
+begin
+ -- Constants and things derived from constants alone
+     -- Submodule level 0
+     VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue := to_unsigned(255, 8);
+     VAR_z_exponent_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l42_c5_e74d := resize(to_unsigned(0, 1), 8);
+     VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iftrue := VAR_z_exponent_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l42_c5_e74d;
+     VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc_right := to_unsigned(0, 1);
+     VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95_right := to_unsigned(255, 8);
+     VAR_BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149_right := to_unsigned(127, 7);
+     VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iftrue := to_unsigned(0, 1);
+     VAR_z_mantissa_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l37_c5_e041 := resize(to_unsigned(0, 1), 14);
+     VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue := VAR_z_mantissa_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l37_c5_e041;
+     VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80_right := to_unsigned(255, 8);
+     VAR_z_mantissa_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l43_c5_8416 := resize(to_unsigned(0, 1), 14);
+     VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iftrue := VAR_z_mantissa_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l43_c5_8416;
+     VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce_right := to_unsigned(0, 1);
+
+ -- Loop to construct simultaneous register transfers for each of the pipeline stages
+ -- LATENCY=0 is combinational Logic
+ for STAGE in 0 to PIPELINE_LATENCY loop
+   if STAGE = 0 then
+     -- Mux in inputs
+     VAR_left := left;
+     VAR_right := right;
+
+     -- Submodule level 0
+     -- float_8_14_t_22_22[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l23_c12_17dc] LATENCY=0
+     VAR_float_8_14_t_22_22_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l23_c12_17dc_return_output := float_8_14_t_22_22(
+     VAR_right);
+
+     -- float_8_14_t_13_0[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l12_c16_ba0a] LATENCY=0
+     VAR_float_8_14_t_13_0_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l12_c16_ba0a_return_output := float_8_14_t_13_0(
+     VAR_left);
+
+     -- float_8_14_t_21_14[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l14_c21_8581] LATENCY=0
+     VAR_float_8_14_t_21_14_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l14_c21_8581_return_output := float_8_14_t_21_14(
+     VAR_left);
+
+     -- float_8_14_t_22_22[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l16_c12_5250] LATENCY=0
+     VAR_float_8_14_t_22_22_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l16_c12_5250_return_output := float_8_14_t_22_22(
+     VAR_left);
+
+     -- float_8_14_t_13_0[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l19_c16_dccc] LATENCY=0
+     VAR_float_8_14_t_13_0_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l19_c16_dccc_return_output := float_8_14_t_13_0(
+     VAR_right);
+
+     -- float_8_14_t_21_14[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l21_c21_917d] LATENCY=0
+     VAR_float_8_14_t_21_14_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l21_c21_917d_return_output := float_8_14_t_21_14(
+     VAR_right);
+
+     -- Submodule level 1
+     VAR_x_exponent_wide_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l14_c3_61c8 := resize(VAR_float_8_14_t_21_14_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l14_c21_8581_return_output, 9);
+     VAR_y_exponent_wide_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l21_c3_69b8 := resize(VAR_float_8_14_t_21_14_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l21_c21_917d_return_output, 9);
+     VAR_BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_left := VAR_float_8_14_t_22_22_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l16_c12_5250_return_output;
+     VAR_BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_right := VAR_float_8_14_t_22_22_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l23_c12_17dc_return_output;
+     VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95_left := VAR_x_exponent_wide_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l14_c3_61c8;
+     VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc_left := VAR_x_exponent_wide_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l14_c3_61c8;
+     VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e_left := VAR_x_exponent_wide_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l14_c3_61c8;
+     VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80_left := VAR_y_exponent_wide_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l21_c3_69b8;
+     VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce_left := VAR_y_exponent_wide_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l21_c3_69b8;
+     VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e_right := VAR_y_exponent_wide_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l21_c3_69b8;
+     -- uint1_uint14[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l58_c14_1a79] LATENCY=0
+     VAR_uint1_uint14_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l58_c14_1a79_return_output := uint1_uint14(
+     to_unsigned(1, 1),
+     VAR_float_8_14_t_13_0_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l19_c16_dccc_return_output);
+
+     -- BIN_OP_EQ[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc] LATENCY=0
+     -- Inputs
+     BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc_left <= VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc_left;
+     BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc_right <= VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc_right;
+     -- Outputs
+     VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc_return_output := BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc_return_output;
+
+     -- BIN_OP_EQ[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80] LATENCY=0
+     -- Inputs
+     BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80_left <= VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80_left;
+     BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80_right <= VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80_right;
+     -- Outputs
+     VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80_return_output := BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80_return_output;
+
+     -- uint1_uint14[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l57_c14_99cd] LATENCY=0
+     VAR_uint1_uint14_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l57_c14_99cd_return_output := uint1_uint14(
+     to_unsigned(1, 1),
+     VAR_float_8_14_t_13_0_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l12_c16_ba0a_return_output);
+
+     -- BIN_OP_PLUS[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e] LATENCY=0
+     -- Inputs
+     BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e_left <= VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e_left;
+     BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e_right <= VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e_right;
+     -- Outputs
+     VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e_return_output := BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e_return_output;
+
+     -- BIN_OP_EQ[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce] LATENCY=0
+     -- Inputs
+     BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce_left <= VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce_left;
+     BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce_right <= VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce_right;
+     -- Outputs
+     VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce_return_output := BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce_return_output;
+
+     -- BIN_OP_EQ[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95] LATENCY=0
+     -- Inputs
+     BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95_left <= VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95_left;
+     BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95_right <= VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95_right;
+     -- Outputs
+     VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95_return_output := BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95_return_output;
+
+     -- BIN_OP_XOR[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066] LATENCY=0
+     -- Inputs
+     BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_left <= VAR_BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_left;
+     BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_right <= VAR_BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_right;
+     -- Outputs
+     VAR_BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_return_output := BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_return_output;
+
+     -- Submodule level 2
+     VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_right := VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c32_dd80_return_output;
+     VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_left := VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_7e95_return_output;
+     VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_left := VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_6fbc_return_output;
+     VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_right := VAR_BIN_OP_EQ_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c35_43ce_return_output;
+     VAR_exponent_sum_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c13_a7ef_0 := resize(VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c28_7e2e_return_output, 9);
+     VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue := VAR_BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_return_output;
+     VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iffalse := VAR_BIN_OP_XOR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l31_c12_c066_return_output;
+     VAR_BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_left := VAR_uint1_uint14_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l57_c14_99cd_return_output;
+     VAR_BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_right := VAR_uint1_uint14_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l58_c14_1a79_return_output;
+     VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left := VAR_exponent_sum_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l78_c13_a7ef_0;
+     -- BIN_OP_OR[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5] LATENCY=0
+     -- Inputs
+     BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_left <= VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_left;
+     BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_right <= VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_right;
+     -- Outputs
+     VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_return_output := BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_return_output;
+
+     -- BIN_OP_INFERRED_MULT[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec] LATENCY=2
+     -- Inputs
+     BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_left <= VAR_BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_left;
+     BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_right <= VAR_BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_right;
+
+     -- BIN_OP_OR[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5] LATENCY=0
+     -- Inputs
+     BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_left <= VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_left;
+     BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_right <= VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_right;
+     -- Outputs
+     VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_return_output := BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_return_output;
+
+     -- Submodule level 3
+     VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond := VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_return_output;
+     VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond := VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_return_output;
+     VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond := VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c7_52b5_return_output;
+     VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond := VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_return_output;
+     VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond := VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_return_output;
+     VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond := VAR_BIN_OP_OR_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c12_66f5_return_output;
+     -- z_sign_MUX[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7] LATENCY=1
+     -- Inputs
+     z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond <= VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond;
+     z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iftrue <= VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iftrue;
+     z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iffalse <= VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iffalse;
+
+     -- Write to comb signals
+     COMB_STAGE0_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond <= VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond;
+     COMB_STAGE0_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond <= VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond;
+     COMB_STAGE0_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue <= VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue;
+     COMB_STAGE0_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond <= VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond;
+     COMB_STAGE0_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond <= VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond;
+     COMB_STAGE0_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond <= VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond;
+     COMB_STAGE0_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left <= VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left;
+   elsif STAGE = 1 then
+     -- Read from prev stage
+     VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond := REG_STAGE0_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond;
+     VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond := REG_STAGE0_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond;
+     VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue := REG_STAGE0_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue;
+     VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond := REG_STAGE0_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond;
+     VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond := REG_STAGE0_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond;
+     VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond := REG_STAGE0_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond;
+     VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left := REG_STAGE0_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left;
+     -- Submodule outputs
+     VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output := z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output;
+
+     -- Submodule level 0
+     VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iffalse := VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output;
+     -- z_sign_MUX[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c] LATENCY=0
+     -- Inputs
+     z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond <= VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond;
+     z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue <= VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue;
+     z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iffalse <= VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iffalse;
+     -- Outputs
+     VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output := z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output;
+
+     -- Submodule level 1
+     -- Write to comb signals
+     COMB_STAGE1_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond <= VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond;
+     COMB_STAGE1_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond <= VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond;
+     COMB_STAGE1_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output <= VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output;
+     COMB_STAGE1_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond <= VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond;
+     COMB_STAGE1_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond <= VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond;
+     COMB_STAGE1_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left <= VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left;
+   elsif STAGE = 2 then
+     -- Read from prev stage
+     VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond := REG_STAGE1_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond;
+     VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond := REG_STAGE1_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond;
+     VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output := REG_STAGE1_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output;
+     VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond := REG_STAGE1_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond;
+     VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond := REG_STAGE1_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond;
+     VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left := REG_STAGE1_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left;
+     -- Submodule outputs
+     VAR_BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_return_output := BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_return_output;
+
+     -- Submodule level 0
+     -- uint30_29_29[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l61_c11_f79a] LATENCY=0
+     VAR_uint30_29_29_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l61_c11_f79a_return_output := uint30_29_29(
+     VAR_BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_return_output);
+
+     -- uint30_28_15[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l66_c20_e072] LATENCY=0
+     VAR_uint30_28_15_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l66_c20_e072_return_output := uint30_28_15(
+     VAR_BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_return_output);
+
+     -- uint30_27_14[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l71_c20_e96c] LATENCY=0
+     VAR_uint30_27_14_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l71_c20_e96c_return_output := uint30_27_14(
+     VAR_BIN_OP_INFERRED_MULT_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l59_c12_c6ec_return_output);
+
+     -- Submodule level 1
+     VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_iffalse := VAR_uint30_27_14_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l71_c20_e96c_return_output;
+     VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_iftrue := VAR_uint30_28_15_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l66_c20_e072_return_output;
+     VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_right := VAR_uint30_29_29_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l61_c11_f79a_return_output;
+     VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_cond := VAR_uint30_29_29_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l61_c11_f79a_return_output;
+     -- BIN_OP_PLUS[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68] LATENCY=0
+     -- Inputs
+     BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left <= VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left;
+     BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_right <= VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_right;
+     -- Outputs
+     VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_return_output := BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_return_output;
+
+     -- z_mantissa_MUX[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d] LATENCY=0
+     -- Inputs
+     z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_cond <= VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_cond;
+     z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_iftrue <= VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_iftrue;
+     z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_iffalse <= VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_iffalse;
+     -- Outputs
+     VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_return_output := z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_return_output;
+
+     -- Submodule level 2
+     VAR_exponent_sum_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c5_37d6 := resize(VAR_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_return_output, 9);
+     VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iffalse := VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l62_c5_339d_return_output;
+     VAR_BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149_left := VAR_exponent_sum_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c5_37d6;
+     -- z_mantissa_MUX[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7] LATENCY=0
+     -- Inputs
+     z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond <= VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond;
+     z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iftrue <= VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iftrue;
+     z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iffalse <= VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iffalse;
+     -- Outputs
+     VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output := z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output;
+
+     -- BIN_OP_MINUS[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149] LATENCY=0
+     -- Inputs
+     BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149_left <= VAR_BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149_left;
+     BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149_right <= VAR_BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149_right;
+     -- Outputs
+     VAR_BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149_return_output := BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149_return_output;
+
+     -- Submodule level 3
+     VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iffalse := VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output;
+     -- z_mantissa_MUX[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c] LATENCY=0
+     -- Inputs
+     z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond <= VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond;
+     z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue <= VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue;
+     z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iffalse <= VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iffalse;
+     -- Outputs
+     VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output := z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output;
+
+     -- uint9_7_0[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l84_c18_f768] LATENCY=0
+     VAR_uint9_7_0_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l84_c18_f768_return_output := uint9_7_0(
+     VAR_BIN_OP_MINUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l80_c20_6149_return_output);
+
+     -- Submodule level 4
+     VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iffalse := VAR_uint9_7_0_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l84_c18_f768_return_output;
+     -- z_exponent_MUX[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7] LATENCY=0
+     -- Inputs
+     z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond <= VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond;
+     z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iftrue <= VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iftrue;
+     z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iffalse <= VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_iffalse;
+     -- Outputs
+     VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output := z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output;
+
+     -- Submodule level 5
+     VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iffalse := VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_return_output;
+     -- z_exponent_MUX[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c] LATENCY=0
+     -- Inputs
+     z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond <= VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond;
+     z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue <= VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue;
+     z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iffalse <= VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iffalse;
+     -- Outputs
+     VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output := z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output;
+
+     -- Submodule level 6
+     -- float_uint8_uint14[BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l89_c10_8ebf] LATENCY=0
+     VAR_float_uint8_uint14_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l89_c10_8ebf_return_output := float_uint8_uint14(
+     VAR_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output,
+     VAR_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output,
+     VAR_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output);
+
+     -- Submodule level 7
+     VAR_return_output := VAR_float_uint8_uint14_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l89_c10_8ebf_return_output;
+     -- Last stage of pipeline return wire to return port/reg
+     return_output <= VAR_return_output;
+   end if;
+ end loop;
+
+end process;
+
+-- Register comb signals
+process(clk) is
+begin
+ if rising_edge(clk) then
+     -- Stage 0
+     REG_STAGE0_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond <= COMB_STAGE0_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond;
+     REG_STAGE0_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond <= COMB_STAGE0_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond;
+     REG_STAGE0_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue <= COMB_STAGE0_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_iftrue;
+     REG_STAGE0_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond <= COMB_STAGE0_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond;
+     REG_STAGE0_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond <= COMB_STAGE0_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond;
+     REG_STAGE0_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond <= COMB_STAGE0_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond;
+     REG_STAGE0_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left <= COMB_STAGE0_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left;
+     -- Stage 1
+     REG_STAGE1_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond <= COMB_STAGE1_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond;
+     REG_STAGE1_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond <= COMB_STAGE1_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_cond;
+     REG_STAGE1_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output <= COMB_STAGE1_z_sign_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l34_c3_906c_return_output;
+     REG_STAGE1_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond <= COMB_STAGE1_z_exponent_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond;
+     REG_STAGE1_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond <= COMB_STAGE1_z_mantissa_MUX_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l40_c8_bde7_cond;
+     REG_STAGE1_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left <= COMB_STAGE1_BIN_OP_PLUS_BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_c_l79_c20_3d68_left;
+ end if;
+end process;
+
+end arch;

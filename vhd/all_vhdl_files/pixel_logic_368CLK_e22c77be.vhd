@@ -1,0 +1,7185 @@
+-- Timing params:
+--   Fixed?: False
+--   Pipeline Slices: [0.004329004329004329, 0.008658008658008658, 0.012987012987012988, 0.017316017316017316, 0.021645021645021644, 0.025974025974025972, 0.0303030303030303, 0.03463203463203463, 0.03896103896103896, 0.04329004329004329, 0.047619047619047616, 0.051948051948051945, 0.05627705627705627, 0.0606060606060606, 0.06493506493506493, 0.06926406926406926, 0.0735930735930736, 0.07792207792207793, 0.08225108225108227, 0.0865800865800866, 0.09090909090909094, 0.09523809523809527, 0.09956709956709961, 0.10389610389610394, 0.10822510822510828, 0.11255411255411261, 0.11688311688311695, 0.12121212121212128, 0.12554112554112562, 0.12987012987012994, 0.13419913419913426, 0.13852813852813858, 0.1428571428571429, 0.14718614718614723, 0.15151515151515155, 0.15584415584415587, 0.1601731601731602, 0.1645021645021645, 0.16883116883116883, 0.17316017316017315, 0.17748917748917747, 0.1818181818181818, 0.18614718614718612, 0.19047619047619044, 0.19480519480519476, 0.19913419913419908, 0.2034632034632034, 0.20779220779220772, 0.21212121212121204, 0.21645021645021637, 0.2207792207792207, 0.225108225108225, 0.22943722943722933, 0.23376623376623365, 0.23809523809523797, 0.2424242424242423, 0.2467532467532466, 0.25108225108225096, 0.2554112554112553, 0.25974025974025966, 0.264069264069264, 0.26839826839826836, 0.2727272727272727, 0.27705627705627706, 0.2813852813852814, 0.28571428571428575, 0.2900432900432901, 0.29437229437229445, 0.2987012987012988, 0.30303030303030315, 0.3073593073593075, 0.31168831168831185, 0.3160173160173162, 0.32034632034632055, 0.3246753246753249, 0.32900432900432924, 0.3333333333333336, 0.33766233766233794, 0.3419913419913423, 0.34632034632034664, 0.350649350649351, 0.35497835497835534, 0.3593073593073597, 0.36363636363636404, 0.3679653679653684, 0.37229437229437273, 0.3766233766233771, 0.38095238095238143, 0.3852813852813858, 0.38961038961039013, 0.3939393939393945, 0.3982683982683988, 0.4025974025974032, 0.4069264069264075, 0.4112554112554119, 0.4155844155844162, 0.41991341991342057, 0.4242424242424249, 0.42857142857142927, 0.4329004329004336, 0.43722943722943797, 0.4415584415584423, 0.44588744588744667, 0.450216450216451, 0.45454545454545536, 0.4588744588744597, 0.46320346320346406, 0.4675324675324684, 0.47186147186147276, 0.4761904761904771, 0.48051948051948146, 0.4848484848484858, 0.48917748917749015, 0.4935064935064945, 0.49783549783549885, 0.5021645021645031, 0.5064935064935074, 0.5108225108225117, 0.515151515151516, 0.5194805194805203, 0.5238095238095246, 0.5281385281385289, 0.5324675324675332, 0.5367965367965375, 0.5411255411255418, 0.5454545454545461, 0.5497835497835504, 0.5541125541125547, 0.558441558441559, 0.5627705627705633, 0.5670995670995675, 0.5714285714285718, 0.5757575757575761, 0.5800865800865804, 0.5844155844155847, 0.588744588744589, 0.5930735930735933, 0.5974025974025976, 0.6017316017316019, 0.6060606060606062, 0.6103896103896105, 0.6147186147186148, 0.6190476190476191, 0.6233766233766234, 0.6277056277056277, 0.632034632034632, 0.6363636363636362, 0.6406926406926405, 0.6450216450216448, 0.6493506493506491, 0.6536796536796534, 0.6580086580086577, 0.662337662337662, 0.6666666666666663, 0.6709956709956706, 0.6753246753246749, 0.6796536796536792, 0.6839826839826835, 0.6883116883116878, 0.6926406926406921, 0.6969696969696964, 0.7012987012987006, 0.7056277056277049, 0.7099567099567092, 0.7142857142857135, 0.7186147186147178, 0.7229437229437221, 0.7272727272727264, 0.7316017316017307, 0.735930735930735, 0.7402597402597393, 0.7445887445887436, 0.7489177489177479, 0.7532467532467522, 0.7575757575757565, 0.7619047619047608, 0.766233766233765, 0.7705627705627693, 0.7748917748917736, 0.7792207792207779, 0.7835497835497822, 0.7878787878787865, 0.7922077922077908, 0.7965367965367951, 0.8008658008657994, 0.8051948051948037, 0.809523809523808, 0.8138528138528123, 0.8181818181818166, 0.8225108225108209, 0.8268398268398252, 0.8311688311688294, 0.8354978354978337, 0.839826839826838, 0.8441558441558423, 0.8484848484848466, 0.8528138528138509, 0.8571428571428552, 0.8614718614718595, 0.8658008658008638, 0.8701298701298681, 0.8744588744588724, 0.8787878787878767, 0.883116883116881, 0.8874458874458853, 0.8917748917748896, 0.8961038961038938, 0.9004329004328981, 0.9047619047619024, 0.9090909090909067, 0.913419913419911, 0.9177489177489153, 0.9220779220779196, 0.9264069264069239, 0.9307359307359282, 0.9350649350649325, 0.9393939393939368, 0.9437229437229411, 0.9480519480519454, 0.9523809523809497, 0.956709956709954, 0.9610389610389583, 0.9653679653679625, 0.9696969696969668, 0.9740259740259711, 0.9783549783549754, 0.9826839826839797, 0.987012987012984, 0.9913419913419883, 0.9956709956709926]
+--   Input regs?: False
+--   Output regs?: False
+library std;
+use std.textio.all;
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+use ieee.float_pkg.all;
+use work.c_structs_pkg.all;
+use work.global_wires_pkg.all;
+-- Submodules: 4
+entity pixel_logic_368CLK_e22c77be is
+port(
+ clk : in std_logic;
+ CLOCK_ENABLE : in unsigned(0 downto 0);
+ global_to_module : in pixel_logic_global_to_module_t;
+ module_to_global : out pixel_logic_module_to_global_t);
+end pixel_logic_368CLK_e22c77be;
+architecture arch of pixel_logic_368CLK_e22c77be is
+-- Types and such
+-- Declarations
+attribute mark_debug : string;
+constant PIPELINE_LATENCY : integer := 368;
+-- All of the wires/regs in function
+-- Stage 0
+signal REG_STAGE0_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE0_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE0_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE0_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 1
+signal REG_STAGE1_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE1_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE1_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE1_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 2
+signal REG_STAGE2_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE2_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE2_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE2_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 3
+signal REG_STAGE3_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE3_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE3_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE3_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 4
+signal REG_STAGE4_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE4_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE4_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE4_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 5
+signal REG_STAGE5_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE5_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE5_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE5_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 6
+signal REG_STAGE6_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE6_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE6_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE6_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 7
+signal REG_STAGE7_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE7_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE7_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE7_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 8
+signal REG_STAGE8_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE8_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE8_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE8_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 9
+signal REG_STAGE9_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE9_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE9_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE9_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 10
+signal REG_STAGE10_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE10_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE10_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE10_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 11
+signal REG_STAGE11_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE11_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE11_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE11_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 12
+signal REG_STAGE12_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE12_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE12_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE12_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 13
+signal REG_STAGE13_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE13_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE13_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE13_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 14
+signal REG_STAGE14_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE14_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE14_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE14_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 15
+signal REG_STAGE15_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE15_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE15_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE15_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 16
+signal REG_STAGE16_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE16_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE16_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE16_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 17
+signal REG_STAGE17_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE17_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE17_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE17_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 18
+signal REG_STAGE18_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE18_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE18_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE18_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 19
+signal REG_STAGE19_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE19_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE19_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE19_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 20
+signal REG_STAGE20_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE20_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE20_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE20_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 21
+signal REG_STAGE21_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE21_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE21_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE21_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 22
+signal REG_STAGE22_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE22_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE22_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE22_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 23
+signal REG_STAGE23_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE23_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE23_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE23_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 24
+signal REG_STAGE24_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE24_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE24_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE24_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 25
+signal REG_STAGE25_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE25_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE25_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE25_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 26
+signal REG_STAGE26_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE26_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE26_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE26_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 27
+signal REG_STAGE27_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE27_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE27_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE27_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 28
+signal REG_STAGE28_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE28_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE28_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE28_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 29
+signal REG_STAGE29_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE29_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE29_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE29_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 30
+signal REG_STAGE30_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE30_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE30_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE30_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 31
+signal REG_STAGE31_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE31_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE31_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE31_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 32
+signal REG_STAGE32_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE32_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE32_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE32_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 33
+signal REG_STAGE33_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE33_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE33_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE33_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 34
+signal REG_STAGE34_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE34_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE34_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE34_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 35
+signal REG_STAGE35_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE35_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE35_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE35_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 36
+signal REG_STAGE36_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE36_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE36_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE36_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 37
+signal REG_STAGE37_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE37_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE37_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE37_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 38
+signal REG_STAGE38_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE38_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE38_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE38_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 39
+signal REG_STAGE39_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE39_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE39_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE39_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 40
+signal REG_STAGE40_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE40_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE40_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE40_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 41
+signal REG_STAGE41_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE41_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE41_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE41_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 42
+signal REG_STAGE42_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE42_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE42_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE42_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 43
+signal REG_STAGE43_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE43_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE43_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE43_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 44
+signal REG_STAGE44_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE44_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE44_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE44_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 45
+signal REG_STAGE45_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE45_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE45_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE45_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 46
+signal REG_STAGE46_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE46_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE46_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE46_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 47
+signal REG_STAGE47_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE47_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE47_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE47_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 48
+signal REG_STAGE48_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE48_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE48_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE48_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 49
+signal REG_STAGE49_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE49_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE49_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE49_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 50
+signal REG_STAGE50_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE50_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE50_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE50_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 51
+signal REG_STAGE51_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE51_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE51_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE51_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 52
+signal REG_STAGE52_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE52_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE52_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE52_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 53
+signal REG_STAGE53_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE53_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE53_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE53_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 54
+signal REG_STAGE54_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE54_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE54_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE54_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 55
+signal REG_STAGE55_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE55_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE55_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE55_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 56
+signal REG_STAGE56_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE56_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE56_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE56_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 57
+signal REG_STAGE57_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE57_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE57_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE57_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 58
+signal REG_STAGE58_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE58_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE58_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE58_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 59
+signal REG_STAGE59_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE59_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE59_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE59_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 60
+signal REG_STAGE60_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE60_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE60_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE60_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 61
+signal REG_STAGE61_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE61_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE61_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE61_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 62
+signal REG_STAGE62_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE62_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE62_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE62_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 63
+signal REG_STAGE63_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE63_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE63_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE63_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 64
+signal REG_STAGE64_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE64_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE64_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE64_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 65
+signal REG_STAGE65_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE65_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE65_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE65_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 66
+signal REG_STAGE66_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE66_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE66_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE66_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 67
+signal REG_STAGE67_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE67_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE67_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE67_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 68
+signal REG_STAGE68_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE68_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE68_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE68_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 69
+signal REG_STAGE69_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE69_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE69_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE69_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 70
+signal REG_STAGE70_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE70_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE70_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE70_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 71
+signal REG_STAGE71_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE71_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE71_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE71_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 72
+signal REG_STAGE72_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE72_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE72_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE72_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 73
+signal REG_STAGE73_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE73_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE73_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE73_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 74
+signal REG_STAGE74_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE74_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE74_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE74_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 75
+signal REG_STAGE75_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE75_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE75_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE75_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 76
+signal REG_STAGE76_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE76_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE76_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE76_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 77
+signal REG_STAGE77_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE77_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE77_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE77_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 78
+signal REG_STAGE78_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE78_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE78_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE78_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 79
+signal REG_STAGE79_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE79_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE79_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE79_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 80
+signal REG_STAGE80_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE80_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE80_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE80_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 81
+signal REG_STAGE81_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE81_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE81_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE81_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 82
+signal REG_STAGE82_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE82_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE82_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE82_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 83
+signal REG_STAGE83_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE83_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE83_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE83_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 84
+signal REG_STAGE84_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE84_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE84_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE84_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 85
+signal REG_STAGE85_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE85_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE85_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE85_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 86
+signal REG_STAGE86_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE86_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE86_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE86_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 87
+signal REG_STAGE87_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE87_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE87_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE87_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 88
+signal REG_STAGE88_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE88_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE88_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE88_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 89
+signal REG_STAGE89_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE89_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE89_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE89_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 90
+signal REG_STAGE90_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE90_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE90_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE90_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 91
+signal REG_STAGE91_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE91_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE91_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE91_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 92
+signal REG_STAGE92_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE92_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE92_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE92_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 93
+signal REG_STAGE93_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE93_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE93_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE93_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 94
+signal REG_STAGE94_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE94_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE94_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE94_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 95
+signal REG_STAGE95_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE95_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE95_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE95_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 96
+signal REG_STAGE96_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE96_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE96_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE96_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 97
+signal REG_STAGE97_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE97_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE97_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE97_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 98
+signal REG_STAGE98_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE98_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE98_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE98_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 99
+signal REG_STAGE99_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE99_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE99_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE99_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 100
+signal REG_STAGE100_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE100_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE100_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE100_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 101
+signal REG_STAGE101_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE101_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE101_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE101_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 102
+signal REG_STAGE102_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE102_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE102_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE102_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 103
+signal REG_STAGE103_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE103_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE103_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE103_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 104
+signal REG_STAGE104_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE104_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE104_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE104_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 105
+signal REG_STAGE105_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE105_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE105_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE105_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 106
+signal REG_STAGE106_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE106_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE106_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE106_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 107
+signal REG_STAGE107_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE107_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE107_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE107_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 108
+signal REG_STAGE108_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE108_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE108_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE108_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 109
+signal REG_STAGE109_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE109_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE109_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE109_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 110
+signal REG_STAGE110_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE110_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE110_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE110_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 111
+signal REG_STAGE111_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE111_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE111_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE111_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 112
+signal REG_STAGE112_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE112_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE112_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE112_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 113
+signal REG_STAGE113_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE113_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE113_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE113_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 114
+signal REG_STAGE114_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE114_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE114_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE114_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 115
+signal REG_STAGE115_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE115_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE115_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE115_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 116
+signal REG_STAGE116_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE116_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE116_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE116_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 117
+signal REG_STAGE117_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE117_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE117_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE117_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 118
+signal REG_STAGE118_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE118_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE118_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE118_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 119
+signal REG_STAGE119_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE119_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE119_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE119_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 120
+signal REG_STAGE120_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE120_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE120_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE120_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 121
+signal REG_STAGE121_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE121_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE121_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE121_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 122
+signal REG_STAGE122_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE122_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE122_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE122_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 123
+signal REG_STAGE123_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE123_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE123_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE123_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 124
+signal REG_STAGE124_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE124_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE124_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE124_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 125
+signal REG_STAGE125_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE125_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE125_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE125_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 126
+signal REG_STAGE126_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE126_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE126_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE126_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 127
+signal REG_STAGE127_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE127_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE127_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE127_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 128
+signal REG_STAGE128_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE128_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE128_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE128_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 129
+signal REG_STAGE129_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE129_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE129_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE129_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 130
+signal REG_STAGE130_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE130_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE130_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE130_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 131
+signal REG_STAGE131_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE131_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE131_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE131_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 132
+signal REG_STAGE132_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE132_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE132_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE132_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 133
+signal REG_STAGE133_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE133_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE133_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE133_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 134
+signal REG_STAGE134_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE134_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE134_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE134_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 135
+signal REG_STAGE135_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE135_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE135_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE135_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 136
+signal REG_STAGE136_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE136_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE136_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE136_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 137
+signal REG_STAGE137_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE137_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE137_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE137_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 138
+signal REG_STAGE138_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE138_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE138_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE138_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 139
+signal REG_STAGE139_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE139_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE139_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE139_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 140
+signal REG_STAGE140_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE140_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE140_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE140_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 141
+signal REG_STAGE141_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE141_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE141_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE141_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 142
+signal REG_STAGE142_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE142_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE142_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE142_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 143
+signal REG_STAGE143_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE143_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE143_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE143_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 144
+signal REG_STAGE144_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE144_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE144_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE144_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 145
+signal REG_STAGE145_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE145_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE145_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE145_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 146
+signal REG_STAGE146_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE146_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE146_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE146_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 147
+signal REG_STAGE147_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE147_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE147_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE147_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 148
+signal REG_STAGE148_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE148_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE148_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE148_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 149
+signal REG_STAGE149_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE149_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE149_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE149_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 150
+signal REG_STAGE150_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE150_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE150_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE150_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 151
+signal REG_STAGE151_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE151_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE151_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE151_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 152
+signal REG_STAGE152_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE152_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE152_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE152_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 153
+signal REG_STAGE153_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE153_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE153_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE153_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 154
+signal REG_STAGE154_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE154_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE154_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE154_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 155
+signal REG_STAGE155_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE155_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE155_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE155_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 156
+signal REG_STAGE156_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE156_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE156_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE156_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 157
+signal REG_STAGE157_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE157_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE157_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE157_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 158
+signal REG_STAGE158_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE158_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE158_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE158_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 159
+signal REG_STAGE159_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE159_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE159_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE159_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 160
+signal REG_STAGE160_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE160_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE160_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE160_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 161
+signal REG_STAGE161_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE161_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE161_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE161_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 162
+signal REG_STAGE162_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE162_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE162_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE162_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 163
+signal REG_STAGE163_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE163_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE163_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE163_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 164
+signal REG_STAGE164_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE164_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE164_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE164_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 165
+signal REG_STAGE165_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE165_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE165_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE165_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 166
+signal REG_STAGE166_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE166_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE166_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE166_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 167
+signal REG_STAGE167_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE167_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE167_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE167_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 168
+signal REG_STAGE168_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE168_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE168_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE168_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 169
+signal REG_STAGE169_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE169_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE169_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE169_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 170
+signal REG_STAGE170_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE170_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE170_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE170_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 171
+signal REG_STAGE171_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE171_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE171_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE171_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 172
+signal REG_STAGE172_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE172_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE172_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE172_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 173
+signal REG_STAGE173_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE173_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE173_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE173_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 174
+signal REG_STAGE174_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE174_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE174_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE174_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 175
+signal REG_STAGE175_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE175_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE175_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE175_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 176
+signal REG_STAGE176_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE176_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE176_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE176_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 177
+signal REG_STAGE177_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE177_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE177_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE177_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 178
+signal REG_STAGE178_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE178_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE178_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE178_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 179
+signal REG_STAGE179_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE179_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE179_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE179_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 180
+signal REG_STAGE180_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE180_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE180_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE180_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 181
+signal REG_STAGE181_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE181_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE181_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE181_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 182
+signal REG_STAGE182_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE182_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE182_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE182_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 183
+signal REG_STAGE183_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE183_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE183_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE183_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 184
+signal REG_STAGE184_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE184_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE184_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE184_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 185
+signal REG_STAGE185_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE185_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE185_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE185_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 186
+signal REG_STAGE186_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE186_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE186_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE186_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 187
+signal REG_STAGE187_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE187_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE187_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE187_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 188
+signal REG_STAGE188_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE188_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE188_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE188_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 189
+signal REG_STAGE189_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE189_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE189_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE189_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 190
+signal REG_STAGE190_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE190_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE190_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE190_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 191
+signal REG_STAGE191_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE191_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE191_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE191_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 192
+signal REG_STAGE192_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE192_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE192_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE192_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 193
+signal REG_STAGE193_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE193_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE193_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE193_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 194
+signal REG_STAGE194_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE194_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE194_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE194_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 195
+signal REG_STAGE195_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE195_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE195_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE195_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 196
+signal REG_STAGE196_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE196_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE196_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE196_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 197
+signal REG_STAGE197_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE197_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE197_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE197_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 198
+signal REG_STAGE198_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE198_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE198_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE198_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 199
+signal REG_STAGE199_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE199_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE199_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE199_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 200
+signal REG_STAGE200_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE200_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE200_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE200_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 201
+signal REG_STAGE201_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE201_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE201_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE201_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 202
+signal REG_STAGE202_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE202_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE202_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE202_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 203
+signal REG_STAGE203_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE203_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE203_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE203_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 204
+signal REG_STAGE204_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE204_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE204_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE204_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 205
+signal REG_STAGE205_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE205_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE205_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE205_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 206
+signal REG_STAGE206_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE206_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE206_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE206_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 207
+signal REG_STAGE207_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE207_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE207_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE207_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 208
+signal REG_STAGE208_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE208_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE208_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE208_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 209
+signal REG_STAGE209_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE209_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE209_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE209_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 210
+signal REG_STAGE210_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE210_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE210_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE210_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 211
+signal REG_STAGE211_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE211_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE211_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE211_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 212
+signal REG_STAGE212_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE212_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE212_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE212_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 213
+signal REG_STAGE213_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE213_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE213_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE213_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 214
+signal REG_STAGE214_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE214_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE214_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE214_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 215
+signal REG_STAGE215_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE215_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE215_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE215_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 216
+signal REG_STAGE216_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE216_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE216_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE216_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 217
+signal REG_STAGE217_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE217_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE217_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE217_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 218
+signal REG_STAGE218_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE218_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE218_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE218_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 219
+signal REG_STAGE219_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE219_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE219_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE219_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 220
+signal REG_STAGE220_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE220_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE220_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE220_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 221
+signal REG_STAGE221_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE221_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE221_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE221_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 222
+signal REG_STAGE222_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE222_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE222_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE222_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 223
+signal REG_STAGE223_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE223_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE223_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE223_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 224
+signal REG_STAGE224_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE224_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE224_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE224_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 225
+signal REG_STAGE225_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE225_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE225_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE225_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 226
+signal REG_STAGE226_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE226_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE226_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE226_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 227
+signal REG_STAGE227_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE227_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE227_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE227_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 228
+signal REG_STAGE228_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE228_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE228_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE228_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 229
+signal REG_STAGE229_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE229_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE229_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE229_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 230
+signal REG_STAGE230_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE230_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE230_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE230_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 231
+signal REG_STAGE231_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE231_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE231_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE231_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 232
+signal REG_STAGE232_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE232_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE232_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE232_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 233
+signal REG_STAGE233_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE233_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE233_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE233_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 234
+signal REG_STAGE234_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE234_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE234_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE234_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 235
+signal REG_STAGE235_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE235_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE235_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE235_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 236
+signal REG_STAGE236_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE236_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE236_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE236_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 237
+signal REG_STAGE237_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE237_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE237_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE237_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 238
+signal REG_STAGE238_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE238_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE238_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE238_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 239
+signal REG_STAGE239_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE239_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE239_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE239_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 240
+signal REG_STAGE240_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE240_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE240_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE240_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 241
+signal REG_STAGE241_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE241_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE241_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE241_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 242
+signal REG_STAGE242_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE242_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE242_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE242_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 243
+signal REG_STAGE243_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE243_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE243_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE243_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 244
+signal REG_STAGE244_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE244_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE244_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE244_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 245
+signal REG_STAGE245_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE245_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE245_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE245_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 246
+signal REG_STAGE246_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE246_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE246_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE246_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 247
+signal REG_STAGE247_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE247_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE247_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE247_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 248
+signal REG_STAGE248_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE248_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE248_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE248_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 249
+signal REG_STAGE249_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE249_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE249_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE249_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 250
+signal REG_STAGE250_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE250_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE250_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE250_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 251
+signal REG_STAGE251_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE251_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE251_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE251_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 252
+signal REG_STAGE252_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE252_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE252_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE252_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 253
+signal REG_STAGE253_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE253_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE253_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE253_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 254
+signal REG_STAGE254_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE254_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE254_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE254_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 255
+signal REG_STAGE255_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE255_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE255_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE255_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 256
+signal REG_STAGE256_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE256_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE256_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE256_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 257
+signal REG_STAGE257_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE257_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE257_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE257_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 258
+signal REG_STAGE258_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE258_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE258_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE258_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 259
+signal REG_STAGE259_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE259_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE259_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE259_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 260
+signal REG_STAGE260_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE260_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE260_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE260_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 261
+signal REG_STAGE261_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE261_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE261_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE261_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 262
+signal REG_STAGE262_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE262_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE262_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE262_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 263
+signal REG_STAGE263_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE263_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE263_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE263_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 264
+signal REG_STAGE264_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE264_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE264_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE264_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 265
+signal REG_STAGE265_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE265_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE265_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE265_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 266
+signal REG_STAGE266_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE266_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE266_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE266_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 267
+signal REG_STAGE267_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE267_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE267_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE267_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 268
+signal REG_STAGE268_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE268_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE268_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE268_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 269
+signal REG_STAGE269_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE269_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE269_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE269_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 270
+signal REG_STAGE270_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE270_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE270_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE270_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 271
+signal REG_STAGE271_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE271_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE271_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE271_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 272
+signal REG_STAGE272_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE272_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE272_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE272_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 273
+signal REG_STAGE273_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE273_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE273_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE273_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 274
+signal REG_STAGE274_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE274_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE274_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE274_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 275
+signal REG_STAGE275_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE275_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE275_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE275_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 276
+signal REG_STAGE276_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE276_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE276_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE276_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 277
+signal REG_STAGE277_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE277_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE277_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE277_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 278
+signal REG_STAGE278_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE278_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE278_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE278_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 279
+signal REG_STAGE279_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE279_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE279_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE279_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 280
+signal REG_STAGE280_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE280_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE280_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE280_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 281
+signal REG_STAGE281_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE281_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE281_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE281_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 282
+signal REG_STAGE282_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE282_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE282_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE282_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 283
+signal REG_STAGE283_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE283_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE283_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE283_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 284
+signal REG_STAGE284_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE284_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE284_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE284_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 285
+signal REG_STAGE285_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE285_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE285_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE285_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 286
+signal REG_STAGE286_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE286_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE286_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE286_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 287
+signal REG_STAGE287_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE287_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE287_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE287_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 288
+signal REG_STAGE288_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE288_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE288_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE288_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 289
+signal REG_STAGE289_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE289_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE289_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE289_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 290
+signal REG_STAGE290_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE290_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE290_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE290_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 291
+signal REG_STAGE291_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE291_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE291_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE291_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 292
+signal REG_STAGE292_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE292_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE292_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE292_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 293
+signal REG_STAGE293_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE293_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE293_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE293_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 294
+signal REG_STAGE294_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE294_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE294_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE294_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 295
+signal REG_STAGE295_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE295_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE295_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE295_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 296
+signal REG_STAGE296_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE296_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE296_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE296_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 297
+signal REG_STAGE297_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE297_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE297_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE297_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 298
+signal REG_STAGE298_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE298_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE298_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE298_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 299
+signal REG_STAGE299_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE299_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE299_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE299_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 300
+signal REG_STAGE300_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE300_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE300_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE300_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 301
+signal REG_STAGE301_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE301_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE301_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE301_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 302
+signal REG_STAGE302_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE302_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE302_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE302_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 303
+signal REG_STAGE303_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE303_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE303_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE303_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 304
+signal REG_STAGE304_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE304_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE304_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE304_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 305
+signal REG_STAGE305_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE305_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE305_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE305_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 306
+signal REG_STAGE306_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE306_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE306_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE306_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 307
+signal REG_STAGE307_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE307_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE307_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE307_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 308
+signal REG_STAGE308_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE308_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE308_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE308_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 309
+signal REG_STAGE309_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE309_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE309_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE309_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 310
+signal REG_STAGE310_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE310_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE310_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE310_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 311
+signal REG_STAGE311_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE311_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE311_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE311_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 312
+signal REG_STAGE312_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE312_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE312_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE312_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 313
+signal REG_STAGE313_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE313_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE313_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE313_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 314
+signal REG_STAGE314_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE314_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE314_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE314_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 315
+signal REG_STAGE315_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE315_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE315_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE315_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 316
+signal REG_STAGE316_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE316_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE316_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE316_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 317
+signal REG_STAGE317_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE317_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE317_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE317_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 318
+signal REG_STAGE318_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE318_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE318_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE318_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 319
+signal REG_STAGE319_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE319_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE319_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE319_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 320
+signal REG_STAGE320_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE320_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE320_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE320_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 321
+signal REG_STAGE321_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE321_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE321_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE321_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 322
+signal REG_STAGE322_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE322_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE322_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE322_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 323
+signal REG_STAGE323_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE323_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE323_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE323_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 324
+signal REG_STAGE324_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE324_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE324_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE324_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 325
+signal REG_STAGE325_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE325_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE325_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE325_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 326
+signal REG_STAGE326_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE326_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE326_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE326_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 327
+signal REG_STAGE327_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE327_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE327_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE327_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 328
+signal REG_STAGE328_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE328_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE328_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE328_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 329
+signal REG_STAGE329_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE329_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE329_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE329_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 330
+signal REG_STAGE330_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE330_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE330_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE330_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 331
+signal REG_STAGE331_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE331_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE331_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE331_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 332
+signal REG_STAGE332_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE332_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE332_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE332_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 333
+signal REG_STAGE333_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE333_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE333_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE333_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 334
+signal REG_STAGE334_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE334_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE334_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE334_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 335
+signal REG_STAGE335_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE335_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE335_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE335_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 336
+signal REG_STAGE336_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE336_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE336_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE336_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 337
+signal REG_STAGE337_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE337_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE337_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE337_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 338
+signal REG_STAGE338_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE338_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE338_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE338_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 339
+signal REG_STAGE339_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE339_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE339_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE339_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 340
+signal REG_STAGE340_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE340_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE340_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE340_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 341
+signal REG_STAGE341_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE341_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE341_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE341_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 342
+signal REG_STAGE342_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE342_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE342_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE342_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 343
+signal REG_STAGE343_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE343_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE343_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE343_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 344
+signal REG_STAGE344_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE344_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE344_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE344_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 345
+signal REG_STAGE345_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE345_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE345_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE345_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 346
+signal REG_STAGE346_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE346_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE346_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE346_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 347
+signal REG_STAGE347_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE347_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE347_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE347_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 348
+signal REG_STAGE348_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE348_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE348_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE348_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 349
+signal REG_STAGE349_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE349_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE349_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE349_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 350
+signal REG_STAGE350_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE350_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE350_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE350_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 351
+signal REG_STAGE351_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE351_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE351_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE351_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 352
+signal REG_STAGE352_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE352_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE352_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE352_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 353
+signal REG_STAGE353_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE353_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE353_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE353_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 354
+signal REG_STAGE354_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE354_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE354_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE354_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 355
+signal REG_STAGE355_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE355_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE355_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE355_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 356
+signal REG_STAGE356_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE356_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE356_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE356_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 357
+signal REG_STAGE357_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE357_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE357_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE357_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 358
+signal REG_STAGE358_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE358_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE358_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE358_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 359
+signal REG_STAGE359_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE359_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE359_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE359_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 360
+signal REG_STAGE360_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE360_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE360_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE360_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 361
+signal REG_STAGE361_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE361_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE361_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE361_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 362
+signal REG_STAGE362_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE362_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE362_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE362_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 363
+signal REG_STAGE363_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE363_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE363_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE363_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 364
+signal REG_STAGE364_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE364_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE364_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE364_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 365
+signal REG_STAGE365_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE365_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE365_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE365_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 366
+signal REG_STAGE366_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE366_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE366_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE366_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Stage 367
+signal REG_STAGE367_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal REG_STAGE367_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal COMB_STAGE367_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal COMB_STAGE367_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+-- Each function instance gets signals
+-- vga_timing[pipelinec_app_c_l193_c31_5469]
+signal vga_timing_pipelinec_app_c_l193_c31_5469_CLOCK_ENABLE : unsigned(0 downto 0);
+signal vga_timing_pipelinec_app_c_l193_c31_5469_return_output : vga_signals_t;
+
+-- frame_clock_logic[pipelinec_app_c_l196_c3_76c1]
+signal frame_clock_logic_pipelinec_app_c_l196_c3_76c1_CLOCK_ENABLE : unsigned(0 downto 0);
+signal frame_clock_logic_pipelinec_app_c_l196_c3_76c1_x : unsigned(15 downto 0);
+signal frame_clock_logic_pipelinec_app_c_l196_c3_76c1_y : unsigned(15 downto 0);
+signal frame_clock_logic_pipelinec_app_c_l196_c3_76c1_active : unsigned(0 downto 0);
+
+-- render_pixel[pipelinec_app_c_l200_c20_6dd9]
+signal render_pixel_pipelinec_app_c_l200_c20_6dd9_i : unsigned(15 downto 0);
+signal render_pixel_pipelinec_app_c_l200_c20_6dd9_j : unsigned(15 downto 0);
+signal render_pixel_pipelinec_app_c_l200_c20_6dd9_return_output : pixel_t;
+
+-- pmod_register_outputs[pipelinec_app_c_l203_c3_57cc]
+signal pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+signal pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+signal pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_color : pixel_t;
+
+
+begin
+
+-- SUBMODULE INSTANCES 
+-- vga_timing_pipelinec_app_c_l193_c31_5469
+vga_timing_pipelinec_app_c_l193_c31_5469 : entity work.vga_timing_0CLK_62591bf8 port map (
+clk,
+vga_timing_pipelinec_app_c_l193_c31_5469_CLOCK_ENABLE,
+global_to_module.vga_timing_pipelinec_app_c_l193_c31_5469,
+vga_timing_pipelinec_app_c_l193_c31_5469_return_output);
+
+-- frame_clock_logic_pipelinec_app_c_l196_c3_76c1
+frame_clock_logic_pipelinec_app_c_l196_c3_76c1 : entity work.frame_clock_logic_0CLK_fc74e538 port map (
+clk,
+frame_clock_logic_pipelinec_app_c_l196_c3_76c1_CLOCK_ENABLE,
+module_to_global.frame_clock_logic_pipelinec_app_c_l196_c3_76c1,
+frame_clock_logic_pipelinec_app_c_l196_c3_76c1_x,
+frame_clock_logic_pipelinec_app_c_l196_c3_76c1_y,
+frame_clock_logic_pipelinec_app_c_l196_c3_76c1_active);
+
+-- render_pixel_pipelinec_app_c_l200_c20_6dd9
+render_pixel_pipelinec_app_c_l200_c20_6dd9 : entity work.render_pixel_368CLK_a505fdde port map (
+clk,
+global_to_module.render_pixel_pipelinec_app_c_l200_c20_6dd9,
+render_pixel_pipelinec_app_c_l200_c20_6dd9_i,
+render_pixel_pipelinec_app_c_l200_c20_6dd9_j,
+render_pixel_pipelinec_app_c_l200_c20_6dd9_return_output);
+
+-- pmod_register_outputs_pipelinec_app_c_l203_c3_57cc
+pmod_register_outputs_pipelinec_app_c_l203_c3_57cc : entity work.pmod_register_outputs_0CLK_25d197a7 port map (
+clk,
+pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+module_to_global.pmod_register_outputs_pipelinec_app_c_l203_c3_57cc,
+pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_color);
+
+
+
+-- Combinatorial process for pipeline stages
+process (
+ CLOCK_ENABLE,
+ -- Registers
+ -- Stage 0
+ REG_STAGE0_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE0_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 1
+ REG_STAGE1_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE1_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 2
+ REG_STAGE2_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE2_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 3
+ REG_STAGE3_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE3_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 4
+ REG_STAGE4_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE4_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 5
+ REG_STAGE5_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE5_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 6
+ REG_STAGE6_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE6_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 7
+ REG_STAGE7_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE7_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 8
+ REG_STAGE8_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE8_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 9
+ REG_STAGE9_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE9_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 10
+ REG_STAGE10_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE10_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 11
+ REG_STAGE11_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE11_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 12
+ REG_STAGE12_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE12_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 13
+ REG_STAGE13_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE13_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 14
+ REG_STAGE14_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE14_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 15
+ REG_STAGE15_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE15_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 16
+ REG_STAGE16_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE16_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 17
+ REG_STAGE17_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE17_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 18
+ REG_STAGE18_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE18_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 19
+ REG_STAGE19_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE19_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 20
+ REG_STAGE20_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE20_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 21
+ REG_STAGE21_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE21_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 22
+ REG_STAGE22_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE22_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 23
+ REG_STAGE23_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE23_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 24
+ REG_STAGE24_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE24_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 25
+ REG_STAGE25_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE25_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 26
+ REG_STAGE26_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE26_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 27
+ REG_STAGE27_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE27_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 28
+ REG_STAGE28_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE28_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 29
+ REG_STAGE29_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE29_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 30
+ REG_STAGE30_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE30_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 31
+ REG_STAGE31_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE31_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 32
+ REG_STAGE32_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE32_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 33
+ REG_STAGE33_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE33_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 34
+ REG_STAGE34_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE34_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 35
+ REG_STAGE35_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE35_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 36
+ REG_STAGE36_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE36_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 37
+ REG_STAGE37_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE37_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 38
+ REG_STAGE38_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE38_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 39
+ REG_STAGE39_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE39_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 40
+ REG_STAGE40_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE40_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 41
+ REG_STAGE41_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE41_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 42
+ REG_STAGE42_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE42_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 43
+ REG_STAGE43_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE43_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 44
+ REG_STAGE44_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE44_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 45
+ REG_STAGE45_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE45_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 46
+ REG_STAGE46_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE46_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 47
+ REG_STAGE47_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE47_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 48
+ REG_STAGE48_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE48_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 49
+ REG_STAGE49_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE49_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 50
+ REG_STAGE50_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE50_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 51
+ REG_STAGE51_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE51_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 52
+ REG_STAGE52_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE52_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 53
+ REG_STAGE53_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE53_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 54
+ REG_STAGE54_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE54_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 55
+ REG_STAGE55_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE55_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 56
+ REG_STAGE56_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE56_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 57
+ REG_STAGE57_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE57_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 58
+ REG_STAGE58_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE58_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 59
+ REG_STAGE59_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE59_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 60
+ REG_STAGE60_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE60_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 61
+ REG_STAGE61_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE61_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 62
+ REG_STAGE62_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE62_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 63
+ REG_STAGE63_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE63_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 64
+ REG_STAGE64_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE64_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 65
+ REG_STAGE65_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE65_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 66
+ REG_STAGE66_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE66_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 67
+ REG_STAGE67_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE67_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 68
+ REG_STAGE68_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE68_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 69
+ REG_STAGE69_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE69_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 70
+ REG_STAGE70_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE70_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 71
+ REG_STAGE71_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE71_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 72
+ REG_STAGE72_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE72_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 73
+ REG_STAGE73_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE73_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 74
+ REG_STAGE74_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE74_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 75
+ REG_STAGE75_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE75_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 76
+ REG_STAGE76_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE76_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 77
+ REG_STAGE77_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE77_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 78
+ REG_STAGE78_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE78_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 79
+ REG_STAGE79_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE79_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 80
+ REG_STAGE80_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE80_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 81
+ REG_STAGE81_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE81_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 82
+ REG_STAGE82_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE82_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 83
+ REG_STAGE83_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE83_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 84
+ REG_STAGE84_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE84_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 85
+ REG_STAGE85_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE85_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 86
+ REG_STAGE86_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE86_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 87
+ REG_STAGE87_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE87_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 88
+ REG_STAGE88_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE88_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 89
+ REG_STAGE89_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE89_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 90
+ REG_STAGE90_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE90_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 91
+ REG_STAGE91_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE91_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 92
+ REG_STAGE92_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE92_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 93
+ REG_STAGE93_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE93_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 94
+ REG_STAGE94_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE94_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 95
+ REG_STAGE95_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE95_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 96
+ REG_STAGE96_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE96_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 97
+ REG_STAGE97_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE97_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 98
+ REG_STAGE98_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE98_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 99
+ REG_STAGE99_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE99_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 100
+ REG_STAGE100_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE100_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 101
+ REG_STAGE101_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE101_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 102
+ REG_STAGE102_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE102_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 103
+ REG_STAGE103_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE103_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 104
+ REG_STAGE104_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE104_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 105
+ REG_STAGE105_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE105_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 106
+ REG_STAGE106_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE106_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 107
+ REG_STAGE107_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE107_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 108
+ REG_STAGE108_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE108_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 109
+ REG_STAGE109_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE109_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 110
+ REG_STAGE110_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE110_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 111
+ REG_STAGE111_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE111_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 112
+ REG_STAGE112_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE112_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 113
+ REG_STAGE113_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE113_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 114
+ REG_STAGE114_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE114_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 115
+ REG_STAGE115_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE115_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 116
+ REG_STAGE116_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE116_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 117
+ REG_STAGE117_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE117_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 118
+ REG_STAGE118_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE118_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 119
+ REG_STAGE119_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE119_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 120
+ REG_STAGE120_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE120_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 121
+ REG_STAGE121_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE121_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 122
+ REG_STAGE122_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE122_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 123
+ REG_STAGE123_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE123_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 124
+ REG_STAGE124_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE124_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 125
+ REG_STAGE125_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE125_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 126
+ REG_STAGE126_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE126_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 127
+ REG_STAGE127_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE127_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 128
+ REG_STAGE128_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE128_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 129
+ REG_STAGE129_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE129_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 130
+ REG_STAGE130_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE130_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 131
+ REG_STAGE131_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE131_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 132
+ REG_STAGE132_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE132_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 133
+ REG_STAGE133_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE133_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 134
+ REG_STAGE134_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE134_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 135
+ REG_STAGE135_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE135_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 136
+ REG_STAGE136_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE136_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 137
+ REG_STAGE137_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE137_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 138
+ REG_STAGE138_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE138_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 139
+ REG_STAGE139_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE139_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 140
+ REG_STAGE140_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE140_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 141
+ REG_STAGE141_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE141_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 142
+ REG_STAGE142_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE142_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 143
+ REG_STAGE143_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE143_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 144
+ REG_STAGE144_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE144_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 145
+ REG_STAGE145_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE145_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 146
+ REG_STAGE146_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE146_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 147
+ REG_STAGE147_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE147_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 148
+ REG_STAGE148_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE148_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 149
+ REG_STAGE149_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE149_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 150
+ REG_STAGE150_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE150_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 151
+ REG_STAGE151_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE151_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 152
+ REG_STAGE152_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE152_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 153
+ REG_STAGE153_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE153_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 154
+ REG_STAGE154_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE154_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 155
+ REG_STAGE155_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE155_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 156
+ REG_STAGE156_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE156_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 157
+ REG_STAGE157_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE157_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 158
+ REG_STAGE158_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE158_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 159
+ REG_STAGE159_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE159_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 160
+ REG_STAGE160_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE160_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 161
+ REG_STAGE161_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE161_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 162
+ REG_STAGE162_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE162_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 163
+ REG_STAGE163_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE163_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 164
+ REG_STAGE164_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE164_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 165
+ REG_STAGE165_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE165_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 166
+ REG_STAGE166_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE166_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 167
+ REG_STAGE167_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE167_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 168
+ REG_STAGE168_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE168_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 169
+ REG_STAGE169_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE169_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 170
+ REG_STAGE170_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE170_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 171
+ REG_STAGE171_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE171_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 172
+ REG_STAGE172_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE172_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 173
+ REG_STAGE173_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE173_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 174
+ REG_STAGE174_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE174_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 175
+ REG_STAGE175_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE175_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 176
+ REG_STAGE176_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE176_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 177
+ REG_STAGE177_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE177_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 178
+ REG_STAGE178_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE178_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 179
+ REG_STAGE179_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE179_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 180
+ REG_STAGE180_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE180_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 181
+ REG_STAGE181_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE181_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 182
+ REG_STAGE182_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE182_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 183
+ REG_STAGE183_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE183_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 184
+ REG_STAGE184_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE184_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 185
+ REG_STAGE185_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE185_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 186
+ REG_STAGE186_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE186_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 187
+ REG_STAGE187_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE187_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 188
+ REG_STAGE188_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE188_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 189
+ REG_STAGE189_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE189_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 190
+ REG_STAGE190_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE190_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 191
+ REG_STAGE191_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE191_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 192
+ REG_STAGE192_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE192_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 193
+ REG_STAGE193_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE193_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 194
+ REG_STAGE194_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE194_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 195
+ REG_STAGE195_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE195_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 196
+ REG_STAGE196_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE196_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 197
+ REG_STAGE197_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE197_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 198
+ REG_STAGE198_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE198_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 199
+ REG_STAGE199_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE199_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 200
+ REG_STAGE200_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE200_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 201
+ REG_STAGE201_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE201_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 202
+ REG_STAGE202_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE202_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 203
+ REG_STAGE203_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE203_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 204
+ REG_STAGE204_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE204_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 205
+ REG_STAGE205_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE205_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 206
+ REG_STAGE206_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE206_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 207
+ REG_STAGE207_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE207_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 208
+ REG_STAGE208_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE208_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 209
+ REG_STAGE209_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE209_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 210
+ REG_STAGE210_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE210_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 211
+ REG_STAGE211_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE211_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 212
+ REG_STAGE212_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE212_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 213
+ REG_STAGE213_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE213_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 214
+ REG_STAGE214_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE214_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 215
+ REG_STAGE215_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE215_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 216
+ REG_STAGE216_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE216_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 217
+ REG_STAGE217_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE217_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 218
+ REG_STAGE218_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE218_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 219
+ REG_STAGE219_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE219_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 220
+ REG_STAGE220_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE220_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 221
+ REG_STAGE221_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE221_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 222
+ REG_STAGE222_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE222_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 223
+ REG_STAGE223_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE223_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 224
+ REG_STAGE224_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE224_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 225
+ REG_STAGE225_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE225_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 226
+ REG_STAGE226_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE226_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 227
+ REG_STAGE227_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE227_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 228
+ REG_STAGE228_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE228_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 229
+ REG_STAGE229_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE229_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 230
+ REG_STAGE230_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE230_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 231
+ REG_STAGE231_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE231_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 232
+ REG_STAGE232_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE232_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 233
+ REG_STAGE233_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE233_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 234
+ REG_STAGE234_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE234_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 235
+ REG_STAGE235_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE235_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 236
+ REG_STAGE236_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE236_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 237
+ REG_STAGE237_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE237_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 238
+ REG_STAGE238_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE238_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 239
+ REG_STAGE239_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE239_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 240
+ REG_STAGE240_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE240_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 241
+ REG_STAGE241_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE241_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 242
+ REG_STAGE242_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE242_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 243
+ REG_STAGE243_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE243_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 244
+ REG_STAGE244_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE244_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 245
+ REG_STAGE245_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE245_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 246
+ REG_STAGE246_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE246_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 247
+ REG_STAGE247_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE247_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 248
+ REG_STAGE248_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE248_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 249
+ REG_STAGE249_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE249_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 250
+ REG_STAGE250_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE250_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 251
+ REG_STAGE251_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE251_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 252
+ REG_STAGE252_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE252_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 253
+ REG_STAGE253_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE253_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 254
+ REG_STAGE254_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE254_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 255
+ REG_STAGE255_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE255_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 256
+ REG_STAGE256_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE256_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 257
+ REG_STAGE257_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE257_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 258
+ REG_STAGE258_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE258_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 259
+ REG_STAGE259_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE259_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 260
+ REG_STAGE260_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE260_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 261
+ REG_STAGE261_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE261_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 262
+ REG_STAGE262_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE262_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 263
+ REG_STAGE263_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE263_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 264
+ REG_STAGE264_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE264_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 265
+ REG_STAGE265_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE265_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 266
+ REG_STAGE266_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE266_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 267
+ REG_STAGE267_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE267_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 268
+ REG_STAGE268_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE268_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 269
+ REG_STAGE269_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE269_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 270
+ REG_STAGE270_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE270_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 271
+ REG_STAGE271_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE271_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 272
+ REG_STAGE272_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE272_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 273
+ REG_STAGE273_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE273_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 274
+ REG_STAGE274_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE274_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 275
+ REG_STAGE275_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE275_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 276
+ REG_STAGE276_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE276_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 277
+ REG_STAGE277_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE277_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 278
+ REG_STAGE278_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE278_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 279
+ REG_STAGE279_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE279_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 280
+ REG_STAGE280_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE280_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 281
+ REG_STAGE281_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE281_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 282
+ REG_STAGE282_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE282_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 283
+ REG_STAGE283_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE283_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 284
+ REG_STAGE284_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE284_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 285
+ REG_STAGE285_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE285_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 286
+ REG_STAGE286_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE286_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 287
+ REG_STAGE287_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE287_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 288
+ REG_STAGE288_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE288_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 289
+ REG_STAGE289_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE289_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 290
+ REG_STAGE290_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE290_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 291
+ REG_STAGE291_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE291_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 292
+ REG_STAGE292_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE292_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 293
+ REG_STAGE293_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE293_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 294
+ REG_STAGE294_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE294_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 295
+ REG_STAGE295_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE295_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 296
+ REG_STAGE296_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE296_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 297
+ REG_STAGE297_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE297_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 298
+ REG_STAGE298_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE298_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 299
+ REG_STAGE299_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE299_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 300
+ REG_STAGE300_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE300_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 301
+ REG_STAGE301_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE301_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 302
+ REG_STAGE302_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE302_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 303
+ REG_STAGE303_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE303_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 304
+ REG_STAGE304_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE304_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 305
+ REG_STAGE305_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE305_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 306
+ REG_STAGE306_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE306_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 307
+ REG_STAGE307_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE307_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 308
+ REG_STAGE308_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE308_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 309
+ REG_STAGE309_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE309_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 310
+ REG_STAGE310_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE310_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 311
+ REG_STAGE311_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE311_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 312
+ REG_STAGE312_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE312_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 313
+ REG_STAGE313_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE313_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 314
+ REG_STAGE314_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE314_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 315
+ REG_STAGE315_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE315_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 316
+ REG_STAGE316_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE316_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 317
+ REG_STAGE317_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE317_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 318
+ REG_STAGE318_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE318_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 319
+ REG_STAGE319_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE319_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 320
+ REG_STAGE320_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE320_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 321
+ REG_STAGE321_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE321_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 322
+ REG_STAGE322_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE322_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 323
+ REG_STAGE323_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE323_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 324
+ REG_STAGE324_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE324_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 325
+ REG_STAGE325_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE325_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 326
+ REG_STAGE326_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE326_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 327
+ REG_STAGE327_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE327_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 328
+ REG_STAGE328_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE328_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 329
+ REG_STAGE329_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE329_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 330
+ REG_STAGE330_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE330_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 331
+ REG_STAGE331_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE331_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 332
+ REG_STAGE332_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE332_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 333
+ REG_STAGE333_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE333_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 334
+ REG_STAGE334_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE334_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 335
+ REG_STAGE335_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE335_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 336
+ REG_STAGE336_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE336_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 337
+ REG_STAGE337_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE337_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 338
+ REG_STAGE338_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE338_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 339
+ REG_STAGE339_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE339_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 340
+ REG_STAGE340_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE340_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 341
+ REG_STAGE341_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE341_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 342
+ REG_STAGE342_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE342_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 343
+ REG_STAGE343_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE343_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 344
+ REG_STAGE344_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE344_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 345
+ REG_STAGE345_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE345_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 346
+ REG_STAGE346_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE346_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 347
+ REG_STAGE347_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE347_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 348
+ REG_STAGE348_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE348_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 349
+ REG_STAGE349_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE349_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 350
+ REG_STAGE350_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE350_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 351
+ REG_STAGE351_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE351_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 352
+ REG_STAGE352_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE352_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 353
+ REG_STAGE353_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE353_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 354
+ REG_STAGE354_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE354_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 355
+ REG_STAGE355_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE355_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 356
+ REG_STAGE356_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE356_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 357
+ REG_STAGE357_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE357_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 358
+ REG_STAGE358_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE358_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 359
+ REG_STAGE359_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE359_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 360
+ REG_STAGE360_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE360_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 361
+ REG_STAGE361_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE361_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 362
+ REG_STAGE362_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE362_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 363
+ REG_STAGE363_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE363_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 364
+ REG_STAGE364_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE364_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 365
+ REG_STAGE365_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE365_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 366
+ REG_STAGE366_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE366_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Stage 367
+ REG_STAGE367_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga,
+ REG_STAGE367_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE,
+ -- Clock cross input
+ global_to_module,
+ -- All submodule outputs
+ vga_timing_pipelinec_app_c_l193_c31_5469_return_output,
+ render_pixel_pipelinec_app_c_l200_c20_6dd9_return_output)
+is 
+ -- All of the wires in function
+ variable VAR_CLOCK_ENABLE : unsigned(0 downto 0);
+ variable VAR_vga_signals : vga_signals_t;
+ variable VAR_vga_timing_pipelinec_app_c_l193_c31_5469_CLOCK_ENABLE : unsigned(0 downto 0);
+ variable VAR_vga_timing_pipelinec_app_c_l193_c31_5469_return_output : vga_signals_t;
+ variable VAR_frame_clock_logic_pipelinec_app_c_l196_c3_76c1_x : unsigned(15 downto 0);
+ variable VAR_frame_clock_logic_pipelinec_app_c_l196_c3_76c1_y : unsigned(15 downto 0);
+ variable VAR_frame_clock_logic_pipelinec_app_c_l196_c3_76c1_active : unsigned(0 downto 0);
+ variable VAR_CONST_REF_RD_uint1_t_vga_signals_t_active_d41d_pipelinec_app_c_l196_c59_f7b0_return_output : unsigned(0 downto 0);
+ variable VAR_frame_clock_logic_pipelinec_app_c_l196_c3_76c1_CLOCK_ENABLE : unsigned(0 downto 0);
+ variable VAR_fixed3 : pixel_t;
+ variable VAR_render_pixel_pipelinec_app_c_l200_c20_6dd9_i : unsigned(15 downto 0);
+ variable VAR_render_pixel_pipelinec_app_c_l200_c20_6dd9_j : unsigned(15 downto 0);
+ variable VAR_render_pixel_pipelinec_app_c_l200_c20_6dd9_return_output : pixel_t;
+ variable VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga : vga_signals_t;
+ variable VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_color : pixel_t;
+ variable VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE : unsigned(0 downto 0);
+ variable VAR_CONST_REF_RD_uint12_t_vga_signals_t_pos_x_d41d_pipelinec_app_c_l200_l196_DUPLICATE_afa2_return_output : unsigned(11 downto 0);
+ variable VAR_CONST_REF_RD_uint12_t_vga_signals_t_pos_y_d41d_pipelinec_app_c_l200_l196_DUPLICATE_e7ef_return_output : unsigned(11 downto 0);
+begin
+
+ -- Loop to construct simultaneous register transfers for each of the pipeline stages
+ -- LATENCY=0 is combinational Logic
+ for STAGE in 0 to PIPELINE_LATENCY loop
+   if STAGE = 0 then
+     -- Mux in clock enable
+     VAR_CLOCK_ENABLE := CLOCK_ENABLE;
+
+     -- Submodule level 0
+     VAR_frame_clock_logic_pipelinec_app_c_l196_c3_76c1_CLOCK_ENABLE := VAR_CLOCK_ENABLE;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := VAR_CLOCK_ENABLE;
+     VAR_vga_timing_pipelinec_app_c_l193_c31_5469_CLOCK_ENABLE := VAR_CLOCK_ENABLE;
+     -- vga_timing[pipelinec_app_c_l193_c31_5469] LATENCY=0
+     -- Clock enable
+     vga_timing_pipelinec_app_c_l193_c31_5469_CLOCK_ENABLE <= VAR_vga_timing_pipelinec_app_c_l193_c31_5469_CLOCK_ENABLE;
+     -- Inputs
+     -- Outputs
+     VAR_vga_timing_pipelinec_app_c_l193_c31_5469_return_output := vga_timing_pipelinec_app_c_l193_c31_5469_return_output;
+
+     -- Submodule level 1
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := VAR_vga_timing_pipelinec_app_c_l193_c31_5469_return_output;
+     -- CONST_REF_RD_uint12_t_vga_signals_t_pos_y_d41d_pipelinec_app_c_l200_l196_DUPLICATE_e7ef LATENCY=0
+     VAR_CONST_REF_RD_uint12_t_vga_signals_t_pos_y_d41d_pipelinec_app_c_l200_l196_DUPLICATE_e7ef_return_output := VAR_vga_timing_pipelinec_app_c_l193_c31_5469_return_output.pos.y;
+
+     -- CONST_REF_RD_uint1_t_vga_signals_t_active_d41d[pipelinec_app_c_l196_c59_f7b0] LATENCY=0
+     VAR_CONST_REF_RD_uint1_t_vga_signals_t_active_d41d_pipelinec_app_c_l196_c59_f7b0_return_output := VAR_vga_timing_pipelinec_app_c_l193_c31_5469_return_output.active;
+
+     -- CONST_REF_RD_uint12_t_vga_signals_t_pos_x_d41d_pipelinec_app_c_l200_l196_DUPLICATE_afa2 LATENCY=0
+     VAR_CONST_REF_RD_uint12_t_vga_signals_t_pos_x_d41d_pipelinec_app_c_l200_l196_DUPLICATE_afa2_return_output := VAR_vga_timing_pipelinec_app_c_l193_c31_5469_return_output.pos.x;
+
+     -- Submodule level 2
+     VAR_frame_clock_logic_pipelinec_app_c_l196_c3_76c1_x := resize(VAR_CONST_REF_RD_uint12_t_vga_signals_t_pos_x_d41d_pipelinec_app_c_l200_l196_DUPLICATE_afa2_return_output, 16);
+     VAR_render_pixel_pipelinec_app_c_l200_c20_6dd9_i := resize(VAR_CONST_REF_RD_uint12_t_vga_signals_t_pos_x_d41d_pipelinec_app_c_l200_l196_DUPLICATE_afa2_return_output, 16);
+     VAR_frame_clock_logic_pipelinec_app_c_l196_c3_76c1_y := resize(VAR_CONST_REF_RD_uint12_t_vga_signals_t_pos_y_d41d_pipelinec_app_c_l200_l196_DUPLICATE_e7ef_return_output, 16);
+     VAR_render_pixel_pipelinec_app_c_l200_c20_6dd9_j := resize(VAR_CONST_REF_RD_uint12_t_vga_signals_t_pos_y_d41d_pipelinec_app_c_l200_l196_DUPLICATE_e7ef_return_output, 16);
+     VAR_frame_clock_logic_pipelinec_app_c_l196_c3_76c1_active := VAR_CONST_REF_RD_uint1_t_vga_signals_t_active_d41d_pipelinec_app_c_l196_c59_f7b0_return_output;
+     -- render_pixel[pipelinec_app_c_l200_c20_6dd9] LATENCY=368
+     -- Inputs
+     render_pixel_pipelinec_app_c_l200_c20_6dd9_i <= VAR_render_pixel_pipelinec_app_c_l200_c20_6dd9_i;
+     render_pixel_pipelinec_app_c_l200_c20_6dd9_j <= VAR_render_pixel_pipelinec_app_c_l200_c20_6dd9_j;
+
+     -- frame_clock_logic[pipelinec_app_c_l196_c3_76c1] LATENCY=0
+     -- Clock enable
+     frame_clock_logic_pipelinec_app_c_l196_c3_76c1_CLOCK_ENABLE <= VAR_frame_clock_logic_pipelinec_app_c_l196_c3_76c1_CLOCK_ENABLE;
+     -- Inputs
+     frame_clock_logic_pipelinec_app_c_l196_c3_76c1_x <= VAR_frame_clock_logic_pipelinec_app_c_l196_c3_76c1_x;
+     frame_clock_logic_pipelinec_app_c_l196_c3_76c1_y <= VAR_frame_clock_logic_pipelinec_app_c_l196_c3_76c1_y;
+     frame_clock_logic_pipelinec_app_c_l196_c3_76c1_active <= VAR_frame_clock_logic_pipelinec_app_c_l196_c3_76c1_active;
+     -- Outputs
+
+     -- Write to comb signals
+     COMB_STAGE0_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE0_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 1 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE0_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE0_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE1_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE1_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 2 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE1_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE1_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE2_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE2_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 3 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE2_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE2_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE3_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE3_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 4 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE3_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE3_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE4_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE4_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 5 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE4_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE4_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE5_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE5_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 6 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE5_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE5_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE6_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE6_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 7 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE6_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE6_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE7_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE7_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 8 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE7_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE7_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE8_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE8_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 9 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE8_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE8_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE9_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE9_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 10 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE9_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE9_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE10_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE10_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 11 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE10_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE10_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE11_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE11_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 12 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE11_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE11_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE12_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE12_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 13 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE12_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE12_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE13_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE13_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 14 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE13_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE13_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE14_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE14_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 15 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE14_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE14_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE15_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE15_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 16 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE15_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE15_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE16_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE16_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 17 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE16_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE16_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE17_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE17_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 18 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE17_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE17_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE18_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE18_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 19 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE18_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE18_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE19_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE19_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 20 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE19_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE19_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE20_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE20_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 21 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE20_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE20_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE21_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE21_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 22 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE21_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE21_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE22_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE22_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 23 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE22_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE22_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE23_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE23_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 24 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE23_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE23_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE24_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE24_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 25 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE24_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE24_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE25_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE25_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 26 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE25_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE25_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE26_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE26_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 27 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE26_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE26_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE27_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE27_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 28 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE27_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE27_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE28_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE28_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 29 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE28_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE28_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE29_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE29_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 30 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE29_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE29_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE30_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE30_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 31 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE30_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE30_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE31_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE31_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 32 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE31_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE31_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE32_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE32_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 33 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE32_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE32_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE33_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE33_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 34 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE33_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE33_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE34_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE34_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 35 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE34_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE34_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE35_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE35_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 36 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE35_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE35_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE36_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE36_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 37 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE36_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE36_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE37_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE37_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 38 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE37_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE37_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE38_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE38_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 39 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE38_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE38_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE39_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE39_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 40 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE39_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE39_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE40_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE40_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 41 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE40_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE40_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE41_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE41_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 42 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE41_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE41_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE42_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE42_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 43 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE42_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE42_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE43_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE43_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 44 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE43_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE43_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE44_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE44_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 45 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE44_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE44_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE45_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE45_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 46 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE45_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE45_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE46_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE46_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 47 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE46_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE46_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE47_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE47_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 48 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE47_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE47_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE48_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE48_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 49 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE48_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE48_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE49_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE49_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 50 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE49_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE49_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE50_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE50_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 51 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE50_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE50_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE51_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE51_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 52 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE51_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE51_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE52_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE52_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 53 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE52_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE52_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE53_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE53_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 54 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE53_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE53_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE54_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE54_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 55 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE54_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE54_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE55_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE55_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 56 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE55_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE55_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE56_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE56_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 57 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE56_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE56_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE57_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE57_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 58 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE57_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE57_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE58_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE58_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 59 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE58_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE58_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE59_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE59_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 60 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE59_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE59_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE60_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE60_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 61 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE60_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE60_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE61_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE61_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 62 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE61_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE61_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE62_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE62_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 63 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE62_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE62_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE63_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE63_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 64 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE63_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE63_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE64_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE64_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 65 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE64_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE64_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE65_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE65_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 66 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE65_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE65_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE66_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE66_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 67 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE66_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE66_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE67_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE67_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 68 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE67_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE67_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE68_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE68_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 69 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE68_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE68_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE69_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE69_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 70 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE69_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE69_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE70_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE70_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 71 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE70_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE70_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE71_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE71_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 72 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE71_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE71_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE72_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE72_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 73 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE72_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE72_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE73_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE73_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 74 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE73_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE73_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE74_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE74_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 75 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE74_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE74_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE75_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE75_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 76 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE75_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE75_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE76_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE76_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 77 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE76_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE76_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE77_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE77_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 78 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE77_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE77_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE78_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE78_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 79 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE78_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE78_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE79_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE79_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 80 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE79_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE79_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE80_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE80_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 81 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE80_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE80_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE81_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE81_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 82 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE81_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE81_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE82_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE82_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 83 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE82_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE82_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE83_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE83_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 84 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE83_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE83_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE84_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE84_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 85 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE84_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE84_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE85_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE85_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 86 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE85_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE85_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE86_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE86_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 87 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE86_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE86_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE87_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE87_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 88 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE87_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE87_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE88_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE88_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 89 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE88_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE88_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE89_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE89_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 90 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE89_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE89_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE90_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE90_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 91 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE90_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE90_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE91_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE91_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 92 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE91_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE91_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE92_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE92_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 93 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE92_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE92_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE93_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE93_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 94 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE93_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE93_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE94_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE94_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 95 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE94_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE94_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE95_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE95_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 96 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE95_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE95_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE96_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE96_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 97 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE96_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE96_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE97_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE97_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 98 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE97_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE97_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE98_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE98_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 99 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE98_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE98_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE99_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE99_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 100 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE99_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE99_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE100_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE100_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 101 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE100_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE100_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE101_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE101_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 102 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE101_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE101_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE102_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE102_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 103 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE102_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE102_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE103_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE103_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 104 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE103_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE103_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE104_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE104_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 105 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE104_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE104_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE105_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE105_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 106 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE105_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE105_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE106_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE106_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 107 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE106_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE106_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE107_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE107_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 108 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE107_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE107_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE108_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE108_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 109 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE108_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE108_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE109_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE109_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 110 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE109_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE109_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE110_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE110_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 111 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE110_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE110_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE111_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE111_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 112 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE111_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE111_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE112_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE112_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 113 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE112_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE112_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE113_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE113_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 114 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE113_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE113_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE114_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE114_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 115 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE114_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE114_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE115_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE115_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 116 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE115_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE115_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE116_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE116_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 117 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE116_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE116_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE117_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE117_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 118 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE117_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE117_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE118_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE118_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 119 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE118_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE118_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE119_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE119_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 120 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE119_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE119_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE120_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE120_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 121 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE120_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE120_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE121_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE121_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 122 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE121_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE121_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE122_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE122_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 123 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE122_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE122_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE123_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE123_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 124 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE123_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE123_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE124_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE124_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 125 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE124_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE124_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE125_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE125_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 126 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE125_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE125_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE126_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE126_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 127 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE126_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE126_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE127_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE127_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 128 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE127_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE127_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE128_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE128_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 129 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE128_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE128_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE129_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE129_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 130 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE129_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE129_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE130_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE130_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 131 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE130_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE130_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE131_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE131_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 132 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE131_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE131_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE132_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE132_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 133 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE132_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE132_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE133_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE133_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 134 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE133_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE133_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE134_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE134_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 135 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE134_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE134_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE135_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE135_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 136 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE135_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE135_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE136_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE136_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 137 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE136_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE136_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE137_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE137_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 138 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE137_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE137_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE138_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE138_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 139 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE138_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE138_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE139_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE139_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 140 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE139_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE139_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE140_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE140_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 141 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE140_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE140_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE141_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE141_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 142 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE141_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE141_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE142_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE142_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 143 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE142_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE142_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE143_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE143_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 144 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE143_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE143_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE144_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE144_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 145 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE144_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE144_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE145_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE145_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 146 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE145_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE145_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE146_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE146_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 147 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE146_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE146_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE147_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE147_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 148 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE147_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE147_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE148_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE148_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 149 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE148_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE148_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE149_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE149_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 150 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE149_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE149_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE150_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE150_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 151 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE150_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE150_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE151_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE151_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 152 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE151_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE151_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE152_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE152_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 153 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE152_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE152_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE153_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE153_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 154 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE153_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE153_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE154_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE154_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 155 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE154_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE154_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE155_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE155_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 156 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE155_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE155_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE156_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE156_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 157 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE156_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE156_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE157_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE157_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 158 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE157_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE157_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE158_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE158_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 159 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE158_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE158_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE159_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE159_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 160 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE159_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE159_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE160_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE160_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 161 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE160_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE160_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE161_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE161_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 162 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE161_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE161_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE162_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE162_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 163 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE162_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE162_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE163_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE163_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 164 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE163_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE163_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE164_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE164_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 165 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE164_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE164_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE165_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE165_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 166 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE165_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE165_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE166_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE166_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 167 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE166_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE166_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE167_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE167_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 168 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE167_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE167_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE168_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE168_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 169 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE168_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE168_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE169_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE169_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 170 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE169_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE169_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE170_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE170_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 171 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE170_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE170_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE171_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE171_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 172 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE171_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE171_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE172_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE172_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 173 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE172_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE172_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE173_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE173_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 174 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE173_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE173_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE174_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE174_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 175 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE174_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE174_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE175_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE175_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 176 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE175_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE175_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE176_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE176_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 177 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE176_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE176_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE177_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE177_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 178 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE177_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE177_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE178_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE178_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 179 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE178_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE178_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE179_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE179_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 180 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE179_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE179_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE180_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE180_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 181 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE180_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE180_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE181_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE181_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 182 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE181_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE181_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE182_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE182_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 183 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE182_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE182_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE183_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE183_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 184 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE183_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE183_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE184_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE184_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 185 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE184_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE184_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE185_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE185_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 186 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE185_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE185_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE186_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE186_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 187 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE186_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE186_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE187_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE187_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 188 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE187_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE187_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE188_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE188_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 189 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE188_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE188_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE189_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE189_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 190 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE189_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE189_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE190_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE190_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 191 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE190_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE190_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE191_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE191_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 192 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE191_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE191_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE192_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE192_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 193 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE192_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE192_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE193_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE193_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 194 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE193_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE193_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE194_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE194_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 195 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE194_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE194_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE195_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE195_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 196 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE195_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE195_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE196_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE196_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 197 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE196_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE196_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE197_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE197_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 198 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE197_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE197_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE198_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE198_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 199 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE198_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE198_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE199_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE199_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 200 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE199_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE199_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE200_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE200_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 201 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE200_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE200_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE201_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE201_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 202 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE201_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE201_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE202_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE202_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 203 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE202_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE202_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE203_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE203_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 204 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE203_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE203_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE204_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE204_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 205 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE204_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE204_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE205_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE205_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 206 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE205_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE205_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE206_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE206_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 207 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE206_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE206_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE207_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE207_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 208 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE207_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE207_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE208_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE208_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 209 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE208_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE208_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE209_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE209_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 210 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE209_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE209_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE210_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE210_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 211 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE210_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE210_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE211_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE211_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 212 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE211_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE211_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE212_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE212_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 213 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE212_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE212_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE213_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE213_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 214 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE213_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE213_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE214_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE214_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 215 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE214_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE214_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE215_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE215_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 216 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE215_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE215_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE216_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE216_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 217 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE216_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE216_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE217_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE217_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 218 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE217_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE217_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE218_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE218_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 219 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE218_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE218_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE219_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE219_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 220 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE219_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE219_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE220_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE220_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 221 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE220_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE220_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE221_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE221_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 222 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE221_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE221_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE222_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE222_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 223 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE222_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE222_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE223_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE223_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 224 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE223_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE223_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE224_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE224_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 225 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE224_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE224_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE225_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE225_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 226 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE225_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE225_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE226_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE226_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 227 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE226_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE226_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE227_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE227_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 228 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE227_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE227_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE228_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE228_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 229 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE228_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE228_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE229_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE229_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 230 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE229_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE229_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE230_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE230_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 231 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE230_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE230_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE231_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE231_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 232 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE231_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE231_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE232_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE232_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 233 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE232_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE232_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE233_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE233_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 234 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE233_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE233_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE234_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE234_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 235 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE234_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE234_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE235_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE235_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 236 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE235_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE235_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE236_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE236_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 237 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE236_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE236_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE237_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE237_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 238 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE237_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE237_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE238_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE238_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 239 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE238_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE238_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE239_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE239_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 240 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE239_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE239_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE240_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE240_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 241 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE240_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE240_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE241_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE241_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 242 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE241_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE241_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE242_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE242_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 243 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE242_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE242_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE243_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE243_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 244 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE243_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE243_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE244_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE244_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 245 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE244_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE244_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE245_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE245_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 246 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE245_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE245_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE246_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE246_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 247 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE246_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE246_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE247_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE247_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 248 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE247_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE247_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE248_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE248_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 249 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE248_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE248_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE249_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE249_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 250 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE249_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE249_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE250_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE250_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 251 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE250_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE250_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE251_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE251_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 252 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE251_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE251_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE252_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE252_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 253 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE252_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE252_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE253_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE253_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 254 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE253_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE253_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE254_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE254_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 255 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE254_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE254_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE255_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE255_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 256 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE255_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE255_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE256_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE256_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 257 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE256_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE256_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE257_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE257_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 258 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE257_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE257_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE258_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE258_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 259 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE258_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE258_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE259_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE259_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 260 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE259_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE259_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE260_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE260_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 261 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE260_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE260_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE261_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE261_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 262 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE261_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE261_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE262_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE262_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 263 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE262_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE262_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE263_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE263_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 264 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE263_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE263_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE264_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE264_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 265 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE264_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE264_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE265_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE265_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 266 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE265_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE265_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE266_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE266_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 267 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE266_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE266_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE267_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE267_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 268 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE267_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE267_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE268_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE268_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 269 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE268_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE268_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE269_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE269_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 270 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE269_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE269_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE270_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE270_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 271 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE270_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE270_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE271_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE271_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 272 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE271_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE271_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE272_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE272_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 273 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE272_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE272_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE273_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE273_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 274 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE273_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE273_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE274_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE274_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 275 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE274_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE274_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE275_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE275_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 276 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE275_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE275_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE276_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE276_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 277 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE276_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE276_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE277_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE277_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 278 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE277_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE277_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE278_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE278_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 279 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE278_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE278_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE279_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE279_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 280 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE279_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE279_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE280_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE280_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 281 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE280_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE280_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE281_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE281_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 282 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE281_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE281_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE282_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE282_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 283 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE282_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE282_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE283_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE283_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 284 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE283_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE283_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE284_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE284_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 285 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE284_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE284_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE285_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE285_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 286 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE285_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE285_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE286_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE286_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 287 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE286_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE286_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE287_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE287_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 288 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE287_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE287_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE288_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE288_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 289 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE288_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE288_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE289_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE289_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 290 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE289_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE289_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE290_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE290_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 291 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE290_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE290_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE291_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE291_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 292 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE291_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE291_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE292_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE292_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 293 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE292_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE292_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE293_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE293_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 294 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE293_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE293_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE294_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE294_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 295 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE294_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE294_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE295_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE295_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 296 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE295_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE295_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE296_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE296_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 297 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE296_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE296_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE297_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE297_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 298 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE297_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE297_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE298_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE298_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 299 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE298_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE298_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE299_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE299_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 300 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE299_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE299_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE300_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE300_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 301 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE300_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE300_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE301_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE301_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 302 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE301_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE301_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE302_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE302_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 303 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE302_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE302_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE303_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE303_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 304 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE303_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE303_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE304_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE304_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 305 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE304_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE304_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE305_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE305_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 306 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE305_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE305_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE306_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE306_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 307 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE306_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE306_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE307_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE307_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 308 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE307_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE307_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE308_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE308_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 309 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE308_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE308_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE309_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE309_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 310 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE309_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE309_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE310_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE310_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 311 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE310_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE310_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE311_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE311_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 312 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE311_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE311_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE312_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE312_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 313 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE312_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE312_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE313_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE313_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 314 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE313_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE313_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE314_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE314_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 315 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE314_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE314_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE315_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE315_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 316 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE315_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE315_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE316_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE316_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 317 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE316_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE316_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE317_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE317_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 318 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE317_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE317_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE318_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE318_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 319 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE318_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE318_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE319_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE319_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 320 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE319_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE319_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE320_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE320_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 321 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE320_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE320_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE321_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE321_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 322 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE321_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE321_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE322_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE322_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 323 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE322_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE322_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE323_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE323_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 324 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE323_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE323_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE324_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE324_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 325 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE324_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE324_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE325_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE325_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 326 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE325_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE325_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE326_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE326_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 327 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE326_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE326_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE327_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE327_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 328 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE327_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE327_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE328_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE328_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 329 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE328_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE328_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE329_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE329_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 330 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE329_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE329_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE330_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE330_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 331 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE330_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE330_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE331_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE331_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 332 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE331_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE331_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE332_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE332_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 333 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE332_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE332_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE333_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE333_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 334 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE333_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE333_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE334_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE334_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 335 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE334_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE334_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE335_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE335_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 336 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE335_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE335_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE336_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE336_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 337 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE336_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE336_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE337_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE337_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 338 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE337_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE337_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE338_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE338_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 339 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE338_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE338_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE339_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE339_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 340 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE339_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE339_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE340_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE340_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 341 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE340_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE340_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE341_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE341_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 342 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE341_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE341_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE342_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE342_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 343 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE342_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE342_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE343_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE343_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 344 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE343_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE343_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE344_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE344_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 345 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE344_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE344_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE345_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE345_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 346 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE345_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE345_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE346_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE346_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 347 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE346_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE346_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE347_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE347_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 348 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE347_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE347_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE348_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE348_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 349 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE348_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE348_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE349_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE349_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 350 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE349_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE349_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE350_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE350_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 351 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE350_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE350_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE351_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE351_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 352 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE351_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE351_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE352_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE352_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 353 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE352_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE352_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE353_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE353_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 354 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE353_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE353_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE354_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE354_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 355 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE354_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE354_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE355_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE355_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 356 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE355_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE355_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE356_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE356_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 357 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE356_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE356_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE357_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE357_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 358 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE357_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE357_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE358_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE358_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 359 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE358_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE358_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE359_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE359_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 360 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE359_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE359_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE360_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE360_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 361 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE360_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE360_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE361_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE361_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 362 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE361_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE361_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE362_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE362_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 363 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE362_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE362_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE363_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE363_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 364 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE363_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE363_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE364_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE364_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 365 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE364_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE364_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE365_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE365_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 366 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE365_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE365_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE366_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE366_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 367 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE366_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE366_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+
+     -- Write to comb signals
+     COMB_STAGE367_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     COMB_STAGE367_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+   elsif STAGE = 368 then
+     -- Read from prev stage
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga := REG_STAGE367_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE := REG_STAGE367_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Submodule outputs
+     VAR_render_pixel_pipelinec_app_c_l200_c20_6dd9_return_output := render_pixel_pipelinec_app_c_l200_c20_6dd9_return_output;
+
+     -- Submodule level 0
+     VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_color := VAR_render_pixel_pipelinec_app_c_l200_c20_6dd9_return_output;
+     -- pmod_register_outputs[pipelinec_app_c_l203_c3_57cc] LATENCY=0
+     -- Clock enable
+     pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Inputs
+     pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_color <= VAR_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_color;
+     -- Outputs
+
+   end if;
+ end loop;
+
+end process;
+
+-- Register comb signals
+process(clk) is
+begin
+ if rising_edge(clk) then
+ if CLOCK_ENABLE(0)='1' then
+     -- Stage 0
+     REG_STAGE0_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE0_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE0_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE0_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 1
+     REG_STAGE1_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE1_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE1_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE1_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 2
+     REG_STAGE2_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE2_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE2_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE2_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 3
+     REG_STAGE3_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE3_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE3_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE3_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 4
+     REG_STAGE4_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE4_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE4_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE4_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 5
+     REG_STAGE5_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE5_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE5_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE5_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 6
+     REG_STAGE6_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE6_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE6_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE6_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 7
+     REG_STAGE7_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE7_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE7_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE7_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 8
+     REG_STAGE8_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE8_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE8_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE8_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 9
+     REG_STAGE9_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE9_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE9_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE9_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 10
+     REG_STAGE10_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE10_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE10_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE10_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 11
+     REG_STAGE11_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE11_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE11_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE11_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 12
+     REG_STAGE12_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE12_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE12_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE12_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 13
+     REG_STAGE13_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE13_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE13_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE13_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 14
+     REG_STAGE14_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE14_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE14_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE14_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 15
+     REG_STAGE15_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE15_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE15_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE15_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 16
+     REG_STAGE16_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE16_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE16_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE16_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 17
+     REG_STAGE17_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE17_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE17_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE17_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 18
+     REG_STAGE18_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE18_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE18_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE18_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 19
+     REG_STAGE19_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE19_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE19_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE19_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 20
+     REG_STAGE20_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE20_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE20_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE20_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 21
+     REG_STAGE21_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE21_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE21_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE21_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 22
+     REG_STAGE22_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE22_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE22_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE22_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 23
+     REG_STAGE23_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE23_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE23_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE23_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 24
+     REG_STAGE24_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE24_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE24_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE24_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 25
+     REG_STAGE25_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE25_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE25_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE25_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 26
+     REG_STAGE26_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE26_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE26_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE26_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 27
+     REG_STAGE27_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE27_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE27_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE27_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 28
+     REG_STAGE28_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE28_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE28_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE28_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 29
+     REG_STAGE29_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE29_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE29_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE29_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 30
+     REG_STAGE30_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE30_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE30_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE30_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 31
+     REG_STAGE31_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE31_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE31_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE31_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 32
+     REG_STAGE32_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE32_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE32_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE32_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 33
+     REG_STAGE33_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE33_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE33_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE33_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 34
+     REG_STAGE34_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE34_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE34_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE34_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 35
+     REG_STAGE35_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE35_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE35_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE35_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 36
+     REG_STAGE36_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE36_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE36_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE36_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 37
+     REG_STAGE37_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE37_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE37_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE37_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 38
+     REG_STAGE38_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE38_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE38_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE38_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 39
+     REG_STAGE39_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE39_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE39_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE39_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 40
+     REG_STAGE40_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE40_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE40_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE40_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 41
+     REG_STAGE41_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE41_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE41_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE41_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 42
+     REG_STAGE42_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE42_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE42_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE42_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 43
+     REG_STAGE43_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE43_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE43_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE43_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 44
+     REG_STAGE44_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE44_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE44_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE44_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 45
+     REG_STAGE45_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE45_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE45_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE45_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 46
+     REG_STAGE46_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE46_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE46_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE46_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 47
+     REG_STAGE47_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE47_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE47_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE47_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 48
+     REG_STAGE48_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE48_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE48_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE48_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 49
+     REG_STAGE49_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE49_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE49_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE49_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 50
+     REG_STAGE50_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE50_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE50_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE50_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 51
+     REG_STAGE51_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE51_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE51_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE51_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 52
+     REG_STAGE52_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE52_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE52_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE52_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 53
+     REG_STAGE53_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE53_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE53_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE53_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 54
+     REG_STAGE54_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE54_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE54_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE54_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 55
+     REG_STAGE55_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE55_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE55_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE55_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 56
+     REG_STAGE56_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE56_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE56_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE56_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 57
+     REG_STAGE57_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE57_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE57_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE57_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 58
+     REG_STAGE58_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE58_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE58_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE58_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 59
+     REG_STAGE59_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE59_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE59_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE59_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 60
+     REG_STAGE60_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE60_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE60_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE60_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 61
+     REG_STAGE61_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE61_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE61_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE61_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 62
+     REG_STAGE62_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE62_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE62_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE62_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 63
+     REG_STAGE63_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE63_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE63_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE63_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 64
+     REG_STAGE64_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE64_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE64_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE64_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 65
+     REG_STAGE65_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE65_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE65_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE65_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 66
+     REG_STAGE66_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE66_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE66_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE66_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 67
+     REG_STAGE67_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE67_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE67_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE67_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 68
+     REG_STAGE68_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE68_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE68_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE68_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 69
+     REG_STAGE69_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE69_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE69_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE69_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 70
+     REG_STAGE70_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE70_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE70_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE70_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 71
+     REG_STAGE71_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE71_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE71_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE71_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 72
+     REG_STAGE72_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE72_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE72_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE72_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 73
+     REG_STAGE73_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE73_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE73_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE73_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 74
+     REG_STAGE74_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE74_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE74_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE74_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 75
+     REG_STAGE75_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE75_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE75_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE75_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 76
+     REG_STAGE76_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE76_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE76_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE76_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 77
+     REG_STAGE77_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE77_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE77_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE77_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 78
+     REG_STAGE78_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE78_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE78_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE78_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 79
+     REG_STAGE79_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE79_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE79_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE79_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 80
+     REG_STAGE80_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE80_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE80_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE80_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 81
+     REG_STAGE81_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE81_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE81_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE81_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 82
+     REG_STAGE82_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE82_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE82_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE82_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 83
+     REG_STAGE83_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE83_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE83_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE83_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 84
+     REG_STAGE84_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE84_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE84_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE84_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 85
+     REG_STAGE85_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE85_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE85_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE85_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 86
+     REG_STAGE86_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE86_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE86_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE86_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 87
+     REG_STAGE87_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE87_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE87_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE87_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 88
+     REG_STAGE88_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE88_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE88_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE88_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 89
+     REG_STAGE89_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE89_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE89_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE89_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 90
+     REG_STAGE90_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE90_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE90_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE90_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 91
+     REG_STAGE91_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE91_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE91_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE91_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 92
+     REG_STAGE92_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE92_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE92_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE92_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 93
+     REG_STAGE93_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE93_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE93_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE93_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 94
+     REG_STAGE94_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE94_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE94_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE94_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 95
+     REG_STAGE95_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE95_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE95_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE95_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 96
+     REG_STAGE96_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE96_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE96_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE96_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 97
+     REG_STAGE97_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE97_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE97_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE97_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 98
+     REG_STAGE98_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE98_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE98_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE98_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 99
+     REG_STAGE99_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE99_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE99_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE99_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 100
+     REG_STAGE100_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE100_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE100_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE100_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 101
+     REG_STAGE101_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE101_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE101_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE101_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 102
+     REG_STAGE102_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE102_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE102_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE102_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 103
+     REG_STAGE103_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE103_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE103_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE103_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 104
+     REG_STAGE104_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE104_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE104_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE104_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 105
+     REG_STAGE105_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE105_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE105_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE105_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 106
+     REG_STAGE106_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE106_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE106_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE106_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 107
+     REG_STAGE107_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE107_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE107_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE107_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 108
+     REG_STAGE108_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE108_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE108_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE108_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 109
+     REG_STAGE109_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE109_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE109_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE109_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 110
+     REG_STAGE110_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE110_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE110_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE110_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 111
+     REG_STAGE111_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE111_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE111_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE111_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 112
+     REG_STAGE112_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE112_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE112_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE112_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 113
+     REG_STAGE113_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE113_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE113_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE113_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 114
+     REG_STAGE114_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE114_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE114_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE114_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 115
+     REG_STAGE115_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE115_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE115_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE115_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 116
+     REG_STAGE116_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE116_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE116_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE116_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 117
+     REG_STAGE117_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE117_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE117_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE117_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 118
+     REG_STAGE118_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE118_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE118_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE118_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 119
+     REG_STAGE119_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE119_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE119_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE119_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 120
+     REG_STAGE120_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE120_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE120_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE120_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 121
+     REG_STAGE121_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE121_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE121_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE121_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 122
+     REG_STAGE122_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE122_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE122_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE122_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 123
+     REG_STAGE123_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE123_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE123_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE123_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 124
+     REG_STAGE124_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE124_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE124_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE124_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 125
+     REG_STAGE125_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE125_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE125_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE125_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 126
+     REG_STAGE126_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE126_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE126_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE126_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 127
+     REG_STAGE127_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE127_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE127_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE127_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 128
+     REG_STAGE128_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE128_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE128_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE128_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 129
+     REG_STAGE129_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE129_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE129_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE129_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 130
+     REG_STAGE130_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE130_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE130_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE130_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 131
+     REG_STAGE131_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE131_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE131_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE131_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 132
+     REG_STAGE132_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE132_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE132_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE132_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 133
+     REG_STAGE133_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE133_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE133_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE133_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 134
+     REG_STAGE134_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE134_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE134_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE134_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 135
+     REG_STAGE135_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE135_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE135_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE135_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 136
+     REG_STAGE136_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE136_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE136_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE136_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 137
+     REG_STAGE137_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE137_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE137_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE137_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 138
+     REG_STAGE138_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE138_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE138_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE138_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 139
+     REG_STAGE139_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE139_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE139_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE139_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 140
+     REG_STAGE140_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE140_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE140_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE140_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 141
+     REG_STAGE141_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE141_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE141_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE141_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 142
+     REG_STAGE142_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE142_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE142_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE142_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 143
+     REG_STAGE143_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE143_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE143_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE143_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 144
+     REG_STAGE144_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE144_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE144_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE144_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 145
+     REG_STAGE145_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE145_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE145_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE145_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 146
+     REG_STAGE146_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE146_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE146_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE146_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 147
+     REG_STAGE147_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE147_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE147_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE147_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 148
+     REG_STAGE148_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE148_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE148_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE148_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 149
+     REG_STAGE149_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE149_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE149_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE149_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 150
+     REG_STAGE150_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE150_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE150_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE150_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 151
+     REG_STAGE151_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE151_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE151_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE151_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 152
+     REG_STAGE152_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE152_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE152_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE152_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 153
+     REG_STAGE153_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE153_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE153_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE153_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 154
+     REG_STAGE154_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE154_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE154_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE154_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 155
+     REG_STAGE155_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE155_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE155_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE155_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 156
+     REG_STAGE156_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE156_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE156_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE156_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 157
+     REG_STAGE157_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE157_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE157_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE157_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 158
+     REG_STAGE158_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE158_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE158_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE158_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 159
+     REG_STAGE159_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE159_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE159_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE159_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 160
+     REG_STAGE160_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE160_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE160_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE160_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 161
+     REG_STAGE161_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE161_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE161_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE161_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 162
+     REG_STAGE162_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE162_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE162_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE162_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 163
+     REG_STAGE163_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE163_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE163_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE163_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 164
+     REG_STAGE164_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE164_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE164_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE164_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 165
+     REG_STAGE165_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE165_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE165_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE165_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 166
+     REG_STAGE166_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE166_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE166_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE166_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 167
+     REG_STAGE167_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE167_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE167_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE167_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 168
+     REG_STAGE168_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE168_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE168_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE168_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 169
+     REG_STAGE169_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE169_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE169_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE169_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 170
+     REG_STAGE170_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE170_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE170_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE170_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 171
+     REG_STAGE171_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE171_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE171_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE171_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 172
+     REG_STAGE172_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE172_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE172_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE172_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 173
+     REG_STAGE173_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE173_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE173_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE173_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 174
+     REG_STAGE174_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE174_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE174_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE174_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 175
+     REG_STAGE175_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE175_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE175_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE175_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 176
+     REG_STAGE176_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE176_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE176_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE176_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 177
+     REG_STAGE177_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE177_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE177_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE177_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 178
+     REG_STAGE178_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE178_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE178_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE178_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 179
+     REG_STAGE179_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE179_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE179_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE179_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 180
+     REG_STAGE180_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE180_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE180_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE180_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 181
+     REG_STAGE181_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE181_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE181_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE181_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 182
+     REG_STAGE182_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE182_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE182_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE182_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 183
+     REG_STAGE183_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE183_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE183_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE183_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 184
+     REG_STAGE184_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE184_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE184_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE184_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 185
+     REG_STAGE185_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE185_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE185_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE185_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 186
+     REG_STAGE186_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE186_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE186_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE186_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 187
+     REG_STAGE187_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE187_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE187_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE187_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 188
+     REG_STAGE188_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE188_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE188_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE188_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 189
+     REG_STAGE189_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE189_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE189_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE189_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 190
+     REG_STAGE190_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE190_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE190_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE190_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 191
+     REG_STAGE191_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE191_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE191_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE191_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 192
+     REG_STAGE192_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE192_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE192_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE192_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 193
+     REG_STAGE193_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE193_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE193_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE193_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 194
+     REG_STAGE194_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE194_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE194_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE194_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 195
+     REG_STAGE195_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE195_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE195_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE195_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 196
+     REG_STAGE196_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE196_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE196_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE196_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 197
+     REG_STAGE197_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE197_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE197_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE197_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 198
+     REG_STAGE198_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE198_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE198_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE198_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 199
+     REG_STAGE199_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE199_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE199_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE199_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 200
+     REG_STAGE200_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE200_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE200_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE200_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 201
+     REG_STAGE201_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE201_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE201_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE201_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 202
+     REG_STAGE202_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE202_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE202_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE202_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 203
+     REG_STAGE203_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE203_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE203_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE203_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 204
+     REG_STAGE204_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE204_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE204_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE204_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 205
+     REG_STAGE205_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE205_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE205_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE205_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 206
+     REG_STAGE206_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE206_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE206_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE206_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 207
+     REG_STAGE207_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE207_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE207_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE207_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 208
+     REG_STAGE208_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE208_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE208_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE208_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 209
+     REG_STAGE209_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE209_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE209_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE209_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 210
+     REG_STAGE210_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE210_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE210_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE210_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 211
+     REG_STAGE211_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE211_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE211_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE211_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 212
+     REG_STAGE212_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE212_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE212_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE212_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 213
+     REG_STAGE213_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE213_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE213_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE213_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 214
+     REG_STAGE214_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE214_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE214_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE214_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 215
+     REG_STAGE215_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE215_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE215_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE215_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 216
+     REG_STAGE216_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE216_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE216_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE216_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 217
+     REG_STAGE217_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE217_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE217_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE217_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 218
+     REG_STAGE218_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE218_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE218_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE218_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 219
+     REG_STAGE219_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE219_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE219_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE219_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 220
+     REG_STAGE220_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE220_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE220_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE220_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 221
+     REG_STAGE221_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE221_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE221_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE221_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 222
+     REG_STAGE222_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE222_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE222_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE222_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 223
+     REG_STAGE223_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE223_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE223_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE223_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 224
+     REG_STAGE224_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE224_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE224_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE224_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 225
+     REG_STAGE225_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE225_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE225_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE225_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 226
+     REG_STAGE226_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE226_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE226_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE226_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 227
+     REG_STAGE227_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE227_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE227_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE227_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 228
+     REG_STAGE228_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE228_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE228_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE228_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 229
+     REG_STAGE229_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE229_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE229_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE229_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 230
+     REG_STAGE230_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE230_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE230_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE230_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 231
+     REG_STAGE231_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE231_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE231_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE231_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 232
+     REG_STAGE232_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE232_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE232_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE232_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 233
+     REG_STAGE233_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE233_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE233_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE233_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 234
+     REG_STAGE234_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE234_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE234_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE234_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 235
+     REG_STAGE235_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE235_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE235_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE235_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 236
+     REG_STAGE236_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE236_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE236_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE236_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 237
+     REG_STAGE237_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE237_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE237_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE237_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 238
+     REG_STAGE238_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE238_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE238_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE238_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 239
+     REG_STAGE239_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE239_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE239_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE239_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 240
+     REG_STAGE240_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE240_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE240_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE240_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 241
+     REG_STAGE241_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE241_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE241_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE241_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 242
+     REG_STAGE242_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE242_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE242_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE242_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 243
+     REG_STAGE243_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE243_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE243_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE243_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 244
+     REG_STAGE244_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE244_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE244_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE244_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 245
+     REG_STAGE245_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE245_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE245_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE245_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 246
+     REG_STAGE246_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE246_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE246_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE246_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 247
+     REG_STAGE247_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE247_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE247_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE247_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 248
+     REG_STAGE248_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE248_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE248_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE248_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 249
+     REG_STAGE249_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE249_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE249_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE249_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 250
+     REG_STAGE250_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE250_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE250_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE250_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 251
+     REG_STAGE251_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE251_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE251_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE251_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 252
+     REG_STAGE252_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE252_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE252_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE252_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 253
+     REG_STAGE253_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE253_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE253_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE253_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 254
+     REG_STAGE254_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE254_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE254_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE254_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 255
+     REG_STAGE255_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE255_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE255_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE255_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 256
+     REG_STAGE256_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE256_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE256_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE256_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 257
+     REG_STAGE257_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE257_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE257_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE257_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 258
+     REG_STAGE258_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE258_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE258_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE258_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 259
+     REG_STAGE259_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE259_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE259_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE259_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 260
+     REG_STAGE260_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE260_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE260_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE260_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 261
+     REG_STAGE261_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE261_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE261_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE261_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 262
+     REG_STAGE262_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE262_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE262_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE262_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 263
+     REG_STAGE263_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE263_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE263_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE263_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 264
+     REG_STAGE264_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE264_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE264_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE264_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 265
+     REG_STAGE265_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE265_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE265_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE265_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 266
+     REG_STAGE266_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE266_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE266_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE266_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 267
+     REG_STAGE267_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE267_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE267_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE267_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 268
+     REG_STAGE268_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE268_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE268_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE268_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 269
+     REG_STAGE269_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE269_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE269_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE269_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 270
+     REG_STAGE270_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE270_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE270_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE270_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 271
+     REG_STAGE271_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE271_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE271_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE271_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 272
+     REG_STAGE272_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE272_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE272_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE272_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 273
+     REG_STAGE273_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE273_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE273_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE273_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 274
+     REG_STAGE274_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE274_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE274_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE274_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 275
+     REG_STAGE275_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE275_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE275_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE275_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 276
+     REG_STAGE276_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE276_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE276_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE276_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 277
+     REG_STAGE277_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE277_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE277_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE277_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 278
+     REG_STAGE278_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE278_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE278_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE278_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 279
+     REG_STAGE279_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE279_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE279_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE279_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 280
+     REG_STAGE280_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE280_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE280_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE280_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 281
+     REG_STAGE281_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE281_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE281_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE281_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 282
+     REG_STAGE282_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE282_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE282_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE282_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 283
+     REG_STAGE283_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE283_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE283_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE283_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 284
+     REG_STAGE284_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE284_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE284_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE284_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 285
+     REG_STAGE285_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE285_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE285_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE285_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 286
+     REG_STAGE286_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE286_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE286_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE286_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 287
+     REG_STAGE287_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE287_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE287_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE287_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 288
+     REG_STAGE288_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE288_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE288_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE288_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 289
+     REG_STAGE289_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE289_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE289_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE289_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 290
+     REG_STAGE290_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE290_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE290_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE290_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 291
+     REG_STAGE291_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE291_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE291_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE291_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 292
+     REG_STAGE292_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE292_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE292_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE292_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 293
+     REG_STAGE293_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE293_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE293_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE293_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 294
+     REG_STAGE294_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE294_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE294_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE294_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 295
+     REG_STAGE295_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE295_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE295_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE295_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 296
+     REG_STAGE296_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE296_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE296_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE296_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 297
+     REG_STAGE297_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE297_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE297_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE297_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 298
+     REG_STAGE298_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE298_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE298_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE298_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 299
+     REG_STAGE299_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE299_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE299_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE299_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 300
+     REG_STAGE300_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE300_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE300_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE300_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 301
+     REG_STAGE301_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE301_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE301_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE301_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 302
+     REG_STAGE302_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE302_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE302_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE302_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 303
+     REG_STAGE303_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE303_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE303_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE303_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 304
+     REG_STAGE304_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE304_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE304_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE304_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 305
+     REG_STAGE305_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE305_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE305_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE305_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 306
+     REG_STAGE306_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE306_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE306_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE306_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 307
+     REG_STAGE307_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE307_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE307_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE307_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 308
+     REG_STAGE308_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE308_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE308_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE308_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 309
+     REG_STAGE309_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE309_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE309_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE309_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 310
+     REG_STAGE310_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE310_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE310_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE310_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 311
+     REG_STAGE311_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE311_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE311_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE311_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 312
+     REG_STAGE312_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE312_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE312_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE312_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 313
+     REG_STAGE313_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE313_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE313_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE313_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 314
+     REG_STAGE314_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE314_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE314_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE314_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 315
+     REG_STAGE315_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE315_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE315_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE315_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 316
+     REG_STAGE316_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE316_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE316_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE316_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 317
+     REG_STAGE317_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE317_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE317_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE317_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 318
+     REG_STAGE318_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE318_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE318_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE318_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 319
+     REG_STAGE319_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE319_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE319_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE319_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 320
+     REG_STAGE320_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE320_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE320_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE320_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 321
+     REG_STAGE321_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE321_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE321_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE321_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 322
+     REG_STAGE322_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE322_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE322_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE322_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 323
+     REG_STAGE323_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE323_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE323_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE323_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 324
+     REG_STAGE324_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE324_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE324_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE324_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 325
+     REG_STAGE325_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE325_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE325_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE325_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 326
+     REG_STAGE326_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE326_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE326_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE326_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 327
+     REG_STAGE327_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE327_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE327_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE327_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 328
+     REG_STAGE328_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE328_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE328_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE328_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 329
+     REG_STAGE329_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE329_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE329_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE329_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 330
+     REG_STAGE330_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE330_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE330_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE330_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 331
+     REG_STAGE331_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE331_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE331_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE331_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 332
+     REG_STAGE332_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE332_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE332_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE332_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 333
+     REG_STAGE333_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE333_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE333_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE333_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 334
+     REG_STAGE334_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE334_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE334_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE334_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 335
+     REG_STAGE335_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE335_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE335_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE335_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 336
+     REG_STAGE336_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE336_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE336_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE336_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 337
+     REG_STAGE337_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE337_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE337_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE337_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 338
+     REG_STAGE338_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE338_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE338_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE338_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 339
+     REG_STAGE339_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE339_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE339_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE339_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 340
+     REG_STAGE340_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE340_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE340_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE340_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 341
+     REG_STAGE341_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE341_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE341_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE341_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 342
+     REG_STAGE342_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE342_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE342_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE342_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 343
+     REG_STAGE343_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE343_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE343_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE343_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 344
+     REG_STAGE344_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE344_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE344_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE344_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 345
+     REG_STAGE345_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE345_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE345_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE345_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 346
+     REG_STAGE346_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE346_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE346_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE346_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 347
+     REG_STAGE347_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE347_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE347_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE347_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 348
+     REG_STAGE348_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE348_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE348_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE348_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 349
+     REG_STAGE349_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE349_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE349_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE349_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 350
+     REG_STAGE350_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE350_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE350_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE350_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 351
+     REG_STAGE351_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE351_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE351_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE351_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 352
+     REG_STAGE352_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE352_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE352_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE352_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 353
+     REG_STAGE353_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE353_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE353_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE353_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 354
+     REG_STAGE354_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE354_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE354_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE354_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 355
+     REG_STAGE355_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE355_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE355_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE355_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 356
+     REG_STAGE356_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE356_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE356_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE356_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 357
+     REG_STAGE357_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE357_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE357_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE357_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 358
+     REG_STAGE358_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE358_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE358_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE358_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 359
+     REG_STAGE359_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE359_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE359_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE359_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 360
+     REG_STAGE360_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE360_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE360_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE360_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 361
+     REG_STAGE361_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE361_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE361_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE361_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 362
+     REG_STAGE362_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE362_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE362_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE362_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 363
+     REG_STAGE363_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE363_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE363_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE363_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 364
+     REG_STAGE364_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE364_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE364_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE364_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 365
+     REG_STAGE365_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE365_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE365_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE365_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 366
+     REG_STAGE366_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE366_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE366_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE366_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+     -- Stage 367
+     REG_STAGE367_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga <= COMB_STAGE367_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_vga;
+     REG_STAGE367_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE <= COMB_STAGE367_pmod_register_outputs_pipelinec_app_c_l203_c3_57cc_CLOCK_ENABLE;
+ end if;
+ end if;
+end process;
+
+end arch;

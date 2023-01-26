@@ -1,0 +1,2391 @@
+-- Timing params:
+--   Fixed?: False
+--   Pipeline Slices: [0.0339368406631085, 0.08072894101550099, 0.1275210413678942, 0.1743131417202854, 0.22110524207267682, 0.26789734242506874, 0.3146894427774618, 0.3614815431298524, 0.4082736434822445, 0.45506574383463766, 0.5018578441870295, 0.5486499445394187, 0.595442044891811, 0.6422341452442041, 0.6890262455965971, 0.7358183459489904, 0.7826104463013809, 0.8294025466537743, 0.876194647006165, 0.9229867473585566, 0.9697788477109486]
+--   Input regs?: False
+--   Output regs?: False
+library std;
+use std.textio.all;
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+use ieee.float_pkg.all;
+use work.c_structs_pkg.all;
+-- Submodules: 23
+entity ray_plane_intersect_53CLK_da3e346a is
+port(
+ clk : in std_logic;
+ plane : in plane_t;
+ hitin : in point_and_dir;
+ return_output : out hit_out);
+end ray_plane_intersect_53CLK_da3e346a;
+architecture arch of ray_plane_intersect_53CLK_da3e346a is
+-- Types and such
+-- Declarations
+attribute mark_debug : string;
+constant PIPELINE_LATENCY : integer := 53;
+-- All of the wires/regs in function
+-- Stage 0
+signal REG_STAGE0_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE0_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+signal REG_STAGE0_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left : std_logic_vector(22 downto 0);
+signal REG_STAGE0_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE0_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE0_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE0_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+signal COMB_STAGE0_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE0_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE0_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+-- Stage 1
+signal REG_STAGE1_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE1_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+signal REG_STAGE1_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left : std_logic_vector(22 downto 0);
+signal REG_STAGE1_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE1_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE1_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE1_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+signal COMB_STAGE1_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE1_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE1_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+-- Stage 2
+signal REG_STAGE2_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE2_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+signal REG_STAGE2_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left : std_logic_vector(22 downto 0);
+signal REG_STAGE2_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE2_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE2_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE2_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+signal COMB_STAGE2_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE2_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE2_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+-- Stage 3
+signal REG_STAGE3_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE3_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+signal REG_STAGE3_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE3_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE3_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE3_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE3_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+signal COMB_STAGE3_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE3_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE3_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 4
+signal REG_STAGE4_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE4_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+signal REG_STAGE4_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE4_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE4_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE4_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE4_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+signal COMB_STAGE4_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE4_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE4_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 5
+signal REG_STAGE5_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE5_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+signal REG_STAGE5_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE5_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE5_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE5_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE5_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+signal COMB_STAGE5_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE5_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE5_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 6
+signal REG_STAGE6_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE6_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+signal REG_STAGE6_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE6_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE6_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE6_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE6_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+signal COMB_STAGE6_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE6_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE6_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 7
+signal REG_STAGE7_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE7_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+signal REG_STAGE7_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE7_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE7_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE7_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE7_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+signal COMB_STAGE7_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE7_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE7_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 8
+signal REG_STAGE8_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE8_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+signal REG_STAGE8_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE8_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE8_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE8_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE8_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+signal COMB_STAGE8_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE8_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE8_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 9
+signal REG_STAGE9_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE9_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE9_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE9_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE9_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE9_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE9_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE9_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 10
+signal REG_STAGE10_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE10_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE10_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE10_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE10_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE10_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE10_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE10_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 11
+signal REG_STAGE11_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE11_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE11_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE11_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE11_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE11_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE11_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE11_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 12
+signal REG_STAGE12_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE12_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE12_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE12_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE12_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE12_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE12_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE12_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 13
+signal REG_STAGE13_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE13_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE13_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE13_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE13_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE13_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE13_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE13_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 14
+signal REG_STAGE14_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE14_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE14_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE14_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE14_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE14_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE14_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE14_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 15
+signal REG_STAGE15_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE15_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE15_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE15_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE15_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE15_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE15_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE15_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 16
+signal REG_STAGE16_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE16_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE16_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE16_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE16_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE16_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE16_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE16_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 17
+signal REG_STAGE17_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE17_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE17_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE17_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE17_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE17_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE17_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE17_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 18
+signal REG_STAGE18_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE18_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE18_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE18_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE18_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE18_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE18_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE18_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 19
+signal REG_STAGE19_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE19_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE19_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE19_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE19_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE19_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE19_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE19_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 20
+signal REG_STAGE20_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE20_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE20_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE20_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE20_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE20_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE20_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE20_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 21
+signal REG_STAGE21_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE21_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE21_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE21_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE21_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE21_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE21_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE21_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 22
+signal REG_STAGE22_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE22_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE22_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE22_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE22_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE22_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE22_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE22_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 23
+signal REG_STAGE23_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE23_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE23_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE23_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE23_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE23_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE23_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE23_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 24
+signal REG_STAGE24_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE24_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE24_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE24_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE24_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE24_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE24_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE24_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 25
+signal REG_STAGE25_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE25_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE25_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE25_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE25_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE25_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE25_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE25_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 26
+signal REG_STAGE26_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE26_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE26_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE26_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE26_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE26_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE26_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE26_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 27
+signal REG_STAGE27_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE27_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE27_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE27_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE27_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE27_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE27_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE27_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 28
+signal REG_STAGE28_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE28_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE28_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal REG_STAGE28_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE28_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE28_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE28_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal COMB_STAGE28_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+-- Stage 29
+signal REG_STAGE29_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE29_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE29_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE29_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal REG_STAGE29_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE29_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE29_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE29_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE29_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE29_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 30
+signal REG_STAGE30_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE30_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE30_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE30_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal REG_STAGE30_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE30_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE30_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE30_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE30_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE30_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 31
+signal REG_STAGE31_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE31_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal REG_STAGE31_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE31_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal REG_STAGE31_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE31_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE31_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal COMB_STAGE31_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE31_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE31_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 32
+signal REG_STAGE32_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE32_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE32_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal REG_STAGE32_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE32_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE32_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE32_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE32_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 33
+signal REG_STAGE33_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE33_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE33_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal REG_STAGE33_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE33_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE33_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE33_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE33_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 34
+signal REG_STAGE34_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE34_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE34_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal REG_STAGE34_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE34_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE34_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE34_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE34_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 35
+signal REG_STAGE35_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE35_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE35_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal REG_STAGE35_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE35_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE35_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE35_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE35_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 36
+signal REG_STAGE36_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE36_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE36_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal REG_STAGE36_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE36_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE36_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE36_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE36_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 37
+signal REG_STAGE37_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE37_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE37_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal REG_STAGE37_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE37_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE37_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE37_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal COMB_STAGE37_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 38
+signal REG_STAGE38_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE38_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE38_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal REG_STAGE38_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE38_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE38_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE38_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal COMB_STAGE38_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 39
+signal REG_STAGE39_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE39_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE39_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal REG_STAGE39_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE39_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE39_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE39_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal COMB_STAGE39_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 40
+signal REG_STAGE40_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE40_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE40_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal REG_STAGE40_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE40_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE40_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE40_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal COMB_STAGE40_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 41
+signal REG_STAGE41_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE41_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE41_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal REG_STAGE41_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE41_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE41_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE41_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal COMB_STAGE41_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 42
+signal REG_STAGE42_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE42_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE42_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal REG_STAGE42_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE42_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE42_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE42_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal COMB_STAGE42_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 43
+signal REG_STAGE43_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE43_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE43_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal REG_STAGE43_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE43_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE43_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE43_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal COMB_STAGE43_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 44
+signal REG_STAGE44_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE44_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE44_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal REG_STAGE44_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE44_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE44_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE44_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal COMB_STAGE44_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 45
+signal REG_STAGE45_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE45_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE45_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal REG_STAGE45_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE45_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE45_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE45_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal COMB_STAGE45_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 46
+signal REG_STAGE46_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE46_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE46_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal REG_STAGE46_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE46_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE46_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE46_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal COMB_STAGE46_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 47
+signal REG_STAGE47_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE47_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE47_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal REG_STAGE47_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE47_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE47_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE47_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal COMB_STAGE47_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 48
+signal REG_STAGE48_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE48_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE48_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal REG_STAGE48_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE48_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE48_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE48_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal COMB_STAGE48_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 49
+signal REG_STAGE49_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE49_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE49_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal REG_STAGE49_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE49_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE49_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE49_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal COMB_STAGE49_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+-- Stage 50
+signal REG_STAGE50_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE50_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE50_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output : point_and_dir;
+signal REG_STAGE50_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output : std_logic_vector(22 downto 0);
+signal COMB_STAGE50_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE50_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE50_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output : point_and_dir;
+signal COMB_STAGE50_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output : std_logic_vector(22 downto 0);
+-- Stage 51
+signal REG_STAGE51_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE51_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE51_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output : point_and_dir;
+signal REG_STAGE51_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output : std_logic_vector(22 downto 0);
+signal COMB_STAGE51_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE51_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE51_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output : point_and_dir;
+signal COMB_STAGE51_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output : std_logic_vector(22 downto 0);
+-- Stage 52
+signal REG_STAGE52_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal REG_STAGE52_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal REG_STAGE52_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output : point_and_dir;
+signal REG_STAGE52_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output : std_logic_vector(22 downto 0);
+signal COMB_STAGE52_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal COMB_STAGE52_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal COMB_STAGE52_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output : point_and_dir;
+signal COMB_STAGE52_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output : std_logic_vector(22 downto 0);
+-- Each function instance gets signals
+-- object_coord_to_float3[tr_pipelinec_gen_c_l263_c25_1a3c]
+signal object_coord_to_float3_tr_pipelinec_gen_c_l263_c25_1a3c_a : fixed3;
+signal object_coord_to_float3_tr_pipelinec_gen_c_l263_c25_1a3c_return_output : float3;
+
+-- BIN_OP_NEQ[tr_pipelinec_gen_c_l269_c6_1110]
+signal BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110_left : std_logic_vector(22 downto 0);
+signal BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110_right : std_logic_vector(22 downto 0);
+signal BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110_return_output : unsigned(0 downto 0);
+
+-- hitout_MUX[tr_pipelinec_gen_c_l269_c3_5a74]
+signal hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+signal hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_iftrue : hit_out;
+signal hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_iffalse : hit_out;
+signal hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_return_output : hit_out;
+
+-- BIN_OP_MINUS[tr_pipelinec_gen_c_l270_c26_e306]
+signal BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left : std_logic_vector(22 downto 0);
+signal BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_right : std_logic_vector(22 downto 0);
+signal BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_return_output : std_logic_vector(22 downto 0);
+
+-- UNARY_OP_NEGATE[tr_pipelinec_gen_c_l270_c58_453c]
+signal UNARY_OP_NEGATE_tr_pipelinec_gen_c_l270_c58_453c_expr : std_logic_vector(22 downto 0);
+signal UNARY_OP_NEGATE_tr_pipelinec_gen_c_l270_c58_453c_return_output : std_logic_vector(22 downto 0);
+
+-- float_fast_div_u[tr_pipelinec_gen_c_l270_c9_2b8e]
+signal float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_a : std_logic_vector(22 downto 0);
+signal float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+signal float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_return_output : std_logic_vector(22 downto 0);
+
+-- float3_mul_float[tr_pipelinec_gen_c_l271_c33_71ba]
+signal float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+signal float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_right : std_logic_vector(22 downto 0);
+signal float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_return_output : float3;
+
+-- float3_add[tr_pipelinec_gen_c_l271_c10_5498]
+signal float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+signal float3_add_tr_pipelinec_gen_c_l271_c10_5498_right : float3;
+signal float3_add_tr_pipelinec_gen_c_l271_c10_5498_return_output : float3;
+
+-- BIN_OP_GT[tr_pipelinec_gen_c_l273_c8_3859]
+signal BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859_left : std_logic_vector(22 downto 0);
+signal BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859_right : std_logic_vector(22 downto 0);
+signal BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859_return_output : unsigned(0 downto 0);
+
+-- hitout_MUX[tr_pipelinec_gen_c_l273_c5_64a4]
+signal hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+signal hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_iftrue : hit_out;
+signal hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_iffalse : hit_out;
+signal hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_return_output : hit_out;
+
+-- float3_sub[tr_pipelinec_gen_c_l274_c11_fb45]
+signal float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_left : float3;
+signal float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+signal float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_return_output : float3;
+
+-- fixed_make_from_float[tr_pipelinec_gen_c_l275_c36_7fd9]
+signal fixed_make_from_float_tr_pipelinec_gen_c_l275_c36_7fd9_a : std_logic_vector(22 downto 0);
+signal fixed_make_from_float_tr_pipelinec_gen_c_l275_c36_7fd9_return_output : fixed;
+
+-- fixed_make_from_float[tr_pipelinec_gen_c_l275_c64_2a97]
+signal fixed_make_from_float_tr_pipelinec_gen_c_l275_c64_2a97_a : std_logic_vector(22 downto 0);
+signal fixed_make_from_float_tr_pipelinec_gen_c_l275_c64_2a97_return_output : fixed;
+
+-- plane_has_hole[tr_pipelinec_gen_c_l275_c21_66d4]
+signal plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_x : fixed;
+signal plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_z : fixed;
+signal plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_return_output : fixed;
+
+-- fixed_is_negative[tr_pipelinec_gen_c_l277_c11_2806]
+signal fixed_is_negative_tr_pipelinec_gen_c_l277_c11_2806_x : fixed;
+signal fixed_is_negative_tr_pipelinec_gen_c_l277_c11_2806_return_output : unsigned(0 downto 0);
+
+-- UNARY_OP_NOT[tr_pipelinec_gen_c_l277_c11_d1c2]
+signal UNARY_OP_NOT_tr_pipelinec_gen_c_l277_c11_d1c2_expr : unsigned(0 downto 0);
+signal UNARY_OP_NOT_tr_pipelinec_gen_c_l277_c11_d1c2_return_output : unsigned(0 downto 0);
+
+-- hitout_hit_MUX[tr_pipelinec_gen_c_l277_c7_a056]
+signal hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_cond : unsigned(0 downto 0);
+signal hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+signal hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iffalse : point_and_dir;
+signal hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output : point_and_dir;
+
+-- hitout_dist_MUX[tr_pipelinec_gen_c_l277_c7_a056]
+signal hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_cond : unsigned(0 downto 0);
+signal hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+signal hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iffalse : std_logic_vector(22 downto 0);
+signal hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output : std_logic_vector(22 downto 0);
+
+-- fixed_to_float[tr_pipelinec_gen_c_l283_c27_1b2f]
+signal fixed_to_float_tr_pipelinec_gen_c_l283_c27_1b2f_a : fixed;
+signal fixed_to_float_tr_pipelinec_gen_c_l283_c27_1b2f_return_output : std_logic_vector(22 downto 0);
+
+function CONST_REF_RD_float3_float3_7d4c( ref_toks_0 : std_logic_vector;
+ ref_toks_1 : std_logic_vector;
+ ref_toks_2 : std_logic_vector) return float3 is
+ 
+  variable base : float3; 
+  variable return_output : float3;
+begin
+      base.x := ref_toks_0;
+      base.y := ref_toks_1;
+      base.z := ref_toks_2;
+
+      return_output := base;
+      return return_output; 
+end function;
+
+function CONST_REF_RD_point_and_dir_hit_out_hit_hit_a85f( ref_toks_0 : float3;
+ ref_toks_1 : float3) return point_and_dir is
+ 
+  variable base : hit_out; 
+  variable return_output : point_and_dir;
+begin
+      base.hit.orig := ref_toks_0;
+      base.hit.dir := ref_toks_1;
+
+      return_output := base.hit;
+      return return_output; 
+end function;
+
+function CONST_REF_RD_hit_out_hit_out_092e( ref_toks_0 : point_and_dir;
+ ref_toks_1 : std_logic_vector;
+ ref_toks_2 : std_logic_vector) return hit_out is
+ 
+  variable base : hit_out; 
+  variable return_output : hit_out;
+begin
+      base.hit := ref_toks_0;
+      base.dist := ref_toks_1;
+      base.borderdist := ref_toks_2;
+
+      return_output := base;
+      return return_output; 
+end function;
+
+function CONST_REF_RD_hit_out_hit_out_dbf7( ref_toks_0 : hit_out;
+ ref_toks_1 : std_logic_vector;
+ ref_toks_2 : std_logic_vector) return hit_out is
+ 
+  variable base : hit_out; 
+  variable return_output : hit_out;
+begin
+      base := ref_toks_0;
+      base.dist := ref_toks_1;
+      base.borderdist := ref_toks_2;
+
+      return_output := base;
+      return return_output; 
+end function;
+
+
+begin
+
+-- SUBMODULE INSTANCES 
+-- object_coord_to_float3_tr_pipelinec_gen_c_l263_c25_1a3c
+object_coord_to_float3_tr_pipelinec_gen_c_l263_c25_1a3c : entity work.object_coord_to_float3_3CLK_9d26212c port map (
+clk,
+object_coord_to_float3_tr_pipelinec_gen_c_l263_c25_1a3c_a,
+object_coord_to_float3_tr_pipelinec_gen_c_l263_c25_1a3c_return_output);
+
+-- BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110
+BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110 : entity work.BIN_OP_NEQ_float_8_14_t_float_8_14_t_0CLK_de264c78 port map (
+BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110_left,
+BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110_right,
+BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110_return_output);
+
+-- hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74
+hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74 : entity work.MUX_uint1_t_hit_out_hit_out_0CLK_de264c78 port map (
+hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_iftrue,
+hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_iffalse,
+hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_return_output);
+
+-- BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306
+BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306 : entity work.BIN_OP_MINUS_float_8_14_t_float_8_14_t_6CLK_ab6afdf3 port map (
+clk,
+BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left,
+BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_right,
+BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_return_output);
+
+-- UNARY_OP_NEGATE_tr_pipelinec_gen_c_l270_c58_453c
+UNARY_OP_NEGATE_tr_pipelinec_gen_c_l270_c58_453c : entity work.UNARY_OP_NEGATE_float_8_14_t_0CLK_de264c78 port map (
+UNARY_OP_NEGATE_tr_pipelinec_gen_c_l270_c58_453c_expr,
+UNARY_OP_NEGATE_tr_pipelinec_gen_c_l270_c58_453c_return_output);
+
+-- float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e
+float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e : entity work.float_fast_div_u_20CLK_66d884cf port map (
+clk,
+float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_a,
+float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b,
+float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_return_output);
+
+-- float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba
+float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba : entity work.float3_mul_float_3CLK_16f88777 port map (
+clk,
+float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_right,
+float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_return_output);
+
+-- float3_add_tr_pipelinec_gen_c_l271_c10_5498
+float3_add_tr_pipelinec_gen_c_l271_c10_5498 : entity work.float3_add_6CLK_561c4913 port map (
+clk,
+float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+float3_add_tr_pipelinec_gen_c_l271_c10_5498_right,
+float3_add_tr_pipelinec_gen_c_l271_c10_5498_return_output);
+
+-- BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859
+BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859 : entity work.BIN_OP_GT_float_8_14_t_float_8_14_t_0CLK_36723c85 port map (
+BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859_left,
+BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859_right,
+BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859_return_output);
+
+-- hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4
+hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4 : entity work.MUX_uint1_t_hit_out_hit_out_0CLK_de264c78 port map (
+hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_iftrue,
+hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_iffalse,
+hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_return_output);
+
+-- float3_sub_tr_pipelinec_gen_c_l274_c11_fb45
+float3_sub_tr_pipelinec_gen_c_l274_c11_fb45 : entity work.float3_sub_7CLK_4e79e5ee port map (
+clk,
+float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_left,
+float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_return_output);
+
+-- fixed_make_from_float_tr_pipelinec_gen_c_l275_c36_7fd9
+fixed_make_from_float_tr_pipelinec_gen_c_l275_c36_7fd9 : entity work.fixed_make_from_float_2CLK_c0caf0ba port map (
+clk,
+fixed_make_from_float_tr_pipelinec_gen_c_l275_c36_7fd9_a,
+fixed_make_from_float_tr_pipelinec_gen_c_l275_c36_7fd9_return_output);
+
+-- fixed_make_from_float_tr_pipelinec_gen_c_l275_c64_2a97
+fixed_make_from_float_tr_pipelinec_gen_c_l275_c64_2a97 : entity work.fixed_make_from_float_2CLK_c0caf0ba port map (
+clk,
+fixed_make_from_float_tr_pipelinec_gen_c_l275_c64_2a97_a,
+fixed_make_from_float_tr_pipelinec_gen_c_l275_c64_2a97_return_output);
+
+-- plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4
+plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4 : entity work.plane_has_hole_2CLK_eec5c658 port map (
+clk,
+plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_x,
+plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_z,
+plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_return_output);
+
+-- fixed_is_negative_tr_pipelinec_gen_c_l277_c11_2806
+fixed_is_negative_tr_pipelinec_gen_c_l277_c11_2806 : entity work.fixed_is_negative_0CLK_23f04728 port map (
+fixed_is_negative_tr_pipelinec_gen_c_l277_c11_2806_x,
+fixed_is_negative_tr_pipelinec_gen_c_l277_c11_2806_return_output);
+
+-- UNARY_OP_NOT_tr_pipelinec_gen_c_l277_c11_d1c2
+UNARY_OP_NOT_tr_pipelinec_gen_c_l277_c11_d1c2 : entity work.UNARY_OP_NOT_uint1_t_1CLK_63bf66d5 port map (
+clk,
+UNARY_OP_NOT_tr_pipelinec_gen_c_l277_c11_d1c2_expr,
+UNARY_OP_NOT_tr_pipelinec_gen_c_l277_c11_d1c2_return_output);
+
+-- hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056
+hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056 : entity work.MUX_uint1_t_point_and_dir_point_and_dir_0CLK_de264c78 port map (
+hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_cond,
+hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iffalse,
+hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output);
+
+-- hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056
+hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056 : entity work.MUX_uint1_t_float_8_14_t_float_8_14_t_0CLK_de264c78 port map (
+hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_cond,
+hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iffalse,
+hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output);
+
+-- fixed_to_float_tr_pipelinec_gen_c_l283_c27_1b2f
+fixed_to_float_tr_pipelinec_gen_c_l283_c27_1b2f : entity work.fixed_to_float_4CLK_4a0c67e4 port map (
+clk,
+fixed_to_float_tr_pipelinec_gen_c_l283_c27_1b2f_a,
+fixed_to_float_tr_pipelinec_gen_c_l283_c27_1b2f_return_output);
+
+
+
+-- Combinatorial process for pipeline stages
+process (
+ -- Inputs
+ plane,
+ hitin,
+ -- Registers
+ -- Stage 0
+ REG_STAGE0_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE0_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b,
+ REG_STAGE0_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left,
+ REG_STAGE0_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE0_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ -- Stage 1
+ REG_STAGE1_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE1_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b,
+ REG_STAGE1_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left,
+ REG_STAGE1_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE1_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ -- Stage 2
+ REG_STAGE2_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE2_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b,
+ REG_STAGE2_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left,
+ REG_STAGE2_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE2_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ -- Stage 3
+ REG_STAGE3_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE3_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b,
+ REG_STAGE3_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE3_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE3_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 4
+ REG_STAGE4_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE4_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b,
+ REG_STAGE4_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE4_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE4_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 5
+ REG_STAGE5_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE5_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b,
+ REG_STAGE5_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE5_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE5_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 6
+ REG_STAGE6_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE6_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b,
+ REG_STAGE6_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE6_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE6_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 7
+ REG_STAGE7_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE7_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b,
+ REG_STAGE7_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE7_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE7_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 8
+ REG_STAGE8_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE8_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b,
+ REG_STAGE8_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE8_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE8_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 9
+ REG_STAGE9_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE9_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE9_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE9_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 10
+ REG_STAGE10_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE10_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE10_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE10_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 11
+ REG_STAGE11_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE11_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE11_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE11_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 12
+ REG_STAGE12_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE12_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE12_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE12_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 13
+ REG_STAGE13_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE13_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE13_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE13_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 14
+ REG_STAGE14_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE14_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE14_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE14_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 15
+ REG_STAGE15_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE15_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE15_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE15_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 16
+ REG_STAGE16_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE16_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE16_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE16_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 17
+ REG_STAGE17_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE17_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE17_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE17_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 18
+ REG_STAGE18_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE18_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE18_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE18_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 19
+ REG_STAGE19_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE19_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE19_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE19_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 20
+ REG_STAGE20_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE20_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE20_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE20_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 21
+ REG_STAGE21_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE21_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE21_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE21_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 22
+ REG_STAGE22_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE22_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE22_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE22_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 23
+ REG_STAGE23_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE23_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE23_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE23_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 24
+ REG_STAGE24_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE24_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE24_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE24_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 25
+ REG_STAGE25_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE25_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE25_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE25_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 26
+ REG_STAGE26_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE26_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE26_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE26_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 27
+ REG_STAGE27_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE27_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE27_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE27_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 28
+ REG_STAGE28_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE28_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE28_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left,
+ REG_STAGE28_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ -- Stage 29
+ REG_STAGE29_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE29_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE29_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE29_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ REG_STAGE29_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 30
+ REG_STAGE30_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE30_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE30_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE30_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ REG_STAGE30_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 31
+ REG_STAGE31_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE31_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left,
+ REG_STAGE31_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE31_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ REG_STAGE31_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 32
+ REG_STAGE32_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE32_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE32_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ REG_STAGE32_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 33
+ REG_STAGE33_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE33_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE33_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ REG_STAGE33_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 34
+ REG_STAGE34_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE34_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE34_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ REG_STAGE34_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 35
+ REG_STAGE35_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE35_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE35_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ REG_STAGE35_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 36
+ REG_STAGE36_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE36_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE36_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ REG_STAGE36_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 37
+ REG_STAGE37_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE37_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE37_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right,
+ REG_STAGE37_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 38
+ REG_STAGE38_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE38_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE38_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ REG_STAGE38_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 39
+ REG_STAGE39_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE39_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE39_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ REG_STAGE39_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 40
+ REG_STAGE40_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE40_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE40_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ REG_STAGE40_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 41
+ REG_STAGE41_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE41_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE41_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ REG_STAGE41_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 42
+ REG_STAGE42_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE42_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE42_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ REG_STAGE42_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 43
+ REG_STAGE43_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE43_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE43_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ REG_STAGE43_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 44
+ REG_STAGE44_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE44_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE44_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ REG_STAGE44_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 45
+ REG_STAGE45_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE45_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE45_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ REG_STAGE45_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 46
+ REG_STAGE46_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE46_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE46_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ REG_STAGE46_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 47
+ REG_STAGE47_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE47_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE47_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ REG_STAGE47_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 48
+ REG_STAGE48_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE48_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE48_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ REG_STAGE48_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 49
+ REG_STAGE49_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE49_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE49_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ REG_STAGE49_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue,
+ -- Stage 50
+ REG_STAGE50_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE50_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE50_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output,
+ REG_STAGE50_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output,
+ -- Stage 51
+ REG_STAGE51_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE51_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE51_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output,
+ REG_STAGE51_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output,
+ -- Stage 52
+ REG_STAGE52_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond,
+ REG_STAGE52_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond,
+ REG_STAGE52_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output,
+ REG_STAGE52_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output,
+ -- All submodule outputs
+ object_coord_to_float3_tr_pipelinec_gen_c_l263_c25_1a3c_return_output,
+ BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110_return_output,
+ hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_return_output,
+ BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_return_output,
+ UNARY_OP_NEGATE_tr_pipelinec_gen_c_l270_c58_453c_return_output,
+ float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_return_output,
+ float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_return_output,
+ float3_add_tr_pipelinec_gen_c_l271_c10_5498_return_output,
+ BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859_return_output,
+ hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_return_output,
+ float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_return_output,
+ fixed_make_from_float_tr_pipelinec_gen_c_l275_c36_7fd9_return_output,
+ fixed_make_from_float_tr_pipelinec_gen_c_l275_c64_2a97_return_output,
+ plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_return_output,
+ fixed_is_negative_tr_pipelinec_gen_c_l277_c11_2806_return_output,
+ UNARY_OP_NOT_tr_pipelinec_gen_c_l277_c11_d1c2_return_output,
+ hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output,
+ hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output,
+ fixed_to_float_tr_pipelinec_gen_c_l283_c27_1b2f_return_output)
+is 
+ -- All of the wires in function
+ variable VAR_CLOCK_ENABLE : unsigned(0 downto 0);
+ variable VAR_return_output : hit_out;
+ variable VAR_plane : plane_t;
+ variable VAR_hitin : point_and_dir;
+ variable VAR_hitout : hit_out;
+ variable VAR_plane_center : float3;
+ variable VAR_object_coord_to_float3_tr_pipelinec_gen_c_l263_c25_1a3c_a : fixed3;
+ variable VAR_CONST_REF_RD_fixed3_plane_t_center_d41d_tr_pipelinec_gen_c_l263_c48_1ec9_return_output : fixed3;
+ variable VAR_object_coord_to_float3_tr_pipelinec_gen_c_l263_c25_1a3c_return_output : float3;
+ variable VAR_d : std_logic_vector(22 downto 0);
+ variable VAR_pt : float3;
+ variable VAR_hole_margin : fixed;
+ variable VAR_o : float3;
+ variable VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110_left : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110_right : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110_return_output : unsigned(0 downto 0);
+ variable VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_iftrue : hit_out;
+ variable VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_return_output : hit_out;
+ variable VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_iffalse : hit_out;
+ variable VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_return_output : hit_out;
+ variable VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond : unsigned(0 downto 0);
+ variable VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_a : std_logic_vector(22 downto 0);
+ variable VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b : std_logic_vector(22 downto 0);
+ variable VAR_CONST_REF_RD_float_8_14_t_point_and_dir_orig_y_d41d_tr_pipelinec_gen_c_l270_c26_3686_return_output : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left : std_logic_vector(22 downto 0);
+ variable VAR_CONST_REF_RD_float_8_14_t_float3_y_d41d_tr_pipelinec_gen_c_l270_c41_90df_return_output : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_right : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_return_output : std_logic_vector(22 downto 0);
+ variable VAR_UNARY_OP_NEGATE_tr_pipelinec_gen_c_l270_c58_453c_expr : std_logic_vector(22 downto 0);
+ variable VAR_UNARY_OP_NEGATE_tr_pipelinec_gen_c_l270_c58_453c_return_output : std_logic_vector(22 downto 0);
+ variable VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_return_output : std_logic_vector(22 downto 0);
+ variable VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left : float3;
+ variable VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_right : float3;
+ variable VAR_CONST_REF_RD_float3_point_and_dir_orig_d41d_tr_pipelinec_gen_c_l271_c21_8379_return_output : float3;
+ variable VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left : float3;
+ variable VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_right : std_logic_vector(22 downto 0);
+ variable VAR_CONST_REF_RD_float3_point_and_dir_dir_d41d_tr_pipelinec_gen_c_l271_c50_db94_return_output : float3;
+ variable VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_return_output : float3;
+ variable VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_return_output : float3;
+ variable VAR_BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859_left : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859_right : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859_return_output : unsigned(0 downto 0);
+ variable VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_iftrue : hit_out;
+ variable VAR_hitout_TRUE_INPUT_MUX_CONST_REF_RD_hit_out_hit_out_092e_tr_pipelinec_gen_c_l273_c5_64a4_return_output : hit_out;
+ variable VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_iffalse : hit_out;
+ variable VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond : unsigned(0 downto 0);
+ variable VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_left : float3;
+ variable VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right : float3;
+ variable VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_return_output : float3;
+ variable VAR_plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_x : fixed;
+ variable VAR_plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_z : fixed;
+ variable VAR_fixed_make_from_float_tr_pipelinec_gen_c_l275_c36_7fd9_a : std_logic_vector(22 downto 0);
+ variable VAR_CONST_REF_RD_float_8_14_t_float3_x_d41d_tr_pipelinec_gen_c_l275_c58_3b31_return_output : std_logic_vector(22 downto 0);
+ variable VAR_fixed_make_from_float_tr_pipelinec_gen_c_l275_c36_7fd9_return_output : fixed;
+ variable VAR_fixed_make_from_float_tr_pipelinec_gen_c_l275_c64_2a97_a : std_logic_vector(22 downto 0);
+ variable VAR_CONST_REF_RD_float_8_14_t_float3_z_d41d_tr_pipelinec_gen_c_l275_c86_a55a_return_output : std_logic_vector(22 downto 0);
+ variable VAR_fixed_make_from_float_tr_pipelinec_gen_c_l275_c64_2a97_return_output : fixed;
+ variable VAR_plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_return_output : fixed;
+ variable VAR_fixed_is_negative_tr_pipelinec_gen_c_l277_c11_2806_x : fixed;
+ variable VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l277_c11_d1c2_expr : unsigned(0 downto 0);
+ variable VAR_fixed_is_negative_tr_pipelinec_gen_c_l277_c11_2806_return_output : unsigned(0 downto 0);
+ variable VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l277_c11_d1c2_return_output : unsigned(0 downto 0);
+ variable VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : point_and_dir;
+ variable VAR_hitout_hit_TRUE_INPUT_MUX_CONST_REF_RD_point_and_dir_hit_out_hit_hit_a85f_tr_pipelinec_gen_c_l277_c7_a056_return_output : point_and_dir;
+ variable VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iffalse : point_and_dir;
+ variable VAR_hitout_hit_FALSE_INPUT_MUX_CONST_REF_RD_point_and_dir_hit_out_hit_d41d_tr_pipelinec_gen_c_l277_c7_a056_return_output : point_and_dir;
+ variable VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output : point_and_dir;
+ variable VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_cond : unsigned(0 downto 0);
+ variable VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue : std_logic_vector(22 downto 0);
+ variable VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iffalse : std_logic_vector(22 downto 0);
+ variable VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output : std_logic_vector(22 downto 0);
+ variable VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_cond : unsigned(0 downto 0);
+ variable VAR_N : float3;
+ variable VAR_CONST_REF_RD_float3_float3_7d4c_tr_pipelinec_gen_c_l281_c26_6c73_return_output : float3;
+ variable VAR_fixed_to_float_tr_pipelinec_gen_c_l283_c27_1b2f_a : fixed;
+ variable VAR_fixed_to_float_tr_pipelinec_gen_c_l283_c27_1b2f_return_output : std_logic_vector(22 downto 0);
+ variable VAR_CONST_REF_RD_float_8_14_t_point_and_dir_dir_y_d41d_tr_pipelinec_gen_c_l269_l270_DUPLICATE_803b_return_output : std_logic_vector(22 downto 0);
+ variable VAR_CONST_REF_RD_hit_out_hit_out_dbf7_tr_pipelinec_gen_c_l269_l273_DUPLICATE_58ae_return_output : hit_out;
+begin
+ -- Constants and things derived from constants alone
+     -- Submodule level 0
+     VAR_BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859_right := to_slv(to_float(0.001, 8, 14));
+     VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110_right := to_slv(to_float(0.0, 8, 14));
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iffalse := to_slv(to_float(1.000000e+23, 8, 14));
+     -- hitout_hit_FALSE_INPUT_MUX_CONST_REF_RD_point_and_dir_hit_out_hit_d41d[tr_pipelinec_gen_c_l277_c7_a056] LATENCY=0
+     VAR_hitout_hit_FALSE_INPUT_MUX_CONST_REF_RD_point_and_dir_hit_out_hit_d41d_tr_pipelinec_gen_c_l277_c7_a056_return_output := hit_out_NULL.hit;
+
+     -- CONST_REF_RD_float3_float3_7d4c[tr_pipelinec_gen_c_l281_c26_6c73] LATENCY=0
+     VAR_CONST_REF_RD_float3_float3_7d4c_tr_pipelinec_gen_c_l281_c26_6c73_return_output := CONST_REF_RD_float3_float3_7d4c(
+     to_slv(to_float(0.0, 8, 14)),
+     to_slv(to_float(1.0, 8, 14)),
+     to_slv(to_float(0.0, 8, 14)));
+
+     -- CONST_REF_RD_hit_out_hit_out_dbf7_tr_pipelinec_gen_c_l269_l273_DUPLICATE_58ae LATENCY=0
+     VAR_CONST_REF_RD_hit_out_hit_out_dbf7_tr_pipelinec_gen_c_l269_l273_DUPLICATE_58ae_return_output := CONST_REF_RD_hit_out_hit_out_dbf7(
+     hit_out_NULL,
+     to_slv(to_float(1.000000e+23, 8, 14)),
+     to_slv(to_float(0.0, 8, 14)));
+
+     -- Submodule level 1
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iffalse := VAR_hitout_hit_FALSE_INPUT_MUX_CONST_REF_RD_point_and_dir_hit_out_hit_d41d_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_iffalse := VAR_CONST_REF_RD_hit_out_hit_out_dbf7_tr_pipelinec_gen_c_l269_l273_DUPLICATE_58ae_return_output;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_iffalse := VAR_CONST_REF_RD_hit_out_hit_out_dbf7_tr_pipelinec_gen_c_l269_l273_DUPLICATE_58ae_return_output;
+
+ -- Loop to construct simultaneous register transfers for each of the pipeline stages
+ -- LATENCY=0 is combinational Logic
+ for STAGE in 0 to PIPELINE_LATENCY loop
+   if STAGE = 0 then
+     -- Mux in inputs
+     VAR_plane := plane;
+     VAR_hitin := hitin;
+
+     -- Submodule level 0
+     -- CONST_REF_RD_fixed3_plane_t_center_d41d[tr_pipelinec_gen_c_l263_c48_1ec9] LATENCY=0
+     VAR_CONST_REF_RD_fixed3_plane_t_center_d41d_tr_pipelinec_gen_c_l263_c48_1ec9_return_output := VAR_plane.center;
+
+     -- CONST_REF_RD_float3_point_and_dir_orig_d41d[tr_pipelinec_gen_c_l271_c21_8379] LATENCY=0
+     VAR_CONST_REF_RD_float3_point_and_dir_orig_d41d_tr_pipelinec_gen_c_l271_c21_8379_return_output := VAR_hitin.orig;
+
+     -- CONST_REF_RD_float_8_14_t_point_and_dir_dir_y_d41d_tr_pipelinec_gen_c_l269_l270_DUPLICATE_803b LATENCY=0
+     VAR_CONST_REF_RD_float_8_14_t_point_and_dir_dir_y_d41d_tr_pipelinec_gen_c_l269_l270_DUPLICATE_803b_return_output := VAR_hitin.dir.y;
+
+     -- CONST_REF_RD_float3_point_and_dir_dir_d41d[tr_pipelinec_gen_c_l271_c50_db94] LATENCY=0
+     VAR_CONST_REF_RD_float3_point_and_dir_dir_d41d_tr_pipelinec_gen_c_l271_c50_db94_return_output := VAR_hitin.dir;
+
+     -- CONST_REF_RD_float_8_14_t_point_and_dir_orig_y_d41d[tr_pipelinec_gen_c_l270_c26_3686] LATENCY=0
+     VAR_CONST_REF_RD_float_8_14_t_point_and_dir_orig_y_d41d_tr_pipelinec_gen_c_l270_c26_3686_return_output := VAR_hitin.orig.y;
+
+     -- Submodule level 1
+     VAR_object_coord_to_float3_tr_pipelinec_gen_c_l263_c25_1a3c_a := VAR_CONST_REF_RD_fixed3_plane_t_center_d41d_tr_pipelinec_gen_c_l263_c48_1ec9_return_output;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := VAR_CONST_REF_RD_float3_point_and_dir_dir_d41d_tr_pipelinec_gen_c_l271_c50_db94_return_output;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := VAR_CONST_REF_RD_float3_point_and_dir_orig_d41d_tr_pipelinec_gen_c_l271_c21_8379_return_output;
+     VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110_left := VAR_CONST_REF_RD_float_8_14_t_point_and_dir_dir_y_d41d_tr_pipelinec_gen_c_l269_l270_DUPLICATE_803b_return_output;
+     VAR_UNARY_OP_NEGATE_tr_pipelinec_gen_c_l270_c58_453c_expr := VAR_CONST_REF_RD_float_8_14_t_point_and_dir_dir_y_d41d_tr_pipelinec_gen_c_l269_l270_DUPLICATE_803b_return_output;
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left := VAR_CONST_REF_RD_float_8_14_t_point_and_dir_orig_y_d41d_tr_pipelinec_gen_c_l270_c26_3686_return_output;
+     -- UNARY_OP_NEGATE[tr_pipelinec_gen_c_l270_c58_453c] LATENCY=0
+     -- Inputs
+     UNARY_OP_NEGATE_tr_pipelinec_gen_c_l270_c58_453c_expr <= VAR_UNARY_OP_NEGATE_tr_pipelinec_gen_c_l270_c58_453c_expr;
+     -- Outputs
+     VAR_UNARY_OP_NEGATE_tr_pipelinec_gen_c_l270_c58_453c_return_output := UNARY_OP_NEGATE_tr_pipelinec_gen_c_l270_c58_453c_return_output;
+
+     -- object_coord_to_float3[tr_pipelinec_gen_c_l263_c25_1a3c] LATENCY=3
+     -- Inputs
+     object_coord_to_float3_tr_pipelinec_gen_c_l263_c25_1a3c_a <= VAR_object_coord_to_float3_tr_pipelinec_gen_c_l263_c25_1a3c_a;
+
+     -- BIN_OP_NEQ[tr_pipelinec_gen_c_l269_c6_1110] LATENCY=0
+     -- Inputs
+     BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110_left <= VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110_left;
+     BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110_right <= VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110_right;
+     -- Outputs
+     VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110_return_output := BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110_return_output;
+
+     -- Submodule level 2
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l269_c6_1110_return_output;
+     VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b := VAR_UNARY_OP_NEGATE_tr_pipelinec_gen_c_l270_c58_453c_return_output;
+     -- Write to comb signals
+     COMB_STAGE0_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE0_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b <= VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     COMB_STAGE0_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left;
+     COMB_STAGE0_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE0_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+   elsif STAGE = 1 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE0_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b := REG_STAGE0_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left := REG_STAGE0_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE0_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE0_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+
+     -- Write to comb signals
+     COMB_STAGE1_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE1_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b <= VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     COMB_STAGE1_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left;
+     COMB_STAGE1_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE1_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+   elsif STAGE = 2 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE1_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b := REG_STAGE1_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left := REG_STAGE1_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE1_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE1_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+
+     -- Write to comb signals
+     COMB_STAGE2_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE2_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b <= VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     COMB_STAGE2_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left;
+     COMB_STAGE2_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE2_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+   elsif STAGE = 3 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE2_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b := REG_STAGE2_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left := REG_STAGE2_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE2_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE2_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     -- Submodule outputs
+     VAR_object_coord_to_float3_tr_pipelinec_gen_c_l263_c25_1a3c_return_output := object_coord_to_float3_tr_pipelinec_gen_c_l263_c25_1a3c_return_output;
+
+     -- Submodule level 0
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := VAR_object_coord_to_float3_tr_pipelinec_gen_c_l263_c25_1a3c_return_output;
+     -- CONST_REF_RD_float_8_14_t_float3_y_d41d[tr_pipelinec_gen_c_l270_c41_90df] LATENCY=0
+     VAR_CONST_REF_RD_float_8_14_t_float3_y_d41d_tr_pipelinec_gen_c_l270_c41_90df_return_output := VAR_object_coord_to_float3_tr_pipelinec_gen_c_l263_c25_1a3c_return_output.y;
+
+     -- Submodule level 1
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_right := VAR_CONST_REF_RD_float_8_14_t_float3_y_d41d_tr_pipelinec_gen_c_l270_c41_90df_return_output;
+     -- BIN_OP_MINUS[tr_pipelinec_gen_c_l270_c26_e306] LATENCY=6
+     -- Inputs
+     BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left;
+     BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_right <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_right;
+
+     -- Write to comb signals
+     COMB_STAGE3_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE3_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b <= VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     COMB_STAGE3_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE3_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE3_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 4 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE3_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b := REG_STAGE3_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE3_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE3_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE3_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE4_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE4_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b <= VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     COMB_STAGE4_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE4_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE4_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 5 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE4_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b := REG_STAGE4_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE4_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE4_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE4_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE5_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE5_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b <= VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     COMB_STAGE5_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE5_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE5_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 6 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE5_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b := REG_STAGE5_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE5_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE5_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE5_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE6_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE6_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b <= VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     COMB_STAGE6_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE6_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE6_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 7 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE6_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b := REG_STAGE6_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE6_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE6_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE6_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE7_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE7_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b <= VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     COMB_STAGE7_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE7_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE7_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 8 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE7_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b := REG_STAGE7_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE7_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE7_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE7_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE8_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE8_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b <= VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     COMB_STAGE8_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE8_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE8_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 9 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE8_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b := REG_STAGE8_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE8_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE8_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE8_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Submodule outputs
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_return_output := BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_return_output;
+
+     -- Submodule level 0
+     VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_a := VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_return_output;
+     -- float_fast_div_u[tr_pipelinec_gen_c_l270_c9_2b8e] LATENCY=20
+     -- Inputs
+     float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_a <= VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_a;
+     float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b <= VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+
+     -- Write to comb signals
+     COMB_STAGE9_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE9_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE9_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE9_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 10 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE9_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE9_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE9_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE9_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE10_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE10_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE10_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE10_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 11 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE10_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE10_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE10_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE10_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE11_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE11_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE11_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE11_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 12 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE11_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE11_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE11_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE11_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE12_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE12_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE12_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE12_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 13 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE12_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE12_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE12_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE12_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE13_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE13_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE13_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE13_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 14 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE13_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE13_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE13_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE13_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE14_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE14_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE14_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE14_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 15 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE14_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE14_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE14_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE14_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE15_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE15_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE15_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE15_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 16 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE15_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE15_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE15_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE15_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE16_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE16_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE16_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE16_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 17 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE16_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE16_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE16_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE16_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE17_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE17_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE17_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE17_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 18 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE17_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE17_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE17_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE17_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE18_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE18_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE18_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE18_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 19 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE18_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE18_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE18_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE18_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE19_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE19_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE19_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE19_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 20 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE19_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE19_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE19_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE19_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE20_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE20_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE20_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE20_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 21 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE20_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE20_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE20_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE20_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE21_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE21_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE21_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE21_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 22 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE21_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE21_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE21_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE21_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE22_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE22_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE22_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE22_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 23 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE22_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE22_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE22_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE22_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE23_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE23_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE23_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE23_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 24 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE23_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE23_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE23_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE23_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE24_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE24_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE24_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE24_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 25 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE24_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE24_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE24_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE24_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE25_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE25_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE25_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE25_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 26 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE25_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE25_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE25_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE25_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE26_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE26_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE26_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE26_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 27 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE26_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE26_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE26_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE26_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE27_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE27_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE27_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE27_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 28 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE27_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE27_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE27_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE27_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- Write to comb signals
+     COMB_STAGE28_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE28_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE28_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     COMB_STAGE28_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+   elsif STAGE = 29 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE28_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE28_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left := REG_STAGE28_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE28_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Submodule outputs
+     VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_return_output := float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_return_output;
+
+     -- Submodule level 0
+     VAR_BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859_left := VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_return_output;
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_right := VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_return_output;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := VAR_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_return_output;
+     -- BIN_OP_GT[tr_pipelinec_gen_c_l273_c8_3859] LATENCY=0
+     -- Inputs
+     BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859_left <= VAR_BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859_left;
+     BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859_right <= VAR_BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859_right;
+     -- Outputs
+     VAR_BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859_return_output := BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859_return_output;
+
+     -- float3_mul_float[tr_pipelinec_gen_c_l271_c33_71ba] LATENCY=3
+     -- Inputs
+     float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_right <= VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_right;
+
+     -- Submodule level 1
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := VAR_BIN_OP_GT_tr_pipelinec_gen_c_l273_c8_3859_return_output;
+     -- Write to comb signals
+     COMB_STAGE29_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE29_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE29_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE29_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     COMB_STAGE29_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 30 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE29_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE29_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE29_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE29_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE29_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE30_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE30_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE30_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE30_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     COMB_STAGE30_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 31 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE30_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE30_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE30_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE30_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE30_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE31_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE31_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     COMB_STAGE31_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE31_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     COMB_STAGE31_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 32 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE31_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left := REG_STAGE31_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE31_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE31_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE31_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Submodule outputs
+     VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_return_output := float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_return_output;
+
+     -- Submodule level 0
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_right := VAR_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_return_output;
+     -- float3_add[tr_pipelinec_gen_c_l271_c10_5498] LATENCY=6
+     -- Inputs
+     float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     float3_add_tr_pipelinec_gen_c_l271_c10_5498_right <= VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_right;
+
+     -- Write to comb signals
+     COMB_STAGE32_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE32_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE32_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     COMB_STAGE32_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 33 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE32_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE32_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE32_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE32_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE33_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE33_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE33_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     COMB_STAGE33_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 34 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE33_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE33_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE33_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE33_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE34_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE34_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE34_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     COMB_STAGE34_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 35 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE34_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE34_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE34_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE34_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE35_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE35_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE35_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     COMB_STAGE35_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 36 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE35_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE35_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE35_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE35_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE36_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE36_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE36_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     COMB_STAGE36_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 37 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE36_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE36_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE36_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE36_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE37_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE37_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE37_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     COMB_STAGE37_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 38 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE37_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE37_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right := REG_STAGE37_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE37_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Submodule outputs
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_return_output := float3_add_tr_pipelinec_gen_c_l271_c10_5498_return_output;
+
+     -- Submodule level 0
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_left := VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_return_output;
+     -- float3_sub[tr_pipelinec_gen_c_l274_c11_fb45] LATENCY=7
+     -- Inputs
+     float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_left <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_left;
+     float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+
+     -- hitout_hit_TRUE_INPUT_MUX_CONST_REF_RD_point_and_dir_hit_out_hit_hit_a85f[tr_pipelinec_gen_c_l277_c7_a056] LATENCY=0
+     VAR_hitout_hit_TRUE_INPUT_MUX_CONST_REF_RD_point_and_dir_hit_out_hit_hit_a85f_tr_pipelinec_gen_c_l277_c7_a056_return_output := CONST_REF_RD_point_and_dir_hit_out_hit_hit_a85f(
+     VAR_float3_add_tr_pipelinec_gen_c_l271_c10_5498_return_output,
+     VAR_CONST_REF_RD_float3_float3_7d4c_tr_pipelinec_gen_c_l281_c26_6c73_return_output);
+
+     -- Submodule level 1
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := VAR_hitout_hit_TRUE_INPUT_MUX_CONST_REF_RD_point_and_dir_hit_out_hit_hit_a85f_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+     -- Write to comb signals
+     COMB_STAGE38_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE38_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE38_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     COMB_STAGE38_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 39 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE38_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE38_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE38_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE38_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE39_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE39_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE39_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     COMB_STAGE39_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 40 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE39_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE39_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE39_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE39_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE40_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE40_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE40_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     COMB_STAGE40_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 41 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE40_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE40_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE40_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE40_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE41_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE41_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE41_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     COMB_STAGE41_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 42 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE41_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE41_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE41_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE41_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE42_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE42_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE42_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     COMB_STAGE42_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 43 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE42_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE42_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE42_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE42_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE43_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE43_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE43_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     COMB_STAGE43_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 44 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE43_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE43_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE43_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE43_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE44_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE44_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE44_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     COMB_STAGE44_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 45 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE44_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE44_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE44_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE44_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Submodule outputs
+     VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_return_output := float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_return_output;
+
+     -- Submodule level 0
+     -- CONST_REF_RD_float_8_14_t_float3_x_d41d[tr_pipelinec_gen_c_l275_c58_3b31] LATENCY=0
+     VAR_CONST_REF_RD_float_8_14_t_float3_x_d41d_tr_pipelinec_gen_c_l275_c58_3b31_return_output := VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_return_output.x;
+
+     -- CONST_REF_RD_float_8_14_t_float3_z_d41d[tr_pipelinec_gen_c_l275_c86_a55a] LATENCY=0
+     VAR_CONST_REF_RD_float_8_14_t_float3_z_d41d_tr_pipelinec_gen_c_l275_c86_a55a_return_output := VAR_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_return_output.z;
+
+     -- Submodule level 1
+     VAR_fixed_make_from_float_tr_pipelinec_gen_c_l275_c36_7fd9_a := VAR_CONST_REF_RD_float_8_14_t_float3_x_d41d_tr_pipelinec_gen_c_l275_c58_3b31_return_output;
+     VAR_fixed_make_from_float_tr_pipelinec_gen_c_l275_c64_2a97_a := VAR_CONST_REF_RD_float_8_14_t_float3_z_d41d_tr_pipelinec_gen_c_l275_c86_a55a_return_output;
+     -- fixed_make_from_float[tr_pipelinec_gen_c_l275_c36_7fd9] LATENCY=2
+     -- Inputs
+     fixed_make_from_float_tr_pipelinec_gen_c_l275_c36_7fd9_a <= VAR_fixed_make_from_float_tr_pipelinec_gen_c_l275_c36_7fd9_a;
+
+     -- fixed_make_from_float[tr_pipelinec_gen_c_l275_c64_2a97] LATENCY=2
+     -- Inputs
+     fixed_make_from_float_tr_pipelinec_gen_c_l275_c64_2a97_a <= VAR_fixed_make_from_float_tr_pipelinec_gen_c_l275_c64_2a97_a;
+
+     -- Write to comb signals
+     COMB_STAGE45_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE45_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE45_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     COMB_STAGE45_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 46 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE45_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE45_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE45_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE45_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE46_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE46_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE46_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     COMB_STAGE46_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 47 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE46_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE46_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE46_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE46_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Submodule outputs
+     VAR_fixed_make_from_float_tr_pipelinec_gen_c_l275_c36_7fd9_return_output := fixed_make_from_float_tr_pipelinec_gen_c_l275_c36_7fd9_return_output;
+     VAR_fixed_make_from_float_tr_pipelinec_gen_c_l275_c64_2a97_return_output := fixed_make_from_float_tr_pipelinec_gen_c_l275_c64_2a97_return_output;
+
+     -- Submodule level 0
+     VAR_plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_x := VAR_fixed_make_from_float_tr_pipelinec_gen_c_l275_c36_7fd9_return_output;
+     VAR_plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_z := VAR_fixed_make_from_float_tr_pipelinec_gen_c_l275_c64_2a97_return_output;
+     -- plane_has_hole[tr_pipelinec_gen_c_l275_c21_66d4] LATENCY=2
+     -- Inputs
+     plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_x <= VAR_plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_x;
+     plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_z <= VAR_plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_z;
+
+     -- Write to comb signals
+     COMB_STAGE47_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE47_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE47_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     COMB_STAGE47_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 48 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE47_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE47_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE47_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE47_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE48_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE48_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE48_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     COMB_STAGE48_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 49 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE48_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE48_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE48_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE48_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Submodule outputs
+     VAR_plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_return_output := plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_return_output;
+
+     -- Submodule level 0
+     VAR_fixed_is_negative_tr_pipelinec_gen_c_l277_c11_2806_x := VAR_plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_return_output;
+     VAR_fixed_to_float_tr_pipelinec_gen_c_l283_c27_1b2f_a := VAR_plane_has_hole_tr_pipelinec_gen_c_l275_c21_66d4_return_output;
+     -- fixed_is_negative[tr_pipelinec_gen_c_l277_c11_2806] LATENCY=0
+     -- Inputs
+     fixed_is_negative_tr_pipelinec_gen_c_l277_c11_2806_x <= VAR_fixed_is_negative_tr_pipelinec_gen_c_l277_c11_2806_x;
+     -- Outputs
+     VAR_fixed_is_negative_tr_pipelinec_gen_c_l277_c11_2806_return_output := fixed_is_negative_tr_pipelinec_gen_c_l277_c11_2806_return_output;
+
+     -- fixed_to_float[tr_pipelinec_gen_c_l283_c27_1b2f] LATENCY=4
+     -- Inputs
+     fixed_to_float_tr_pipelinec_gen_c_l283_c27_1b2f_a <= VAR_fixed_to_float_tr_pipelinec_gen_c_l283_c27_1b2f_a;
+
+     -- Submodule level 1
+     VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l277_c11_d1c2_expr := VAR_fixed_is_negative_tr_pipelinec_gen_c_l277_c11_2806_return_output;
+     -- UNARY_OP_NOT[tr_pipelinec_gen_c_l277_c11_d1c2] LATENCY=1
+     -- Inputs
+     UNARY_OP_NOT_tr_pipelinec_gen_c_l277_c11_d1c2_expr <= VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l277_c11_d1c2_expr;
+
+     -- Write to comb signals
+     COMB_STAGE49_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE49_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE49_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     COMB_STAGE49_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+   elsif STAGE = 50 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE49_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE49_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE49_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue := REG_STAGE49_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Submodule outputs
+     VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l277_c11_d1c2_return_output := UNARY_OP_NOT_tr_pipelinec_gen_c_l277_c11_d1c2_return_output;
+
+     -- Submodule level 0
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_cond := VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l277_c11_d1c2_return_output;
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_cond := VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l277_c11_d1c2_return_output;
+     -- hitout_dist_MUX[tr_pipelinec_gen_c_l277_c7_a056] LATENCY=0
+     -- Inputs
+     hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_cond <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_cond;
+     hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iffalse <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iffalse;
+     -- Outputs
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output := hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+
+     -- hitout_hit_MUX[tr_pipelinec_gen_c_l277_c7_a056] LATENCY=0
+     -- Inputs
+     hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_cond <= VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_cond;
+     hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iffalse <= VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iffalse;
+     -- Outputs
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output := hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+
+     -- Submodule level 1
+     -- Write to comb signals
+     COMB_STAGE50_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE50_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE50_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output <= VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+     COMB_STAGE50_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+   elsif STAGE = 51 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE50_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE50_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output := REG_STAGE50_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output := REG_STAGE50_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+
+     -- Write to comb signals
+     COMB_STAGE51_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE51_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE51_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output <= VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+     COMB_STAGE51_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+   elsif STAGE = 52 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE51_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE51_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output := REG_STAGE51_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output := REG_STAGE51_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+
+     -- Write to comb signals
+     COMB_STAGE52_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     COMB_STAGE52_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     COMB_STAGE52_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output <= VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+     COMB_STAGE52_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output <= VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+   elsif STAGE = 53 then
+     -- Read from prev stage
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond := REG_STAGE52_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond := REG_STAGE52_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output := REG_STAGE52_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output := REG_STAGE52_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+     -- Submodule outputs
+     VAR_fixed_to_float_tr_pipelinec_gen_c_l283_c27_1b2f_return_output := fixed_to_float_tr_pipelinec_gen_c_l283_c27_1b2f_return_output;
+
+     -- Submodule level 0
+     -- hitout_TRUE_INPUT_MUX_CONST_REF_RD_hit_out_hit_out_092e[tr_pipelinec_gen_c_l273_c5_64a4] LATENCY=0
+     VAR_hitout_TRUE_INPUT_MUX_CONST_REF_RD_hit_out_hit_out_092e_tr_pipelinec_gen_c_l273_c5_64a4_return_output := CONST_REF_RD_hit_out_hit_out_092e(
+     VAR_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output,
+     VAR_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output,
+     VAR_fixed_to_float_tr_pipelinec_gen_c_l283_c27_1b2f_return_output);
+
+     -- Submodule level 1
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_iftrue := VAR_hitout_TRUE_INPUT_MUX_CONST_REF_RD_hit_out_hit_out_092e_tr_pipelinec_gen_c_l273_c5_64a4_return_output;
+     -- hitout_MUX[tr_pipelinec_gen_c_l273_c5_64a4] LATENCY=0
+     -- Inputs
+     hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_iftrue;
+     hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_iffalse <= VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_iffalse;
+     -- Outputs
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_return_output := hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_return_output;
+
+     -- Submodule level 2
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_iftrue := VAR_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_return_output;
+     -- hitout_MUX[tr_pipelinec_gen_c_l269_c3_5a74] LATENCY=0
+     -- Inputs
+     hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_iftrue;
+     hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_iffalse <= VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_iffalse;
+     -- Outputs
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_return_output := hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_return_output;
+
+     -- Submodule level 3
+     VAR_return_output := VAR_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_return_output;
+     -- Last stage of pipeline return wire to return port/reg
+     return_output <= VAR_return_output;
+   end if;
+ end loop;
+
+end process;
+
+-- Register comb signals
+process(clk) is
+begin
+ if rising_edge(clk) then
+     -- Stage 0
+     REG_STAGE0_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE0_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE0_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b <= COMB_STAGE0_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     REG_STAGE0_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left <= COMB_STAGE0_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left;
+     REG_STAGE0_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE0_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE0_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE0_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     -- Stage 1
+     REG_STAGE1_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE1_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE1_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b <= COMB_STAGE1_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     REG_STAGE1_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left <= COMB_STAGE1_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left;
+     REG_STAGE1_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE1_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE1_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE1_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     -- Stage 2
+     REG_STAGE2_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE2_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE2_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b <= COMB_STAGE2_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     REG_STAGE2_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left <= COMB_STAGE2_BIN_OP_MINUS_tr_pipelinec_gen_c_l270_c26_e306_left;
+     REG_STAGE2_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE2_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE2_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE2_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     -- Stage 3
+     REG_STAGE3_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE3_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE3_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b <= COMB_STAGE3_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     REG_STAGE3_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE3_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE3_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE3_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE3_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE3_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 4
+     REG_STAGE4_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE4_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE4_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b <= COMB_STAGE4_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     REG_STAGE4_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE4_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE4_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE4_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE4_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE4_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 5
+     REG_STAGE5_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE5_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE5_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b <= COMB_STAGE5_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     REG_STAGE5_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE5_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE5_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE5_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE5_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE5_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 6
+     REG_STAGE6_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE6_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE6_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b <= COMB_STAGE6_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     REG_STAGE6_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE6_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE6_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE6_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE6_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE6_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 7
+     REG_STAGE7_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE7_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE7_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b <= COMB_STAGE7_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     REG_STAGE7_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE7_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE7_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE7_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE7_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE7_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 8
+     REG_STAGE8_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE8_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE8_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b <= COMB_STAGE8_float_fast_div_u_tr_pipelinec_gen_c_l270_c9_2b8e_b;
+     REG_STAGE8_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE8_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE8_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE8_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE8_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE8_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 9
+     REG_STAGE9_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE9_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE9_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE9_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE9_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE9_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE9_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE9_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 10
+     REG_STAGE10_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE10_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE10_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE10_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE10_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE10_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE10_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE10_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 11
+     REG_STAGE11_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE11_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE11_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE11_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE11_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE11_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE11_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE11_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 12
+     REG_STAGE12_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE12_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE12_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE12_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE12_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE12_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE12_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE12_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 13
+     REG_STAGE13_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE13_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE13_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE13_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE13_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE13_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE13_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE13_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 14
+     REG_STAGE14_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE14_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE14_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE14_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE14_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE14_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE14_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE14_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 15
+     REG_STAGE15_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE15_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE15_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE15_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE15_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE15_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE15_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE15_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 16
+     REG_STAGE16_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE16_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE16_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE16_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE16_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE16_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE16_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE16_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 17
+     REG_STAGE17_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE17_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE17_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE17_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE17_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE17_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE17_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE17_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 18
+     REG_STAGE18_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE18_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE18_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE18_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE18_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE18_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE18_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE18_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 19
+     REG_STAGE19_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE19_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE19_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE19_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE19_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE19_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE19_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE19_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 20
+     REG_STAGE20_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE20_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE20_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE20_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE20_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE20_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE20_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE20_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 21
+     REG_STAGE21_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE21_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE21_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE21_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE21_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE21_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE21_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE21_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 22
+     REG_STAGE22_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE22_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE22_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE22_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE22_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE22_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE22_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE22_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 23
+     REG_STAGE23_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE23_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE23_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE23_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE23_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE23_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE23_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE23_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 24
+     REG_STAGE24_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE24_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE24_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE24_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE24_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE24_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE24_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE24_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 25
+     REG_STAGE25_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE25_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE25_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE25_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE25_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE25_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE25_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE25_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 26
+     REG_STAGE26_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE26_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE26_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE26_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE26_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE26_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE26_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE26_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 27
+     REG_STAGE27_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE27_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE27_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE27_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE27_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE27_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE27_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE27_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 28
+     REG_STAGE28_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE28_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE28_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE28_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE28_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left <= COMB_STAGE28_float3_mul_float_tr_pipelinec_gen_c_l271_c33_71ba_left;
+     REG_STAGE28_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE28_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     -- Stage 29
+     REG_STAGE29_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE29_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE29_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE29_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE29_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE29_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE29_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE29_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     REG_STAGE29_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE29_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 30
+     REG_STAGE30_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE30_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE30_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE30_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE30_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE30_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE30_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE30_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     REG_STAGE30_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE30_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 31
+     REG_STAGE31_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE31_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE31_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left <= COMB_STAGE31_float3_add_tr_pipelinec_gen_c_l271_c10_5498_left;
+     REG_STAGE31_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE31_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE31_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE31_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     REG_STAGE31_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE31_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 32
+     REG_STAGE32_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE32_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE32_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE32_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE32_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE32_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     REG_STAGE32_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE32_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 33
+     REG_STAGE33_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE33_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE33_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE33_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE33_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE33_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     REG_STAGE33_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE33_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 34
+     REG_STAGE34_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE34_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE34_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE34_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE34_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE34_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     REG_STAGE34_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE34_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 35
+     REG_STAGE35_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE35_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE35_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE35_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE35_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE35_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     REG_STAGE35_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE35_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 36
+     REG_STAGE36_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE36_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE36_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE36_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE36_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE36_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     REG_STAGE36_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE36_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 37
+     REG_STAGE37_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE37_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE37_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE37_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE37_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right <= COMB_STAGE37_float3_sub_tr_pipelinec_gen_c_l274_c11_fb45_right;
+     REG_STAGE37_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE37_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 38
+     REG_STAGE38_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE38_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE38_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE38_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE38_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE38_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     REG_STAGE38_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE38_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 39
+     REG_STAGE39_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE39_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE39_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE39_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE39_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE39_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     REG_STAGE39_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE39_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 40
+     REG_STAGE40_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE40_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE40_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE40_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE40_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE40_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     REG_STAGE40_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE40_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 41
+     REG_STAGE41_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE41_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE41_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE41_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE41_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE41_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     REG_STAGE41_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE41_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 42
+     REG_STAGE42_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE42_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE42_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE42_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE42_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE42_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     REG_STAGE42_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE42_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 43
+     REG_STAGE43_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE43_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE43_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE43_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE43_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE43_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     REG_STAGE43_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE43_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 44
+     REG_STAGE44_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE44_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE44_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE44_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE44_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE44_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     REG_STAGE44_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE44_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 45
+     REG_STAGE45_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE45_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE45_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE45_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE45_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE45_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     REG_STAGE45_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE45_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 46
+     REG_STAGE46_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE46_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE46_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE46_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE46_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE46_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     REG_STAGE46_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE46_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 47
+     REG_STAGE47_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE47_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE47_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE47_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE47_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE47_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     REG_STAGE47_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE47_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 48
+     REG_STAGE48_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE48_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE48_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE48_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE48_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE48_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     REG_STAGE48_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE48_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 49
+     REG_STAGE49_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE49_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE49_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE49_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE49_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE49_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     REG_STAGE49_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue <= COMB_STAGE49_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_iftrue;
+     -- Stage 50
+     REG_STAGE50_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE50_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE50_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE50_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE50_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output <= COMB_STAGE50_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+     REG_STAGE50_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output <= COMB_STAGE50_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+     -- Stage 51
+     REG_STAGE51_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE51_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE51_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE51_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE51_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output <= COMB_STAGE51_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+     REG_STAGE51_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output <= COMB_STAGE51_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+     -- Stage 52
+     REG_STAGE52_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond <= COMB_STAGE52_hitout_MUX_tr_pipelinec_gen_c_l269_c3_5a74_cond;
+     REG_STAGE52_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond <= COMB_STAGE52_hitout_MUX_tr_pipelinec_gen_c_l273_c5_64a4_cond;
+     REG_STAGE52_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output <= COMB_STAGE52_hitout_hit_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+     REG_STAGE52_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output <= COMB_STAGE52_hitout_dist_MUX_tr_pipelinec_gen_c_l277_c7_a056_return_output;
+ end if;
+end process;
+
+end arch;

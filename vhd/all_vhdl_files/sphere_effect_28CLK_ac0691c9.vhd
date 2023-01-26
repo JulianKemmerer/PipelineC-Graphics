@@ -1,0 +1,1881 @@
+-- Timing params:
+--   Fixed?: False
+--   Pipeline Slices: [0.021873950627167377, 0.0698290643193624, 0.11778417801155873, 0.16573929170375507, 0.21369440539595075, 0.26164951908814577, 0.3096046327803408, 0.3575597464725384, 0.40551486016473276, 0.4534699738569291, 0.5014250875491248, 0.5493802012413205, 0.5973353149335161, 0.6452904286257112, 0.6932455423179081, 0.7412006560101039, 0.7891557697022988, 0.8371108833944952, 0.8850659970866909, 0.9330211107788865, 0.9809762244710829]
+--   Input regs?: False
+--   Output regs?: False
+library std;
+use std.textio.all;
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+use ieee.float_pkg.all;
+use work.c_structs_pkg.all;
+use work.global_wires_pkg.all;
+-- Submodules: 35
+entity sphere_effect_28CLK_ac0691c9 is
+port(
+ clk : in std_logic;
+ global_to_module : in sphere_effect_global_to_module_t;
+ hit : in hit_out;
+ hit_material : in material_t;
+ return_output : out fixed3);
+end sphere_effect_28CLK_ac0691c9;
+architecture arch of sphere_effect_28CLK_ac0691c9 is
+-- Types and such
+-- Declarations
+attribute mark_debug : string;
+constant PIPELINE_LATENCY : integer := 28;
+-- All of the wires/regs in function
+-- Stage 0
+signal REG_STAGE0_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE0_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left : std_logic_vector(22 downto 0);
+signal REG_STAGE0_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE0_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE0_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE0_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 1
+signal REG_STAGE1_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left : unsigned(0 downto 0);
+signal REG_STAGE1_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE1_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left : std_logic_vector(22 downto 0);
+signal REG_STAGE1_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE1_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE1_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left : unsigned(0 downto 0);
+signal COMB_STAGE1_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE1_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE1_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE1_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 2
+signal REG_STAGE2_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left : unsigned(0 downto 0);
+signal REG_STAGE2_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE2_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left : std_logic_vector(22 downto 0);
+signal REG_STAGE2_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE2_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE2_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left : unsigned(0 downto 0);
+signal COMB_STAGE2_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE2_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE2_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE2_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 3
+signal REG_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE3_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left : std_logic_vector(22 downto 0);
+signal REG_STAGE3_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE3_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE3_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 4
+signal REG_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE4_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left : std_logic_vector(22 downto 0);
+signal REG_STAGE4_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE4_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE4_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 5
+signal REG_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE5_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left : std_logic_vector(22 downto 0);
+signal REG_STAGE5_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE5_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE5_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 6
+signal REG_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE6_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left : std_logic_vector(22 downto 0);
+signal REG_STAGE6_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE6_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE6_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 7
+signal REG_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE7_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE7_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 8
+signal REG_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE8_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE8_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 9
+signal REG_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE9_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE9_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 10
+signal REG_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE10_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE10_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 11
+signal REG_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE11_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE11_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 12
+signal REG_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE12_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE12_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 13
+signal REG_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE13_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE13_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 14
+signal REG_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE14_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE14_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 15
+signal REG_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE15_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE15_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 16
+signal REG_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE16_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right : std_logic_vector(22 downto 0);
+signal REG_STAGE16_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE16_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right : std_logic_vector(22 downto 0);
+signal COMB_STAGE16_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 17
+signal REG_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE17_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right : std_logic_vector(22 downto 0);
+signal REG_STAGE17_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE17_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right : std_logic_vector(22 downto 0);
+signal COMB_STAGE17_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 18
+signal REG_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE18_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE18_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 19
+signal REG_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE19_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE19_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 20
+signal REG_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE20_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE20_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 21
+signal REG_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE21_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE21_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 22
+signal REG_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE22_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE22_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 23
+signal REG_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE23_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE23_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 24
+signal REG_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE24_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE24_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 25
+signal REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE25_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue : fixed3;
+signal REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE25_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal COMB_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue : fixed3;
+signal COMB_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 26
+signal REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue : fixed3;
+signal REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal COMB_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue : fixed3;
+signal COMB_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+-- Stage 27
+signal REG_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal REG_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal COMB_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal COMB_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+-- Each function instance gets signals
+-- CONST_SR_1[tr_pipelinec_gen_c_l296_c18_f3d6]
+signal CONST_SR_1_tr_pipelinec_gen_c_l296_c18_f3d6_x : unsigned(15 downto 0);
+signal CONST_SR_1_tr_pipelinec_gen_c_l296_c18_f3d6_return_output : unsigned(15 downto 0);
+
+-- BIN_OP_AND[tr_pipelinec_gen_c_l298_c9_e0db]
+signal BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db_left : unsigned(7 downto 0);
+signal BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db_right : unsigned(5 downto 0);
+signal BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db_return_output : unsigned(7 downto 0);
+
+-- BIN_OP_NEQ[tr_pipelinec_gen_c_l298_c9_2eea]
+signal BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea_left : unsigned(7 downto 0);
+signal BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea_right : unsigned(0 downto 0);
+signal BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea_return_output : unsigned(0 downto 0);
+
+-- BIN_OP_NEQ[tr_pipelinec_gen_c_l298_c9_7f44]
+signal BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44_left : unsigned(0 downto 0);
+signal BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44_right : unsigned(0 downto 0);
+signal BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44_return_output : unsigned(0 downto 0);
+
+-- hash16[tr_pipelinec_gen_c_l298_c38_e100]
+signal hash16_tr_pipelinec_gen_c_l298_c38_e100_v : unsigned(15 downto 0);
+signal hash16_tr_pipelinec_gen_c_l298_c38_e100_return_output : unsigned(15 downto 0);
+
+-- CONST_SR_13[tr_pipelinec_gen_c_l298_c38_c085]
+signal CONST_SR_13_tr_pipelinec_gen_c_l298_c38_c085_x : unsigned(15 downto 0);
+signal CONST_SR_13_tr_pipelinec_gen_c_l298_c38_c085_return_output : unsigned(15 downto 0);
+
+-- BIN_OP_AND[tr_pipelinec_gen_c_l298_c38_b65d]
+signal BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d_left : unsigned(15 downto 0);
+signal BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d_right : unsigned(0 downto 0);
+signal BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d_return_output : unsigned(15 downto 0);
+
+-- BIN_OP_NEQ[tr_pipelinec_gen_c_l298_c38_a8f4]
+signal BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4_left : unsigned(15 downto 0);
+signal BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4_right : unsigned(0 downto 0);
+signal BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4_return_output : unsigned(0 downto 0);
+
+-- BIN_OP_NEQ[tr_pipelinec_gen_c_l298_c38_a2d1]
+signal BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1_left : unsigned(0 downto 0);
+signal BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1_right : unsigned(0 downto 0);
+signal BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1_return_output : unsigned(0 downto 0);
+
+-- BIN_OP_OR[tr_pipelinec_gen_c_l298_c9_6e58]
+signal BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left : unsigned(0 downto 0);
+signal BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_right : unsigned(0 downto 0);
+signal BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_return_output : unsigned(0 downto 0);
+
+-- rcolor_MUX[tr_pipelinec_gen_c_l298_c3_06a1]
+signal rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+signal rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iftrue : fixed3;
+signal rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+signal rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_return_output : fixed3;
+
+-- fixed_to_float[tr_pipelinec_gen_c_l299_c42_f0b6]
+signal fixed_to_float_tr_pipelinec_gen_c_l299_c42_f0b6_a : fixed;
+signal fixed_to_float_tr_pipelinec_gen_c_l299_c42_f0b6_return_output : std_logic_vector(22 downto 0);
+
+-- BIN_OP_SL[tr_pipelinec_gen_c_l299_c42_1d03]
+signal BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03_left : std_logic_vector(22 downto 0);
+signal BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03_right : signed(3 downto 0);
+signal BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03_return_output : std_logic_vector(22 downto 0);
+
+-- BIN_OP_INFERRED_MULT[tr_pipelinec_gen_c_l299_c42_0f0d]
+signal BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d_left : std_logic_vector(22 downto 0);
+signal BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d_right : std_logic_vector(22 downto 0);
+signal BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d_return_output : std_logic_vector(22 downto 0);
+
+-- BIN_OP_MINUS[tr_pipelinec_gen_c_l299_c24_990a]
+signal BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left : std_logic_vector(22 downto 0);
+signal BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_right : std_logic_vector(22 downto 0);
+signal BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_return_output : std_logic_vector(22 downto 0);
+
+-- BIN_OP_MINUS[tr_pipelinec_gen_c_l300_c35_c4c5]
+signal BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5_left : std_logic_vector(22 downto 0);
+signal BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5_right : std_logic_vector(22 downto 0);
+signal BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5_return_output : std_logic_vector(22 downto 0);
+
+-- BIN_OP_MINUS[tr_pipelinec_gen_c_l300_c25_22e4]
+signal BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4_left : std_logic_vector(22 downto 0);
+signal BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4_right : std_logic_vector(22 downto 0);
+signal BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4_return_output : std_logic_vector(22 downto 0);
+
+-- BIN_OP_SL[tr_pipelinec_gen_c_l300_c25_0461]
+signal BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461_left : std_logic_vector(22 downto 0);
+signal BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461_right : signed(1 downto 0);
+signal BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461_return_output : std_logic_vector(22 downto 0);
+
+-- BIN_OP_INFERRED_MULT[tr_pipelinec_gen_c_l300_c25_d3fe]
+signal BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_left : std_logic_vector(22 downto 0);
+signal BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_right : std_logic_vector(22 downto 0);
+signal BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_return_output : std_logic_vector(22 downto 0);
+
+-- BIN_OP_INFERRED_MULT[tr_pipelinec_gen_c_l301_c22_976a]
+signal BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a_left : std_logic_vector(22 downto 0);
+signal BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a_right : std_logic_vector(22 downto 0);
+signal BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a_return_output : std_logic_vector(22 downto 0);
+
+-- BIN_OP_INFERRED_MULT[tr_pipelinec_gen_c_l301_c32_b05e]
+signal BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e_left : std_logic_vector(22 downto 0);
+signal BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e_right : std_logic_vector(22 downto 0);
+signal BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e_return_output : std_logic_vector(22 downto 0);
+
+-- BIN_OP_PLUS[tr_pipelinec_gen_c_l301_c22_2a92]
+signal BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_left : std_logic_vector(22 downto 0);
+signal BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right : std_logic_vector(22 downto 0);
+signal BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_return_output : std_logic_vector(22 downto 0);
+
+-- fixed_shr[tr_pipelinec_gen_c_l302_c31_d17e]
+signal fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e_a : fixed;
+signal fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e_shift : signed(5 downto 0);
+signal fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e_return_output : fixed;
+
+-- fixed_make_from_double[tr_pipelinec_gen_c_l302_c53_5ee4]
+signal fixed_make_from_double_tr_pipelinec_gen_c_l302_c53_5ee4_a : std_logic_vector(22 downto 0);
+signal fixed_make_from_double_tr_pipelinec_gen_c_l302_c53_5ee4_return_output : fixed;
+
+-- fixed_add[tr_pipelinec_gen_c_l302_c21_4645]
+signal fixed_add_tr_pipelinec_gen_c_l302_c21_4645_left : fixed;
+signal fixed_add_tr_pipelinec_gen_c_l302_c21_4645_right : fixed;
+signal fixed_add_tr_pipelinec_gen_c_l302_c21_4645_return_output : fixed;
+
+-- fixed_make_from_float[tr_pipelinec_gen_c_l304_c17_b0a7]
+signal fixed_make_from_float_tr_pipelinec_gen_c_l304_c17_b0a7_a : std_logic_vector(22 downto 0);
+signal fixed_make_from_float_tr_pipelinec_gen_c_l304_c17_b0a7_return_output : fixed;
+
+-- fixed_lt[tr_pipelinec_gen_c_l304_c8_9a93]
+signal fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_left : fixed;
+signal fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+signal fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_return_output : unsigned(0 downto 0);
+
+-- rcolor_MUX[tr_pipelinec_gen_c_l304_c5_ac9e]
+signal rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_cond : unsigned(0 downto 0);
+signal rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue : fixed3;
+signal rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+signal rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_return_output : fixed3;
+
+-- BIN_OP_LT[tr_pipelinec_gen_c_l304_c62_cd27]
+signal BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27_left : std_logic_vector(22 downto 0);
+signal BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27_right : std_logic_vector(22 downto 0);
+signal BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27_return_output : unsigned(0 downto 0);
+
+-- fixed_make_from_double[tr_pipelinec_gen_c_l304_c129_c57f]
+signal fixed_make_from_double_tr_pipelinec_gen_c_l304_c129_c57f_a : std_logic_vector(22 downto 0);
+signal fixed_make_from_double_tr_pipelinec_gen_c_l304_c129_c57f_return_output : fixed;
+
+-- fixed3_make_from_fixed[tr_pipelinec_gen_c_l304_c106_b2f8]
+signal fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c106_b2f8_left : fixed;
+signal fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c106_b2f8_return_output : fixed3;
+
+-- fixed_make_from_double[tr_pipelinec_gen_c_l304_c196_721e]
+signal fixed_make_from_double_tr_pipelinec_gen_c_l304_c196_721e_a : std_logic_vector(22 downto 0);
+signal fixed_make_from_double_tr_pipelinec_gen_c_l304_c196_721e_return_output : fixed;
+
+-- fixed3_make_from_fixed[tr_pipelinec_gen_c_l304_c173_4e80]
+signal fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c173_4e80_left : fixed;
+signal fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c173_4e80_return_output : fixed3;
+
+-- MUX[tr_pipelinec_gen_c_l304_c62_1891]
+signal MUX_tr_pipelinec_gen_c_l304_c62_1891_cond : unsigned(0 downto 0);
+signal MUX_tr_pipelinec_gen_c_l304_c62_1891_iftrue : fixed3;
+signal MUX_tr_pipelinec_gen_c_l304_c62_1891_iffalse : fixed3;
+signal MUX_tr_pipelinec_gen_c_l304_c62_1891_return_output : fixed3;
+
+function float_abs( x : std_logic_vector) return std_logic_vector is
+
+  --variable x : std_logic_vector(31 downto 0);
+  variable return_output : std_logic_vector(31 downto 0);
+
+begin
+
+    return_output := x; -- Same value
+    return_output(return_output'left) := '0'; -- Clear sign bit
+    return return_output;
+
+end function;
+
+
+begin
+
+-- SUBMODULE INSTANCES 
+-- CONST_SR_1_tr_pipelinec_gen_c_l296_c18_f3d6
+CONST_SR_1_tr_pipelinec_gen_c_l296_c18_f3d6 : entity work.CONST_SR_1_uint16_t_0CLK_de264c78 port map (
+CONST_SR_1_tr_pipelinec_gen_c_l296_c18_f3d6_x,
+CONST_SR_1_tr_pipelinec_gen_c_l296_c18_f3d6_return_output);
+
+-- BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db
+BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db : entity work.BIN_OP_AND_uint8_t_uint6_t_0CLK_de264c78 port map (
+BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db_left,
+BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db_right,
+BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db_return_output);
+
+-- BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea
+BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea : entity work.BIN_OP_NEQ_uint8_t_uint1_t_1CLK_461124c5 port map (
+clk,
+BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea_left,
+BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea_right,
+BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea_return_output);
+
+-- BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44
+BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44 : entity work.BIN_OP_NEQ_uint1_t_uint1_t_0CLK_de264c78 port map (
+BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44_left,
+BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44_right,
+BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44_return_output);
+
+-- hash16_tr_pipelinec_gen_c_l298_c38_e100
+hash16_tr_pipelinec_gen_c_l298_c38_e100 : entity work.hash16_2CLK_4e804713 port map (
+clk,
+hash16_tr_pipelinec_gen_c_l298_c38_e100_v,
+hash16_tr_pipelinec_gen_c_l298_c38_e100_return_output);
+
+-- CONST_SR_13_tr_pipelinec_gen_c_l298_c38_c085
+CONST_SR_13_tr_pipelinec_gen_c_l298_c38_c085 : entity work.CONST_SR_13_uint16_t_0CLK_de264c78 port map (
+CONST_SR_13_tr_pipelinec_gen_c_l298_c38_c085_x,
+CONST_SR_13_tr_pipelinec_gen_c_l298_c38_c085_return_output);
+
+-- BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d
+BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d : entity work.BIN_OP_AND_uint16_t_uint1_t_0CLK_de264c78 port map (
+BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d_left,
+BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d_right,
+BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d_return_output);
+
+-- BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4
+BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4 : entity work.BIN_OP_NEQ_uint16_t_uint1_t_0CLK_de264c78 port map (
+BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4_left,
+BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4_right,
+BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4_return_output);
+
+-- BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1
+BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1 : entity work.BIN_OP_NEQ_uint1_t_uint1_t_1CLK_2bdb950a port map (
+clk,
+BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1_left,
+BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1_right,
+BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1_return_output);
+
+-- BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58
+BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58 : entity work.BIN_OP_OR_uint1_t_uint1_t_0CLK_de264c78 port map (
+BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left,
+BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_right,
+BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_return_output);
+
+-- rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1
+rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1 : entity work.MUX_uint1_t_fixed3_fixed3_0CLK_de264c78 port map (
+rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iftrue,
+rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_return_output);
+
+-- fixed_to_float_tr_pipelinec_gen_c_l299_c42_f0b6
+fixed_to_float_tr_pipelinec_gen_c_l299_c42_f0b6 : entity work.fixed_to_float_3CLK_adafa2ea port map (
+clk,
+fixed_to_float_tr_pipelinec_gen_c_l299_c42_f0b6_a,
+fixed_to_float_tr_pipelinec_gen_c_l299_c42_f0b6_return_output);
+
+-- BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03
+BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03 : entity work.BIN_OP_SL_float_8_14_t_int4_t_1CLK_71d30f8d port map (
+clk,
+BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03_left,
+BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03_right,
+BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03_return_output);
+
+-- BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d : entity work.BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_3CLK_58295ff6 port map (
+clk,
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d_left,
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d_right,
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d_return_output);
+
+-- BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a
+BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a : entity work.BIN_OP_MINUS_float_8_14_t_float_8_14_t_6CLK_ab6afdf3 port map (
+clk,
+BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left,
+BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_right,
+BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_return_output);
+
+-- BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5
+BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5 : entity work.BIN_OP_MINUS_float_8_14_t_float_8_14_t_6CLK_ab6afdf3 port map (
+clk,
+BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5_left,
+BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5_right,
+BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5_return_output);
+
+-- BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4
+BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4 : entity work.BIN_OP_MINUS_float_8_14_t_float_8_14_t_6CLK_ab6afdf3 port map (
+clk,
+BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4_left,
+BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4_right,
+BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4_return_output);
+
+-- BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461
+BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461 : entity work.BIN_OP_SL_float_8_14_t_int2_t_1CLK_614886e9 port map (
+clk,
+BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461_left,
+BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461_right,
+BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461_return_output);
+
+-- BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe : entity work.BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_2CLK_1abfd622 port map (
+clk,
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_left,
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_right,
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_return_output);
+
+-- BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a : entity work.BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_3CLK_80c26621 port map (
+clk,
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a_left,
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a_right,
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a_return_output);
+
+-- BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e : entity work.BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_3CLK_b7f61fd3 port map (
+clk,
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e_left,
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e_right,
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e_return_output);
+
+-- BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92
+BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92 : entity work.BIN_OP_PLUS_float_8_14_t_float_8_14_t_6CLK_d5d58814 port map (
+clk,
+BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_left,
+BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right,
+BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_return_output);
+
+-- fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e
+fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e : entity work.fixed_shr_0CLK_6a3d4cae port map (
+fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e_a,
+fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e_shift,
+fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e_return_output);
+
+-- fixed_make_from_double_tr_pipelinec_gen_c_l302_c53_5ee4
+fixed_make_from_double_tr_pipelinec_gen_c_l302_c53_5ee4 : entity work.fixed_make_from_double_0CLK_38477f9e port map (
+fixed_make_from_double_tr_pipelinec_gen_c_l302_c53_5ee4_a,
+fixed_make_from_double_tr_pipelinec_gen_c_l302_c53_5ee4_return_output);
+
+-- fixed_add_tr_pipelinec_gen_c_l302_c21_4645
+fixed_add_tr_pipelinec_gen_c_l302_c21_4645 : entity work.fixed_add_1CLK_4aa0a483 port map (
+clk,
+fixed_add_tr_pipelinec_gen_c_l302_c21_4645_left,
+fixed_add_tr_pipelinec_gen_c_l302_c21_4645_right,
+fixed_add_tr_pipelinec_gen_c_l302_c21_4645_return_output);
+
+-- fixed_make_from_float_tr_pipelinec_gen_c_l304_c17_b0a7
+fixed_make_from_float_tr_pipelinec_gen_c_l304_c17_b0a7 : entity work.fixed_make_from_float_2CLK_c0caf0ba port map (
+clk,
+fixed_make_from_float_tr_pipelinec_gen_c_l304_c17_b0a7_a,
+fixed_make_from_float_tr_pipelinec_gen_c_l304_c17_b0a7_return_output);
+
+-- fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93
+fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93 : entity work.fixed_lt_1CLK_966fd94d port map (
+clk,
+fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_left,
+fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_return_output);
+
+-- rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e
+rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e : entity work.MUX_uint1_t_fixed3_fixed3_1CLK_b60b22dc port map (
+clk,
+rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_cond,
+rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue,
+rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_return_output);
+
+-- BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27
+BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27 : entity work.BIN_OP_LT_float_8_14_t_float_8_14_t_1CLK_7a8500e0 port map (
+clk,
+BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27_left,
+BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27_right,
+BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27_return_output);
+
+-- fixed_make_from_double_tr_pipelinec_gen_c_l304_c129_c57f
+fixed_make_from_double_tr_pipelinec_gen_c_l304_c129_c57f : entity work.fixed_make_from_double_0CLK_38477f9e port map (
+fixed_make_from_double_tr_pipelinec_gen_c_l304_c129_c57f_a,
+fixed_make_from_double_tr_pipelinec_gen_c_l304_c129_c57f_return_output);
+
+-- fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c106_b2f8
+fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c106_b2f8 : entity work.fixed3_make_from_fixed_0CLK_b45f1687 port map (
+fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c106_b2f8_left,
+fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c106_b2f8_return_output);
+
+-- fixed_make_from_double_tr_pipelinec_gen_c_l304_c196_721e
+fixed_make_from_double_tr_pipelinec_gen_c_l304_c196_721e : entity work.fixed_make_from_double_0CLK_38477f9e port map (
+fixed_make_from_double_tr_pipelinec_gen_c_l304_c196_721e_a,
+fixed_make_from_double_tr_pipelinec_gen_c_l304_c196_721e_return_output);
+
+-- fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c173_4e80
+fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c173_4e80 : entity work.fixed3_make_from_fixed_0CLK_b45f1687 port map (
+fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c173_4e80_left,
+fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c173_4e80_return_output);
+
+-- MUX_tr_pipelinec_gen_c_l304_c62_1891
+MUX_tr_pipelinec_gen_c_l304_c62_1891 : entity work.MUX_uint1_t_fixed3_fixed3_0CLK_de264c78 port map (
+MUX_tr_pipelinec_gen_c_l304_c62_1891_cond,
+MUX_tr_pipelinec_gen_c_l304_c62_1891_iftrue,
+MUX_tr_pipelinec_gen_c_l304_c62_1891_iffalse,
+MUX_tr_pipelinec_gen_c_l304_c62_1891_return_output);
+
+
+
+-- Combinatorial process for pipeline stages
+process (
+ -- Inputs
+ hit,
+ hit_material,
+ -- Registers
+ -- Stage 0
+ REG_STAGE0_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE0_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left,
+ REG_STAGE0_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 1
+ REG_STAGE1_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left,
+ REG_STAGE1_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE1_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left,
+ REG_STAGE1_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE1_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 2
+ REG_STAGE2_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left,
+ REG_STAGE2_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE2_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left,
+ REG_STAGE2_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE2_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 3
+ REG_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE3_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left,
+ REG_STAGE3_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 4
+ REG_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE4_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left,
+ REG_STAGE4_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 5
+ REG_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE5_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left,
+ REG_STAGE5_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 6
+ REG_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE6_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left,
+ REG_STAGE6_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 7
+ REG_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE7_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 8
+ REG_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE8_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 9
+ REG_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE9_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 10
+ REG_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE10_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 11
+ REG_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE11_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 12
+ REG_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE12_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 13
+ REG_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE13_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 14
+ REG_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE14_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 15
+ REG_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE15_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 16
+ REG_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE16_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right,
+ REG_STAGE16_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 17
+ REG_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE17_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right,
+ REG_STAGE17_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 18
+ REG_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE18_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 19
+ REG_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE19_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 20
+ REG_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE20_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 21
+ REG_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE21_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 22
+ REG_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE22_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 23
+ REG_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE23_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 24
+ REG_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE24_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 25
+ REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE25_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right,
+ REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue,
+ REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 26
+ REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue,
+ REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse,
+ -- Stage 27
+ REG_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse,
+ REG_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond,
+ -- Clock cross input
+ global_to_module,
+ -- All submodule outputs
+ CONST_SR_1_tr_pipelinec_gen_c_l296_c18_f3d6_return_output,
+ BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db_return_output,
+ BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea_return_output,
+ BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44_return_output,
+ hash16_tr_pipelinec_gen_c_l298_c38_e100_return_output,
+ CONST_SR_13_tr_pipelinec_gen_c_l298_c38_c085_return_output,
+ BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d_return_output,
+ BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4_return_output,
+ BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1_return_output,
+ BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_return_output,
+ rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_return_output,
+ fixed_to_float_tr_pipelinec_gen_c_l299_c42_f0b6_return_output,
+ BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03_return_output,
+ BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d_return_output,
+ BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_return_output,
+ BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5_return_output,
+ BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4_return_output,
+ BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461_return_output,
+ BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_return_output,
+ BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a_return_output,
+ BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e_return_output,
+ BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_return_output,
+ fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e_return_output,
+ fixed_make_from_double_tr_pipelinec_gen_c_l302_c53_5ee4_return_output,
+ fixed_add_tr_pipelinec_gen_c_l302_c21_4645_return_output,
+ fixed_make_from_float_tr_pipelinec_gen_c_l304_c17_b0a7_return_output,
+ fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_return_output,
+ rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_return_output,
+ BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27_return_output,
+ fixed_make_from_double_tr_pipelinec_gen_c_l304_c129_c57f_return_output,
+ fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c106_b2f8_return_output,
+ fixed_make_from_double_tr_pipelinec_gen_c_l304_c196_721e_return_output,
+ fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c173_4e80_return_output,
+ MUX_tr_pipelinec_gen_c_l304_c62_1891_return_output)
+is 
+ -- All of the wires in function
+ variable VAR_CLOCK_ENABLE : unsigned(0 downto 0);
+ variable VAR_return_output : fixed3;
+ variable VAR_hit : hit_out;
+ variable VAR_hit_material : material_t;
+ variable VAR_state : full_state_t;
+ variable VAR_rcolor : fixed3;
+ variable VAR_CONST_REF_RD_fixed3_material_t_diffuse_color_d41d_tr_pipelinec_gen_c_l291_c19_89a4_return_output : fixed3;
+ variable VAR_scene : scene_t;
+ variable VAR_CONST_REF_RD_scene_t_full_state_t_scene_d41d_tr_pipelinec_gen_c_l292_c19_f4c4_return_output : scene_t;
+ variable VAR_colors : scene_colors_t;
+ variable VAR_s : sphere_t;
+ variable VAR_CONST_REF_RD_sphere_t_scene_t_sphere_d41d_tr_pipelinec_gen_c_l294_c16_f9c5_return_output : sphere_t;
+ variable VAR_frame : unsigned(15 downto 0);
+ variable VAR_CONST_REF_RD_uint16_t_scene_t_frame_d41d_tr_pipelinec_gen_c_l295_c20_c952_return_output : unsigned(15 downto 0);
+ variable VAR_tick : unsigned(7 downto 0);
+ variable VAR_tick_tr_pipelinec_gen_c_l296_c11_fda6_0 : unsigned(7 downto 0);
+ variable VAR_CONST_SR_1_tr_pipelinec_gen_c_l296_c18_f3d6_return_output : unsigned(15 downto 0);
+ variable VAR_CONST_SR_1_tr_pipelinec_gen_c_l296_c18_f3d6_x : unsigned(15 downto 0);
+ variable VAR_BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db_left : unsigned(7 downto 0);
+ variable VAR_BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db_right : unsigned(5 downto 0);
+ variable VAR_BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db_return_output : unsigned(7 downto 0);
+ variable VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea_left : unsigned(7 downto 0);
+ variable VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea_right : unsigned(0 downto 0);
+ variable VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea_return_output : unsigned(0 downto 0);
+ variable VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44_left : unsigned(0 downto 0);
+ variable VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44_right : unsigned(0 downto 0);
+ variable VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44_return_output : unsigned(0 downto 0);
+ variable VAR_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left : unsigned(0 downto 0);
+ variable VAR_hash16_tr_pipelinec_gen_c_l298_c38_e100_v : unsigned(15 downto 0);
+ variable VAR_hash16_tr_pipelinec_gen_c_l298_c38_e100_return_output : unsigned(15 downto 0);
+ variable VAR_BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d_left : unsigned(15 downto 0);
+ variable VAR_CONST_SR_13_tr_pipelinec_gen_c_l298_c38_c085_return_output : unsigned(15 downto 0);
+ variable VAR_CONST_SR_13_tr_pipelinec_gen_c_l298_c38_c085_x : unsigned(15 downto 0);
+ variable VAR_BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d_right : unsigned(0 downto 0);
+ variable VAR_BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d_return_output : unsigned(15 downto 0);
+ variable VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4_left : unsigned(15 downto 0);
+ variable VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4_right : unsigned(0 downto 0);
+ variable VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4_return_output : unsigned(0 downto 0);
+ variable VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1_left : unsigned(0 downto 0);
+ variable VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1_right : unsigned(0 downto 0);
+ variable VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1_return_output : unsigned(0 downto 0);
+ variable VAR_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_right : unsigned(0 downto 0);
+ variable VAR_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_return_output : unsigned(0 downto 0);
+ variable VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iftrue : fixed3;
+ variable VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_return_output : fixed3;
+ variable VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse : fixed3;
+ variable VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_return_output : fixed3;
+ variable VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond : unsigned(0 downto 0);
+ variable VAR_dy : std_logic_vector(22 downto 0);
+ variable VAR_CONST_REF_RD_float_8_14_t_hit_out_hit_dir_y_d41d_tr_pipelinec_gen_c_l299_c24_c0af_return_output : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left : std_logic_vector(22 downto 0);
+ variable VAR_fixed_to_float_tr_pipelinec_gen_c_l299_c42_f0b6_a : fixed;
+ variable VAR_BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03_left : std_logic_vector(22 downto 0);
+ variable VAR_CONST_REF_RD_fixed_sphere_t_center_y_d41d_tr_pipelinec_gen_c_l299_c57_8e9d_return_output : fixed;
+ variable VAR_fixed_to_float_tr_pipelinec_gen_c_l299_c42_f0b6_return_output : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03_right : signed(3 downto 0);
+ variable VAR_BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03_return_output : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d_left : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d_right : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d_return_output : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_right : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_return_output : std_logic_vector(22 downto 0);
+ variable VAR_dx : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4_left : std_logic_vector(22 downto 0);
+ variable VAR_CONST_REF_RD_float_8_14_t_hit_out_hit_dir_z_d41d_tr_pipelinec_gen_c_l300_c35_7353_return_output : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5_left : std_logic_vector(22 downto 0);
+ variable VAR_CONST_REF_RD_float_8_14_t_hit_out_hit_dir_x_d41d_tr_pipelinec_gen_c_l300_c51_2602_return_output : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5_right : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5_return_output : std_logic_vector(22 downto 0);
+ variable VAR_float_abs_tr_pipelinec_gen_c_l300_c25_11ea_return_output : std_logic_vector(31 downto 0);
+ variable VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4_right : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4_return_output : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461_left : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461_right : signed(1 downto 0);
+ variable VAR_BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461_return_output : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_left : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_right : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_return_output : std_logic_vector(22 downto 0);
+ variable VAR_d : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a_left : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a_right : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a_return_output : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_left : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e_left : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e_right : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e_return_output : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_return_output : std_logic_vector(22 downto 0);
+ variable VAR_mindist : fixed;
+ variable VAR_fixed_add_tr_pipelinec_gen_c_l302_c21_4645_left : fixed;
+ variable VAR_fixed_add_tr_pipelinec_gen_c_l302_c21_4645_right : fixed;
+ variable VAR_fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e_a : fixed;
+ variable VAR_fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e_shift : signed(5 downto 0);
+ variable VAR_CONST_REF_RD_fixed_sphere_t_heat_d41d_tr_pipelinec_gen_c_l302_c41_b53b_return_output : fixed;
+ variable VAR_fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e_return_output : fixed;
+ variable VAR_fixed_make_from_double_tr_pipelinec_gen_c_l302_c53_5ee4_a : std_logic_vector(22 downto 0);
+ variable VAR_fixed_make_from_double_tr_pipelinec_gen_c_l302_c53_5ee4_return_output : fixed;
+ variable VAR_fixed_add_tr_pipelinec_gen_c_l302_c21_4645_return_output : fixed;
+ variable VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_left : fixed;
+ variable VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right : fixed;
+ variable VAR_fixed_make_from_float_tr_pipelinec_gen_c_l304_c17_b0a7_a : std_logic_vector(22 downto 0);
+ variable VAR_fixed_make_from_float_tr_pipelinec_gen_c_l304_c17_b0a7_return_output : fixed;
+ variable VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_return_output : unsigned(0 downto 0);
+ variable VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue : fixed3;
+ variable VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse : fixed3;
+ variable VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_cond : unsigned(0 downto 0);
+ variable VAR_MUX_tr_pipelinec_gen_c_l304_c62_1891_cond : unsigned(0 downto 0);
+ variable VAR_MUX_tr_pipelinec_gen_c_l304_c62_1891_iftrue : fixed3;
+ variable VAR_MUX_tr_pipelinec_gen_c_l304_c62_1891_iffalse : fixed3;
+ variable VAR_BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27_left : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27_right : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27_return_output : unsigned(0 downto 0);
+ variable VAR_fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c106_b2f8_left : fixed;
+ variable VAR_fixed_make_from_double_tr_pipelinec_gen_c_l304_c129_c57f_a : std_logic_vector(22 downto 0);
+ variable VAR_fixed_make_from_double_tr_pipelinec_gen_c_l304_c129_c57f_return_output : fixed;
+ variable VAR_fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c106_b2f8_return_output : fixed3;
+ variable VAR_fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c173_4e80_left : fixed;
+ variable VAR_fixed_make_from_double_tr_pipelinec_gen_c_l304_c196_721e_a : std_logic_vector(22 downto 0);
+ variable VAR_fixed_make_from_double_tr_pipelinec_gen_c_l304_c196_721e_return_output : fixed;
+ variable VAR_fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c173_4e80_return_output : fixed3;
+ variable VAR_MUX_tr_pipelinec_gen_c_l304_c62_1891_return_output : fixed3;
+begin
+ -- Constants and things derived from constants alone
+     -- Submodule level 0
+     VAR_fixed_make_from_double_tr_pipelinec_gen_c_l304_c129_c57f_a := to_slv(to_float(0.0, 8, 14));
+     VAR_BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d_right := to_unsigned(1, 1);
+     VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4_right := to_unsigned(0, 1);
+     VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1_right := to_unsigned(0, 1);
+     VAR_BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03_right := to_signed(-6, 4);
+     VAR_BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db_right := to_unsigned(63, 6);
+     VAR_BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461_right := to_signed(-1, 2);
+     VAR_fixed_make_from_double_tr_pipelinec_gen_c_l302_c53_5ee4_a := resize_float_e_m_t(to_slv(to_float(0.0625, 8, 23)),8,23,8,14);
+     VAR_fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e_shift := signed(std_logic_vector(resize(to_unsigned(4, 3), 6)));
+     VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea_right := to_unsigned(1, 1);
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4_right := to_slv(to_float(0.6, 8, 14));
+     VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_right := to_slv(to_float(1.25, 8, 14));
+     VAR_fixed_make_from_double_tr_pipelinec_gen_c_l304_c196_721e_a := to_slv(to_float(1.2, 8, 14));
+     VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44_right := to_unsigned(0, 1);
+     VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d_right := to_slv(to_float(1.5, 8, 14));
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27_right := resize_float_e_m_t(to_slv(to_float(0.0225, 8, 23)),8,23,8,14);
+     -- fixed_make_from_double[tr_pipelinec_gen_c_l302_c53_5ee4] LATENCY=0
+     -- Inputs
+     fixed_make_from_double_tr_pipelinec_gen_c_l302_c53_5ee4_a <= VAR_fixed_make_from_double_tr_pipelinec_gen_c_l302_c53_5ee4_a;
+     -- Outputs
+     VAR_fixed_make_from_double_tr_pipelinec_gen_c_l302_c53_5ee4_return_output := fixed_make_from_double_tr_pipelinec_gen_c_l302_c53_5ee4_return_output;
+
+     -- fixed_make_from_double[tr_pipelinec_gen_c_l304_c196_721e] LATENCY=0
+     -- Inputs
+     fixed_make_from_double_tr_pipelinec_gen_c_l304_c196_721e_a <= VAR_fixed_make_from_double_tr_pipelinec_gen_c_l304_c196_721e_a;
+     -- Outputs
+     VAR_fixed_make_from_double_tr_pipelinec_gen_c_l304_c196_721e_return_output := fixed_make_from_double_tr_pipelinec_gen_c_l304_c196_721e_return_output;
+
+     -- fixed_make_from_double[tr_pipelinec_gen_c_l304_c129_c57f] LATENCY=0
+     -- Inputs
+     fixed_make_from_double_tr_pipelinec_gen_c_l304_c129_c57f_a <= VAR_fixed_make_from_double_tr_pipelinec_gen_c_l304_c129_c57f_a;
+     -- Outputs
+     VAR_fixed_make_from_double_tr_pipelinec_gen_c_l304_c129_c57f_return_output := fixed_make_from_double_tr_pipelinec_gen_c_l304_c129_c57f_return_output;
+
+     -- Submodule level 1
+     VAR_fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c173_4e80_left := VAR_fixed_make_from_double_tr_pipelinec_gen_c_l304_c196_721e_return_output;
+     VAR_fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c106_b2f8_left := VAR_fixed_make_from_double_tr_pipelinec_gen_c_l304_c129_c57f_return_output;
+     VAR_fixed_add_tr_pipelinec_gen_c_l302_c21_4645_right := VAR_fixed_make_from_double_tr_pipelinec_gen_c_l302_c53_5ee4_return_output;
+     -- fixed3_make_from_fixed[tr_pipelinec_gen_c_l304_c106_b2f8] LATENCY=0
+     -- Inputs
+     fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c106_b2f8_left <= VAR_fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c106_b2f8_left;
+     -- Outputs
+     VAR_fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c106_b2f8_return_output := fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c106_b2f8_return_output;
+
+     -- fixed3_make_from_fixed[tr_pipelinec_gen_c_l304_c173_4e80] LATENCY=0
+     -- Inputs
+     fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c173_4e80_left <= VAR_fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c173_4e80_left;
+     -- Outputs
+     VAR_fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c173_4e80_return_output := fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c173_4e80_return_output;
+
+     -- Submodule level 2
+     VAR_MUX_tr_pipelinec_gen_c_l304_c62_1891_iffalse := VAR_fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c173_4e80_return_output;
+     VAR_MUX_tr_pipelinec_gen_c_l304_c62_1891_iftrue := VAR_fixed3_make_from_fixed_tr_pipelinec_gen_c_l304_c106_b2f8_return_output;
+ -- Reads from global variables
+     VAR_state := global_to_module.state;
+     -- Submodule level 0
+     -- CONST_REF_RD_scene_t_full_state_t_scene_d41d[tr_pipelinec_gen_c_l292_c19_f4c4] LATENCY=0
+     VAR_CONST_REF_RD_scene_t_full_state_t_scene_d41d_tr_pipelinec_gen_c_l292_c19_f4c4_return_output := VAR_state.scene;
+
+     -- Submodule level 1
+     -- CONST_REF_RD_uint16_t_scene_t_frame_d41d[tr_pipelinec_gen_c_l295_c20_c952] LATENCY=0
+     VAR_CONST_REF_RD_uint16_t_scene_t_frame_d41d_tr_pipelinec_gen_c_l295_c20_c952_return_output := VAR_CONST_REF_RD_scene_t_full_state_t_scene_d41d_tr_pipelinec_gen_c_l292_c19_f4c4_return_output.frame;
+
+     -- CONST_REF_RD_sphere_t_scene_t_sphere_d41d[tr_pipelinec_gen_c_l294_c16_f9c5] LATENCY=0
+     VAR_CONST_REF_RD_sphere_t_scene_t_sphere_d41d_tr_pipelinec_gen_c_l294_c16_f9c5_return_output := VAR_CONST_REF_RD_scene_t_full_state_t_scene_d41d_tr_pipelinec_gen_c_l292_c19_f4c4_return_output.sphere;
+
+     -- Submodule level 2
+     VAR_CONST_SR_1_tr_pipelinec_gen_c_l296_c18_f3d6_x := VAR_CONST_REF_RD_uint16_t_scene_t_frame_d41d_tr_pipelinec_gen_c_l295_c20_c952_return_output;
+     -- CONST_REF_RD_fixed_sphere_t_heat_d41d[tr_pipelinec_gen_c_l302_c41_b53b] LATENCY=0
+     VAR_CONST_REF_RD_fixed_sphere_t_heat_d41d_tr_pipelinec_gen_c_l302_c41_b53b_return_output := VAR_CONST_REF_RD_sphere_t_scene_t_sphere_d41d_tr_pipelinec_gen_c_l294_c16_f9c5_return_output.heat;
+
+     -- CONST_REF_RD_fixed_sphere_t_center_y_d41d[tr_pipelinec_gen_c_l299_c57_8e9d] LATENCY=0
+     VAR_CONST_REF_RD_fixed_sphere_t_center_y_d41d_tr_pipelinec_gen_c_l299_c57_8e9d_return_output := VAR_CONST_REF_RD_sphere_t_scene_t_sphere_d41d_tr_pipelinec_gen_c_l294_c16_f9c5_return_output.center.y;
+
+     -- CONST_SR_1[tr_pipelinec_gen_c_l296_c18_f3d6] LATENCY=0
+     -- Inputs
+     CONST_SR_1_tr_pipelinec_gen_c_l296_c18_f3d6_x <= VAR_CONST_SR_1_tr_pipelinec_gen_c_l296_c18_f3d6_x;
+     -- Outputs
+     VAR_CONST_SR_1_tr_pipelinec_gen_c_l296_c18_f3d6_return_output := CONST_SR_1_tr_pipelinec_gen_c_l296_c18_f3d6_return_output;
+
+     -- Submodule level 3
+     VAR_tick_tr_pipelinec_gen_c_l296_c11_fda6_0 := resize(VAR_CONST_SR_1_tr_pipelinec_gen_c_l296_c18_f3d6_return_output, 8);
+     VAR_hash16_tr_pipelinec_gen_c_l298_c38_e100_v := resize(VAR_tick_tr_pipelinec_gen_c_l296_c11_fda6_0, 16);
+     VAR_BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db_left := VAR_tick_tr_pipelinec_gen_c_l296_c11_fda6_0;
+     VAR_fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e_a := VAR_CONST_REF_RD_fixed_sphere_t_heat_d41d_tr_pipelinec_gen_c_l302_c41_b53b_return_output;
+     VAR_fixed_to_float_tr_pipelinec_gen_c_l299_c42_f0b6_a := VAR_CONST_REF_RD_fixed_sphere_t_center_y_d41d_tr_pipelinec_gen_c_l299_c57_8e9d_return_output;
+     -- fixed_shr[tr_pipelinec_gen_c_l302_c31_d17e] LATENCY=0
+     -- Inputs
+     fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e_a <= VAR_fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e_a;
+     fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e_shift <= VAR_fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e_shift;
+     -- Outputs
+     VAR_fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e_return_output := fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e_return_output;
+
+     -- Submodule level 4
+     VAR_fixed_add_tr_pipelinec_gen_c_l302_c21_4645_left := VAR_fixed_shr_tr_pipelinec_gen_c_l302_c31_d17e_return_output;
+
+ -- Loop to construct simultaneous register transfers for each of the pipeline stages
+ -- LATENCY=0 is combinational Logic
+ for STAGE in 0 to PIPELINE_LATENCY loop
+   if STAGE = 0 then
+     -- Mux in inputs
+     VAR_hit := hit;
+     VAR_hit_material := hit_material;
+
+     -- Submodule level 0
+     -- CONST_REF_RD_fixed3_material_t_diffuse_color_d41d[tr_pipelinec_gen_c_l291_c19_89a4] LATENCY=0
+     VAR_CONST_REF_RD_fixed3_material_t_diffuse_color_d41d_tr_pipelinec_gen_c_l291_c19_89a4_return_output := VAR_hit_material.diffuse_color;
+
+     -- CONST_REF_RD_float_8_14_t_hit_out_hit_dir_z_d41d[tr_pipelinec_gen_c_l300_c35_7353] LATENCY=0
+     VAR_CONST_REF_RD_float_8_14_t_hit_out_hit_dir_z_d41d_tr_pipelinec_gen_c_l300_c35_7353_return_output := VAR_hit.hit.dir.z;
+
+     -- CONST_REF_RD_float_8_14_t_hit_out_hit_dir_x_d41d[tr_pipelinec_gen_c_l300_c51_2602] LATENCY=0
+     VAR_CONST_REF_RD_float_8_14_t_hit_out_hit_dir_x_d41d_tr_pipelinec_gen_c_l300_c51_2602_return_output := VAR_hit.hit.dir.x;
+
+     -- hash16[tr_pipelinec_gen_c_l298_c38_e100] LATENCY=2
+     -- Inputs
+     hash16_tr_pipelinec_gen_c_l298_c38_e100_v <= VAR_hash16_tr_pipelinec_gen_c_l298_c38_e100_v;
+
+     -- fixed_add[tr_pipelinec_gen_c_l302_c21_4645] LATENCY=1
+     -- Inputs
+     fixed_add_tr_pipelinec_gen_c_l302_c21_4645_left <= VAR_fixed_add_tr_pipelinec_gen_c_l302_c21_4645_left;
+     fixed_add_tr_pipelinec_gen_c_l302_c21_4645_right <= VAR_fixed_add_tr_pipelinec_gen_c_l302_c21_4645_right;
+
+     -- fixed_to_float[tr_pipelinec_gen_c_l299_c42_f0b6] LATENCY=3
+     -- Inputs
+     fixed_to_float_tr_pipelinec_gen_c_l299_c42_f0b6_a <= VAR_fixed_to_float_tr_pipelinec_gen_c_l299_c42_f0b6_a;
+
+     -- CONST_REF_RD_float_8_14_t_hit_out_hit_dir_y_d41d[tr_pipelinec_gen_c_l299_c24_c0af] LATENCY=0
+     VAR_CONST_REF_RD_float_8_14_t_hit_out_hit_dir_y_d41d_tr_pipelinec_gen_c_l299_c24_c0af_return_output := VAR_hit.hit.dir.y;
+
+     -- BIN_OP_AND[tr_pipelinec_gen_c_l298_c9_e0db] LATENCY=0
+     -- Inputs
+     BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db_left <= VAR_BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db_left;
+     BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db_right <= VAR_BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db_right;
+     -- Outputs
+     VAR_BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db_return_output := BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db_return_output;
+
+     -- Submodule level 1
+     VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea_left := VAR_BIN_OP_AND_tr_pipelinec_gen_c_l298_c9_e0db_return_output;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := VAR_CONST_REF_RD_fixed3_material_t_diffuse_color_d41d_tr_pipelinec_gen_c_l291_c19_89a4_return_output;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := VAR_CONST_REF_RD_fixed3_material_t_diffuse_color_d41d_tr_pipelinec_gen_c_l291_c19_89a4_return_output;
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5_right := VAR_CONST_REF_RD_float_8_14_t_hit_out_hit_dir_x_d41d_tr_pipelinec_gen_c_l300_c51_2602_return_output;
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left := VAR_CONST_REF_RD_float_8_14_t_hit_out_hit_dir_y_d41d_tr_pipelinec_gen_c_l299_c24_c0af_return_output;
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5_left := VAR_CONST_REF_RD_float_8_14_t_hit_out_hit_dir_z_d41d_tr_pipelinec_gen_c_l300_c35_7353_return_output;
+     -- BIN_OP_MINUS[tr_pipelinec_gen_c_l300_c35_c4c5] LATENCY=6
+     -- Inputs
+     BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5_left <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5_left;
+     BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5_right <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5_right;
+
+     -- BIN_OP_NEQ[tr_pipelinec_gen_c_l298_c9_2eea] LATENCY=1
+     -- Inputs
+     BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea_left <= VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea_left;
+     BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea_right <= VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea_right;
+
+     -- Write to comb signals
+     COMB_STAGE0_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE0_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     COMB_STAGE0_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 1 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE0_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left := REG_STAGE0_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE0_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Submodule outputs
+     VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea_return_output := BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea_return_output;
+     VAR_fixed_add_tr_pipelinec_gen_c_l302_c21_4645_return_output := fixed_add_tr_pipelinec_gen_c_l302_c21_4645_return_output;
+
+     -- Submodule level 0
+     VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44_left := VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_2eea_return_output;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := VAR_fixed_add_tr_pipelinec_gen_c_l302_c21_4645_return_output;
+     -- BIN_OP_NEQ[tr_pipelinec_gen_c_l298_c9_7f44] LATENCY=0
+     -- Inputs
+     BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44_left <= VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44_left;
+     BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44_right <= VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44_right;
+     -- Outputs
+     VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44_return_output := BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44_return_output;
+
+     -- Submodule level 1
+     VAR_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left := VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c9_7f44_return_output;
+     -- Write to comb signals
+     COMB_STAGE1_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left <= VAR_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left;
+     COMB_STAGE1_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE1_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     COMB_STAGE1_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE1_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 2 then
+     -- Read from prev stage
+     VAR_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left := REG_STAGE1_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE1_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left := REG_STAGE1_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE1_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE1_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Submodule outputs
+     VAR_hash16_tr_pipelinec_gen_c_l298_c38_e100_return_output := hash16_tr_pipelinec_gen_c_l298_c38_e100_return_output;
+
+     -- Submodule level 0
+     VAR_CONST_SR_13_tr_pipelinec_gen_c_l298_c38_c085_x := VAR_hash16_tr_pipelinec_gen_c_l298_c38_e100_return_output;
+     -- CONST_SR_13[tr_pipelinec_gen_c_l298_c38_c085] LATENCY=0
+     -- Inputs
+     CONST_SR_13_tr_pipelinec_gen_c_l298_c38_c085_x <= VAR_CONST_SR_13_tr_pipelinec_gen_c_l298_c38_c085_x;
+     -- Outputs
+     VAR_CONST_SR_13_tr_pipelinec_gen_c_l298_c38_c085_return_output := CONST_SR_13_tr_pipelinec_gen_c_l298_c38_c085_return_output;
+
+     -- Submodule level 1
+     VAR_BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d_left := VAR_CONST_SR_13_tr_pipelinec_gen_c_l298_c38_c085_return_output;
+     -- BIN_OP_AND[tr_pipelinec_gen_c_l298_c38_b65d] LATENCY=0
+     -- Inputs
+     BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d_left <= VAR_BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d_left;
+     BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d_right <= VAR_BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d_right;
+     -- Outputs
+     VAR_BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d_return_output := BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d_return_output;
+
+     -- Submodule level 2
+     VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4_left := VAR_BIN_OP_AND_tr_pipelinec_gen_c_l298_c38_b65d_return_output;
+     -- BIN_OP_NEQ[tr_pipelinec_gen_c_l298_c38_a8f4] LATENCY=0
+     -- Inputs
+     BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4_left <= VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4_left;
+     BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4_right <= VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4_right;
+     -- Outputs
+     VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4_return_output := BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4_return_output;
+
+     -- Submodule level 3
+     VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1_left := VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a8f4_return_output;
+     -- BIN_OP_NEQ[tr_pipelinec_gen_c_l298_c38_a2d1] LATENCY=1
+     -- Inputs
+     BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1_left <= VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1_left;
+     BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1_right <= VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1_right;
+
+     -- Write to comb signals
+     COMB_STAGE2_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left <= VAR_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left;
+     COMB_STAGE2_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE2_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     COMB_STAGE2_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE2_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 3 then
+     -- Read from prev stage
+     VAR_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left := REG_STAGE2_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE2_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left := REG_STAGE2_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE2_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE2_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Submodule outputs
+     VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1_return_output := BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1_return_output;
+     VAR_fixed_to_float_tr_pipelinec_gen_c_l299_c42_f0b6_return_output := fixed_to_float_tr_pipelinec_gen_c_l299_c42_f0b6_return_output;
+
+     -- Submodule level 0
+     VAR_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_right := VAR_BIN_OP_NEQ_tr_pipelinec_gen_c_l298_c38_a2d1_return_output;
+     VAR_BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03_left := VAR_fixed_to_float_tr_pipelinec_gen_c_l299_c42_f0b6_return_output;
+     -- BIN_OP_OR[tr_pipelinec_gen_c_l298_c9_6e58] LATENCY=0
+     -- Inputs
+     BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left <= VAR_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left;
+     BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_right <= VAR_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_right;
+     -- Outputs
+     VAR_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_return_output := BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_return_output;
+
+     -- BIN_OP_SL[tr_pipelinec_gen_c_l299_c42_1d03] LATENCY=1
+     -- Inputs
+     BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03_left <= VAR_BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03_left;
+     BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03_right <= VAR_BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03_right;
+
+     -- Submodule level 1
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := VAR_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_return_output;
+     -- Write to comb signals
+     COMB_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE3_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     COMB_STAGE3_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 4 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left := REG_STAGE3_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE3_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Submodule outputs
+     VAR_BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03_return_output := BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03_return_output;
+
+     -- Submodule level 0
+     VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d_left := VAR_BIN_OP_SL_tr_pipelinec_gen_c_l299_c42_1d03_return_output;
+     -- BIN_OP_INFERRED_MULT[tr_pipelinec_gen_c_l299_c42_0f0d] LATENCY=3
+     -- Inputs
+     BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d_left <= VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d_left;
+     BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d_right <= VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d_right;
+
+     -- Write to comb signals
+     COMB_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE4_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     COMB_STAGE4_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 5 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left := REG_STAGE4_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE4_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+
+     -- Write to comb signals
+     COMB_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE5_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     COMB_STAGE5_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 6 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left := REG_STAGE5_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE5_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Submodule outputs
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5_return_output := BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5_return_output;
+
+     -- Submodule level 0
+     -- float_abs[tr_pipelinec_gen_c_l300_c25_11ea] LATENCY=0
+     VAR_float_abs_tr_pipelinec_gen_c_l300_c25_11ea_return_output := float_abs(
+     resize_float_e_m_t(VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c35_c4c5_return_output,8,14,8,23));
+
+     -- Submodule level 1
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4_left := resize_float_e_m_t(VAR_float_abs_tr_pipelinec_gen_c_l300_c25_11ea_return_output,8,23,8,14);
+     -- BIN_OP_MINUS[tr_pipelinec_gen_c_l300_c25_22e4] LATENCY=6
+     -- Inputs
+     BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4_left <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4_left;
+     BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4_right <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4_right;
+
+     -- Write to comb signals
+     COMB_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE6_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     COMB_STAGE6_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 7 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left := REG_STAGE6_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE6_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Submodule outputs
+     VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d_return_output := BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d_return_output;
+
+     -- Submodule level 0
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_right := VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l299_c42_0f0d_return_output;
+     -- BIN_OP_MINUS[tr_pipelinec_gen_c_l299_c24_990a] LATENCY=6
+     -- Inputs
+     BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_right <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_right;
+
+     -- Write to comb signals
+     COMB_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE7_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 8 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE7_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+
+     -- Write to comb signals
+     COMB_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE8_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 9 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE8_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+
+     -- Write to comb signals
+     COMB_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE9_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 10 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE9_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+
+     -- Write to comb signals
+     COMB_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE10_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 11 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE10_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+
+     -- Write to comb signals
+     COMB_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE11_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 12 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE11_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Submodule outputs
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4_return_output := BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4_return_output;
+
+     -- Submodule level 0
+     VAR_BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461_left := VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l300_c25_22e4_return_output;
+     -- BIN_OP_SL[tr_pipelinec_gen_c_l300_c25_0461] LATENCY=1
+     -- Inputs
+     BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461_left <= VAR_BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461_left;
+     BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461_right <= VAR_BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461_right;
+
+     -- Write to comb signals
+     COMB_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE12_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 13 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE12_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Submodule outputs
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_return_output := BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_return_output;
+     VAR_BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461_return_output := BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461_return_output;
+
+     -- Submodule level 0
+     VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e_left := VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_return_output;
+     VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e_right := VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_return_output;
+     VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_left := VAR_BIN_OP_SL_tr_pipelinec_gen_c_l300_c25_0461_return_output;
+     -- BIN_OP_INFERRED_MULT[tr_pipelinec_gen_c_l300_c25_d3fe] LATENCY=2
+     -- Inputs
+     BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_left <= VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_left;
+     BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_right <= VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_right;
+
+     -- BIN_OP_INFERRED_MULT[tr_pipelinec_gen_c_l301_c32_b05e] LATENCY=3
+     -- Inputs
+     BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e_left <= VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e_left;
+     BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e_right <= VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e_right;
+
+     -- Write to comb signals
+     COMB_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE13_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 14 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE13_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+
+     -- Write to comb signals
+     COMB_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE14_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 15 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE14_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Submodule outputs
+     VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_return_output := BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_return_output;
+
+     -- Submodule level 0
+     VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a_left := VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_return_output;
+     VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a_right := VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l300_c25_d3fe_return_output;
+     -- BIN_OP_INFERRED_MULT[tr_pipelinec_gen_c_l301_c22_976a] LATENCY=3
+     -- Inputs
+     BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a_left <= VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a_left;
+     BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a_right <= VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a_right;
+
+     -- Write to comb signals
+     COMB_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE15_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 16 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE15_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Submodule outputs
+     VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e_return_output := BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e_return_output;
+
+     -- Submodule level 0
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right := VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c32_b05e_return_output;
+     -- Write to comb signals
+     COMB_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE16_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right;
+     COMB_STAGE16_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 17 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right := REG_STAGE16_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE16_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+
+     -- Write to comb signals
+     COMB_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE17_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right;
+     COMB_STAGE17_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 18 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right := REG_STAGE17_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE17_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Submodule outputs
+     VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a_return_output := BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a_return_output;
+
+     -- Submodule level 0
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_left := VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l301_c22_976a_return_output;
+     -- BIN_OP_PLUS[tr_pipelinec_gen_c_l301_c22_2a92] LATENCY=6
+     -- Inputs
+     BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_left;
+     BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right;
+
+     -- Write to comb signals
+     COMB_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE18_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 19 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE18_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+
+     -- Write to comb signals
+     COMB_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE19_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 20 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE19_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+
+     -- Write to comb signals
+     COMB_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE20_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 21 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE20_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+
+     -- Write to comb signals
+     COMB_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE21_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 22 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE21_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+
+     -- Write to comb signals
+     COMB_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE22_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 23 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE22_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+
+     -- Write to comb signals
+     COMB_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE23_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 24 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE23_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Submodule outputs
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_return_output := BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_return_output;
+
+     -- Submodule level 0
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27_left := VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_return_output;
+     VAR_fixed_make_from_float_tr_pipelinec_gen_c_l304_c17_b0a7_a := VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_return_output;
+     -- fixed_make_from_float[tr_pipelinec_gen_c_l304_c17_b0a7] LATENCY=2
+     -- Inputs
+     fixed_make_from_float_tr_pipelinec_gen_c_l304_c17_b0a7_a <= VAR_fixed_make_from_float_tr_pipelinec_gen_c_l304_c17_b0a7_a;
+
+     -- BIN_OP_LT[tr_pipelinec_gen_c_l304_c62_cd27] LATENCY=1
+     -- Inputs
+     BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27_left;
+     BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27_right <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27_right;
+
+     -- Write to comb signals
+     COMB_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE24_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 25 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE24_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Submodule outputs
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27_return_output := BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27_return_output;
+
+     -- Submodule level 0
+     VAR_MUX_tr_pipelinec_gen_c_l304_c62_1891_cond := VAR_BIN_OP_LT_tr_pipelinec_gen_c_l304_c62_cd27_return_output;
+     -- MUX[tr_pipelinec_gen_c_l304_c62_1891] LATENCY=0
+     -- Inputs
+     MUX_tr_pipelinec_gen_c_l304_c62_1891_cond <= VAR_MUX_tr_pipelinec_gen_c_l304_c62_1891_cond;
+     MUX_tr_pipelinec_gen_c_l304_c62_1891_iftrue <= VAR_MUX_tr_pipelinec_gen_c_l304_c62_1891_iftrue;
+     MUX_tr_pipelinec_gen_c_l304_c62_1891_iffalse <= VAR_MUX_tr_pipelinec_gen_c_l304_c62_1891_iffalse;
+     -- Outputs
+     VAR_MUX_tr_pipelinec_gen_c_l304_c62_1891_return_output := MUX_tr_pipelinec_gen_c_l304_c62_1891_return_output;
+
+     -- Submodule level 1
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue := VAR_MUX_tr_pipelinec_gen_c_l304_c62_1891_return_output;
+     -- Write to comb signals
+     COMB_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE25_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     COMB_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue;
+     COMB_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 26 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right := REG_STAGE25_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue := REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Submodule outputs
+     VAR_fixed_make_from_float_tr_pipelinec_gen_c_l304_c17_b0a7_return_output := fixed_make_from_float_tr_pipelinec_gen_c_l304_c17_b0a7_return_output;
+
+     -- Submodule level 0
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_left := VAR_fixed_make_from_float_tr_pipelinec_gen_c_l304_c17_b0a7_return_output;
+     -- fixed_lt[tr_pipelinec_gen_c_l304_c8_9a93] LATENCY=1
+     -- Inputs
+     fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_left <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_left;
+     fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+
+     -- Write to comb signals
+     COMB_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     COMB_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue;
+     COMB_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+   elsif STAGE = 27 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue := REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse := REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Submodule outputs
+     VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_return_output := fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_return_output;
+
+     -- Submodule level 0
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_cond := VAR_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_return_output;
+     -- rcolor_MUX[tr_pipelinec_gen_c_l304_c5_ac9e] LATENCY=1
+     -- Inputs
+     rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_cond;
+     rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue;
+     rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+
+     -- Write to comb signals
+     COMB_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     COMB_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+   elsif STAGE = 28 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse := REG_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond := REG_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     -- Submodule outputs
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_return_output := rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_return_output;
+
+     -- Submodule level 0
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iftrue := VAR_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_return_output;
+     -- rcolor_MUX[tr_pipelinec_gen_c_l298_c3_06a1] LATENCY=0
+     -- Inputs
+     rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iftrue;
+     rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     -- Outputs
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_return_output := rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_return_output;
+
+     -- Submodule level 1
+     VAR_return_output := VAR_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_return_output;
+     -- Last stage of pipeline return wire to return port/reg
+     return_output <= VAR_return_output;
+   end if;
+ end loop;
+
+end process;
+
+-- Register comb signals
+process(clk) is
+begin
+ if rising_edge(clk) then
+     -- Stage 0
+     REG_STAGE0_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE0_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE0_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left <= COMB_STAGE0_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     REG_STAGE0_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE0_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 1
+     REG_STAGE1_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left <= COMB_STAGE1_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left;
+     REG_STAGE1_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE1_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE1_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left <= COMB_STAGE1_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     REG_STAGE1_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE1_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE1_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE1_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 2
+     REG_STAGE2_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left <= COMB_STAGE2_BIN_OP_OR_tr_pipelinec_gen_c_l298_c9_6e58_left;
+     REG_STAGE2_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE2_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE2_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left <= COMB_STAGE2_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     REG_STAGE2_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE2_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE2_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE2_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 3
+     REG_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE3_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left <= COMB_STAGE3_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     REG_STAGE3_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE3_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE3_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 4
+     REG_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE4_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left <= COMB_STAGE4_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     REG_STAGE4_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE4_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE4_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 5
+     REG_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE5_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left <= COMB_STAGE5_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     REG_STAGE5_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE5_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 6
+     REG_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE6_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left <= COMB_STAGE6_BIN_OP_MINUS_tr_pipelinec_gen_c_l299_c24_990a_left;
+     REG_STAGE6_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE6_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 7
+     REG_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE7_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE7_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 8
+     REG_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE8_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE8_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 9
+     REG_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE9_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE9_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 10
+     REG_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE10_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE10_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 11
+     REG_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE11_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE11_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 12
+     REG_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE12_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE12_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 13
+     REG_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE13_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE13_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 14
+     REG_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE14_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE14_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 15
+     REG_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE15_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE15_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 16
+     REG_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE16_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right <= COMB_STAGE16_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right;
+     REG_STAGE16_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE16_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 17
+     REG_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE17_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right <= COMB_STAGE17_BIN_OP_PLUS_tr_pipelinec_gen_c_l301_c22_2a92_right;
+     REG_STAGE17_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE17_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 18
+     REG_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE18_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE18_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 19
+     REG_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE19_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE19_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 20
+     REG_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE20_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE20_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 21
+     REG_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE21_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE21_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 22
+     REG_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE22_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE22_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 23
+     REG_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE23_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE23_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 24
+     REG_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE24_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE24_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 25
+     REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE25_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right <= COMB_STAGE25_fixed_lt_tr_pipelinec_gen_c_l304_c8_9a93_right;
+     REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue <= COMB_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue;
+     REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 26
+     REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+     REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue <= COMB_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iftrue;
+     REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse <= COMB_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l304_c5_ac9e_iffalse;
+     -- Stage 27
+     REG_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse <= COMB_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_iffalse;
+     REG_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond <= COMB_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l298_c3_06a1_cond;
+ end if;
+end process;
+
+end arch;

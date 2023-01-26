@@ -1,0 +1,3630 @@
+-- Timing params:
+--   Fixed?: False
+--   Pipeline Slices: [0.010535100663865742, 0.025060892630766208, 0.0395866845976669, 0.05411247656456696, 0.06863826853146711, 0.0831640604983674, 0.09768985246526805, 0.11221564443216793, 0.12674143639906826, 0.14126722836596894, 0.1557930203328692, 0.17031881229976867, 0.18484460426666904, 0.1993703962335697, 0.21389618820047035, 0.22842198016737109, 0.2429477721342709, 0.25747356410117167, 0.2719993560680716, 0.28652514803497175, 0.30105094000187205, 0.3155767319687728, 0.33010252393567263, 0.34462831590257376, 0.35915410786947366, 0.37367989983637395, 0.3882056918032734, 0.40273148377017415, 0.4172572757370744, 0.43178306770397556, 0.4463088596708754, 0.46083465163777565, 0.47536044360467633, 0.48988623557157635, 0.504412027538477, 0.5189378195053769, 0.5334636114722768, 0.547989403439177, 0.5625151954060778, 0.5770409873729776, 0.5915667793398787, 0.6060925713067785, 0.6206183632736786, 0.6351441552405794, 0.6496699472074798, 0.6641957391743806, 0.6787215311412808, 0.6932473231081803, 0.707773115075081, 0.7222989070419817, 0.7368246990088813, 0.7513504909757814, 0.7658762829426822, 0.7804020749095826, 0.7949278668764823, 0.8094536588433829, 0.8239794508102842, 0.8385052427771841, 0.8530310347440843, 0.8675568267109846, 0.8820826186778852, 0.8966084106447851, 0.9111342026116854, 0.9256599945785857, 0.9401857865454859, 0.954711578512386, 0.9692373704792862, 0.9837631624461869, 0.9982889544130871]
+--   Input regs?: False
+--   Output regs?: False
+library std;
+use std.textio.all;
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+use ieee.float_pkg.all;
+use work.c_structs_pkg.all;
+use work.global_wires_pkg.all;
+-- Submodules: 14
+entity cast_ray_nested_145CLK_96264b07 is
+port(
+ clk : in std_logic;
+ global_to_module : in cast_ray_nested_global_to_module_t;
+ hitin : in point_and_dir;
+ return_output : out fixed3);
+end cast_ray_nested_145CLK_96264b07;
+architecture arch of cast_ray_nested_145CLK_96264b07 is
+-- Types and such
+-- Declarations
+attribute mark_debug : string;
+constant PIPELINE_LATENCY : integer := 145;
+-- All of the wires/regs in function
+-- Stage 0
+signal REG_STAGE0_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin : point_and_dir;
+signal COMB_STAGE0_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin : point_and_dir;
+-- Stage 1
+signal REG_STAGE1_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin : point_and_dir;
+signal COMB_STAGE1_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin : point_and_dir;
+-- Stage 2
+signal REG_STAGE2_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin : point_and_dir;
+signal COMB_STAGE2_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin : point_and_dir;
+-- Stage 3
+-- Stage 4
+-- Stage 5
+signal REG_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 6
+signal REG_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 7
+signal REG_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 8
+signal REG_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 9
+signal REG_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 10
+signal REG_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 11
+signal REG_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 12
+signal REG_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 13
+signal REG_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 14
+signal REG_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 15
+signal REG_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 16
+signal REG_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 17
+signal REG_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 18
+signal REG_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 19
+signal REG_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 20
+signal REG_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 21
+signal REG_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 22
+signal REG_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 23
+signal REG_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 24
+signal REG_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 25
+signal REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 26
+signal REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 27
+signal REG_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 28
+signal REG_STAGE28_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE28_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 29
+signal REG_STAGE29_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE29_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 30
+signal REG_STAGE30_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE30_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 31
+signal REG_STAGE31_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE31_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 32
+signal REG_STAGE32_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE32_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 33
+signal REG_STAGE33_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE33_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 34
+signal REG_STAGE34_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE34_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 35
+signal REG_STAGE35_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE35_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 36
+signal REG_STAGE36_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE36_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 37
+signal REG_STAGE37_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE37_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 38
+signal REG_STAGE38_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE38_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 39
+signal REG_STAGE39_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE39_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 40
+signal REG_STAGE40_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE40_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 41
+signal REG_STAGE41_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE41_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 42
+signal REG_STAGE42_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE42_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 43
+signal REG_STAGE43_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE43_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 44
+signal REG_STAGE44_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE44_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 45
+signal REG_STAGE45_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE45_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 46
+signal REG_STAGE46_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE46_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 47
+signal REG_STAGE47_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE47_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 48
+signal REG_STAGE48_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE48_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 49
+signal REG_STAGE49_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE49_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 50
+signal REG_STAGE50_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE50_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 51
+signal REG_STAGE51_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE51_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 52
+signal REG_STAGE52_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE52_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 53
+signal REG_STAGE53_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE53_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE53_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE53_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE53_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE53_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 54
+signal REG_STAGE54_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE54_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE54_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE54_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE54_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE54_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 55
+signal REG_STAGE55_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE55_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE55_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE55_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE55_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE55_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 56
+signal REG_STAGE56_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE56_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE56_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE56_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE56_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE56_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 57
+signal REG_STAGE57_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE57_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE57_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE57_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE57_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE57_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 58
+signal REG_STAGE58_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE58_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE58_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE58_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE58_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE58_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 59
+signal REG_STAGE59_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE59_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE59_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE59_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE59_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE59_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 60
+signal REG_STAGE60_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE60_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE60_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE60_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE60_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE60_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 61
+signal REG_STAGE61_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE61_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE61_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE61_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE61_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE61_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 62
+signal REG_STAGE62_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE62_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE62_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE62_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE62_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE62_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 63
+signal REG_STAGE63_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE63_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE63_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE63_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE63_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE63_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 64
+signal REG_STAGE64_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE64_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE64_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE64_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE64_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE64_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 65
+signal REG_STAGE65_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE65_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE65_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE65_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE65_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE65_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE65_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE65_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 66
+signal REG_STAGE66_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE66_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE66_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE66_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE66_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE66_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE66_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE66_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 67
+signal REG_STAGE67_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE67_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE67_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE67_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE67_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE67_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE67_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE67_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 68
+signal REG_STAGE68_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE68_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE68_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE68_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE68_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE68_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE68_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE68_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 69
+signal REG_STAGE69_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE69_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE69_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE69_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE69_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE69_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE69_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE69_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 70
+signal REG_STAGE70_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE70_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE70_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE70_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE70_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE70_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE70_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE70_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 71
+signal REG_STAGE71_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE71_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE71_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE71_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE71_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE71_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE71_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE71_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 72
+signal REG_STAGE72_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE72_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE72_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE72_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE72_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE72_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE72_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE72_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 73
+signal REG_STAGE73_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE73_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE73_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE73_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE73_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE73_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE73_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE73_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 74
+signal REG_STAGE74_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE74_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE74_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE74_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE74_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE74_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE74_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE74_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 75
+signal REG_STAGE75_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE75_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE75_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE75_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE75_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE75_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE75_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE75_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 76
+signal REG_STAGE76_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE76_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE76_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE76_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE76_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE76_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE76_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE76_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 77
+signal REG_STAGE77_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE77_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE77_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE77_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE77_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE77_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE77_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE77_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 78
+signal REG_STAGE78_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE78_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE78_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE78_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE78_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE78_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE78_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE78_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 79
+signal REG_STAGE79_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE79_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE79_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE79_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE79_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE79_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE79_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE79_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 80
+signal REG_STAGE80_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE80_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE80_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE80_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE80_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE80_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE80_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE80_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 81
+signal REG_STAGE81_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE81_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE81_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE81_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE81_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE81_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE81_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE81_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 82
+signal REG_STAGE82_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE82_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE82_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE82_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE82_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE82_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE82_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE82_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 83
+signal REG_STAGE83_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE83_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE83_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE83_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE83_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE83_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE83_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE83_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 84
+signal REG_STAGE84_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE84_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE84_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE84_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE84_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE84_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE84_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE84_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 85
+signal REG_STAGE85_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE85_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE85_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE85_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE85_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE85_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE85_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE85_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 86
+signal REG_STAGE86_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE86_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE86_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE86_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE86_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE86_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE86_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE86_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 87
+signal REG_STAGE87_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE87_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE87_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE87_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE87_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE87_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE87_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE87_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 88
+signal REG_STAGE88_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE88_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE88_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE88_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE88_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE88_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE88_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE88_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 89
+signal REG_STAGE89_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE89_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE89_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE89_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE89_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE89_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE89_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE89_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 90
+signal REG_STAGE90_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE90_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE90_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE90_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE90_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE90_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE90_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE90_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 91
+signal REG_STAGE91_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE91_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE91_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE91_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE91_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE91_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE91_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE91_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 92
+signal REG_STAGE92_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE92_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE92_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE92_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE92_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE92_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE92_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE92_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 93
+signal REG_STAGE93_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE93_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE93_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE93_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE93_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE93_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE93_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE93_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 94
+signal REG_STAGE94_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE94_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE94_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE94_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE94_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE94_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE94_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE94_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 95
+signal REG_STAGE95_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE95_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE95_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE95_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE95_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE95_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE95_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE95_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 96
+signal REG_STAGE96_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE96_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE96_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE96_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE96_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE96_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE96_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE96_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 97
+signal REG_STAGE97_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE97_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE97_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE97_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE97_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE97_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE97_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE97_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 98
+signal REG_STAGE98_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE98_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE98_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE98_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE98_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE98_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE98_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE98_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 99
+signal REG_STAGE99_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE99_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE99_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE99_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE99_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE99_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE99_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE99_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 100
+signal REG_STAGE100_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE100_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE100_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE100_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE100_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE100_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE100_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE100_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 101
+signal REG_STAGE101_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE101_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE101_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE101_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE101_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE101_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE101_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE101_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 102
+signal REG_STAGE102_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE102_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE102_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE102_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE102_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE102_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE102_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE102_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 103
+signal REG_STAGE103_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal REG_STAGE103_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal REG_STAGE103_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal REG_STAGE103_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE103_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE103_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal COMB_STAGE103_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal COMB_STAGE103_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 104
+signal REG_STAGE104_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE104_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+-- Stage 105
+signal REG_STAGE105_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE105_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE105_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE105_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE105_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE105_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 106
+signal REG_STAGE106_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE106_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE106_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE106_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE106_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE106_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 107
+signal REG_STAGE107_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE107_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE107_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE107_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE107_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE107_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 108
+signal REG_STAGE108_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE108_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE108_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE108_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE108_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE108_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 109
+signal REG_STAGE109_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE109_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE109_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE109_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE109_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE109_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 110
+signal REG_STAGE110_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE110_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE110_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE110_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE110_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE110_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 111
+signal REG_STAGE111_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE111_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE111_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE111_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE111_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE111_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 112
+signal REG_STAGE112_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE112_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE112_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE112_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE112_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE112_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 113
+signal REG_STAGE113_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE113_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE113_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE113_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE113_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE113_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 114
+signal REG_STAGE114_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE114_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE114_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE114_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE114_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE114_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 115
+signal REG_STAGE115_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE115_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE115_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE115_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE115_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE115_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 116
+signal REG_STAGE116_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE116_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE116_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE116_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE116_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE116_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 117
+signal REG_STAGE117_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE117_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE117_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE117_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE117_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE117_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 118
+signal REG_STAGE118_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE118_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE118_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE118_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE118_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE118_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 119
+signal REG_STAGE119_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE119_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE119_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE119_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE119_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE119_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 120
+signal REG_STAGE120_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE120_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE120_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE120_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE120_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE120_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 121
+signal REG_STAGE121_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE121_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE121_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE121_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE121_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE121_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 122
+signal REG_STAGE122_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE122_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE122_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE122_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE122_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE122_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 123
+signal REG_STAGE123_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE123_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE123_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE123_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE123_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE123_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 124
+signal REG_STAGE124_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE124_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE124_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE124_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE124_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE124_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 125
+signal REG_STAGE125_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE125_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE125_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE125_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE125_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE125_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 126
+signal REG_STAGE126_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE126_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE126_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE126_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE126_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE126_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 127
+signal REG_STAGE127_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE127_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE127_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE127_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE127_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE127_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 128
+signal REG_STAGE128_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE128_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE128_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE128_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE128_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE128_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 129
+signal REG_STAGE129_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE129_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE129_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE129_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE129_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE129_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 130
+signal REG_STAGE130_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE130_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE130_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE130_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE130_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE130_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 131
+signal REG_STAGE131_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE131_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE131_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE131_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE131_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE131_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 132
+signal REG_STAGE132_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE132_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE132_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE132_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE132_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE132_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 133
+signal REG_STAGE133_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE133_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE133_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE133_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE133_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE133_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 134
+signal REG_STAGE134_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE134_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE134_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE134_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE134_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE134_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 135
+signal REG_STAGE135_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE135_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE135_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE135_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE135_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE135_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 136
+signal REG_STAGE136_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE136_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE136_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE136_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE136_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE136_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 137
+signal REG_STAGE137_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE137_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE137_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE137_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE137_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE137_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 138
+signal REG_STAGE138_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE138_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal REG_STAGE138_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal COMB_STAGE138_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE138_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE138_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+-- Stage 139
+signal REG_STAGE139_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE139_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE139_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE139_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+-- Stage 140
+signal REG_STAGE140_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE140_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE140_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE140_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+-- Stage 141
+signal REG_STAGE141_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE141_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE141_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE141_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+-- Stage 142
+signal REG_STAGE142_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE142_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE142_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE142_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+-- Stage 143
+signal REG_STAGE143_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal REG_STAGE143_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal COMB_STAGE143_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal COMB_STAGE143_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+-- Stage 144
+-- Each function instance gets signals
+-- scene_colors[tr_pipelinec_gen_c_l349_c27_838c]
+signal scene_colors_tr_pipelinec_gen_c_l349_c27_838c_scene : scene_t;
+signal scene_colors_tr_pipelinec_gen_c_l349_c27_838c_return_output : scene_colors_t;
+
+-- object_coord_to_float3[tr_pipelinec_gen_c_l352_c41_3143]
+signal object_coord_to_float3_tr_pipelinec_gen_c_l352_c41_3143_a : fixed3;
+signal object_coord_to_float3_tr_pipelinec_gen_c_l352_c41_3143_return_output : float3;
+
+-- ray_sphere_intersect[tr_pipelinec_gen_c_l352_c20_a905]
+signal ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_center : float3;
+signal ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin : point_and_dir;
+signal ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_return_output : hit_out;
+
+-- ray_plane_intersect[tr_pipelinec_gen_c_l353_c22_8447]
+signal ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_plane : plane_t;
+signal ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_hitin : point_and_dir;
+signal ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_return_output : hit_out;
+
+-- BIN_OP_LT[tr_pipelinec_gen_c_l355_c6_be52]
+signal BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+signal BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_right : std_logic_vector(22 downto 0);
+signal BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_return_output : unsigned(0 downto 0);
+
+-- hitout_MUX[tr_pipelinec_gen_c_l355_c3_5823]
+signal hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_cond : unsigned(0 downto 0);
+signal hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+signal hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iffalse : hit_out;
+signal hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_return_output : hit_out;
+
+-- hit_material_MUX[tr_pipelinec_gen_c_l355_c3_5823]
+signal hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_cond : unsigned(0 downto 0);
+signal hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+signal hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iffalse : material_t;
+signal hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_return_output : material_t;
+
+-- plane_effect[tr_pipelinec_gen_c_l358_c34_cb9c]
+signal plane_effect_tr_pipelinec_gen_c_l358_c34_cb9c_hit : hit_out;
+signal plane_effect_tr_pipelinec_gen_c_l358_c34_cb9c_return_output : fixed3;
+
+-- BIN_OP_GTE[tr_pipelinec_gen_c_l362_c6_6210]
+signal BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210_left : std_logic_vector(22 downto 0);
+signal BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210_right : std_logic_vector(22 downto 0);
+signal BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210_return_output : unsigned(0 downto 0);
+
+-- rcolor_MUX[tr_pipelinec_gen_c_l362_c3_2d8b]
+signal rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+signal rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+signal rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iffalse : fixed3;
+signal rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_return_output : fixed3;
+
+-- background_color[tr_pipelinec_gen_c_l362_c59_dfda]
+signal background_color_tr_pipelinec_gen_c_l362_c59_dfda_dir_y : std_logic_vector(22 downto 0);
+signal background_color_tr_pipelinec_gen_c_l362_c59_dfda_return_output : fixed3;
+
+-- light_intensity[tr_pipelinec_gen_c_l363_c62_4c94]
+signal light_intensity_tr_pipelinec_gen_c_l363_c62_4c94_hit : float3;
+signal light_intensity_tr_pipelinec_gen_c_l363_c62_4c94_return_output : fixed;
+
+-- fixed3_mul_fixed[tr_pipelinec_gen_c_l363_c17_7f51]
+signal fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+signal fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_right : fixed;
+signal fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_return_output : fixed3;
+
+function CONST_REF_RD_material_t_material_t_4eb0( ref_toks_0 : material_t;
+ ref_toks_1 : fixed3) return material_t is
+ 
+  variable base : material_t; 
+  variable return_output : material_t;
+begin
+      base := ref_toks_0;
+      base.diffuse_color := ref_toks_1;
+
+      return_output := base;
+      return return_output; 
+end function;
+
+
+begin
+
+-- SUBMODULE INSTANCES 
+-- scene_colors_tr_pipelinec_gen_c_l349_c27_838c
+scene_colors_tr_pipelinec_gen_c_l349_c27_838c : entity work.scene_colors_0CLK_5af1a430 port map (
+scene_colors_tr_pipelinec_gen_c_l349_c27_838c_scene,
+scene_colors_tr_pipelinec_gen_c_l349_c27_838c_return_output);
+
+-- object_coord_to_float3_tr_pipelinec_gen_c_l352_c41_3143
+object_coord_to_float3_tr_pipelinec_gen_c_l352_c41_3143 : entity work.object_coord_to_float3_3CLK_9d26212c port map (
+clk,
+object_coord_to_float3_tr_pipelinec_gen_c_l352_c41_3143_a,
+object_coord_to_float3_tr_pipelinec_gen_c_l352_c41_3143_return_output);
+
+-- ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905
+ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905 : entity work.ray_sphere_intersect_101CLK_0beb6017 port map (
+clk,
+ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_center,
+ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin,
+ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_return_output);
+
+-- ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447
+ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447 : entity work.ray_plane_intersect_53CLK_da3e346a port map (
+clk,
+ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_plane,
+ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_hitin,
+ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_return_output);
+
+-- BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52
+BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52 : entity work.BIN_OP_LT_float_8_14_t_float_8_14_t_0CLK_36723c85 port map (
+BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_right,
+BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_return_output);
+
+-- hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823
+hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823 : entity work.MUX_uint1_t_hit_out_hit_out_1CLK_3d2f1477 port map (
+clk,
+hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_cond,
+hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iffalse,
+hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_return_output);
+
+-- hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823
+hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823 : entity work.MUX_uint1_t_material_t_material_t_1CLK_3d2f1477 port map (
+clk,
+hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_cond,
+hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iffalse,
+hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_return_output);
+
+-- plane_effect_tr_pipelinec_gen_c_l358_c34_cb9c
+plane_effect_tr_pipelinec_gen_c_l358_c34_cb9c : entity work.plane_effect_12CLK_917a7b84 port map (
+clk,
+global_to_module.plane_effect_tr_pipelinec_gen_c_l358_c34_cb9c,
+plane_effect_tr_pipelinec_gen_c_l358_c34_cb9c_hit,
+plane_effect_tr_pipelinec_gen_c_l358_c34_cb9c_return_output);
+
+-- BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210
+BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210 : entity work.BIN_OP_GTE_float_8_14_t_float_8_14_t_0CLK_36723c85 port map (
+BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210_left,
+BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210_right,
+BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210_return_output);
+
+-- rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b
+rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b : entity work.MUX_uint1_t_fixed3_fixed3_1CLK_6065287d port map (
+clk,
+rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iffalse,
+rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_return_output);
+
+-- background_color_tr_pipelinec_gen_c_l362_c59_dfda
+background_color_tr_pipelinec_gen_c_l362_c59_dfda : entity work.background_color_5CLK_890b8db0 port map (
+clk,
+background_color_tr_pipelinec_gen_c_l362_c59_dfda_dir_y,
+background_color_tr_pipelinec_gen_c_l362_c59_dfda_return_output);
+
+-- light_intensity_tr_pipelinec_gen_c_l363_c62_4c94
+light_intensity_tr_pipelinec_gen_c_l363_c62_4c94 : entity work.light_intensity_34CLK_f814a112 port map (
+clk,
+light_intensity_tr_pipelinec_gen_c_l363_c62_4c94_hit,
+light_intensity_tr_pipelinec_gen_c_l363_c62_4c94_return_output);
+
+-- fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51
+fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51 : entity work.fixed3_mul_fixed_5CLK_c4855664 port map (
+clk,
+fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_right,
+fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_return_output);
+
+
+
+-- Combinatorial process for pipeline stages
+process (
+ -- Inputs
+ hitin,
+ -- Registers
+ -- Stage 0
+ REG_STAGE0_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin,
+ -- Stage 1
+ REG_STAGE1_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin,
+ -- Stage 2
+ REG_STAGE2_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin,
+ -- Stage 3
+ -- Stage 4
+ -- Stage 5
+ REG_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 6
+ REG_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 7
+ REG_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 8
+ REG_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 9
+ REG_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 10
+ REG_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 11
+ REG_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 12
+ REG_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 13
+ REG_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 14
+ REG_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 15
+ REG_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 16
+ REG_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 17
+ REG_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 18
+ REG_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 19
+ REG_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 20
+ REG_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 21
+ REG_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 22
+ REG_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 23
+ REG_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 24
+ REG_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 25
+ REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 26
+ REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 27
+ REG_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 28
+ REG_STAGE28_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 29
+ REG_STAGE29_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 30
+ REG_STAGE30_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 31
+ REG_STAGE31_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 32
+ REG_STAGE32_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 33
+ REG_STAGE33_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 34
+ REG_STAGE34_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 35
+ REG_STAGE35_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 36
+ REG_STAGE36_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 37
+ REG_STAGE37_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 38
+ REG_STAGE38_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 39
+ REG_STAGE39_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 40
+ REG_STAGE40_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 41
+ REG_STAGE41_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 42
+ REG_STAGE42_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 43
+ REG_STAGE43_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 44
+ REG_STAGE44_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 45
+ REG_STAGE45_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 46
+ REG_STAGE46_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 47
+ REG_STAGE47_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 48
+ REG_STAGE48_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 49
+ REG_STAGE49_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 50
+ REG_STAGE50_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 51
+ REG_STAGE51_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 52
+ REG_STAGE52_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 53
+ REG_STAGE53_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE53_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE53_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 54
+ REG_STAGE54_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE54_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE54_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 55
+ REG_STAGE55_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE55_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE55_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 56
+ REG_STAGE56_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE56_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE56_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 57
+ REG_STAGE57_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE57_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE57_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 58
+ REG_STAGE58_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE58_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE58_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 59
+ REG_STAGE59_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE59_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE59_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 60
+ REG_STAGE60_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE60_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE60_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 61
+ REG_STAGE61_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE61_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE61_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 62
+ REG_STAGE62_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE62_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE62_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 63
+ REG_STAGE63_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE63_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE63_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 64
+ REG_STAGE64_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE64_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE64_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 65
+ REG_STAGE65_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE65_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE65_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE65_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 66
+ REG_STAGE66_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE66_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE66_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE66_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 67
+ REG_STAGE67_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE67_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE67_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE67_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 68
+ REG_STAGE68_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE68_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE68_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE68_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 69
+ REG_STAGE69_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE69_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE69_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE69_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 70
+ REG_STAGE70_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE70_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE70_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE70_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 71
+ REG_STAGE71_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE71_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE71_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE71_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 72
+ REG_STAGE72_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE72_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE72_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE72_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 73
+ REG_STAGE73_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE73_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE73_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE73_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 74
+ REG_STAGE74_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE74_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE74_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE74_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 75
+ REG_STAGE75_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE75_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE75_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE75_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 76
+ REG_STAGE76_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE76_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE76_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE76_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 77
+ REG_STAGE77_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE77_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE77_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE77_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 78
+ REG_STAGE78_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE78_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE78_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE78_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 79
+ REG_STAGE79_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE79_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE79_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE79_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 80
+ REG_STAGE80_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE80_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE80_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE80_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 81
+ REG_STAGE81_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE81_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE81_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE81_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 82
+ REG_STAGE82_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE82_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE82_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE82_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 83
+ REG_STAGE83_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE83_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE83_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE83_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 84
+ REG_STAGE84_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE84_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE84_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE84_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 85
+ REG_STAGE85_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE85_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE85_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE85_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 86
+ REG_STAGE86_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE86_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE86_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE86_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 87
+ REG_STAGE87_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE87_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE87_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE87_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 88
+ REG_STAGE88_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE88_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE88_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE88_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 89
+ REG_STAGE89_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE89_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE89_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE89_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 90
+ REG_STAGE90_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE90_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE90_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE90_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 91
+ REG_STAGE91_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE91_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE91_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE91_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 92
+ REG_STAGE92_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE92_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE92_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE92_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 93
+ REG_STAGE93_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE93_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE93_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE93_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 94
+ REG_STAGE94_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE94_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE94_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE94_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 95
+ REG_STAGE95_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE95_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE95_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE95_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 96
+ REG_STAGE96_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE96_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE96_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE96_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 97
+ REG_STAGE97_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE97_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE97_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE97_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 98
+ REG_STAGE98_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE98_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE98_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE98_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 99
+ REG_STAGE99_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE99_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE99_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE99_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 100
+ REG_STAGE100_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE100_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE100_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE100_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 101
+ REG_STAGE101_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE101_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE101_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE101_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 102
+ REG_STAGE102_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE102_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE102_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE102_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 103
+ REG_STAGE103_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left,
+ REG_STAGE103_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE103_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue,
+ REG_STAGE103_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 104
+ REG_STAGE104_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ -- Stage 105
+ REG_STAGE105_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE105_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE105_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 106
+ REG_STAGE106_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE106_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE106_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 107
+ REG_STAGE107_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE107_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE107_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 108
+ REG_STAGE108_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE108_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE108_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 109
+ REG_STAGE109_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE109_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE109_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 110
+ REG_STAGE110_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE110_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE110_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 111
+ REG_STAGE111_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE111_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE111_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 112
+ REG_STAGE112_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE112_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE112_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 113
+ REG_STAGE113_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE113_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE113_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 114
+ REG_STAGE114_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE114_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE114_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 115
+ REG_STAGE115_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE115_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE115_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 116
+ REG_STAGE116_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE116_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE116_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 117
+ REG_STAGE117_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE117_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE117_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 118
+ REG_STAGE118_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE118_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE118_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 119
+ REG_STAGE119_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE119_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE119_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 120
+ REG_STAGE120_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE120_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE120_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 121
+ REG_STAGE121_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE121_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE121_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 122
+ REG_STAGE122_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE122_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE122_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 123
+ REG_STAGE123_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE123_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE123_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 124
+ REG_STAGE124_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE124_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE124_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 125
+ REG_STAGE125_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE125_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE125_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 126
+ REG_STAGE126_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE126_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE126_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 127
+ REG_STAGE127_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE127_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE127_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 128
+ REG_STAGE128_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE128_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE128_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 129
+ REG_STAGE129_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE129_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE129_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 130
+ REG_STAGE130_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE130_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE130_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 131
+ REG_STAGE131_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE131_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE131_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 132
+ REG_STAGE132_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE132_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE132_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 133
+ REG_STAGE133_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE133_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE133_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 134
+ REG_STAGE134_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE134_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE134_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 135
+ REG_STAGE135_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE135_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE135_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 136
+ REG_STAGE136_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE136_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE136_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 137
+ REG_STAGE137_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE137_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE137_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 138
+ REG_STAGE138_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE138_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ REG_STAGE138_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left,
+ -- Stage 139
+ REG_STAGE139_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE139_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ -- Stage 140
+ REG_STAGE140_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE140_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ -- Stage 141
+ REG_STAGE141_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE141_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ -- Stage 142
+ REG_STAGE142_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE142_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ -- Stage 143
+ REG_STAGE143_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue,
+ REG_STAGE143_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond,
+ -- Stage 144
+ -- Clock cross input
+ global_to_module,
+ -- All submodule outputs
+ scene_colors_tr_pipelinec_gen_c_l349_c27_838c_return_output,
+ object_coord_to_float3_tr_pipelinec_gen_c_l352_c41_3143_return_output,
+ ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_return_output,
+ ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_return_output,
+ BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_return_output,
+ hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_return_output,
+ hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_return_output,
+ plane_effect_tr_pipelinec_gen_c_l358_c34_cb9c_return_output,
+ BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210_return_output,
+ rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_return_output,
+ background_color_tr_pipelinec_gen_c_l362_c59_dfda_return_output,
+ light_intensity_tr_pipelinec_gen_c_l363_c62_4c94_return_output,
+ fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_return_output)
+is 
+ -- All of the wires in function
+ variable VAR_CLOCK_ENABLE : unsigned(0 downto 0);
+ variable VAR_return_output : fixed3;
+ variable VAR_hitin : point_and_dir;
+ variable VAR_state : full_state_t;
+ variable VAR_scene : scene_t;
+ variable VAR_CONST_REF_RD_scene_t_full_state_t_scene_d41d_tr_pipelinec_gen_c_l348_c19_fc6c_return_output : scene_t;
+ variable VAR_colors : scene_colors_t;
+ variable VAR_scene_colors_tr_pipelinec_gen_c_l349_c27_838c_scene : scene_t;
+ variable VAR_scene_colors_tr_pipelinec_gen_c_l349_c27_838c_return_output : scene_colors_t;
+ variable VAR_hit_material : material_t;
+ variable VAR_CONST_REF_RD_material_t_scene_colors_t_sphere_d41d_tr_pipelinec_gen_c_l351_c18_a8b2_return_output : material_t;
+ variable VAR_hitout : hit_out;
+ variable VAR_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_center : float3;
+ variable VAR_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin : point_and_dir;
+ variable VAR_object_coord_to_float3_tr_pipelinec_gen_c_l352_c41_3143_a : fixed3;
+ variable VAR_CONST_REF_RD_fixed3_scene_t_sphere_center_d41d_tr_pipelinec_gen_c_l352_c64_9dca_return_output : fixed3;
+ variable VAR_object_coord_to_float3_tr_pipelinec_gen_c_l352_c41_3143_return_output : float3;
+ variable VAR_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_return_output : hit_out;
+ variable VAR_hitplane : hit_out;
+ variable VAR_ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_plane : plane_t;
+ variable VAR_ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_hitin : point_and_dir;
+ variable VAR_CONST_REF_RD_plane_t_scene_t_plane_d41d_tr_pipelinec_gen_c_l353_c42_29d9_return_output : plane_t;
+ variable VAR_ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_return_output : hit_out;
+ variable VAR_CONST_REF_RD_float_8_14_t_hit_out_dist_d41d_tr_pipelinec_gen_c_l355_c6_f097_return_output : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left : std_logic_vector(22 downto 0);
+ variable VAR_CONST_REF_RD_float_8_14_t_hit_out_dist_d41d_tr_pipelinec_gen_c_l355_c22_f82c_return_output : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_right : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_return_output : unsigned(0 downto 0);
+ variable VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : hit_out;
+ variable VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iffalse : hit_out;
+ variable VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_return_output : hit_out;
+ variable VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_cond : unsigned(0 downto 0);
+ variable VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue : material_t;
+ variable VAR_hit_material_TRUE_INPUT_MUX_CONST_REF_RD_material_t_material_t_4eb0_tr_pipelinec_gen_c_l355_c3_5823_return_output : material_t;
+ variable VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iffalse : material_t;
+ variable VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_return_output : material_t;
+ variable VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_cond : unsigned(0 downto 0);
+ variable VAR_CONST_REF_RD_material_t_scene_colors_t_plane_d41d_tr_pipelinec_gen_c_l357_c20_b77f_return_output : material_t;
+ variable VAR_plane_effect_tr_pipelinec_gen_c_l358_c34_cb9c_hit : hit_out;
+ variable VAR_plane_effect_tr_pipelinec_gen_c_l358_c34_cb9c_return_output : fixed3;
+ variable VAR_rcolor : fixed3;
+ variable VAR_CONST_REF_RD_float_8_14_t_hit_out_dist_d41d_tr_pipelinec_gen_c_l362_c6_c85b_return_output : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210_left : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210_right : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210_return_output : unsigned(0 downto 0);
+ variable VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue : fixed3;
+ variable VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iffalse : fixed3;
+ variable VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_return_output : fixed3;
+ variable VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond : unsigned(0 downto 0);
+ variable VAR_background_color_tr_pipelinec_gen_c_l362_c59_dfda_dir_y : std_logic_vector(22 downto 0);
+ variable VAR_CONST_REF_RD_float_8_14_t_point_and_dir_dir_y_d41d_tr_pipelinec_gen_c_l362_c76_5e51_return_output : std_logic_vector(22 downto 0);
+ variable VAR_background_color_tr_pipelinec_gen_c_l362_c59_dfda_return_output : fixed3;
+ variable VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left : fixed3;
+ variable VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_right : fixed;
+ variable VAR_CONST_REF_RD_fixed3_material_t_diffuse_color_d41d_tr_pipelinec_gen_c_l363_c34_231e_return_output : fixed3;
+ variable VAR_light_intensity_tr_pipelinec_gen_c_l363_c62_4c94_hit : float3;
+ variable VAR_CONST_REF_RD_float3_hit_out_hit_orig_d41d_tr_pipelinec_gen_c_l363_c78_9e28_return_output : float3;
+ variable VAR_light_intensity_tr_pipelinec_gen_c_l363_c62_4c94_return_output : fixed;
+ variable VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_return_output : fixed3;
+begin
+ -- Constants and things derived from constants alone
+     -- Submodule level 0
+     VAR_BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210_right := resize_float_e_m_t(to_slv(to_float(512.0, 8, 23)),8,23,8,14);
+ -- Reads from global variables
+     VAR_state := global_to_module.state;
+     -- Submodule level 0
+     -- CONST_REF_RD_scene_t_full_state_t_scene_d41d[tr_pipelinec_gen_c_l348_c19_fc6c] LATENCY=0
+     VAR_CONST_REF_RD_scene_t_full_state_t_scene_d41d_tr_pipelinec_gen_c_l348_c19_fc6c_return_output := VAR_state.scene;
+
+     -- Submodule level 1
+     VAR_scene_colors_tr_pipelinec_gen_c_l349_c27_838c_scene := VAR_CONST_REF_RD_scene_t_full_state_t_scene_d41d_tr_pipelinec_gen_c_l348_c19_fc6c_return_output;
+     -- CONST_REF_RD_plane_t_scene_t_plane_d41d[tr_pipelinec_gen_c_l353_c42_29d9] LATENCY=0
+     VAR_CONST_REF_RD_plane_t_scene_t_plane_d41d_tr_pipelinec_gen_c_l353_c42_29d9_return_output := VAR_CONST_REF_RD_scene_t_full_state_t_scene_d41d_tr_pipelinec_gen_c_l348_c19_fc6c_return_output.plane;
+
+     -- scene_colors[tr_pipelinec_gen_c_l349_c27_838c] LATENCY=0
+     -- Inputs
+     scene_colors_tr_pipelinec_gen_c_l349_c27_838c_scene <= VAR_scene_colors_tr_pipelinec_gen_c_l349_c27_838c_scene;
+     -- Outputs
+     VAR_scene_colors_tr_pipelinec_gen_c_l349_c27_838c_return_output := scene_colors_tr_pipelinec_gen_c_l349_c27_838c_return_output;
+
+     -- CONST_REF_RD_fixed3_scene_t_sphere_center_d41d[tr_pipelinec_gen_c_l352_c64_9dca] LATENCY=0
+     VAR_CONST_REF_RD_fixed3_scene_t_sphere_center_d41d_tr_pipelinec_gen_c_l352_c64_9dca_return_output := VAR_CONST_REF_RD_scene_t_full_state_t_scene_d41d_tr_pipelinec_gen_c_l348_c19_fc6c_return_output.sphere.center;
+
+     -- Submodule level 2
+     VAR_object_coord_to_float3_tr_pipelinec_gen_c_l352_c41_3143_a := VAR_CONST_REF_RD_fixed3_scene_t_sphere_center_d41d_tr_pipelinec_gen_c_l352_c64_9dca_return_output;
+     VAR_ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_plane := VAR_CONST_REF_RD_plane_t_scene_t_plane_d41d_tr_pipelinec_gen_c_l353_c42_29d9_return_output;
+     -- CONST_REF_RD_material_t_scene_colors_t_plane_d41d[tr_pipelinec_gen_c_l357_c20_b77f] LATENCY=0
+     VAR_CONST_REF_RD_material_t_scene_colors_t_plane_d41d_tr_pipelinec_gen_c_l357_c20_b77f_return_output := VAR_scene_colors_tr_pipelinec_gen_c_l349_c27_838c_return_output.plane;
+
+     -- CONST_REF_RD_material_t_scene_colors_t_sphere_d41d[tr_pipelinec_gen_c_l351_c18_a8b2] LATENCY=0
+     VAR_CONST_REF_RD_material_t_scene_colors_t_sphere_d41d_tr_pipelinec_gen_c_l351_c18_a8b2_return_output := VAR_scene_colors_tr_pipelinec_gen_c_l349_c27_838c_return_output.sphere;
+
+     -- Submodule level 3
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iffalse := VAR_CONST_REF_RD_material_t_scene_colors_t_sphere_d41d_tr_pipelinec_gen_c_l351_c18_a8b2_return_output;
+
+ -- Loop to construct simultaneous register transfers for each of the pipeline stages
+ -- LATENCY=0 is combinational Logic
+ for STAGE in 0 to PIPELINE_LATENCY loop
+   if STAGE = 0 then
+     -- Mux in inputs
+     VAR_hitin := hitin;
+
+     -- Submodule level 0
+     VAR_ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_hitin := VAR_hitin;
+     VAR_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin := VAR_hitin;
+     -- object_coord_to_float3[tr_pipelinec_gen_c_l352_c41_3143] LATENCY=3
+     -- Inputs
+     object_coord_to_float3_tr_pipelinec_gen_c_l352_c41_3143_a <= VAR_object_coord_to_float3_tr_pipelinec_gen_c_l352_c41_3143_a;
+
+     -- CONST_REF_RD_float_8_14_t_point_and_dir_dir_y_d41d[tr_pipelinec_gen_c_l362_c76_5e51] LATENCY=0
+     VAR_CONST_REF_RD_float_8_14_t_point_and_dir_dir_y_d41d_tr_pipelinec_gen_c_l362_c76_5e51_return_output := VAR_hitin.dir.y;
+
+     -- ray_plane_intersect[tr_pipelinec_gen_c_l353_c22_8447] LATENCY=53
+     -- Inputs
+     ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_plane <= VAR_ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_plane;
+     ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_hitin <= VAR_ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_hitin;
+
+     -- Submodule level 1
+     VAR_background_color_tr_pipelinec_gen_c_l362_c59_dfda_dir_y := VAR_CONST_REF_RD_float_8_14_t_point_and_dir_dir_y_d41d_tr_pipelinec_gen_c_l362_c76_5e51_return_output;
+     -- background_color[tr_pipelinec_gen_c_l362_c59_dfda] LATENCY=5
+     -- Inputs
+     background_color_tr_pipelinec_gen_c_l362_c59_dfda_dir_y <= VAR_background_color_tr_pipelinec_gen_c_l362_c59_dfda_dir_y;
+
+     -- Write to comb signals
+     COMB_STAGE0_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin <= VAR_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin;
+   elsif STAGE = 1 then
+     -- Read from prev stage
+     VAR_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin := REG_STAGE0_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE1_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin <= VAR_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin;
+   elsif STAGE = 2 then
+     -- Read from prev stage
+     VAR_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin := REG_STAGE1_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE2_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin <= VAR_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin;
+   elsif STAGE = 3 then
+     -- Read from prev stage
+     VAR_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin := REG_STAGE2_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin;
+     -- Submodule outputs
+     VAR_object_coord_to_float3_tr_pipelinec_gen_c_l352_c41_3143_return_output := object_coord_to_float3_tr_pipelinec_gen_c_l352_c41_3143_return_output;
+
+     -- Submodule level 0
+     VAR_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_center := VAR_object_coord_to_float3_tr_pipelinec_gen_c_l352_c41_3143_return_output;
+     -- ray_sphere_intersect[tr_pipelinec_gen_c_l352_c20_a905] LATENCY=101
+     -- Inputs
+     ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_center <= VAR_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_center;
+     ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin <= VAR_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin;
+
+     -- Write to comb signals
+   elsif STAGE = 4 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 5 then
+     -- Read from prev stage
+     -- Submodule outputs
+     VAR_background_color_tr_pipelinec_gen_c_l362_c59_dfda_return_output := background_color_tr_pipelinec_gen_c_l362_c59_dfda_return_output;
+
+     -- Submodule level 0
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := VAR_background_color_tr_pipelinec_gen_c_l362_c59_dfda_return_output;
+     -- Write to comb signals
+     COMB_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 6 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 7 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 8 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 9 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 10 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 11 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 12 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 13 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 14 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 15 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 16 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 17 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 18 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 19 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 20 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 21 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 22 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 23 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 24 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 25 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 26 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 27 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 28 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE28_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 29 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE28_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE29_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 30 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE29_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE30_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 31 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE30_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE31_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 32 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE31_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE32_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 33 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE32_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE33_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 34 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE33_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE34_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 35 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE34_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE35_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 36 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE35_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE36_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 37 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE36_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE37_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 38 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE37_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE38_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 39 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE38_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE39_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 40 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE39_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE40_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 41 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE40_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE41_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 42 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE41_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE42_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 43 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE42_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE43_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 44 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE43_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE44_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 45 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE44_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE45_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 46 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE45_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE46_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 47 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE46_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE47_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 48 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE47_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE48_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 49 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE48_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE49_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 50 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE49_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE50_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 51 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE50_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE51_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 52 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE51_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE52_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 53 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE52_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Submodule outputs
+     VAR_ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_return_output := ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_return_output;
+
+     -- Submodule level 0
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := VAR_ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_return_output;
+     VAR_plane_effect_tr_pipelinec_gen_c_l358_c34_cb9c_hit := VAR_ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_return_output;
+     -- plane_effect[tr_pipelinec_gen_c_l358_c34_cb9c] LATENCY=12
+     -- Inputs
+     plane_effect_tr_pipelinec_gen_c_l358_c34_cb9c_hit <= VAR_plane_effect_tr_pipelinec_gen_c_l358_c34_cb9c_hit;
+
+     -- CONST_REF_RD_float_8_14_t_hit_out_dist_d41d[tr_pipelinec_gen_c_l355_c6_f097] LATENCY=0
+     VAR_CONST_REF_RD_float_8_14_t_hit_out_dist_d41d_tr_pipelinec_gen_c_l355_c6_f097_return_output := VAR_ray_plane_intersect_tr_pipelinec_gen_c_l353_c22_8447_return_output.dist;
+
+     -- Submodule level 1
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := VAR_CONST_REF_RD_float_8_14_t_hit_out_dist_d41d_tr_pipelinec_gen_c_l355_c6_f097_return_output;
+     -- Write to comb signals
+     COMB_STAGE53_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE53_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE53_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 54 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE53_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE53_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE53_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE54_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE54_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE54_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 55 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE54_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE54_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE54_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE55_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE55_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE55_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 56 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE55_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE55_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE55_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE56_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE56_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE56_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 57 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE56_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE56_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE56_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE57_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE57_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE57_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 58 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE57_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE57_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE57_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE58_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE58_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE58_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 59 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE58_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE58_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE58_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE59_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE59_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE59_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 60 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE59_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE59_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE59_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE60_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE60_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE60_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 61 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE60_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE60_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE60_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE61_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE61_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE61_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 62 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE61_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE61_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE61_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE62_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE62_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE62_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 63 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE62_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE62_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE62_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE63_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE63_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE63_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 64 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE63_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE63_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE63_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE64_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE64_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE64_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 65 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE64_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE64_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE64_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Submodule outputs
+     VAR_plane_effect_tr_pipelinec_gen_c_l358_c34_cb9c_return_output := plane_effect_tr_pipelinec_gen_c_l358_c34_cb9c_return_output;
+
+     -- Submodule level 0
+     -- hit_material_TRUE_INPUT_MUX_CONST_REF_RD_material_t_material_t_4eb0[tr_pipelinec_gen_c_l355_c3_5823] LATENCY=0
+     VAR_hit_material_TRUE_INPUT_MUX_CONST_REF_RD_material_t_material_t_4eb0_tr_pipelinec_gen_c_l355_c3_5823_return_output := CONST_REF_RD_material_t_material_t_4eb0(
+     VAR_CONST_REF_RD_material_t_scene_colors_t_plane_d41d_tr_pipelinec_gen_c_l357_c20_b77f_return_output,
+     VAR_plane_effect_tr_pipelinec_gen_c_l358_c34_cb9c_return_output);
+
+     -- Submodule level 1
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := VAR_hit_material_TRUE_INPUT_MUX_CONST_REF_RD_material_t_material_t_4eb0_tr_pipelinec_gen_c_l355_c3_5823_return_output;
+     -- Write to comb signals
+     COMB_STAGE65_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE65_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE65_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE65_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 66 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE65_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE65_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE65_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE65_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE66_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE66_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE66_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE66_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 67 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE66_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE66_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE66_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE66_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE67_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE67_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE67_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE67_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 68 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE67_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE67_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE67_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE67_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE68_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE68_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE68_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE68_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 69 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE68_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE68_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE68_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE68_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE69_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE69_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE69_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE69_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 70 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE69_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE69_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE69_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE69_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE70_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE70_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE70_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE70_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 71 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE70_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE70_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE70_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE70_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE71_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE71_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE71_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE71_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 72 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE71_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE71_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE71_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE71_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE72_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE72_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE72_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE72_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 73 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE72_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE72_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE72_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE72_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE73_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE73_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE73_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE73_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 74 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE73_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE73_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE73_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE73_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE74_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE74_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE74_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE74_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 75 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE74_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE74_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE74_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE74_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE75_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE75_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE75_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE75_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 76 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE75_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE75_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE75_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE75_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE76_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE76_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE76_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE76_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 77 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE76_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE76_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE76_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE76_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE77_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE77_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE77_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE77_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 78 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE77_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE77_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE77_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE77_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE78_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE78_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE78_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE78_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 79 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE78_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE78_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE78_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE78_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE79_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE79_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE79_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE79_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 80 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE79_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE79_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE79_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE79_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE80_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE80_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE80_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE80_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 81 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE80_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE80_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE80_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE80_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE81_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE81_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE81_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE81_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 82 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE81_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE81_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE81_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE81_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE82_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE82_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE82_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE82_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 83 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE82_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE82_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE82_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE82_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE83_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE83_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE83_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE83_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 84 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE83_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE83_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE83_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE83_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE84_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE84_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE84_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE84_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 85 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE84_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE84_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE84_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE84_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE85_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE85_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE85_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE85_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 86 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE85_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE85_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE85_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE85_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE86_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE86_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE86_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE86_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 87 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE86_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE86_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE86_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE86_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE87_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE87_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE87_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE87_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 88 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE87_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE87_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE87_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE87_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE88_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE88_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE88_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE88_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 89 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE88_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE88_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE88_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE88_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE89_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE89_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE89_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE89_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 90 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE89_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE89_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE89_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE89_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE90_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE90_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE90_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE90_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 91 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE90_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE90_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE90_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE90_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE91_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE91_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE91_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE91_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 92 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE91_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE91_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE91_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE91_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE92_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE92_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE92_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE92_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 93 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE92_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE92_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE92_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE92_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE93_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE93_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE93_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE93_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 94 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE93_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE93_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE93_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE93_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE94_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE94_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE94_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE94_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 95 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE94_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE94_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE94_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE94_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE95_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE95_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE95_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE95_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 96 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE95_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE95_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE95_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE95_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE96_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE96_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE96_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE96_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 97 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE96_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE96_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE96_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE96_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE97_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE97_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE97_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE97_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 98 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE97_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE97_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE97_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE97_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE98_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE98_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE98_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE98_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 99 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE98_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE98_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE98_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE98_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE99_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE99_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE99_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE99_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 100 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE99_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE99_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE99_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE99_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE100_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE100_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE100_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE100_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 101 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE100_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE100_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE100_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE100_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE101_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE101_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE101_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE101_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 102 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE101_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE101_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE101_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE101_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE102_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE102_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE102_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE102_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 103 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE102_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE102_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE102_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE102_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+
+     -- Write to comb signals
+     COMB_STAGE103_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     COMB_STAGE103_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE103_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     COMB_STAGE103_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 104 then
+     -- Read from prev stage
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left := REG_STAGE103_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE103_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue := REG_STAGE103_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE103_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Submodule outputs
+     VAR_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_return_output := ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_return_output;
+
+     -- Submodule level 0
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iffalse := VAR_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_return_output;
+     -- CONST_REF_RD_float_8_14_t_hit_out_dist_d41d[tr_pipelinec_gen_c_l355_c22_f82c] LATENCY=0
+     VAR_CONST_REF_RD_float_8_14_t_hit_out_dist_d41d_tr_pipelinec_gen_c_l355_c22_f82c_return_output := VAR_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_return_output.dist;
+
+     -- Submodule level 1
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_right := VAR_CONST_REF_RD_float_8_14_t_hit_out_dist_d41d_tr_pipelinec_gen_c_l355_c22_f82c_return_output;
+     -- BIN_OP_LT[tr_pipelinec_gen_c_l355_c6_be52] LATENCY=0
+     -- Inputs
+     BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_right <= VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_right;
+     -- Outputs
+     VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_return_output := BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_return_output;
+
+     -- Submodule level 2
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_cond := VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_return_output;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_cond := VAR_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_return_output;
+     -- hit_material_MUX[tr_pipelinec_gen_c_l355_c3_5823] LATENCY=1
+     -- Inputs
+     hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_cond <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_cond;
+     hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iffalse <= VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iffalse;
+
+     -- hitout_MUX[tr_pipelinec_gen_c_l355_c3_5823] LATENCY=1
+     -- Inputs
+     hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_cond <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_cond;
+     hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iffalse <= VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iffalse;
+
+     -- Write to comb signals
+     COMB_STAGE104_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+   elsif STAGE = 105 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE104_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Submodule outputs
+     VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_return_output := hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_return_output;
+     VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_return_output := hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_return_output;
+
+     -- Submodule level 0
+     -- CONST_REF_RD_fixed3_material_t_diffuse_color_d41d[tr_pipelinec_gen_c_l363_c34_231e] LATENCY=0
+     VAR_CONST_REF_RD_fixed3_material_t_diffuse_color_d41d_tr_pipelinec_gen_c_l363_c34_231e_return_output := VAR_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_return_output.diffuse_color;
+
+     -- CONST_REF_RD_float_8_14_t_hit_out_dist_d41d[tr_pipelinec_gen_c_l362_c6_c85b] LATENCY=0
+     VAR_CONST_REF_RD_float_8_14_t_hit_out_dist_d41d_tr_pipelinec_gen_c_l362_c6_c85b_return_output := VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_return_output.dist;
+
+     -- CONST_REF_RD_float3_hit_out_hit_orig_d41d[tr_pipelinec_gen_c_l363_c78_9e28] LATENCY=0
+     VAR_CONST_REF_RD_float3_hit_out_hit_orig_d41d_tr_pipelinec_gen_c_l363_c78_9e28_return_output := VAR_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_return_output.hit.orig;
+
+     -- Submodule level 1
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := VAR_CONST_REF_RD_fixed3_material_t_diffuse_color_d41d_tr_pipelinec_gen_c_l363_c34_231e_return_output;
+     VAR_light_intensity_tr_pipelinec_gen_c_l363_c62_4c94_hit := VAR_CONST_REF_RD_float3_hit_out_hit_orig_d41d_tr_pipelinec_gen_c_l363_c78_9e28_return_output;
+     VAR_BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210_left := VAR_CONST_REF_RD_float_8_14_t_hit_out_dist_d41d_tr_pipelinec_gen_c_l362_c6_c85b_return_output;
+     -- BIN_OP_GTE[tr_pipelinec_gen_c_l362_c6_6210] LATENCY=0
+     -- Inputs
+     BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210_left <= VAR_BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210_left;
+     BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210_right <= VAR_BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210_right;
+     -- Outputs
+     VAR_BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210_return_output := BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210_return_output;
+
+     -- light_intensity[tr_pipelinec_gen_c_l363_c62_4c94] LATENCY=34
+     -- Inputs
+     light_intensity_tr_pipelinec_gen_c_l363_c62_4c94_hit <= VAR_light_intensity_tr_pipelinec_gen_c_l363_c62_4c94_hit;
+
+     -- Submodule level 2
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := VAR_BIN_OP_GTE_tr_pipelinec_gen_c_l362_c6_6210_return_output;
+     -- Write to comb signals
+     COMB_STAGE105_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE105_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE105_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 106 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE105_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE105_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE105_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE106_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE106_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE106_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 107 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE106_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE106_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE106_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE107_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE107_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE107_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 108 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE107_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE107_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE107_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE108_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE108_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE108_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 109 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE108_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE108_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE108_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE109_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE109_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE109_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 110 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE109_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE109_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE109_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE110_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE110_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE110_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 111 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE110_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE110_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE110_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE111_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE111_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE111_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 112 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE111_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE111_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE111_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE112_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE112_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE112_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 113 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE112_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE112_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE112_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE113_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE113_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE113_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 114 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE113_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE113_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE113_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE114_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE114_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE114_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 115 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE114_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE114_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE114_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE115_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE115_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE115_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 116 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE115_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE115_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE115_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE116_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE116_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE116_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 117 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE116_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE116_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE116_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE117_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE117_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE117_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 118 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE117_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE117_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE117_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE118_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE118_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE118_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 119 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE118_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE118_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE118_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE119_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE119_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE119_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 120 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE119_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE119_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE119_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE120_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE120_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE120_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 121 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE120_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE120_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE120_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE121_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE121_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE121_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 122 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE121_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE121_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE121_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE122_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE122_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE122_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 123 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE122_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE122_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE122_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE123_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE123_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE123_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 124 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE123_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE123_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE123_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE124_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE124_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE124_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 125 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE124_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE124_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE124_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE125_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE125_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE125_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 126 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE125_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE125_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE125_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE126_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE126_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE126_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 127 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE126_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE126_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE126_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE127_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE127_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE127_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 128 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE127_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE127_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE127_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE128_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE128_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE128_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 129 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE128_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE128_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE128_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE129_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE129_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE129_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 130 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE129_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE129_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE129_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE130_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE130_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE130_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 131 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE130_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE130_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE130_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE131_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE131_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE131_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 132 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE131_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE131_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE131_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE132_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE132_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE132_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 133 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE132_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE132_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE132_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE133_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE133_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE133_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 134 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE133_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE133_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE133_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE134_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE134_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE134_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 135 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE134_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE134_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE134_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE135_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE135_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE135_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 136 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE135_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE135_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE135_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE136_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE136_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE136_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 137 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE136_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE136_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE136_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE137_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE137_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE137_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 138 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE137_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE137_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE137_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+
+     -- Write to comb signals
+     COMB_STAGE138_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE138_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     COMB_STAGE138_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+   elsif STAGE = 139 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE138_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE138_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left := REG_STAGE138_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Submodule outputs
+     VAR_light_intensity_tr_pipelinec_gen_c_l363_c62_4c94_return_output := light_intensity_tr_pipelinec_gen_c_l363_c62_4c94_return_output;
+
+     -- Submodule level 0
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_right := VAR_light_intensity_tr_pipelinec_gen_c_l363_c62_4c94_return_output;
+     -- fixed3_mul_fixed[tr_pipelinec_gen_c_l363_c17_7f51] LATENCY=5
+     -- Inputs
+     fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_right <= VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_right;
+
+     -- Write to comb signals
+     COMB_STAGE139_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE139_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+   elsif STAGE = 140 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE139_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE139_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+
+     -- Write to comb signals
+     COMB_STAGE140_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE140_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+   elsif STAGE = 141 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE140_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE140_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+
+     -- Write to comb signals
+     COMB_STAGE141_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE141_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+   elsif STAGE = 142 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE141_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE141_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+
+     -- Write to comb signals
+     COMB_STAGE142_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE142_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+   elsif STAGE = 143 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE142_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE142_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+
+     -- Write to comb signals
+     COMB_STAGE143_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     COMB_STAGE143_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+   elsif STAGE = 144 then
+     -- Read from prev stage
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue := REG_STAGE143_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond := REG_STAGE143_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     -- Submodule outputs
+     VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_return_output := fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_return_output;
+
+     -- Submodule level 0
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iffalse := VAR_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_return_output;
+     -- rcolor_MUX[tr_pipelinec_gen_c_l362_c3_2d8b] LATENCY=1
+     -- Inputs
+     rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iffalse <= VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iffalse;
+
+     -- Write to comb signals
+   elsif STAGE = 145 then
+     -- Read from prev stage
+     -- Submodule outputs
+     VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_return_output := rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_return_output;
+
+     -- Submodule level 0
+     VAR_return_output := VAR_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_return_output;
+     -- Last stage of pipeline return wire to return port/reg
+     return_output <= VAR_return_output;
+   end if;
+ end loop;
+
+end process;
+
+-- Register comb signals
+process(clk) is
+begin
+ if rising_edge(clk) then
+     -- Stage 0
+     REG_STAGE0_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin <= COMB_STAGE0_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin;
+     -- Stage 1
+     REG_STAGE1_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin <= COMB_STAGE1_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin;
+     -- Stage 2
+     REG_STAGE2_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin <= COMB_STAGE2_ray_sphere_intersect_tr_pipelinec_gen_c_l352_c20_a905_hitin;
+     -- Stage 3
+     -- Stage 4
+     -- Stage 5
+     REG_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE5_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 6
+     REG_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE6_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 7
+     REG_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE7_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 8
+     REG_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE8_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 9
+     REG_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE9_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 10
+     REG_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE10_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 11
+     REG_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE11_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 12
+     REG_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE12_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 13
+     REG_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE13_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 14
+     REG_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE14_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 15
+     REG_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE15_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 16
+     REG_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE16_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 17
+     REG_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE17_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 18
+     REG_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE18_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 19
+     REG_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE19_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 20
+     REG_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE20_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 21
+     REG_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE21_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 22
+     REG_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE22_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 23
+     REG_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE23_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 24
+     REG_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE24_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 25
+     REG_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE25_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 26
+     REG_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE26_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 27
+     REG_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE27_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 28
+     REG_STAGE28_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE28_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 29
+     REG_STAGE29_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE29_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 30
+     REG_STAGE30_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE30_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 31
+     REG_STAGE31_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE31_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 32
+     REG_STAGE32_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE32_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 33
+     REG_STAGE33_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE33_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 34
+     REG_STAGE34_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE34_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 35
+     REG_STAGE35_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE35_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 36
+     REG_STAGE36_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE36_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 37
+     REG_STAGE37_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE37_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 38
+     REG_STAGE38_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE38_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 39
+     REG_STAGE39_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE39_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 40
+     REG_STAGE40_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE40_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 41
+     REG_STAGE41_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE41_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 42
+     REG_STAGE42_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE42_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 43
+     REG_STAGE43_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE43_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 44
+     REG_STAGE44_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE44_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 45
+     REG_STAGE45_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE45_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 46
+     REG_STAGE46_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE46_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 47
+     REG_STAGE47_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE47_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 48
+     REG_STAGE48_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE48_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 49
+     REG_STAGE49_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE49_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 50
+     REG_STAGE50_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE50_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 51
+     REG_STAGE51_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE51_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 52
+     REG_STAGE52_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE52_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 53
+     REG_STAGE53_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE53_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE53_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE53_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE53_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE53_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 54
+     REG_STAGE54_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE54_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE54_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE54_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE54_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE54_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 55
+     REG_STAGE55_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE55_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE55_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE55_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE55_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE55_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 56
+     REG_STAGE56_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE56_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE56_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE56_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE56_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE56_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 57
+     REG_STAGE57_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE57_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE57_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE57_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE57_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE57_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 58
+     REG_STAGE58_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE58_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE58_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE58_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE58_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE58_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 59
+     REG_STAGE59_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE59_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE59_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE59_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE59_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE59_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 60
+     REG_STAGE60_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE60_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE60_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE60_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE60_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE60_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 61
+     REG_STAGE61_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE61_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE61_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE61_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE61_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE61_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 62
+     REG_STAGE62_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE62_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE62_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE62_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE62_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE62_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 63
+     REG_STAGE63_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE63_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE63_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE63_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE63_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE63_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 64
+     REG_STAGE64_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE64_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE64_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE64_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE64_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE64_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 65
+     REG_STAGE65_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE65_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE65_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE65_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE65_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE65_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE65_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE65_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 66
+     REG_STAGE66_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE66_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE66_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE66_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE66_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE66_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE66_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE66_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 67
+     REG_STAGE67_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE67_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE67_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE67_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE67_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE67_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE67_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE67_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 68
+     REG_STAGE68_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE68_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE68_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE68_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE68_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE68_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE68_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE68_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 69
+     REG_STAGE69_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE69_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE69_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE69_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE69_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE69_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE69_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE69_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 70
+     REG_STAGE70_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE70_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE70_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE70_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE70_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE70_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE70_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE70_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 71
+     REG_STAGE71_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE71_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE71_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE71_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE71_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE71_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE71_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE71_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 72
+     REG_STAGE72_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE72_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE72_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE72_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE72_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE72_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE72_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE72_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 73
+     REG_STAGE73_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE73_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE73_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE73_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE73_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE73_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE73_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE73_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 74
+     REG_STAGE74_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE74_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE74_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE74_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE74_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE74_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE74_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE74_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 75
+     REG_STAGE75_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE75_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE75_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE75_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE75_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE75_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE75_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE75_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 76
+     REG_STAGE76_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE76_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE76_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE76_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE76_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE76_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE76_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE76_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 77
+     REG_STAGE77_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE77_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE77_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE77_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE77_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE77_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE77_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE77_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 78
+     REG_STAGE78_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE78_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE78_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE78_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE78_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE78_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE78_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE78_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 79
+     REG_STAGE79_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE79_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE79_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE79_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE79_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE79_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE79_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE79_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 80
+     REG_STAGE80_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE80_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE80_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE80_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE80_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE80_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE80_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE80_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 81
+     REG_STAGE81_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE81_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE81_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE81_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE81_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE81_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE81_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE81_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 82
+     REG_STAGE82_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE82_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE82_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE82_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE82_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE82_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE82_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE82_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 83
+     REG_STAGE83_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE83_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE83_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE83_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE83_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE83_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE83_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE83_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 84
+     REG_STAGE84_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE84_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE84_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE84_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE84_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE84_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE84_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE84_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 85
+     REG_STAGE85_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE85_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE85_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE85_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE85_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE85_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE85_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE85_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 86
+     REG_STAGE86_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE86_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE86_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE86_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE86_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE86_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE86_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE86_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 87
+     REG_STAGE87_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE87_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE87_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE87_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE87_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE87_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE87_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE87_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 88
+     REG_STAGE88_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE88_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE88_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE88_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE88_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE88_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE88_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE88_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 89
+     REG_STAGE89_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE89_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE89_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE89_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE89_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE89_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE89_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE89_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 90
+     REG_STAGE90_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE90_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE90_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE90_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE90_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE90_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE90_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE90_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 91
+     REG_STAGE91_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE91_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE91_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE91_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE91_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE91_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE91_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE91_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 92
+     REG_STAGE92_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE92_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE92_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE92_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE92_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE92_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE92_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE92_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 93
+     REG_STAGE93_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE93_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE93_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE93_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE93_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE93_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE93_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE93_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 94
+     REG_STAGE94_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE94_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE94_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE94_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE94_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE94_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE94_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE94_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 95
+     REG_STAGE95_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE95_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE95_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE95_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE95_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE95_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE95_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE95_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 96
+     REG_STAGE96_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE96_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE96_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE96_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE96_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE96_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE96_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE96_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 97
+     REG_STAGE97_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE97_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE97_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE97_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE97_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE97_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE97_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE97_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 98
+     REG_STAGE98_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE98_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE98_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE98_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE98_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE98_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE98_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE98_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 99
+     REG_STAGE99_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE99_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE99_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE99_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE99_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE99_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE99_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE99_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 100
+     REG_STAGE100_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE100_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE100_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE100_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE100_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE100_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE100_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE100_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 101
+     REG_STAGE101_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE101_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE101_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE101_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE101_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE101_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE101_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE101_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 102
+     REG_STAGE102_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE102_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE102_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE102_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE102_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE102_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE102_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE102_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 103
+     REG_STAGE103_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left <= COMB_STAGE103_BIN_OP_LT_tr_pipelinec_gen_c_l355_c6_be52_left;
+     REG_STAGE103_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE103_hitout_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE103_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue <= COMB_STAGE103_hit_material_MUX_tr_pipelinec_gen_c_l355_c3_5823_iftrue;
+     REG_STAGE103_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE103_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 104
+     REG_STAGE104_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE104_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     -- Stage 105
+     REG_STAGE105_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE105_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE105_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE105_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE105_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE105_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 106
+     REG_STAGE106_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE106_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE106_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE106_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE106_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE106_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 107
+     REG_STAGE107_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE107_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE107_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE107_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE107_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE107_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 108
+     REG_STAGE108_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE108_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE108_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE108_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE108_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE108_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 109
+     REG_STAGE109_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE109_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE109_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE109_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE109_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE109_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 110
+     REG_STAGE110_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE110_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE110_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE110_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE110_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE110_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 111
+     REG_STAGE111_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE111_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE111_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE111_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE111_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE111_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 112
+     REG_STAGE112_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE112_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE112_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE112_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE112_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE112_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 113
+     REG_STAGE113_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE113_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE113_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE113_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE113_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE113_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 114
+     REG_STAGE114_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE114_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE114_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE114_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE114_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE114_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 115
+     REG_STAGE115_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE115_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE115_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE115_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE115_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE115_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 116
+     REG_STAGE116_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE116_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE116_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE116_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE116_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE116_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 117
+     REG_STAGE117_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE117_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE117_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE117_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE117_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE117_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 118
+     REG_STAGE118_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE118_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE118_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE118_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE118_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE118_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 119
+     REG_STAGE119_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE119_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE119_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE119_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE119_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE119_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 120
+     REG_STAGE120_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE120_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE120_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE120_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE120_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE120_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 121
+     REG_STAGE121_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE121_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE121_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE121_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE121_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE121_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 122
+     REG_STAGE122_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE122_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE122_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE122_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE122_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE122_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 123
+     REG_STAGE123_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE123_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE123_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE123_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE123_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE123_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 124
+     REG_STAGE124_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE124_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE124_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE124_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE124_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE124_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 125
+     REG_STAGE125_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE125_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE125_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE125_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE125_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE125_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 126
+     REG_STAGE126_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE126_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE126_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE126_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE126_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE126_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 127
+     REG_STAGE127_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE127_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE127_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE127_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE127_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE127_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 128
+     REG_STAGE128_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE128_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE128_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE128_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE128_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE128_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 129
+     REG_STAGE129_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE129_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE129_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE129_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE129_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE129_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 130
+     REG_STAGE130_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE130_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE130_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE130_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE130_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE130_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 131
+     REG_STAGE131_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE131_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE131_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE131_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE131_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE131_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 132
+     REG_STAGE132_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE132_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE132_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE132_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE132_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE132_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 133
+     REG_STAGE133_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE133_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE133_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE133_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE133_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE133_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 134
+     REG_STAGE134_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE134_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE134_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE134_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE134_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE134_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 135
+     REG_STAGE135_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE135_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE135_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE135_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE135_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE135_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 136
+     REG_STAGE136_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE136_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE136_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE136_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE136_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE136_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 137
+     REG_STAGE137_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE137_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE137_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE137_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE137_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE137_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 138
+     REG_STAGE138_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE138_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE138_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE138_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     REG_STAGE138_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left <= COMB_STAGE138_fixed3_mul_fixed_tr_pipelinec_gen_c_l363_c17_7f51_left;
+     -- Stage 139
+     REG_STAGE139_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE139_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE139_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE139_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     -- Stage 140
+     REG_STAGE140_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE140_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE140_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE140_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     -- Stage 141
+     REG_STAGE141_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE141_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE141_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE141_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     -- Stage 142
+     REG_STAGE142_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE142_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE142_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE142_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     -- Stage 143
+     REG_STAGE143_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue <= COMB_STAGE143_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_iftrue;
+     REG_STAGE143_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond <= COMB_STAGE143_rcolor_MUX_tr_pipelinec_gen_c_l362_c3_2d8b_cond;
+     -- Stage 144
+ end if;
+end process;
+
+end arch;

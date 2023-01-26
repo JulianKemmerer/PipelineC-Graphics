@@ -1,0 +1,3375 @@
+-- Timing params:
+--   Fixed?: False
+--   Pipeline Slices: [0.0027503275551332773, 0.015447050053337309, 0.028143772551541286, 0.04084049504974531, 0.05353721754794915, 0.06623394004615323, 0.0789306625443571, 0.09162738504256109, 0.10432410754076507, 0.11702083003896906, 0.12971755253717304, 0.14241427503537699, 0.15511099753358099, 0.16780772003178496, 0.18050444252998904, 0.19320116502819307, 0.205897887526397, 0.2185946100246009, 0.23129133252280498, 0.24398805502100884, 0.2566847775192129, 0.26938150001741684, 0.2820782225156209, 0.294774945013825, 0.30747166751202903, 0.3201683900102331, 0.33286511250843703, 0.34556183500664106, 0.3582585575048453, 0.37095528000304934, 0.38365200250125336, 0.3963487249994575, 0.4090454474976616, 0.4217421699958655, 0.4344388924940694, 0.4471356149922737, 0.45983233749047775, 0.4725290599886818, 0.4852257824868859, 0.49792250498509016, 0.5106192274832939, 0.5233159499814982, 0.5360126724797021, 0.548709394977906, 0.5614061174761101, 0.5741028399743142, 0.5867995624725182, 0.5994962849707222, 0.6121930074689264, 0.6248897299671308, 0.6375864524653346, 0.6502831749635387, 0.6629798974617428, 0.6756766199599469, 0.6883733424581506, 0.7010700649563547, 0.713766787454559, 0.7264635099527631, 0.7391602324509671, 0.7518569549491708, 0.7645536774473752, 0.777250399945579, 0.789947122443783, 0.8026438449419874, 0.8153405674401912, 0.8280372899383955, 0.8407340124365995, 0.8534307349348036, 0.8661274574330078, 0.8788241799312116, 0.891520902429416, 0.9042176249276198, 0.9169143474258237, 0.9296110699240278, 0.9423077924222317, 0.9550045149204358, 0.9677012374186402, 0.9803979599168441, 0.9930946824150483]
+--   Input regs?: False
+--   Output regs?: False
+library std;
+use std.textio.all;
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+use ieee.float_pkg.all;
+use work.c_structs_pkg.all;
+-- Submodules: 19
+entity ray_sphere_intersect_109CLK_198e5ba5 is
+port(
+ clk : in std_logic;
+ center : in float3;
+ hitin : in point_and_dir;
+ return_output : out hit_out);
+end ray_sphere_intersect_109CLK_198e5ba5;
+architecture arch of ray_sphere_intersect_109CLK_198e5ba5 is
+-- Types and such
+-- Declarations
+attribute mark_debug : string;
+constant PIPELINE_LATENCY : integer := 109;
+-- All of the wires/regs in function
+-- Stage 0
+signal REG_STAGE0_dot_tr_pipelinec_gen_c_l243_c20_0102_b : float3;
+signal REG_STAGE0_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE0_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE0_dot_tr_pipelinec_gen_c_l243_c20_0102_b : float3;
+signal COMB_STAGE0_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE0_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 1
+signal REG_STAGE1_dot_tr_pipelinec_gen_c_l243_c20_0102_b : float3;
+signal REG_STAGE1_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE1_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE1_dot_tr_pipelinec_gen_c_l243_c20_0102_b : float3;
+signal COMB_STAGE1_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE1_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 2
+signal REG_STAGE2_dot_tr_pipelinec_gen_c_l243_c20_0102_b : float3;
+signal REG_STAGE2_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE2_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE2_dot_tr_pipelinec_gen_c_l243_c20_0102_b : float3;
+signal COMB_STAGE2_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE2_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 3
+signal REG_STAGE3_dot_tr_pipelinec_gen_c_l243_c20_0102_b : float3;
+signal REG_STAGE3_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE3_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE3_dot_tr_pipelinec_gen_c_l243_c20_0102_b : float3;
+signal COMB_STAGE3_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE3_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 4
+signal REG_STAGE4_dot_tr_pipelinec_gen_c_l243_c20_0102_b : float3;
+signal REG_STAGE4_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE4_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE4_dot_tr_pipelinec_gen_c_l243_c20_0102_b : float3;
+signal COMB_STAGE4_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE4_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 5
+signal REG_STAGE5_dot_tr_pipelinec_gen_c_l243_c20_0102_b : float3;
+signal REG_STAGE5_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE5_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE5_dot_tr_pipelinec_gen_c_l243_c20_0102_b : float3;
+signal COMB_STAGE5_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE5_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 6
+signal REG_STAGE6_dot_tr_pipelinec_gen_c_l243_c20_0102_b : float3;
+signal REG_STAGE6_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE6_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE6_dot_tr_pipelinec_gen_c_l243_c20_0102_b : float3;
+signal COMB_STAGE6_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE6_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 7
+signal REG_STAGE7_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE7_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE7_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE7_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 8
+signal REG_STAGE8_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE8_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE8_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE8_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 9
+signal REG_STAGE9_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE9_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE9_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE9_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 10
+signal REG_STAGE10_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE10_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE10_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE10_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 11
+signal REG_STAGE11_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE11_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE11_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE11_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 12
+signal REG_STAGE12_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE12_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE12_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE12_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 13
+signal REG_STAGE13_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE13_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE13_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE13_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 14
+signal REG_STAGE14_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE14_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE14_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE14_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 15
+signal REG_STAGE15_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE15_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE15_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE15_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 16
+signal REG_STAGE16_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE16_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE16_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE16_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 17
+signal REG_STAGE17_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE17_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE17_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE17_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 18
+signal REG_STAGE18_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE18_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE18_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE18_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 19
+signal REG_STAGE19_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE19_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE19_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE19_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 20
+signal REG_STAGE20_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE20_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE20_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE20_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 21
+signal REG_STAGE21_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE21_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE21_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE21_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 22
+signal REG_STAGE22_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE22_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE22_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE22_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE22_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE22_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 23
+signal REG_STAGE23_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE23_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE23_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE23_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE23_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE23_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 24
+signal REG_STAGE24_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE24_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE24_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE24_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE24_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE24_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 25
+signal REG_STAGE25_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left : std_logic_vector(22 downto 0);
+signal REG_STAGE25_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE25_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE25_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE25_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE25_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE25_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE25_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 26
+signal REG_STAGE26_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left : std_logic_vector(22 downto 0);
+signal REG_STAGE26_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE26_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE26_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE26_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE26_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE26_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE26_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 27
+signal REG_STAGE27_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left : std_logic_vector(22 downto 0);
+signal REG_STAGE27_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE27_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE27_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE27_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE27_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE27_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE27_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 28
+signal REG_STAGE28_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE28_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE28_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE28_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE28_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE28_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 29
+signal REG_STAGE29_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE29_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE29_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE29_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE29_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE29_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 30
+signal REG_STAGE30_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE30_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE30_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE30_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE30_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE30_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 31
+signal REG_STAGE31_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE31_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE31_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE31_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE31_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE31_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 32
+signal REG_STAGE32_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE32_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE32_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE32_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE32_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE32_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 33
+signal REG_STAGE33_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE33_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE33_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE33_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE33_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE33_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 34
+signal REG_STAGE34_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE34_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE34_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE34_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE34_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE34_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE34_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE34_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE34_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE34_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE34_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE34_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 35
+signal REG_STAGE35_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE35_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE35_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE35_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE35_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE35_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE35_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE35_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE35_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE35_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE35_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE35_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE35_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE35_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE35_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE35_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE35_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE35_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE35_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE35_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 36
+signal REG_STAGE36_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE36_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE36_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE36_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE36_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE36_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE36_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE36_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE36_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE36_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE36_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE36_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE36_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE36_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE36_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE36_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE36_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE36_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE36_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE36_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 37
+signal REG_STAGE37_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE37_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE37_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE37_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE37_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE37_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE37_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE37_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE37_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE37_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE37_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE37_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE37_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE37_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE37_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE37_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE37_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE37_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE37_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE37_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 38
+signal REG_STAGE38_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE38_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE38_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE38_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE38_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE38_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE38_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE38_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE38_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE38_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE38_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE38_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE38_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE38_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE38_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE38_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE38_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE38_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE38_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE38_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 39
+signal REG_STAGE39_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE39_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE39_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE39_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE39_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE39_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE39_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE39_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE39_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE39_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE39_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE39_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE39_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE39_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE39_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE39_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE39_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE39_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE39_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE39_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 40
+signal REG_STAGE40_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE40_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE40_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE40_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE40_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE40_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE40_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE40_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE40_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE40_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE40_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE40_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE40_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE40_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE40_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE40_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE40_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE40_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE40_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE40_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 41
+signal REG_STAGE41_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE41_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE41_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE41_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE41_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE41_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE41_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE41_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE41_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE41_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE41_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE41_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE41_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE41_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE41_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE41_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE41_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE41_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE41_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE41_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 42
+signal REG_STAGE42_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE42_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE42_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE42_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE42_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE42_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE42_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE42_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE42_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE42_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE42_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE42_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE42_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE42_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE42_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE42_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE42_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE42_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE42_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE42_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 43
+signal REG_STAGE43_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE43_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE43_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE43_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE43_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE43_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE43_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE43_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE43_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE43_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE43_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE43_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE43_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE43_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE43_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE43_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE43_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE43_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE43_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE43_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 44
+signal REG_STAGE44_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE44_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE44_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE44_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE44_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE44_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE44_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE44_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE44_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE44_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE44_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE44_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE44_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE44_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE44_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE44_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE44_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE44_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE44_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE44_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 45
+signal REG_STAGE45_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE45_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE45_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE45_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE45_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE45_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE45_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE45_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE45_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE45_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE45_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE45_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE45_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE45_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE45_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE45_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE45_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE45_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE45_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE45_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 46
+signal REG_STAGE46_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE46_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE46_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE46_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE46_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE46_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE46_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE46_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE46_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE46_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE46_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE46_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE46_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE46_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE46_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE46_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE46_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE46_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE46_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE46_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 47
+signal REG_STAGE47_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE47_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE47_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE47_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE47_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE47_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE47_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE47_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE47_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE47_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE47_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE47_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE47_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE47_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE47_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE47_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE47_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE47_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE47_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE47_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 48
+signal REG_STAGE48_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE48_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE48_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE48_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE48_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE48_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE48_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE48_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE48_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE48_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE48_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE48_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE48_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE48_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE48_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE48_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE48_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE48_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE48_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE48_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 49
+signal REG_STAGE49_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE49_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE49_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE49_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE49_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE49_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE49_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE49_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE49_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE49_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE49_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE49_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE49_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE49_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE49_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE49_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE49_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE49_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE49_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE49_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 50
+signal REG_STAGE50_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE50_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE50_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE50_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE50_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE50_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE50_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE50_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE50_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE50_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE50_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE50_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE50_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE50_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE50_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE50_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE50_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE50_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE50_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE50_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 51
+signal REG_STAGE51_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE51_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE51_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE51_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE51_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE51_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE51_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE51_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE51_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE51_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE51_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE51_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE51_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE51_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE51_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE51_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE51_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE51_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE51_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE51_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 52
+signal REG_STAGE52_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE52_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE52_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE52_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE52_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE52_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE52_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE52_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE52_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE52_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE52_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE52_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE52_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE52_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE52_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE52_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE52_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE52_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE52_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE52_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 53
+signal REG_STAGE53_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE53_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE53_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE53_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE53_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE53_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal REG_STAGE53_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE53_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE53_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE53_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE53_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE53_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE53_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE53_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE53_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE53_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal COMB_STAGE53_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE53_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE53_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE53_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 54
+signal REG_STAGE54_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE54_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE54_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE54_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE54_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE54_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE54_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE54_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE54_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE54_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE54_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE54_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE54_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE54_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE54_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE54_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE54_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE54_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 55
+signal REG_STAGE55_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE55_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE55_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE55_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE55_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE55_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE55_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE55_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE55_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE55_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE55_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE55_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE55_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE55_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE55_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE55_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE55_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE55_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 56
+signal REG_STAGE56_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE56_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE56_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE56_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE56_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE56_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE56_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE56_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE56_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE56_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE56_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE56_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE56_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE56_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE56_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE56_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE56_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE56_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 57
+signal REG_STAGE57_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE57_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE57_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE57_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE57_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE57_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE57_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE57_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE57_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE57_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE57_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE57_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE57_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE57_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE57_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE57_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE57_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE57_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 58
+signal REG_STAGE58_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE58_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE58_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE58_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE58_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE58_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE58_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE58_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE58_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE58_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE58_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE58_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE58_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE58_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE58_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE58_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE58_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE58_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 59
+signal REG_STAGE59_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE59_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE59_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE59_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal REG_STAGE59_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal REG_STAGE59_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal REG_STAGE59_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal REG_STAGE59_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE59_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE59_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE59_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE59_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE59_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal COMB_STAGE59_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal COMB_STAGE59_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal COMB_STAGE59_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal COMB_STAGE59_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE59_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+-- Stage 60
+signal REG_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal REG_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal REG_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_t : std_logic_vector(22 downto 0);
+signal COMB_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal COMB_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal COMB_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_t : std_logic_vector(22 downto 0);
+-- Stage 61
+-- Stage 62
+-- Stage 63
+-- Stage 64
+-- Stage 65
+-- Stage 66
+-- Stage 67
+-- Stage 68
+-- Stage 69
+-- Stage 70
+-- Stage 71
+-- Stage 72
+-- Stage 73
+-- Stage 74
+-- Stage 75
+-- Stage 76
+-- Stage 77
+-- Stage 78
+-- Stage 79
+-- Stage 80
+-- Stage 81
+-- Stage 82
+-- Stage 83
+-- Stage 84
+-- Stage 85
+-- Stage 86
+-- Stage 87
+-- Stage 88
+-- Stage 89
+-- Stage 90
+-- Stage 91
+-- Stage 92
+-- Stage 93
+-- Stage 94
+-- Stage 95
+-- Stage 96
+-- Stage 97
+-- Stage 98
+-- Stage 99
+-- Stage 100
+-- Stage 101
+-- Stage 102
+-- Stage 103
+-- Stage 104
+-- Stage 105
+-- Stage 106
+-- Stage 107
+-- Stage 108
+-- Each function instance gets signals
+-- float3_sub[tr_pipelinec_gen_c_l242_c15_773e]
+signal float3_sub_tr_pipelinec_gen_c_l242_c15_773e_left : float3;
+signal float3_sub_tr_pipelinec_gen_c_l242_c15_773e_right : float3;
+signal float3_sub_tr_pipelinec_gen_c_l242_c15_773e_return_output : float3;
+
+-- dot[tr_pipelinec_gen_c_l243_c20_0102]
+signal dot_tr_pipelinec_gen_c_l243_c20_0102_a : float3;
+signal dot_tr_pipelinec_gen_c_l243_c20_0102_b : float3;
+signal dot_tr_pipelinec_gen_c_l243_c20_0102_return_output : std_logic_vector(22 downto 0);
+
+-- dot[tr_pipelinec_gen_c_l244_c20_4003]
+signal dot_tr_pipelinec_gen_c_l244_c20_4003_a : float3;
+signal dot_tr_pipelinec_gen_c_l244_c20_4003_b : float3;
+signal dot_tr_pipelinec_gen_c_l244_c20_4003_return_output : std_logic_vector(22 downto 0);
+
+-- BIN_OP_MINUS[tr_pipelinec_gen_c_l244_c20_0e69]
+signal BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69_left : std_logic_vector(22 downto 0);
+signal BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69_right : std_logic_vector(22 downto 0);
+signal BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69_return_output : std_logic_vector(22 downto 0);
+
+-- BIN_OP_INFERRED_MULT[tr_pipelinec_gen_c_l245_c23_0aed]
+signal BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed_left : std_logic_vector(22 downto 0);
+signal BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed_right : std_logic_vector(22 downto 0);
+signal BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed_return_output : std_logic_vector(22 downto 0);
+
+-- BIN_OP_MINUS[tr_pipelinec_gen_c_l245_c23_0a1c]
+signal BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left : std_logic_vector(22 downto 0);
+signal BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_right : std_logic_vector(22 downto 0);
+signal BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_return_output : std_logic_vector(22 downto 0);
+
+-- UNARY_OP_NOT[tr_pipelinec_gen_c_l249_c7_c0e7]
+signal UNARY_OP_NOT_tr_pipelinec_gen_c_l249_c7_c0e7_expr : unsigned(0 downto 0);
+signal UNARY_OP_NOT_tr_pipelinec_gen_c_l249_c7_c0e7_return_output : unsigned(0 downto 0);
+
+-- t_MUX[tr_pipelinec_gen_c_l249_c3_22be]
+signal t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal t_MUX_tr_pipelinec_gen_c_l249_c3_22be_iftrue : std_logic_vector(22 downto 0);
+signal t_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal t_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output : std_logic_vector(22 downto 0);
+
+-- diff_MUX[tr_pipelinec_gen_c_l249_c3_22be]
+signal diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iftrue : std_logic_vector(22 downto 0);
+signal diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+signal diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output : std_logic_vector(22 downto 0);
+
+-- nothit_MUX[tr_pipelinec_gen_c_l249_c3_22be]
+signal nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+signal nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iftrue : unsigned(0 downto 0);
+signal nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+signal nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output : unsigned(0 downto 0);
+
+-- sqrt[tr_pipelinec_gen_c_l250_c15_8789]
+signal sqrt_tr_pipelinec_gen_c_l250_c15_8789_x : std_logic_vector(22 downto 0);
+signal sqrt_tr_pipelinec_gen_c_l250_c15_8789_return_output : std_logic_vector(22 downto 0);
+
+-- BIN_OP_PLUS[tr_pipelinec_gen_c_l250_c11_059e]
+signal BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+signal BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_right : std_logic_vector(22 downto 0);
+signal BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_return_output : std_logic_vector(22 downto 0);
+
+-- UNARY_OP_NEGATE[tr_pipelinec_gen_c_l250_c11_1ed0]
+signal UNARY_OP_NEGATE_tr_pipelinec_gen_c_l250_c11_1ed0_expr : std_logic_vector(22 downto 0);
+signal UNARY_OP_NEGATE_tr_pipelinec_gen_c_l250_c11_1ed0_return_output : std_logic_vector(22 downto 0);
+
+-- diff_MUX[tr_pipelinec_gen_c_l253_c5_b325]
+signal diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_cond : unsigned(0 downto 0);
+signal diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+signal diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+signal diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_return_output : std_logic_vector(22 downto 0);
+
+-- UNARY_OP_NEGATE[tr_pipelinec_gen_c_l253_c24_68ad]
+signal UNARY_OP_NEGATE_tr_pipelinec_gen_c_l253_c24_68ad_expr : std_logic_vector(22 downto 0);
+signal UNARY_OP_NEGATE_tr_pipelinec_gen_c_l253_c24_68ad_return_output : std_logic_vector(22 downto 0);
+
+-- UNARY_OP_NOT[tr_pipelinec_gen_c_l255_c22_3ed2]
+signal UNARY_OP_NOT_tr_pipelinec_gen_c_l255_c22_3ed2_expr : unsigned(0 downto 0);
+signal UNARY_OP_NOT_tr_pipelinec_gen_c_l255_c22_3ed2_return_output : unsigned(0 downto 0);
+
+-- sphere_hit[tr_pipelinec_gen_c_l255_c10_60e9]
+signal sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hit : unsigned(0 downto 0);
+signal sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+signal sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+signal sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_t : std_logic_vector(22 downto 0);
+signal sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_diff : std_logic_vector(22 downto 0);
+signal sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_return_output : hit_out;
+
+function float_8_14_t_sign( x : std_logic_vector) return unsigned is
+
+  --variable x : std_logic_vector(22 downto 0);
+  variable return_output : unsigned(0 downto 0);
+
+begin
+
+    return_output(0) := x(x'left); -- left most sign bit
+    return return_output;
+
+end function;
+
+
+begin
+
+-- SUBMODULE INSTANCES 
+-- float3_sub_tr_pipelinec_gen_c_l242_c15_773e
+float3_sub_tr_pipelinec_gen_c_l242_c15_773e : entity work.float3_sub_7CLK_10b65775 port map (
+clk,
+float3_sub_tr_pipelinec_gen_c_l242_c15_773e_left,
+float3_sub_tr_pipelinec_gen_c_l242_c15_773e_right,
+float3_sub_tr_pipelinec_gen_c_l242_c15_773e_return_output);
+
+-- dot_tr_pipelinec_gen_c_l243_c20_0102
+dot_tr_pipelinec_gen_c_l243_c20_0102 : entity work.dot_15CLK_5e5aa800 port map (
+clk,
+dot_tr_pipelinec_gen_c_l243_c20_0102_a,
+dot_tr_pipelinec_gen_c_l243_c20_0102_b,
+dot_tr_pipelinec_gen_c_l243_c20_0102_return_output);
+
+-- dot_tr_pipelinec_gen_c_l244_c20_4003
+dot_tr_pipelinec_gen_c_l244_c20_4003 : entity work.dot_15CLK_5e5aa800 port map (
+clk,
+dot_tr_pipelinec_gen_c_l244_c20_4003_a,
+dot_tr_pipelinec_gen_c_l244_c20_4003_b,
+dot_tr_pipelinec_gen_c_l244_c20_4003_return_output);
+
+-- BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69
+BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69 : entity work.BIN_OP_MINUS_float_8_14_t_float_8_14_t_6CLK_ab6afdf3 port map (
+clk,
+BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69_left,
+BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69_right,
+BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69_return_output);
+
+-- BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed : entity work.BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t_3CLK_977e22b4 port map (
+clk,
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed_left,
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed_right,
+BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed_return_output);
+
+-- BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c
+BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c : entity work.BIN_OP_MINUS_float_8_14_t_float_8_14_t_6CLK_ab6afdf3 port map (
+clk,
+BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left,
+BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_right,
+BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_return_output);
+
+-- UNARY_OP_NOT_tr_pipelinec_gen_c_l249_c7_c0e7
+UNARY_OP_NOT_tr_pipelinec_gen_c_l249_c7_c0e7 : entity work.UNARY_OP_NOT_uint1_t_1CLK_2e182bc4 port map (
+clk,
+UNARY_OP_NOT_tr_pipelinec_gen_c_l249_c7_c0e7_expr,
+UNARY_OP_NOT_tr_pipelinec_gen_c_l249_c7_c0e7_return_output);
+
+-- t_MUX_tr_pipelinec_gen_c_l249_c3_22be
+t_MUX_tr_pipelinec_gen_c_l249_c3_22be : entity work.MUX_uint1_t_float_8_14_t_float_8_14_t_0CLK_de264c78 port map (
+t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+t_MUX_tr_pipelinec_gen_c_l249_c3_22be_iftrue,
+t_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+t_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output);
+
+-- diff_MUX_tr_pipelinec_gen_c_l249_c3_22be
+diff_MUX_tr_pipelinec_gen_c_l249_c3_22be : entity work.MUX_uint1_t_float_8_14_t_float_8_14_t_1CLK_51a8450f port map (
+clk,
+diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iftrue,
+diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output);
+
+-- nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be
+nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be : entity work.MUX_uint1_t_uint1_t_uint1_t_0CLK_de264c78 port map (
+nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iftrue,
+nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output);
+
+-- sqrt_tr_pipelinec_gen_c_l250_c15_8789
+sqrt_tr_pipelinec_gen_c_l250_c15_8789 : entity work.sqrt_20CLK_2303e114 port map (
+clk,
+sqrt_tr_pipelinec_gen_c_l250_c15_8789_x,
+sqrt_tr_pipelinec_gen_c_l250_c15_8789_return_output);
+
+-- BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e
+BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e : entity work.BIN_OP_PLUS_float_8_14_t_float_8_14_t_6CLK_d5d58814 port map (
+clk,
+BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_right,
+BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_return_output);
+
+-- UNARY_OP_NEGATE_tr_pipelinec_gen_c_l250_c11_1ed0
+UNARY_OP_NEGATE_tr_pipelinec_gen_c_l250_c11_1ed0 : entity work.UNARY_OP_NEGATE_float_8_14_t_0CLK_de264c78 port map (
+UNARY_OP_NEGATE_tr_pipelinec_gen_c_l250_c11_1ed0_expr,
+UNARY_OP_NEGATE_tr_pipelinec_gen_c_l250_c11_1ed0_return_output);
+
+-- diff_MUX_tr_pipelinec_gen_c_l253_c5_b325
+diff_MUX_tr_pipelinec_gen_c_l253_c5_b325 : entity work.MUX_uint1_t_float_8_14_t_float_8_14_t_0CLK_de264c78 port map (
+diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_cond,
+diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_return_output);
+
+-- UNARY_OP_NEGATE_tr_pipelinec_gen_c_l253_c24_68ad
+UNARY_OP_NEGATE_tr_pipelinec_gen_c_l253_c24_68ad : entity work.UNARY_OP_NEGATE_float_8_14_t_1CLK_2e182bc4 port map (
+clk,
+UNARY_OP_NEGATE_tr_pipelinec_gen_c_l253_c24_68ad_expr,
+UNARY_OP_NEGATE_tr_pipelinec_gen_c_l253_c24_68ad_return_output);
+
+-- UNARY_OP_NOT_tr_pipelinec_gen_c_l255_c22_3ed2
+UNARY_OP_NOT_tr_pipelinec_gen_c_l255_c22_3ed2 : entity work.UNARY_OP_NOT_uint1_t_1CLK_5e0622e1 port map (
+clk,
+UNARY_OP_NOT_tr_pipelinec_gen_c_l255_c22_3ed2_expr,
+UNARY_OP_NOT_tr_pipelinec_gen_c_l255_c22_3ed2_return_output);
+
+-- sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9
+sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9 : entity work.sphere_hit_48CLK_c9304c7f port map (
+clk,
+sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hit,
+sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_t,
+sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_diff,
+sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_return_output);
+
+
+
+-- Combinatorial process for pipeline stages
+process (
+ -- Inputs
+ center,
+ hitin,
+ -- Registers
+ -- Stage 0
+ REG_STAGE0_dot_tr_pipelinec_gen_c_l243_c20_0102_b,
+ REG_STAGE0_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE0_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 1
+ REG_STAGE1_dot_tr_pipelinec_gen_c_l243_c20_0102_b,
+ REG_STAGE1_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE1_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 2
+ REG_STAGE2_dot_tr_pipelinec_gen_c_l243_c20_0102_b,
+ REG_STAGE2_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE2_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 3
+ REG_STAGE3_dot_tr_pipelinec_gen_c_l243_c20_0102_b,
+ REG_STAGE3_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE3_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 4
+ REG_STAGE4_dot_tr_pipelinec_gen_c_l243_c20_0102_b,
+ REG_STAGE4_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE4_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 5
+ REG_STAGE5_dot_tr_pipelinec_gen_c_l243_c20_0102_b,
+ REG_STAGE5_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE5_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 6
+ REG_STAGE6_dot_tr_pipelinec_gen_c_l243_c20_0102_b,
+ REG_STAGE6_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE6_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 7
+ REG_STAGE7_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE7_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 8
+ REG_STAGE8_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE8_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 9
+ REG_STAGE9_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE9_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 10
+ REG_STAGE10_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE10_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 11
+ REG_STAGE11_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE11_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 12
+ REG_STAGE12_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE12_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 13
+ REG_STAGE13_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE13_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 14
+ REG_STAGE14_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE14_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 15
+ REG_STAGE15_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE15_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 16
+ REG_STAGE16_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE16_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 17
+ REG_STAGE17_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE17_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 18
+ REG_STAGE18_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE18_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 19
+ REG_STAGE19_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE19_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 20
+ REG_STAGE20_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE20_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 21
+ REG_STAGE21_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE21_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 22
+ REG_STAGE22_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE22_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE22_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 23
+ REG_STAGE23_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE23_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE23_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 24
+ REG_STAGE24_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE24_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE24_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 25
+ REG_STAGE25_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left,
+ REG_STAGE25_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE25_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE25_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 26
+ REG_STAGE26_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left,
+ REG_STAGE26_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE26_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE26_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 27
+ REG_STAGE27_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left,
+ REG_STAGE27_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE27_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE27_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 28
+ REG_STAGE28_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE28_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE28_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 29
+ REG_STAGE29_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE29_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE29_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 30
+ REG_STAGE30_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE30_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE30_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 31
+ REG_STAGE31_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE31_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE31_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 32
+ REG_STAGE32_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE32_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE32_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 33
+ REG_STAGE33_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE33_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE33_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 34
+ REG_STAGE34_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE34_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE34_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE34_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE34_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE34_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 35
+ REG_STAGE35_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE35_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE35_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE35_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE35_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE35_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE35_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE35_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE35_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE35_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 36
+ REG_STAGE36_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE36_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE36_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE36_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE36_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE36_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE36_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE36_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE36_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE36_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 37
+ REG_STAGE37_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE37_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE37_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE37_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE37_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE37_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE37_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE37_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE37_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE37_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 38
+ REG_STAGE38_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE38_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE38_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE38_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE38_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE38_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE38_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE38_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE38_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE38_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 39
+ REG_STAGE39_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE39_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE39_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE39_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE39_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE39_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE39_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE39_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE39_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE39_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 40
+ REG_STAGE40_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE40_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE40_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE40_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE40_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE40_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE40_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE40_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE40_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE40_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 41
+ REG_STAGE41_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE41_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE41_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE41_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE41_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE41_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE41_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE41_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE41_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE41_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 42
+ REG_STAGE42_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE42_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE42_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE42_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE42_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE42_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE42_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE42_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE42_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE42_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 43
+ REG_STAGE43_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE43_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE43_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE43_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE43_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE43_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE43_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE43_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE43_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE43_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 44
+ REG_STAGE44_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE44_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE44_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE44_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE44_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE44_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE44_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE44_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE44_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE44_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 45
+ REG_STAGE45_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE45_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE45_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE45_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE45_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE45_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE45_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE45_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE45_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE45_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 46
+ REG_STAGE46_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE46_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE46_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE46_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE46_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE46_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE46_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE46_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE46_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE46_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 47
+ REG_STAGE47_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE47_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE47_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE47_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE47_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE47_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE47_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE47_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE47_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE47_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 48
+ REG_STAGE48_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE48_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE48_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE48_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE48_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE48_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE48_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE48_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE48_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE48_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 49
+ REG_STAGE49_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE49_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE49_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE49_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE49_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE49_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE49_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE49_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE49_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE49_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 50
+ REG_STAGE50_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE50_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE50_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE50_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE50_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE50_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE50_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE50_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE50_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE50_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 51
+ REG_STAGE51_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE51_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE51_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE51_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE51_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE51_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE51_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE51_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE51_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE51_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 52
+ REG_STAGE52_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE52_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE52_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE52_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE52_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE52_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE52_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE52_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE52_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE52_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 53
+ REG_STAGE53_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE53_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE53_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE53_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE53_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE53_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left,
+ REG_STAGE53_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE53_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE53_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE53_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 54
+ REG_STAGE54_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE54_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE54_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE54_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE54_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE54_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE54_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE54_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE54_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 55
+ REG_STAGE55_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE55_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE55_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE55_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE55_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE55_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE55_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE55_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE55_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 56
+ REG_STAGE56_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE56_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE56_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE56_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE56_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE56_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE56_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE56_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE56_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 57
+ REG_STAGE57_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE57_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE57_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE57_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE57_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE57_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE57_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE57_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE57_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 58
+ REG_STAGE58_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE58_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE58_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE58_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE58_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE58_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE58_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE58_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE58_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 59
+ REG_STAGE59_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE59_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE59_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE59_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse,
+ REG_STAGE59_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond,
+ REG_STAGE59_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue,
+ REG_STAGE59_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse,
+ REG_STAGE59_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE59_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ -- Stage 60
+ REG_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center,
+ REG_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin,
+ REG_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_t,
+ -- Stage 61
+ -- Stage 62
+ -- Stage 63
+ -- Stage 64
+ -- Stage 65
+ -- Stage 66
+ -- Stage 67
+ -- Stage 68
+ -- Stage 69
+ -- Stage 70
+ -- Stage 71
+ -- Stage 72
+ -- Stage 73
+ -- Stage 74
+ -- Stage 75
+ -- Stage 76
+ -- Stage 77
+ -- Stage 78
+ -- Stage 79
+ -- Stage 80
+ -- Stage 81
+ -- Stage 82
+ -- Stage 83
+ -- Stage 84
+ -- Stage 85
+ -- Stage 86
+ -- Stage 87
+ -- Stage 88
+ -- Stage 89
+ -- Stage 90
+ -- Stage 91
+ -- Stage 92
+ -- Stage 93
+ -- Stage 94
+ -- Stage 95
+ -- Stage 96
+ -- Stage 97
+ -- Stage 98
+ -- Stage 99
+ -- Stage 100
+ -- Stage 101
+ -- Stage 102
+ -- Stage 103
+ -- Stage 104
+ -- Stage 105
+ -- Stage 106
+ -- Stage 107
+ -- Stage 108
+ -- All submodule outputs
+ float3_sub_tr_pipelinec_gen_c_l242_c15_773e_return_output,
+ dot_tr_pipelinec_gen_c_l243_c20_0102_return_output,
+ dot_tr_pipelinec_gen_c_l244_c20_4003_return_output,
+ BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69_return_output,
+ BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed_return_output,
+ BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_return_output,
+ UNARY_OP_NOT_tr_pipelinec_gen_c_l249_c7_c0e7_return_output,
+ t_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output,
+ diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output,
+ nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output,
+ sqrt_tr_pipelinec_gen_c_l250_c15_8789_return_output,
+ BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_return_output,
+ UNARY_OP_NEGATE_tr_pipelinec_gen_c_l250_c11_1ed0_return_output,
+ diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_return_output,
+ UNARY_OP_NEGATE_tr_pipelinec_gen_c_l253_c24_68ad_return_output,
+ UNARY_OP_NOT_tr_pipelinec_gen_c_l255_c22_3ed2_return_output,
+ sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_return_output)
+is 
+ -- All of the wires in function
+ variable VAR_CLOCK_ENABLE : unsigned(0 downto 0);
+ variable VAR_return_output : hit_out;
+ variable VAR_center : float3;
+ variable VAR_hitin : point_and_dir;
+ variable VAR_rc : float3;
+ variable VAR_float3_sub_tr_pipelinec_gen_c_l242_c15_773e_left : float3;
+ variable VAR_float3_sub_tr_pipelinec_gen_c_l242_c15_773e_right : float3;
+ variable VAR_CONST_REF_RD_float3_point_and_dir_orig_d41d_tr_pipelinec_gen_c_l242_c26_097b_return_output : float3;
+ variable VAR_float3_sub_tr_pipelinec_gen_c_l242_c15_773e_return_output : float3;
+ variable VAR_b : std_logic_vector(22 downto 0);
+ variable VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_a : float3;
+ variable VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_b : float3;
+ variable VAR_CONST_REF_RD_float3_point_and_dir_dir_d41d_tr_pipelinec_gen_c_l243_c28_a7a5_return_output : float3;
+ variable VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_return_output : std_logic_vector(22 downto 0);
+ variable VAR_c : std_logic_vector(22 downto 0);
+ variable VAR_dot_tr_pipelinec_gen_c_l244_c20_4003_a : float3;
+ variable VAR_dot_tr_pipelinec_gen_c_l244_c20_4003_b : float3;
+ variable VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69_left : std_logic_vector(22 downto 0);
+ variable VAR_dot_tr_pipelinec_gen_c_l244_c20_4003_return_output : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69_right : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69_return_output : std_logic_vector(22 downto 0);
+ variable VAR_diff : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed_left : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed_right : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed_return_output : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_right : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_return_output : std_logic_vector(22 downto 0);
+ variable VAR_nothit : unsigned(0 downto 0);
+ variable VAR_float_8_14_t_sign_tr_pipelinec_gen_c_l246_c20_f3b8_return_output : unsigned(0 downto 0);
+ variable VAR_t : std_logic_vector(22 downto 0);
+ variable VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l249_c7_c0e7_expr : unsigned(0 downto 0);
+ variable VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l249_c7_c0e7_return_output : unsigned(0 downto 0);
+ variable VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_iftrue : std_logic_vector(22 downto 0);
+ variable VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+ variable VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output : std_logic_vector(22 downto 0);
+ variable VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+ variable VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iftrue : std_logic_vector(22 downto 0);
+ variable VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_return_output : std_logic_vector(22 downto 0);
+ variable VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : std_logic_vector(22 downto 0);
+ variable VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output : std_logic_vector(22 downto 0);
+ variable VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+ variable VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iftrue : unsigned(0 downto 0);
+ variable VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse : unsigned(0 downto 0);
+ variable VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output : unsigned(0 downto 0);
+ variable VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond : unsigned(0 downto 0);
+ variable VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left : std_logic_vector(22 downto 0);
+ variable VAR_sqrt_tr_pipelinec_gen_c_l250_c15_8789_x : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_right : std_logic_vector(22 downto 0);
+ variable VAR_sqrt_tr_pipelinec_gen_c_l250_c15_8789_return_output : std_logic_vector(22 downto 0);
+ variable VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_return_output : std_logic_vector(22 downto 0);
+ variable VAR_UNARY_OP_NEGATE_tr_pipelinec_gen_c_l250_c11_1ed0_expr : std_logic_vector(22 downto 0);
+ variable VAR_UNARY_OP_NEGATE_tr_pipelinec_gen_c_l250_c11_1ed0_return_output : std_logic_vector(22 downto 0);
+ variable VAR_float_8_14_t_sign_tr_pipelinec_gen_c_l251_c14_aa71_return_output : unsigned(0 downto 0);
+ variable VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue : std_logic_vector(22 downto 0);
+ variable VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse : std_logic_vector(22 downto 0);
+ variable VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_cond : unsigned(0 downto 0);
+ variable VAR_UNARY_OP_NEGATE_tr_pipelinec_gen_c_l253_c24_68ad_expr : std_logic_vector(22 downto 0);
+ variable VAR_UNARY_OP_NEGATE_tr_pipelinec_gen_c_l253_c24_68ad_return_output : std_logic_vector(22 downto 0);
+ variable VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hit : unsigned(0 downto 0);
+ variable VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center : float3;
+ variable VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin : point_and_dir;
+ variable VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_t : std_logic_vector(22 downto 0);
+ variable VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_diff : std_logic_vector(22 downto 0);
+ variable VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l255_c22_3ed2_expr : unsigned(0 downto 0);
+ variable VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l255_c22_3ed2_return_output : unsigned(0 downto 0);
+ variable VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_return_output : hit_out;
+begin
+ -- Constants and things derived from constants alone
+     -- Submodule level 0
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69_right := resize_float_e_m_t(to_slv(to_float(20.25, 8, 23)),8,23,8,14);
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := to_slv(to_float(1.000000e+23, 8, 14));
+
+ -- Loop to construct simultaneous register transfers for each of the pipeline stages
+ -- LATENCY=0 is combinational Logic
+ for STAGE in 0 to PIPELINE_LATENCY loop
+   if STAGE = 0 then
+     -- Mux in inputs
+     VAR_center := center;
+     VAR_hitin := hitin;
+
+     -- Submodule level 0
+     VAR_float3_sub_tr_pipelinec_gen_c_l242_c15_773e_right := VAR_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := VAR_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := VAR_hitin;
+     -- CONST_REF_RD_float3_point_and_dir_dir_d41d[tr_pipelinec_gen_c_l243_c28_a7a5] LATENCY=0
+     VAR_CONST_REF_RD_float3_point_and_dir_dir_d41d_tr_pipelinec_gen_c_l243_c28_a7a5_return_output := VAR_hitin.dir;
+
+     -- CONST_REF_RD_float3_point_and_dir_orig_d41d[tr_pipelinec_gen_c_l242_c26_097b] LATENCY=0
+     VAR_CONST_REF_RD_float3_point_and_dir_orig_d41d_tr_pipelinec_gen_c_l242_c26_097b_return_output := VAR_hitin.orig;
+
+     -- Submodule level 1
+     VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_b := VAR_CONST_REF_RD_float3_point_and_dir_dir_d41d_tr_pipelinec_gen_c_l243_c28_a7a5_return_output;
+     VAR_float3_sub_tr_pipelinec_gen_c_l242_c15_773e_left := VAR_CONST_REF_RD_float3_point_and_dir_orig_d41d_tr_pipelinec_gen_c_l242_c26_097b_return_output;
+     -- float3_sub[tr_pipelinec_gen_c_l242_c15_773e] LATENCY=7
+     -- Inputs
+     float3_sub_tr_pipelinec_gen_c_l242_c15_773e_left <= VAR_float3_sub_tr_pipelinec_gen_c_l242_c15_773e_left;
+     float3_sub_tr_pipelinec_gen_c_l242_c15_773e_right <= VAR_float3_sub_tr_pipelinec_gen_c_l242_c15_773e_right;
+
+     -- Write to comb signals
+     COMB_STAGE0_dot_tr_pipelinec_gen_c_l243_c20_0102_b <= VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     COMB_STAGE0_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE0_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 1 then
+     -- Read from prev stage
+     VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_b := REG_STAGE0_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE0_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE0_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE1_dot_tr_pipelinec_gen_c_l243_c20_0102_b <= VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     COMB_STAGE1_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE1_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 2 then
+     -- Read from prev stage
+     VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_b := REG_STAGE1_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE1_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE1_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE2_dot_tr_pipelinec_gen_c_l243_c20_0102_b <= VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     COMB_STAGE2_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE2_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 3 then
+     -- Read from prev stage
+     VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_b := REG_STAGE2_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE2_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE2_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE3_dot_tr_pipelinec_gen_c_l243_c20_0102_b <= VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     COMB_STAGE3_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE3_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 4 then
+     -- Read from prev stage
+     VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_b := REG_STAGE3_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE3_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE3_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE4_dot_tr_pipelinec_gen_c_l243_c20_0102_b <= VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     COMB_STAGE4_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE4_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 5 then
+     -- Read from prev stage
+     VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_b := REG_STAGE4_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE4_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE4_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE5_dot_tr_pipelinec_gen_c_l243_c20_0102_b <= VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     COMB_STAGE5_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE5_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 6 then
+     -- Read from prev stage
+     VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_b := REG_STAGE5_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE5_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE5_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE6_dot_tr_pipelinec_gen_c_l243_c20_0102_b <= VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     COMB_STAGE6_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE6_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 7 then
+     -- Read from prev stage
+     VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_b := REG_STAGE6_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE6_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE6_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Submodule outputs
+     VAR_float3_sub_tr_pipelinec_gen_c_l242_c15_773e_return_output := float3_sub_tr_pipelinec_gen_c_l242_c15_773e_return_output;
+
+     -- Submodule level 0
+     VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_a := VAR_float3_sub_tr_pipelinec_gen_c_l242_c15_773e_return_output;
+     VAR_dot_tr_pipelinec_gen_c_l244_c20_4003_a := VAR_float3_sub_tr_pipelinec_gen_c_l242_c15_773e_return_output;
+     VAR_dot_tr_pipelinec_gen_c_l244_c20_4003_b := VAR_float3_sub_tr_pipelinec_gen_c_l242_c15_773e_return_output;
+     -- dot[tr_pipelinec_gen_c_l244_c20_4003] LATENCY=15
+     -- Inputs
+     dot_tr_pipelinec_gen_c_l244_c20_4003_a <= VAR_dot_tr_pipelinec_gen_c_l244_c20_4003_a;
+     dot_tr_pipelinec_gen_c_l244_c20_4003_b <= VAR_dot_tr_pipelinec_gen_c_l244_c20_4003_b;
+
+     -- dot[tr_pipelinec_gen_c_l243_c20_0102] LATENCY=15
+     -- Inputs
+     dot_tr_pipelinec_gen_c_l243_c20_0102_a <= VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_a;
+     dot_tr_pipelinec_gen_c_l243_c20_0102_b <= VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+
+     -- Write to comb signals
+     COMB_STAGE7_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE7_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 8 then
+     -- Read from prev stage
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE7_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE7_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE8_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE8_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 9 then
+     -- Read from prev stage
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE8_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE8_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE9_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE9_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 10 then
+     -- Read from prev stage
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE9_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE9_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE10_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE10_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 11 then
+     -- Read from prev stage
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE10_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE10_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE11_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE11_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 12 then
+     -- Read from prev stage
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE11_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE11_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE12_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE12_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 13 then
+     -- Read from prev stage
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE12_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE12_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE13_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE13_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 14 then
+     -- Read from prev stage
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE13_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE13_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE14_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE14_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 15 then
+     -- Read from prev stage
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE14_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE14_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE15_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE15_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 16 then
+     -- Read from prev stage
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE15_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE15_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE16_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE16_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 17 then
+     -- Read from prev stage
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE16_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE16_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE17_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE17_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 18 then
+     -- Read from prev stage
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE17_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE17_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE18_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE18_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 19 then
+     -- Read from prev stage
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE18_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE18_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE19_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE19_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 20 then
+     -- Read from prev stage
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE19_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE19_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE20_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE20_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 21 then
+     -- Read from prev stage
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE20_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE20_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE21_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE21_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 22 then
+     -- Read from prev stage
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE21_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE21_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Submodule outputs
+     VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_return_output := dot_tr_pipelinec_gen_c_l243_c20_0102_return_output;
+     VAR_dot_tr_pipelinec_gen_c_l244_c20_4003_return_output := dot_tr_pipelinec_gen_c_l244_c20_4003_return_output;
+
+     -- Submodule level 0
+     VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed_left := VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_return_output;
+     VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed_right := VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_return_output;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := VAR_dot_tr_pipelinec_gen_c_l243_c20_0102_return_output;
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69_left := VAR_dot_tr_pipelinec_gen_c_l244_c20_4003_return_output;
+     -- BIN_OP_INFERRED_MULT[tr_pipelinec_gen_c_l245_c23_0aed] LATENCY=3
+     -- Inputs
+     BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed_left <= VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed_left;
+     BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed_right <= VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed_right;
+
+     -- BIN_OP_MINUS[tr_pipelinec_gen_c_l244_c20_0e69] LATENCY=6
+     -- Inputs
+     BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69_left <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69_left;
+     BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69_right <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69_right;
+
+     -- Write to comb signals
+     COMB_STAGE22_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE22_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE22_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 23 then
+     -- Read from prev stage
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE22_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE22_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE22_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE23_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE23_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE23_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 24 then
+     -- Read from prev stage
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE23_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE23_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE23_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE24_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE24_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE24_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 25 then
+     -- Read from prev stage
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE24_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE24_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE24_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Submodule outputs
+     VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed_return_output := BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed_return_output;
+
+     -- Submodule level 0
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left := VAR_BIN_OP_INFERRED_MULT_tr_pipelinec_gen_c_l245_c23_0aed_return_output;
+     -- Write to comb signals
+     COMB_STAGE25_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left;
+     COMB_STAGE25_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE25_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE25_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 26 then
+     -- Read from prev stage
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left := REG_STAGE25_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE25_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE25_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE25_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE26_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left;
+     COMB_STAGE26_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE26_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE26_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 27 then
+     -- Read from prev stage
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left := REG_STAGE26_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE26_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE26_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE26_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE27_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left;
+     COMB_STAGE27_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE27_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE27_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 28 then
+     -- Read from prev stage
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left := REG_STAGE27_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE27_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE27_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE27_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Submodule outputs
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69_return_output := BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69_return_output;
+
+     -- Submodule level 0
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_right := VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l244_c20_0e69_return_output;
+     -- BIN_OP_MINUS[tr_pipelinec_gen_c_l245_c23_0a1c] LATENCY=6
+     -- Inputs
+     BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left;
+     BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_right <= VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_right;
+
+     -- Write to comb signals
+     COMB_STAGE28_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE28_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE28_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 29 then
+     -- Read from prev stage
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE28_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE28_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE28_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE29_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE29_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE29_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 30 then
+     -- Read from prev stage
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE29_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE29_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE29_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE30_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE30_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE30_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 31 then
+     -- Read from prev stage
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE30_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE30_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE30_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE31_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE31_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE31_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 32 then
+     -- Read from prev stage
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE31_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE31_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE31_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE32_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE32_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE32_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 33 then
+     -- Read from prev stage
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE32_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE32_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE32_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE33_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE33_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE33_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 34 then
+     -- Read from prev stage
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE33_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE33_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE33_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Submodule outputs
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_return_output := BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_return_output;
+
+     -- Submodule level 0
+     VAR_UNARY_OP_NEGATE_tr_pipelinec_gen_c_l253_c24_68ad_expr := VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_return_output;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_return_output;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_return_output;
+     VAR_sqrt_tr_pipelinec_gen_c_l250_c15_8789_x := VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_return_output;
+     -- float_8_14_t_sign[tr_pipelinec_gen_c_l246_c20_f3b8] LATENCY=0
+     VAR_float_8_14_t_sign_tr_pipelinec_gen_c_l246_c20_f3b8_return_output := float_8_14_t_sign(
+     VAR_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_return_output);
+
+     -- sqrt[tr_pipelinec_gen_c_l250_c15_8789] LATENCY=20
+     -- Inputs
+     sqrt_tr_pipelinec_gen_c_l250_c15_8789_x <= VAR_sqrt_tr_pipelinec_gen_c_l250_c15_8789_x;
+
+     -- UNARY_OP_NEGATE[tr_pipelinec_gen_c_l253_c24_68ad] LATENCY=1
+     -- Inputs
+     UNARY_OP_NEGATE_tr_pipelinec_gen_c_l253_c24_68ad_expr <= VAR_UNARY_OP_NEGATE_tr_pipelinec_gen_c_l253_c24_68ad_expr;
+
+     -- Submodule level 1
+     VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l249_c7_c0e7_expr := VAR_float_8_14_t_sign_tr_pipelinec_gen_c_l246_c20_f3b8_return_output;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := VAR_float_8_14_t_sign_tr_pipelinec_gen_c_l246_c20_f3b8_return_output;
+     -- UNARY_OP_NOT[tr_pipelinec_gen_c_l249_c7_c0e7] LATENCY=1
+     -- Inputs
+     UNARY_OP_NOT_tr_pipelinec_gen_c_l249_c7_c0e7_expr <= VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l249_c7_c0e7_expr;
+
+     -- Write to comb signals
+     COMB_STAGE34_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE34_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE34_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE34_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE34_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE34_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 35 then
+     -- Read from prev stage
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE34_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE34_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE34_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE34_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE34_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE34_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Submodule outputs
+     VAR_UNARY_OP_NEGATE_tr_pipelinec_gen_c_l253_c24_68ad_return_output := UNARY_OP_NEGATE_tr_pipelinec_gen_c_l253_c24_68ad_return_output;
+     VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l249_c7_c0e7_return_output := UNARY_OP_NOT_tr_pipelinec_gen_c_l249_c7_c0e7_return_output;
+
+     -- Submodule level 0
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := VAR_UNARY_OP_NEGATE_tr_pipelinec_gen_c_l253_c24_68ad_return_output;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l249_c7_c0e7_return_output;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l249_c7_c0e7_return_output;
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l249_c7_c0e7_return_output;
+     -- Write to comb signals
+     COMB_STAGE35_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE35_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE35_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE35_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE35_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE35_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE35_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE35_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE35_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE35_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 36 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE35_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE35_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE35_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE35_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE35_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE35_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE35_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE35_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE35_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE35_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE36_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE36_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE36_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE36_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE36_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE36_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE36_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE36_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE36_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE36_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 37 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE36_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE36_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE36_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE36_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE36_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE36_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE36_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE36_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE36_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE36_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE37_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE37_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE37_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE37_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE37_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE37_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE37_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE37_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE37_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE37_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 38 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE37_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE37_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE37_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE37_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE37_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE37_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE37_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE37_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE37_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE37_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE38_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE38_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE38_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE38_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE38_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE38_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE38_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE38_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE38_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE38_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 39 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE38_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE38_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE38_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE38_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE38_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE38_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE38_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE38_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE38_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE38_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE39_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE39_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE39_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE39_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE39_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE39_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE39_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE39_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE39_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE39_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 40 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE39_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE39_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE39_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE39_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE39_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE39_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE39_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE39_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE39_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE39_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE40_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE40_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE40_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE40_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE40_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE40_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE40_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE40_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE40_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE40_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 41 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE40_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE40_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE40_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE40_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE40_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE40_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE40_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE40_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE40_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE40_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE41_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE41_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE41_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE41_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE41_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE41_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE41_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE41_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE41_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE41_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 42 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE41_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE41_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE41_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE41_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE41_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE41_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE41_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE41_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE41_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE41_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE42_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE42_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE42_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE42_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE42_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE42_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE42_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE42_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE42_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE42_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 43 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE42_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE42_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE42_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE42_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE42_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE42_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE42_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE42_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE42_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE42_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE43_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE43_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE43_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE43_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE43_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE43_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE43_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE43_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE43_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE43_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 44 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE43_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE43_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE43_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE43_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE43_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE43_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE43_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE43_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE43_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE43_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE44_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE44_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE44_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE44_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE44_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE44_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE44_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE44_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE44_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE44_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 45 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE44_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE44_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE44_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE44_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE44_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE44_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE44_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE44_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE44_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE44_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE45_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE45_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE45_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE45_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE45_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE45_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE45_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE45_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE45_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE45_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 46 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE45_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE45_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE45_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE45_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE45_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE45_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE45_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE45_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE45_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE45_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE46_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE46_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE46_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE46_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE46_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE46_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE46_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE46_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE46_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE46_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 47 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE46_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE46_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE46_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE46_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE46_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE46_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE46_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE46_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE46_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE46_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE47_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE47_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE47_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE47_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE47_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE47_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE47_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE47_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE47_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE47_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 48 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE47_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE47_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE47_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE47_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE47_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE47_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE47_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE47_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE47_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE47_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE48_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE48_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE48_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE48_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE48_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE48_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE48_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE48_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE48_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE48_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 49 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE48_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE48_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE48_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE48_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE48_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE48_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE48_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE48_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE48_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE48_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE49_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE49_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE49_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE49_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE49_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE49_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE49_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE49_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE49_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE49_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 50 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE49_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE49_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE49_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE49_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE49_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE49_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE49_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE49_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE49_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE49_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE50_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE50_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE50_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE50_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE50_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE50_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE50_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE50_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE50_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE50_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 51 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE50_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE50_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE50_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE50_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE50_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE50_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE50_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE50_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE50_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE50_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE51_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE51_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE51_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE51_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE51_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE51_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE51_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE51_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE51_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE51_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 52 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE51_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE51_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE51_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE51_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE51_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE51_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE51_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE51_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE51_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE51_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE52_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE52_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE52_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE52_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE52_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE52_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE52_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE52_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE52_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE52_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 53 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE52_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE52_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE52_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE52_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE52_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE52_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE52_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE52_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE52_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE52_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE53_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE53_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE53_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE53_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE53_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE53_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     COMB_STAGE53_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE53_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE53_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE53_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 54 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE53_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE53_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE53_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE53_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE53_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left := REG_STAGE53_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE53_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE53_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE53_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE53_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Submodule outputs
+     VAR_sqrt_tr_pipelinec_gen_c_l250_c15_8789_return_output := sqrt_tr_pipelinec_gen_c_l250_c15_8789_return_output;
+
+     -- Submodule level 0
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_right := VAR_sqrt_tr_pipelinec_gen_c_l250_c15_8789_return_output;
+     -- BIN_OP_PLUS[tr_pipelinec_gen_c_l250_c11_059e] LATENCY=6
+     -- Inputs
+     BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_right <= VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_right;
+
+     -- Write to comb signals
+     COMB_STAGE54_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE54_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE54_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE54_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE54_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE54_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE54_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE54_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE54_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 55 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE54_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE54_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE54_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE54_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE54_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE54_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE54_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE54_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE54_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE55_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE55_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE55_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE55_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE55_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE55_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE55_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE55_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE55_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 56 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE55_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE55_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE55_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE55_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE55_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE55_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE55_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE55_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE55_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE56_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE56_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE56_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE56_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE56_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE56_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE56_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE56_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE56_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 57 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE56_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE56_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE56_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE56_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE56_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE56_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE56_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE56_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE56_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE57_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE57_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE57_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE57_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE57_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE57_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE57_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE57_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE57_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 58 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE57_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE57_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE57_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE57_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE57_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE57_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE57_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE57_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE57_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE58_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE58_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE58_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE58_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE58_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE58_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE58_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE58_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE58_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 59 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE58_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE58_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE58_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE58_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE58_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE58_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE58_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE58_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE58_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+
+     -- Write to comb signals
+     COMB_STAGE59_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE59_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE59_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE59_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     COMB_STAGE59_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     COMB_STAGE59_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     COMB_STAGE59_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     COMB_STAGE59_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE59_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+   elsif STAGE = 60 then
+     -- Read from prev stage
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE59_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE59_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE59_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse := REG_STAGE59_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond := REG_STAGE59_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue := REG_STAGE59_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse := REG_STAGE59_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE59_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE59_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Submodule outputs
+     VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_return_output := BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_return_output;
+
+     -- Submodule level 0
+     VAR_UNARY_OP_NEGATE_tr_pipelinec_gen_c_l250_c11_1ed0_expr := VAR_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_return_output;
+     -- UNARY_OP_NEGATE[tr_pipelinec_gen_c_l250_c11_1ed0] LATENCY=0
+     -- Inputs
+     UNARY_OP_NEGATE_tr_pipelinec_gen_c_l250_c11_1ed0_expr <= VAR_UNARY_OP_NEGATE_tr_pipelinec_gen_c_l250_c11_1ed0_expr;
+     -- Outputs
+     VAR_UNARY_OP_NEGATE_tr_pipelinec_gen_c_l250_c11_1ed0_return_output := UNARY_OP_NEGATE_tr_pipelinec_gen_c_l250_c11_1ed0_return_output;
+
+     -- Submodule level 1
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_iftrue := VAR_UNARY_OP_NEGATE_tr_pipelinec_gen_c_l250_c11_1ed0_return_output;
+     -- t_MUX[tr_pipelinec_gen_c_l249_c3_22be] LATENCY=0
+     -- Inputs
+     t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     t_MUX_tr_pipelinec_gen_c_l249_c3_22be_iftrue <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_iftrue;
+     t_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     -- Outputs
+     VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output := t_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output;
+
+     -- float_8_14_t_sign[tr_pipelinec_gen_c_l251_c14_aa71] LATENCY=0
+     VAR_float_8_14_t_sign_tr_pipelinec_gen_c_l251_c14_aa71_return_output := float_8_14_t_sign(
+     VAR_UNARY_OP_NEGATE_tr_pipelinec_gen_c_l250_c11_1ed0_return_output);
+
+     -- Submodule level 2
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_cond := VAR_float_8_14_t_sign_tr_pipelinec_gen_c_l251_c14_aa71_return_output;
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iftrue := VAR_float_8_14_t_sign_tr_pipelinec_gen_c_l251_c14_aa71_return_output;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_t := VAR_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output;
+     -- nothit_MUX[tr_pipelinec_gen_c_l249_c3_22be] LATENCY=0
+     -- Inputs
+     nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iftrue <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iftrue;
+     nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     -- Outputs
+     VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output := nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output;
+
+     -- diff_MUX[tr_pipelinec_gen_c_l253_c5_b325] LATENCY=0
+     -- Inputs
+     diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_cond;
+     diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     -- Outputs
+     VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_return_output := diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_return_output;
+
+     -- Submodule level 3
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iftrue := VAR_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_return_output;
+     VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l255_c22_3ed2_expr := VAR_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output;
+     -- diff_MUX[tr_pipelinec_gen_c_l249_c3_22be] LATENCY=1
+     -- Inputs
+     diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iftrue <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iftrue;
+     diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+
+     -- UNARY_OP_NOT[tr_pipelinec_gen_c_l255_c22_3ed2] LATENCY=1
+     -- Inputs
+     UNARY_OP_NOT_tr_pipelinec_gen_c_l255_c22_3ed2_expr <= VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l255_c22_3ed2_expr;
+
+     -- Write to comb signals
+     COMB_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     COMB_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     COMB_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_t <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_t;
+   elsif STAGE = 61 then
+     -- Read from prev stage
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center := REG_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin := REG_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_t := REG_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_t;
+     -- Submodule outputs
+     VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l255_c22_3ed2_return_output := UNARY_OP_NOT_tr_pipelinec_gen_c_l255_c22_3ed2_return_output;
+     VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output := diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output;
+
+     -- Submodule level 0
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hit := VAR_UNARY_OP_NOT_tr_pipelinec_gen_c_l255_c22_3ed2_return_output;
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_diff := VAR_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_return_output;
+     -- sphere_hit[tr_pipelinec_gen_c_l255_c10_60e9] LATENCY=48
+     -- Inputs
+     sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hit <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hit;
+     sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_t <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_t;
+     sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_diff <= VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_diff;
+
+     -- Write to comb signals
+   elsif STAGE = 62 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 63 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 64 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 65 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 66 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 67 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 68 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 69 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 70 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 71 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 72 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 73 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 74 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 75 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 76 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 77 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 78 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 79 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 80 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 81 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 82 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 83 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 84 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 85 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 86 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 87 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 88 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 89 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 90 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 91 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 92 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 93 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 94 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 95 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 96 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 97 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 98 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 99 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 100 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 101 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 102 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 103 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 104 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 105 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 106 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 107 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 108 then
+     -- Read from prev stage
+
+     -- Write to comb signals
+   elsif STAGE = 109 then
+     -- Read from prev stage
+     -- Submodule outputs
+     VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_return_output := sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_return_output;
+
+     -- Submodule level 0
+     VAR_return_output := VAR_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_return_output;
+     -- Last stage of pipeline return wire to return port/reg
+     return_output <= VAR_return_output;
+   end if;
+ end loop;
+
+end process;
+
+-- Register comb signals
+process(clk) is
+begin
+ if rising_edge(clk) then
+     -- Stage 0
+     REG_STAGE0_dot_tr_pipelinec_gen_c_l243_c20_0102_b <= COMB_STAGE0_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     REG_STAGE0_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE0_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE0_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE0_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 1
+     REG_STAGE1_dot_tr_pipelinec_gen_c_l243_c20_0102_b <= COMB_STAGE1_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     REG_STAGE1_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE1_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE1_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE1_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 2
+     REG_STAGE2_dot_tr_pipelinec_gen_c_l243_c20_0102_b <= COMB_STAGE2_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     REG_STAGE2_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE2_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE2_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE2_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 3
+     REG_STAGE3_dot_tr_pipelinec_gen_c_l243_c20_0102_b <= COMB_STAGE3_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     REG_STAGE3_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE3_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE3_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE3_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 4
+     REG_STAGE4_dot_tr_pipelinec_gen_c_l243_c20_0102_b <= COMB_STAGE4_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     REG_STAGE4_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE4_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE4_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE4_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 5
+     REG_STAGE5_dot_tr_pipelinec_gen_c_l243_c20_0102_b <= COMB_STAGE5_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     REG_STAGE5_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE5_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE5_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE5_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 6
+     REG_STAGE6_dot_tr_pipelinec_gen_c_l243_c20_0102_b <= COMB_STAGE6_dot_tr_pipelinec_gen_c_l243_c20_0102_b;
+     REG_STAGE6_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE6_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE6_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE6_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 7
+     REG_STAGE7_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE7_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE7_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE7_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 8
+     REG_STAGE8_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE8_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE8_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE8_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 9
+     REG_STAGE9_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE9_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE9_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE9_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 10
+     REG_STAGE10_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE10_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE10_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE10_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 11
+     REG_STAGE11_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE11_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE11_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE11_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 12
+     REG_STAGE12_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE12_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE12_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE12_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 13
+     REG_STAGE13_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE13_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE13_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE13_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 14
+     REG_STAGE14_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE14_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE14_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE14_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 15
+     REG_STAGE15_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE15_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE15_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE15_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 16
+     REG_STAGE16_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE16_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE16_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE16_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 17
+     REG_STAGE17_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE17_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE17_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE17_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 18
+     REG_STAGE18_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE18_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE18_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE18_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 19
+     REG_STAGE19_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE19_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE19_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE19_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 20
+     REG_STAGE20_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE20_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE20_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE20_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 21
+     REG_STAGE21_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE21_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE21_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE21_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 22
+     REG_STAGE22_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE22_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE22_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE22_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE22_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE22_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 23
+     REG_STAGE23_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE23_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE23_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE23_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE23_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE23_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 24
+     REG_STAGE24_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE24_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE24_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE24_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE24_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE24_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 25
+     REG_STAGE25_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left <= COMB_STAGE25_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left;
+     REG_STAGE25_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE25_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE25_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE25_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE25_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE25_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 26
+     REG_STAGE26_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left <= COMB_STAGE26_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left;
+     REG_STAGE26_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE26_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE26_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE26_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE26_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE26_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 27
+     REG_STAGE27_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left <= COMB_STAGE27_BIN_OP_MINUS_tr_pipelinec_gen_c_l245_c23_0a1c_left;
+     REG_STAGE27_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE27_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE27_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE27_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE27_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE27_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 28
+     REG_STAGE28_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE28_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE28_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE28_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE28_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE28_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 29
+     REG_STAGE29_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE29_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE29_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE29_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE29_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE29_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 30
+     REG_STAGE30_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE30_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE30_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE30_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE30_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE30_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 31
+     REG_STAGE31_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE31_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE31_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE31_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE31_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE31_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 32
+     REG_STAGE32_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE32_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE32_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE32_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE32_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE32_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 33
+     REG_STAGE33_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE33_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE33_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE33_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE33_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE33_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 34
+     REG_STAGE34_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE34_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE34_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE34_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE34_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE34_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE34_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE34_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE34_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE34_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE34_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE34_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 35
+     REG_STAGE35_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE35_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE35_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE35_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE35_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE35_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE35_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE35_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE35_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE35_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE35_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE35_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE35_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE35_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE35_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE35_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE35_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE35_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE35_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE35_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 36
+     REG_STAGE36_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE36_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE36_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE36_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE36_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE36_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE36_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE36_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE36_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE36_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE36_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE36_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE36_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE36_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE36_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE36_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE36_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE36_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE36_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE36_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 37
+     REG_STAGE37_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE37_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE37_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE37_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE37_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE37_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE37_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE37_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE37_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE37_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE37_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE37_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE37_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE37_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE37_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE37_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE37_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE37_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE37_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE37_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 38
+     REG_STAGE38_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE38_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE38_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE38_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE38_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE38_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE38_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE38_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE38_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE38_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE38_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE38_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE38_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE38_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE38_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE38_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE38_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE38_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE38_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE38_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 39
+     REG_STAGE39_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE39_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE39_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE39_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE39_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE39_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE39_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE39_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE39_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE39_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE39_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE39_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE39_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE39_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE39_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE39_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE39_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE39_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE39_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE39_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 40
+     REG_STAGE40_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE40_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE40_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE40_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE40_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE40_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE40_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE40_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE40_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE40_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE40_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE40_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE40_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE40_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE40_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE40_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE40_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE40_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE40_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE40_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 41
+     REG_STAGE41_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE41_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE41_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE41_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE41_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE41_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE41_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE41_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE41_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE41_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE41_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE41_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE41_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE41_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE41_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE41_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE41_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE41_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE41_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE41_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 42
+     REG_STAGE42_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE42_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE42_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE42_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE42_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE42_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE42_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE42_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE42_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE42_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE42_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE42_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE42_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE42_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE42_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE42_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE42_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE42_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE42_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE42_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 43
+     REG_STAGE43_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE43_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE43_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE43_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE43_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE43_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE43_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE43_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE43_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE43_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE43_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE43_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE43_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE43_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE43_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE43_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE43_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE43_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE43_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE43_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 44
+     REG_STAGE44_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE44_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE44_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE44_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE44_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE44_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE44_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE44_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE44_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE44_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE44_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE44_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE44_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE44_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE44_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE44_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE44_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE44_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE44_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE44_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 45
+     REG_STAGE45_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE45_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE45_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE45_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE45_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE45_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE45_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE45_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE45_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE45_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE45_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE45_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE45_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE45_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE45_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE45_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE45_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE45_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE45_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE45_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 46
+     REG_STAGE46_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE46_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE46_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE46_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE46_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE46_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE46_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE46_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE46_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE46_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE46_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE46_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE46_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE46_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE46_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE46_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE46_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE46_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE46_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE46_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 47
+     REG_STAGE47_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE47_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE47_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE47_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE47_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE47_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE47_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE47_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE47_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE47_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE47_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE47_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE47_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE47_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE47_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE47_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE47_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE47_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE47_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE47_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 48
+     REG_STAGE48_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE48_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE48_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE48_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE48_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE48_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE48_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE48_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE48_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE48_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE48_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE48_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE48_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE48_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE48_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE48_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE48_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE48_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE48_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE48_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 49
+     REG_STAGE49_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE49_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE49_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE49_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE49_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE49_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE49_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE49_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE49_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE49_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE49_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE49_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE49_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE49_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE49_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE49_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE49_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE49_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE49_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE49_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 50
+     REG_STAGE50_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE50_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE50_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE50_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE50_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE50_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE50_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE50_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE50_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE50_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE50_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE50_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE50_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE50_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE50_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE50_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE50_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE50_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE50_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE50_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 51
+     REG_STAGE51_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE51_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE51_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE51_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE51_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE51_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE51_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE51_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE51_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE51_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE51_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE51_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE51_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE51_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE51_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE51_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE51_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE51_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE51_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE51_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 52
+     REG_STAGE52_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE52_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE52_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE52_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE52_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE52_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE52_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE52_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE52_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE52_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE52_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE52_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE52_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE52_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE52_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE52_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE52_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE52_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE52_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE52_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 53
+     REG_STAGE53_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE53_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE53_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE53_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE53_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE53_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE53_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE53_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE53_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE53_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE53_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left <= COMB_STAGE53_BIN_OP_PLUS_tr_pipelinec_gen_c_l250_c11_059e_left;
+     REG_STAGE53_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE53_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE53_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE53_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE53_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE53_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE53_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE53_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 54
+     REG_STAGE54_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE54_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE54_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE54_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE54_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE54_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE54_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE54_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE54_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE54_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE54_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE54_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE54_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE54_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE54_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE54_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE54_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE54_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 55
+     REG_STAGE55_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE55_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE55_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE55_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE55_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE55_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE55_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE55_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE55_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE55_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE55_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE55_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE55_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE55_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE55_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE55_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE55_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE55_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 56
+     REG_STAGE56_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE56_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE56_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE56_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE56_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE56_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE56_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE56_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE56_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE56_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE56_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE56_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE56_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE56_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE56_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE56_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE56_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE56_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 57
+     REG_STAGE57_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE57_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE57_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE57_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE57_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE57_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE57_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE57_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE57_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE57_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE57_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE57_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE57_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE57_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE57_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE57_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE57_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE57_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 58
+     REG_STAGE58_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE58_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE58_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE58_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE58_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE58_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE58_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE58_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE58_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE58_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE58_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE58_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE58_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE58_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE58_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE58_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE58_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE58_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 59
+     REG_STAGE59_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE59_t_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE59_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE59_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE59_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE59_diff_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE59_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse <= COMB_STAGE59_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_iffalse;
+     REG_STAGE59_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond <= COMB_STAGE59_nothit_MUX_tr_pipelinec_gen_c_l249_c3_22be_cond;
+     REG_STAGE59_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue <= COMB_STAGE59_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iftrue;
+     REG_STAGE59_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse <= COMB_STAGE59_diff_MUX_tr_pipelinec_gen_c_l253_c5_b325_iffalse;
+     REG_STAGE59_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE59_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE59_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE59_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     -- Stage 60
+     REG_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center <= COMB_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_center;
+     REG_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin <= COMB_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_hitin;
+     REG_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_t <= COMB_STAGE60_sphere_hit_tr_pipelinec_gen_c_l255_c10_60e9_t;
+     -- Stage 61
+     -- Stage 62
+     -- Stage 63
+     -- Stage 64
+     -- Stage 65
+     -- Stage 66
+     -- Stage 67
+     -- Stage 68
+     -- Stage 69
+     -- Stage 70
+     -- Stage 71
+     -- Stage 72
+     -- Stage 73
+     -- Stage 74
+     -- Stage 75
+     -- Stage 76
+     -- Stage 77
+     -- Stage 78
+     -- Stage 79
+     -- Stage 80
+     -- Stage 81
+     -- Stage 82
+     -- Stage 83
+     -- Stage 84
+     -- Stage 85
+     -- Stage 86
+     -- Stage 87
+     -- Stage 88
+     -- Stage 89
+     -- Stage 90
+     -- Stage 91
+     -- Stage 92
+     -- Stage 93
+     -- Stage 94
+     -- Stage 95
+     -- Stage 96
+     -- Stage 97
+     -- Stage 98
+     -- Stage 99
+     -- Stage 100
+     -- Stage 101
+     -- Stage 102
+     -- Stage 103
+     -- Stage 104
+     -- Stage 105
+     -- Stage 106
+     -- Stage 107
+     -- Stage 108
+ end if;
+end process;
+
+end arch;
