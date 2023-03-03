@@ -10,7 +10,8 @@ PIPELINEC_ROOT?=../PipelineC
 PIPELINEC?=$(PIPELINEC_ROOT)/src/pipelinec
 INCLUDE+=-I$(PIPELINEC_ROOT) -I../CflexHDL/include
 PIPELINEC_MAIN?=./pipelinec_app.c
-BOARD?=gsd_orangecrab
+BOARD?=hackaday_hadbadge
+#BOARD?=gsd_orangecrab
 #BOARD?=digilent_arty
 VALENTYUSB=../OrangeCrab-test-sw/hw/deps/valentyusb
 OMP_FLAGS=-fopenmp=libiomp5
@@ -65,11 +66,18 @@ tr_gen: tr_pipelinec.gen.c simulator_main.cpp
 	grep -v fixed_make_from_float synth/float_module_instances.log
 
 ./fullsynth/top/top-digilent_arty.vhd: pipelinec_app_config.h pipelinec_app.c tr_pipelinec.gen.c
-	echo \#pragma PART "xc7a100tcsg324-1" >> pipelinec_app_config.h # Arty 35t
-	$(PIPELINEC) ./pipelinec_app.c --hier_mult .9375 --out_dir ./fullsynth
+	#echo \#pragma PART "xc7a100tcsg324-1" >> pipelinec_app_config.h # Arty 100t
+	echo \#pragma PART "xc7a35tcsg324-1" >> pipelinec_app_config.h # Arty 35t
+	$(PIPELINEC) ./pipelinec_app.c --hier_mult 1.9375 --out_dir ./fullsynth
 
 ./fullsynth/top/top-gsd_orangecrab.vhd: pipelinec_app_config.h pipelinec_app.c tr_pipelinec.gen.c
 	echo \#pragma PART "LFE5U-85F-6BG381C" >> pipelinec_app_config.h # An ECP5U 85F part (OrgangeCrab 85F) 
+	$(PIPELINEC) ./pipelinec_app.c --coarse --sweep --start 70 --out_dir ./fullsynth
+	cp ./fullsynth/top/top.vhd ./fullsynth/top/top-$(BOARD).vhd
+
+./fullsynth/top/top-hackaday_hadbadge.vhd: pipelinec_app_config.h pipelinec_app.c tr_pipelinec.gen.c
+	#FIXME: chech part!
+	echo \#pragma PART "LFE5U-45F-8BG381C" >> pipelinec_app_config.h # An ECP5U 45F part (Hackaday Badge 2019) 
 	$(PIPELINEC) ./pipelinec_app.c --coarse --sweep --start 70 --out_dir ./fullsynth
 	cp ./fullsynth/top/top.vhd ./fullsynth/top/top-$(BOARD).vhd
 
@@ -108,7 +116,7 @@ $(GATEWAREDIR)/digilent_arty.bit: ./fullsynth/top/top-digilent_arty.vhd ./litex_
 	#FIXME: unify builr and vhd directories
 	mkdir -p ./vhd/all_vhdl_files/
 	cp `cat ./fullsynth/vhdl_files.txt` ./vhd/all_vhdl_files/ #FIXME: with this, maybe --sim is not needed
-	FRAME_WIDTH=$(FRAME_WIDTH) FRAME_HEIGHT=$(FRAME_HEIGHT) FRAME_FPS=$(FRAME_FPS) python3 ./litex_soc.py $(BOARD) --cpu-type=None
+	FRAME_WIDTH=$(FRAME_WIDTH) FRAME_HEIGHT=$(FRAME_HEIGHT) FRAME_FPS=$(FRAME_FPS) python3 ./litex_soc-OSSCAD.py $(BOARD) --cpu-type=None
 
 digilent_arty: $(GATEWAREDIR)/digilent_arty.bit
 	openFPGALoader -b arty --freq 30e6 $<
@@ -150,4 +158,11 @@ $(GATEWAREDIR)/gsd_orangecrab.dfu: ./vhd/all_vhdl_files/top.v ./litex_soc.py
 	ecppack --bootaddr 0 --compress  $(GATEWAREDIR)/gsd_orangecrab.config --svf $(GATEWAREDIR)/gsd_orangecrab.svf --bit $(GATEWAREDIR)/gsd_orangecrab.bit	
 	cp $(GATEWAREDIR)/gsd_orangecrab.bit $@
 	dfu-suffix -v 1209 -p 5bf0 -a $@
+
+$(GATEWAREDIR)/hackaday_hadbadge.bit: ./vhd/all_vhdl_files/top.v ./litex_soc.py
+	FRAME_WIDTH=$(FRAME_WIDTH) FRAME_HEIGHT=$(FRAME_HEIGHT) FRAME_FPS=$(FRAME_FPS) python3 ./litex_soc.py $(BOARD) --cpu-type=None
+
+hackaday_hadbadge: $(GATEWAREDIR)/hackaday_hadbadge.bit
+	echo TO PROGRAM THE BADGE, run:
+	echo dfu-util -d 1d50:614a,1d50:614b -a 0 -R -D ./build/hackaday_hadbadge/gateware/hackaday_hadbadge.bit
 
