@@ -29,8 +29,9 @@ Twitter:
 [@pipelinec_hdl](https://twitter.com/pipelinec_hdl) 
 [@suarezvictor](https://twitter.com/suarezvictor)
 
-Talk on Discord: [Digital Design HQ](https://discord.gg/pY2wJvnCMY)
-`#hdl-other`
-`#project-chat`
-`#fpga`
-
+Talk on Discord: 
+* [Digital Design HQ](https://discord.gg/pY2wJvnCMY)
+  * `#hdl-other`
+  * `#project-chat`
+  * `#fpga`
+* [PipelineC](https://discord.gg/Aupm3DDrK2)

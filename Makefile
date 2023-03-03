@@ -8,7 +8,7 @@ VERILATOR_CFLAGS+=-CFLAGS -DUSE_VERILATOR -CFLAGS -DFRAME_WIDTH=$(FRAME_WIDTH) -
 CFLEX_C?=python3 ../CflexHDL/cflexparser/cflexc.py
 PIPELINEC_ROOT?=../PipelineC
 PIPELINEC?=$(PIPELINEC_ROOT)/src/pipelinec
-INCLUDE+=-I$(PIPELINEC_ROOT) -I../CflexHDL/include
+INCLUDE+=-I$(PIPELINEC_ROOT) -I$(PIPELINEC_ROOT)/pipelinec/include -I../CflexHDL/include
 PIPELINEC_MAIN?=./pipelinec_app.c
 BOARD?=hackaday_hadbadge
 #BOARD?=gsd_orangecrab
