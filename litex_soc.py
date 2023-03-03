@@ -123,7 +123,7 @@ def build_de0nano(args, timings):
 	return soc
 
 lcd_timings = ("480x320@60Hz", {
-	"pix_clk"       : 12e6, #TODO: check datasheet
+	"pix_clk"       : 12.5e6, #TODO: check datasheet
 	"h_active"      : 480,
     "h_blanking"    : 64,
     "h_sync_offset" : 8,
@@ -330,13 +330,14 @@ def build_orangecrab(args, timings):
 
 
 class _CRG_HadBadge2019(LiteXModule):
-    def __init__(self, platform, sys_clk_freq, video_clock=12e6, with_video_pll=False):
+    def __init__(self, platform, sys_clk_freq, video_clock=12e6):
         self.rst    = Signal()
         self.cd_sys = ClockDomain()
 
         # # #
 
         # Clk / Rst
+        clkin_freq = 8e6
         clk8 = platform.request("clk8")
 
 
@@ -344,18 +345,10 @@ class _CRG_HadBadge2019(LiteXModule):
         self.pll = pll = ECP5PLL()
         pll.pfd_freq_range = (8e6, 400e6) # Lower Min from 10MHz to 8MHz.
         self.comb += pll.reset.eq(self.rst)
-        pll.register_clkin(clk8, 8e6)
-        pll.create_clkout(self.cd_sys, sys_clk_freq) #TODO: merge PLLs
-
-        # Video PLL
-        if with_video_pll:
-            self.submodules.video_pll = video_pll = ECP5PLL()
-            video_pll.pfd_freq_range = pll.pfd_freq_range
-            video_pll.register_clkin(clk8, 8e6)
-            self.cd_dvi = ClockDomain()
-            self.cd_dvi5x = ClockDomain()
-            video_pll.create_clkout(self.cd_dvi, video_clock)
-            video_pll.create_clkout(self.cd_dvi5x, 5*video_clock)
+        pll.register_clkin(clk8, clkin_freq)
+        pll.create_clkout(self.cd_sys, sys_clk_freq)
+        #self.cd_video = ClockDomain()
+        #video_pll.create_clkout(self.cd_video, video_clock)
 
 
 class HadBadge_LCDPHY(Module):
@@ -364,7 +357,7 @@ class HadBadge_LCDPHY(Module):
 
         # # #
         from gateware.lcd import LCD # AUO H320QN01
-        l = LCD(pads, ref_freq=ref_freq, OFFX=56-3, OFFY=56) #OFFX seems like blanking-sync_offset-3
+        l = LCD(pads, ref_freq=ref_freq, OFFX=56-1, OFFY=56) #for some reason 1 clock less delay is needed
         l = ClockDomainsRenamer(clock_domain)(l)
         self.submodules.lcd = l
 
@@ -389,15 +382,15 @@ def build_hadbadge2019(args, timings):
 	#from litex.build.yosys_wrapper import YosysWrapper
 	#YosysWrapper._default_template =  [] #see .ys file for default, [] to skip JSON build
 
-	sys_clk_freq=int(8e6)
+	video_clock = timings["pix_clk"]
+	sys_clk_freq=int(video_clock)
 	kwargs = soc_core_argdict(args)
 	soc = SoCCore(platform, sys_clk_freq, **kwargs)
-	video_clock = timings["pix_clk"]
 
 	soc.submodules.crg = _CRG_HadBadge2019(platform, sys_clk_freq, video_clock)
 	soc.button = Signal() #~platform.usr_btn
 
-	lcd_clk = "sys"
+	lcd_clk = "sys" #"video"
 	soc.submodules.videophy = HadBadge_LCDPHY(platform.request("lcd"), clock_domain=lcd_clk, ref_freq=video_clock)
 	add_video_custom_generator(soc, phy=soc.videophy, timings=timings, clock_domain=lcd_clk)
 
