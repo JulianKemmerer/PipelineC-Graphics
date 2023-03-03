@@ -122,6 +122,20 @@ def build_de0nano(args, timings):
 	soc.submodules.videophy = VideoHDMIPHY(soc.platform.request("gpdi"), clock_domain = soc.video_clock_domain)
 	return soc
 
+lcd_timings = ("480x320@60Hz", {
+	"pix_clk"       : 12e6, #TODO: check datasheet
+	"h_active"      : 480,
+    "h_blanking"    : 64,
+    "h_sync_offset" : 8,
+    "h_sync_width"  : 24,
+    "v_active"      : 320,
+    "v_blanking"    : 64,
+    "v_sync_offset" : 8,
+    "v_sync_width"  : 24,
+})
+
+video_timings[lcd_timings[0]] = lcd_timings[1]
+
 def get_video_timings():
 	timings_sel = "{W}x{H}@{FPS}Hz".format(W = os.environ["FRAME_WIDTH"], H = os.environ["FRAME_HEIGHT"], FPS = os.environ["FRAME_FPS"])
 	timings = video_timings[timings_sel]
@@ -162,8 +176,8 @@ class _CRG_arty(Module):
 
 def build_arty(args, timings):
 	from litex_boards.platforms import digilent_arty as board
-	platform = board.Platform(variant="a7-100", toolchain="vivado") # a7-35 or a7-100 
-	#platform = board.Platform(toolchain="yosys+nextpnr") #brings errors about usage of DSP48E1 (* operator) and of ODDR
+	#platform = board.Platform(variant="a7-100", toolchain="vivado") # a7-35 or a7-100 
+	platform = board.Platform(toolchain="yosys+nextpnr") #brings errors about usage of DSP48E1 (* operator) and of ODDR
 	sys_clk_freq = int(100e6)
 	soc = SoCCore(platform, sys_clk_freq, **soc_core_argdict(args))
 	soc.submodules.crg = _CRG_arty(platform, sys_clk_freq, timings["pix_clk"], False)
@@ -199,7 +213,7 @@ def build_arty(args, timings):
 from migen.genlib.misc import WaitTimer
 from migen.genlib.resetsync import AsyncResetSynchronizer
 
-class _CRGECP5(LiteXModule):
+class _CRGOrangecrab(LiteXModule):
     def __init__(self, platform, sys_clk_freq, video_clock, with_usb_pll=True):
         self.rst = Signal()
         self.cd_por      = ClockDomain()
@@ -281,7 +295,7 @@ def build_orangecrab(args, timings):
 	kwargs["uart_name"] = "usb_acm" #set this to get USB ACM serial
     #platform.add_extension(gsd_orangecrab.feather_serial) #rx=GPIO:0 & tx=GPIO:1
 	soc = SoCCore(platform, sys_clk_freq, **kwargs)
-	soc.submodules.crg = _CRGECP5(platform, sys_clk_freq, timings["pix_clk"])
+	soc.submodules.crg = _CRGOrangecrab(platform, sys_clk_freq, timings["pix_clk"])
 	soc.button = ~platform.usr_btn
 
 	if DVI:
@@ -314,6 +328,82 @@ def build_orangecrab(args, timings):
 		add_video_custom_generator(soc, phy=soc.videophy, timings=timings, clock_domain="vga")
 	return soc
 
+
+class _CRG_HadBadge2019(LiteXModule):
+    def __init__(self, platform, sys_clk_freq, video_clock=12e6, with_video_pll=False):
+        self.rst    = Signal()
+        self.cd_sys = ClockDomain()
+
+        # # #
+
+        # Clk / Rst
+        clk8 = platform.request("clk8")
+
+
+        # PLL
+        self.pll = pll = ECP5PLL()
+        pll.pfd_freq_range = (8e6, 400e6) # Lower Min from 10MHz to 8MHz.
+        self.comb += pll.reset.eq(self.rst)
+        pll.register_clkin(clk8, 8e6)
+        pll.create_clkout(self.cd_sys, sys_clk_freq) #TODO: merge PLLs
+
+        # Video PLL
+        if with_video_pll:
+            self.submodules.video_pll = video_pll = ECP5PLL()
+            video_pll.pfd_freq_range = pll.pfd_freq_range
+            video_pll.register_clkin(clk8, 8e6)
+            self.cd_dvi = ClockDomain()
+            self.cd_dvi5x = ClockDomain()
+            video_pll.create_clkout(self.cd_dvi, video_clock)
+            video_pll.create_clkout(self.cd_dvi5x, 5*video_clock)
+
+
+class HadBadge_LCDPHY(Module):
+    def __init__(self, pads, clock_domain="sys", ref_freq=25e6):
+        self.sink = sink = stream.Endpoint(video_data_layout)
+
+        # # #
+        from gateware.lcd import LCD # AUO H320QN01
+        l = LCD(pads, ref_freq=ref_freq, OFFX=56-3, OFFY=56) #OFFX seems like blanking-sync_offset-3
+        l = ClockDomainsRenamer(clock_domain)(l)
+        self.submodules.lcd = l
+
+        # Always ack Sink, no backpressure.
+        self.comb += sink.ready.eq(1)
+
+        # Drive Controls.
+        self.comb += l.en.eq(sink.de)
+        self.comb += l.hsync.eq(~sink.hsync)
+        self.comb += l.vsync.eq(~sink.vsync)
+
+        # Drive Datas.
+        self.comb += l.r.eq(sink.r)
+        self.comb += l.g.eq(sink.g)
+        self.comb += l.b.eq(sink.b)
+
+def build_hadbadge2019(args, timings):
+	from litex_boards.platforms import hackaday_hadbadge as board
+	toolchain="trellis"
+
+	platform = board.Platform(toolchain=toolchain)
+	#from litex.build.yosys_wrapper import YosysWrapper
+	#YosysWrapper._default_template =  [] #see .ys file for default, [] to skip JSON build
+
+	sys_clk_freq=int(8e6)
+	kwargs = soc_core_argdict(args)
+	soc = SoCCore(platform, sys_clk_freq, **kwargs)
+	video_clock = timings["pix_clk"]
+
+	soc.submodules.crg = _CRG_HadBadge2019(platform, sys_clk_freq, video_clock)
+	soc.button = Signal() #~platform.usr_btn
+
+	lcd_clk = "sys"
+	soc.submodules.videophy = HadBadge_LCDPHY(platform.request("lcd"), clock_domain=lcd_clk, ref_freq=video_clock)
+	add_video_custom_generator(soc, phy=soc.videophy, timings=timings, clock_domain=lcd_clk)
+
+	return soc
+
+
 if __name__ == "__main__":
 	boardname = sys.argv[1]
 	sys.argv = sys.argv[1:] #remove first argument
@@ -331,6 +421,11 @@ if __name__ == "__main__":
 		VHDL=False
 		run=False
 		soc = build_orangecrab(args, timings)
+	if boardname == "hackaday_hadbadge":
+		VHDL=False
+		run=True
+		soc = build_hadbadge2019(args, timings)
+
 	if VHDL:
 		soc.platform.add_source_dir("./vhd/all_vhdl_files", recursive=False)
 	else:
