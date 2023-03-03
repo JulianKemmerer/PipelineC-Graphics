@@ -87,6 +87,9 @@ struct material_t {
 
 #ifdef COLOR_DECOMP
 #define color_basic_t color_type
+inline color_type colorbasic_select(color_type x, color_type a, color_type b) { return b+(a-b)*x; }
+#define color_select colorbasic_select //FIXME: too hacky
+#undef HEAT_CONSTANT //it uses color_select at frame frequency, but it's now defined as single channel
 struct render_material_t {
     color_basic_t diffuse_color;
     color_basic_t reflect_color;
@@ -117,6 +120,9 @@ struct scene_t
   color fog;
   uint16_t frame;
   uint16_t scorebar;
+#ifdef COLOR_DECOMP
+  uint2_t current_color_channel;
+#endif
 };
 
 struct scene_colors_t

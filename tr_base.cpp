@@ -14,7 +14,13 @@ HOW TO PLAY:
 //#define SOFT_SHADOW 1 //2 for smoother border transition
 //#define LEVELS
 //#define ALTERNATE_UI 3 //level of graphics detail
-//#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702)
+//ALTERNATE_UI=1 640x480: synths in Arty35T @35.60 MHz, 2199/33280 cells, 0 latency)
+//ALTERNATE_UI=2 640x480: synths in Arty35T @27.43 MHz, 3479/33280 cells, 0 latency)
+//ALTERNATE_UI=3 640x480: synths in Arty35T @25.74 MHz, 7651/33280 cells, 5 latency)
+
+//#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702 board=???)
+//RT_SMALL_UI 640x480: synths in Arty35T @27.63 MHz, about 27000/33280 cells, 28 latency)
+
 //#define DITHER
 //#define ANTIALIAS 6 //default 6, smooth 4
 #define SCREEN_ASPECT 16./9. //or for example 10./9. 
@@ -116,9 +122,10 @@ inline scene_colors_t scene_colors(IN(scene_t) scene)
 }
 
 #else
-inline scene_colors_t scene_colors(uint2_t channel)
+inline scene_colors_t scene_colors(IN(scene_t) scene)
 {
-  IN(scene_t) scene = state.scene;
+  //IN(scene_t) scene = state.scene;
+  uint2_t channel = scene.current_color_channel;
 
   scene_colors_t r;
   if(channel == 0)
@@ -311,7 +318,7 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(point_and_dir) hitin)
   return hitout;
 }
 
-color_basic_t sphere_effect(IN(hit_out) hit, IN(material_t) hit_material)
+color_basic_t sphere_effect(IN(hit_out) hit, IN(render_material_t) hit_material)
 {
   color_basic_t rcolor = hit_material.diffuse_color;
 #ifdef BLINKY
@@ -468,7 +475,7 @@ color_basic_t background_color(float dir_y)
   return color_basic_t(y);
 }
 
-color_type light_intensity(IN(vec3) hit)
+color_basic_t light_intensity(IN(vec3) hit)
 {
 #if 0
   //this float version takes 2148 FPGA cells
@@ -480,7 +487,7 @@ color_type light_intensity(IN(vec3) hit)
   coord_type lz = (coord_type(hit.z)-LIGHT_Z)*coord_type(1./LIGHT_Y);
   coord_type lx = coord_type(hit.x)*coord_type(1./LIGHT_Y);
   coord_type dl = lx*lx + 1. + lz*lz;
-  return color_type(inversesqrt(float(dl))); //FIXME: implement RSQRT for fixed points
+  return color_basic_t(inversesqrt(float(dl))); //FIXME: implement RSQRT for fixed points
 #endif
 }
 
@@ -492,7 +499,7 @@ color_basic_t cast_ray_nested(IN(point_and_dir) hitin)
 #ifdef RT_SMALL_UI
   return background_color(hitin.dir.y);
 #else
-  material_t hit_material;
+  render_material_t hit_material;
   hit_material = colors.sphere;//this is what's reflected on the floor
 #if 1<PLANE_MAXRECURSIVITY
   hit_out hitout = ray_sphere_intersect(object_coord_to_float3(scene.sphere.center), hitin);
@@ -528,7 +535,7 @@ color_basic_t cast_ray_nested(IN(point_and_dir) hitin)
 #endif
 }
 
-color_basic_t shade(IN(color_basic_t) background, IN(vec3) dir, IN(hit_out) hit, IN(material_t) hit_material, color_type minfog)
+color_basic_t shade(IN(color_basic_t) background, IN(vec3) dir, IN(hit_out) hit, IN(render_material_t) hit_material, color_type minfog)
 {
   IN(scene_t) scene = get_scene();
   IN(scene_colors_t) colors = scene_colors(scene);
@@ -544,7 +551,7 @@ color_basic_t shade(IN(color_basic_t) background, IN(vec3) dir, IN(hit_out) hit,
     hitreflect.dist = hit.dist; //to accumulate distance
 #endif
     color_basic_t reflect_color = cast_ray_nested(hitreflect);
-    color_type li = light_intensity(hit.hit.orig);
+    color_basic_t li = light_intensity(hit.hit.orig);
 #ifdef SOFT_SHADOW
     float sx = hit.hit.orig.x - SPHERE_X;
     float sy = (float)scene.sphere.center.y;
@@ -581,7 +588,7 @@ color_basic_t cast_ray(IN(point_and_dir) hitin)
 #endif
 
   hit_out hitsphere = ray_sphere_intersect(object_coord_to_float3(scene.sphere.center), hitin);
-  material_t sphere_material = colors.sphere; //FIXME: needed?
+  render_material_t sphere_material = colors.sphere; //FIXME: needed?
   sphere_material.diffuse_color = sphere_effect(hitsphere, colors.sphere);
 
 #ifndef RT_SMALL_UI
@@ -589,12 +596,12 @@ color_basic_t cast_ray(IN(point_and_dir) hitin)
 #else
   hit_out hitplane; hitplane.dist = RAY_NOINT;
 #endif
-  material_t planematerial;
+  render_material_t planematerial;
   planematerial = colors.plane;  //FIXME: needed?
   planematerial.diffuse_color = plane_effect(hitplane);
 #ifndef ANTIALIAS
   bool planehit =  hitplane.dist < hitsphere.dist;
-  material_t hit_material;
+  render_material_t hit_material;
   hit_material = planehit ? planematerial : sphere_material;
 
    hit_out hitout = planehit ? hitplane : hitsphere;
@@ -988,7 +995,7 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
     pix.b = (b >= 256) ? uint8_t(255):uint8_t(b);
 #else //not COLOR_DECOMP
     pix = pix_in;
-    color_type c = render_pixel_internal(x, y, scene, scene_colors(scene, channel));
+    color_type c = render_pixel_internal(x, y);
     uint16_t c9 = (uint16_t)fixed_asshort(c, 8);
     uint8_t c8 = (uint8_t) ((c9 & ~0xFF) ? (uint8_t)0xFF:(uint8_t)c9);
     if(channel == 0)

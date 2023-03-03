@@ -14,9 +14,16 @@ HOW TO PLAY:
 //#define SOFT_SHADOW 1 //2 for smoother border transition
 //#define LEVELS
 //#define ALTERNATE_UI 3 //level of graphics detail
-//#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702)
+//ALTERNATE_UI=1 640x480: synths in Arty35T @35.60 MHz, 2199/33280 cells, 0 latency)
+//ALTERNATE_UI=2 640x480: synths in Arty35T @27.43 MHz, 3479/33280 cells, 0 latency)
+//ALTERNATE_UI=3 640x480: synths in Arty35T @25.74 MHz, 7651/33280 cells, 5 latency)
+
+//#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702 board=???)
+//RT_SMALL_UI 640x480: synths in Arty35T @27.63 MHz, about 27000/33280 cells, 28 latency)
+
 //#define DITHER
 //#define ANTIALIAS 6 //default 6, smooth 4
+#define SCREEN_ASPECT 16./9. //or for example 10./9. 
 
 #include "tr.h"
 
@@ -73,22 +80,14 @@ inline scene_colors_t scene_colors(IN(scene_t) scene)
 struct point_and_dir
 {
   vec3 orig, dir;
-  float dist; //FIXME: move appropiately
 };
 
 struct hit_out
 {
   float dist, borderdist;
   point_and_dir hit;
-  float accdist;
 };
 
-float calc_accdist(IN(point_and_dir) hitin, IN(hit_out) hitout)
-{
-  float din = hitin.dist + hitout.dist;
-  float d = float_shift(din, -(ANTIALIAS+6));
-  return d;
-}
 
 //#warning: this seems to add cells to synth, FIXME: inline and define 'hit_out hitout;' at top
 hit_out sphere_hit(bool hit, IN(vec3) center, IN(point_and_dir) hitin, float t, float diff)
@@ -99,7 +98,6 @@ hit_out sphere_hit(bool hit, IN(vec3) center, IN(point_and_dir) hitin, float t, 
   {
     hitout.hit.orig = hitin.orig + hitin.dir*hitout.dist;
     hitout.hit.dir = normalize(hitout.hit.orig - center);
-    hitout.accdist = calc_accdist(hitin, hitout);
   }
   hitout.borderdist = diff;
   return hitout;
@@ -150,7 +148,6 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(point_and_dir) hitin)
        if(!fixed_is_negative(hole_margin))
        {
           hitout.dist = d;
-          hitout.accdist = calc_accdist(hitin, hitout);
           hitout.hit.orig = pt;
           vec3 N = VECTOR_NURMAL_UPWARDS;
           hitout.hit.dir = N; //points upwards
@@ -161,7 +158,7 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(point_and_dir) hitin)
   return hitout;
 }
 
-color_basic_t sphere_effect(IN(hit_out) hit, IN(material_t) hit_material)
+color_basic_t sphere_effect(IN(hit_out) hit, IN(render_material_t) hit_material)
 {
   color_basic_t rcolor = hit_material.diffuse_color;
   IN(scene_t) scene = get_scene();
@@ -184,16 +181,6 @@ color_basic_t sphere_effect(IN(hit_out) hit, IN(material_t) hit_material)
   return rcolor;
 }
 
-inline color_type plane_alpha(float borderdist, float dist_z)
-{
-  return color_type(borderdist/dist_z); //float_shift(borderdist/dist_z, -1);
-}
-
-float triang(float x )
-{
-  float h = x-float(int(x));
-  return float_abs(h-.5);
-}
 
 
 color_basic_t plane_effect(IN(hit_out) hit)
@@ -217,50 +204,10 @@ color_basic_t plane_effect(IN(hit_out) hit)
  color_basic_t color2 = colors.plane_color2;
 
   rcolor = ((ix ^ iz) & 1) != 0 ? colors.plane_color1 : color2;
-  color_basic_t rcolor2 = ((ix ^ iz) & 1) == 0 ? colors.plane_color1 : color2;
-
-  float hitdist = hit.accdist;
-  float opax = triang(ox)/float_shift(hitdist, 1);
-  float opaz = triang(oz)/float_shift(hitdist, 1);
-
-
-  if(opax > 1.) opax = 1.; if(opax < -1.) opax = -1.;
-  if(opaz > 1.) opaz = 1.; if(opaz < -1.) opaz = -1.;
-
-  float_type opa = opaz*opax+.5;
-
-  if(is_negative(opa))
-  {
-    rcolor = rcolor2;
-    //rcolor.x = 1.;
-  }
-  else if(opa > 1.)
-  {
-    rcolor = rcolor;
-    //rcolor.y = 1.;
-  }
-  else
-  {
-    //rcolor = color_select(color_type(opa), rcolor, rcolor2);
-    float r = opa*float(rcolor.x)-(opa-1.)*float(rcolor2.x);
-    float g = opa*float(rcolor.y)-(opa-1.)*float(rcolor2.y);
-    float b = opa*float(rcolor.z)-(opa-1.)*float(rcolor2.z);
-    rcolor.x = color_type(r);
-    rcolor.y = color_type(g);
-    rcolor.z = color_type(b);
-    //rcolor.z = 1.;
-  }
 
   if(hit.borderdist < HOLE_BORDER)
   {
-    float dh = HOLE_BORDER-hit.borderdist;
-    if(dh < hit.accdist)
-    {
-      color_type opacity = plane_alpha(dh, hit.accdist);
-      rcolor = color_select(opacity, colors.plane.diffuse_color, rcolor); //border inside floor
-    }
-    else
-      rcolor = colors.plane.diffuse_color;
+    rcolor = colors.plane.diffuse_color;
   }
 
   return rcolor;
@@ -272,13 +219,13 @@ color_basic_t background_color(float dir_y)
   return color_basic_t(y);
 }
 
-color_type light_intensity(IN(vec3) hit)
+color_basic_t light_intensity(IN(vec3) hit)
 {
   //light_intensity optimized for fixe points
   coord_type lz = (coord_type(hit.z)-LIGHT_Z)*coord_type(1./LIGHT_Y);
   coord_type lx = coord_type(hit.x)*coord_type(1./LIGHT_Y);
   coord_type dl = lx*lx + 1. + lz*lz;
-  return color_type(inversesqrt(float(dl))); //FIXME: implement RSQRT for fixed points
+  return color_basic_t(inversesqrt(float(dl))); //FIXME: implement RSQRT for fixed points
 }
 
 color_basic_t cast_ray_nested(IN(point_and_dir) hitin)
@@ -286,7 +233,7 @@ color_basic_t cast_ray_nested(IN(point_and_dir) hitin)
   IN(scene_t) scene = get_scene();
   IN(scene_colors_t) colors = scene_colors(scene);
 
-  material_t hit_material;
+  render_material_t hit_material;
   hit_material = colors.sphere;//this is what's reflected on the floor
   hit_out hitout = ray_sphere_intersect(object_coord_to_float3(scene.sphere.center), hitin);
 
@@ -297,7 +244,6 @@ color_basic_t cast_ray_nested(IN(point_and_dir) hitin)
     //this controls what's reflected on the sphere
     hitout = hitplane;
     hit_material = colors.plane;
-    hitout.accdist = float_shift(hitout.accdist, 2); //blur ball reflection
     hit_material.diffuse_color = plane_effect(hitout);
   }
   
@@ -311,7 +257,7 @@ color_basic_t cast_ray_nested(IN(point_and_dir) hitin)
   return rcolor;
 }
 
-color_basic_t shade(IN(color_basic_t) background, IN(vec3) dir, IN(hit_out) hit, IN(material_t) hit_material, color_type minfog)
+color_basic_t shade(IN(color_basic_t) background, IN(vec3) dir, IN(hit_out) hit, IN(render_material_t) hit_material, color_type minfog)
 {
   IN(scene_t) scene = get_scene();
   IN(scene_colors_t) colors = scene_colors(scene);
@@ -323,9 +269,8 @@ color_basic_t shade(IN(color_basic_t) background, IN(vec3) dir, IN(hit_out) hit,
     point_and_dir hitreflect;
     hitreflect.orig = hit.hit.orig;
     hitreflect.dir = reflect(dir, hit.hit.dir);
-    hitreflect.dist = hit.dist; //to accumulate distance
     color_basic_t reflect_color = cast_ray_nested(hitreflect);
-    color_type li = light_intensity(hit.hit.orig);
+    color_basic_t li = light_intensity(hit.hit.orig);
     color_basic_t diffuse_color = hit_material.diffuse_color * (li + AMBIENT_INTENSITY);
     color_basic_t comb_color = diffuse_color + reflect_color*hit_material.reflect_color;
     rcolor = color_select(color_max(color_type(fogmix), minfog), colors.fog, comb_color);
@@ -351,48 +296,20 @@ color_basic_t cast_ray(IN(point_and_dir) hitin)
   color_basic_t bfog = color_select(mix, colors.fog, sky);
 
   hit_out hitsphere = ray_sphere_intersect(object_coord_to_float3(scene.sphere.center), hitin);
-  material_t sphere_material = colors.sphere; //FIXME: needed?
+  render_material_t sphere_material = colors.sphere; //FIXME: needed?
   sphere_material.diffuse_color = sphere_effect(hitsphere, colors.sphere);
 
   hit_out hitplane = ray_plane_intersect(scene.plane, hitin);
-  material_t planematerial;
+  render_material_t planematerial;
   planematerial = colors.plane;  //FIXME: needed?
   planematerial.diffuse_color = plane_effect(hitplane);
-//#warning why non default constructor?
-   color_basic_t rcolor = color_basic_t(0.);
+  bool planehit =  hitplane.dist < hitsphere.dist;
+  render_material_t hit_material;
+  hit_material = planehit ? planematerial : sphere_material;
 
-   color_basic_t planecolor = shade(bfog, hitin.dir, hitplane, planematerial, mix); //FIXME: bfog
-
-   float sphere_plane_dist = hitplane.dist - hitsphere.dist;
-   if(hitplane.dist != RAY_NOINT && hitplane.borderdist < hitplane.accdist)
-   {
-     color_type planeopacity = plane_alpha(hitplane.borderdist, hitplane.accdist);
-     planecolor = color_select(planeopacity, planecolor, bfog); //border next to hole
-   }
-
-   if(is_negative(sphere_plane_dist))
-   {
-     //plane & plane border
-     rcolor = planecolor;
-   }
-   else
-   {
-     color_basic_t spherecolor = shade(bfog, hitin.dir, hitsphere, colors.sphere, 0.);
-     float aaradius = float_shift(hitsphere.dist, ANTIALIAS-13);
-     float opacity = hitsphere.borderdist*aaradius;
-
-     float da = sphere_plane_dist*aaradius; //FIXME: this shouldn't compresses in y axis when plane is near to the horizontal
-     if(da >= 0. && da < 1.) //sphere & floor intersection
-     {
-       opacity = opacity*da;
-     }
-
-     if(opacity > 1.) opacity = 1.;
-     if(is_negative(opacity)) opacity = 0.; //FIXME: define clamp function
-
-     rcolor = color_select(color_type(opacity), spherecolor, planecolor);
-   }
-
+   hit_out hitout = planehit ? hitplane : hitsphere;
+   color_type c = planehit ? mix : color_type(0.);
+   color_basic_t rcolor = shade(bfog, hitin.dir, hitout, hit_material, c); //no fog for sphere
    return rcolor;
 }
 
@@ -406,7 +323,6 @@ color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y)
   hitin.orig = object_coord_to_float3(scene.camera);
   vec3 camera_dir = {float(x), float(y), float(-1.)};
   hitin.dir = normalize(camera_dir);
-  hitin.dist = 0.; //start dist
   return cast_ray(hitin);
 }
 
@@ -549,7 +465,7 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
   cy = (FRAME_HEIGHT + 1) - cy;
   const float W = (float)FRAME_WIDTH;
   const float H = (float)FRAME_HEIGHT;
-  static const screen_coord_t ax = 1024.*(16./9.)/W;
+  static const screen_coord_t ax = 1024.*(SCREEN_ASPECT)/W;
   static const screen_coord_t ay = 1024./H;
   screen_coord_t x = fixed_shr(cx, 10+1) * ax;
   screen_coord_t y = fixed_shr(cy, 10+1) * ay;
