@@ -63,15 +63,41 @@ hole_t plane_has_hole(hole_t x, hole_t z)
 
 inline scene_colors_t scene_colors(IN(scene_t) scene)
 {
+  uint2_t channel = scene.current_color_channel;
+
   scene_colors_t r;
-  r.sphere = scene.sphere.material;
-  r.plane = scene.plane.material;
-  r.plane_color1 = scene.plane.color1;
-  r.plane_color2 = scene.plane.color2;
-  r.fog = scene.fog;
+  if(channel == 0)
+  {
+    r.sphere.diffuse_color = scene.sphere.material.diffuse_color.r;
+    r.sphere.reflect_color = scene.sphere.material.reflect_color.r;
+    r.plane.diffuse_color = scene.plane.material.diffuse_color.r;
+    r.plane.reflect_color = scene.plane.material.reflect_color.r;
+    r.plane_color1 = scene.plane.color1.r;
+    r.plane_color2 = scene.plane.color2.r;
+    r.fog = scene.fog.r;
+  }
+  else if(channel == 1)
+  {
+    r.sphere.diffuse_color = scene.sphere.material.diffuse_color.g;
+    r.sphere.reflect_color = scene.sphere.material.reflect_color.g;
+    r.plane.diffuse_color = scene.plane.material.diffuse_color.g;
+    r.plane.reflect_color = scene.plane.material.reflect_color.g;
+    r.plane_color1 = scene.plane.color1.g;
+    r.plane_color2 = scene.plane.color2.g;
+    r.fog = scene.fog.g;
+  }
+  else
+  {
+    r.sphere.diffuse_color = scene.sphere.material.diffuse_color.b;
+    r.sphere.reflect_color = scene.sphere.material.reflect_color.b;
+    r.plane.diffuse_color = scene.plane.material.diffuse_color.b;
+    r.plane.reflect_color = scene.plane.material.reflect_color.b;
+    r.plane_color1 = scene.plane.color1.b;
+    r.plane_color2 = scene.plane.color2.b;
+    r.fog = scene.fog.b;
+  }
   return r;
 }
-
 
 
 
@@ -398,7 +424,6 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
     bool half_up = state.sphere_y > state.plane_y;
     if(half_up && state.won == false)
     {
-      state.heat = state.heat + HEAT_CONSTANT;
 
       //TODO: if the plane has a hole can be calculated at rendering time and reused!
       if(plane_has_hole(coord_x, coord_z) > -HOLE_GUARD_MARGIN) // > about -.1 gives margin for the ball size
@@ -422,13 +447,12 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
   }
   state.camera_y = state.camera_y + fixed_shr(state.sphere_y - state.camera_y, 5);
 
-  state.heat = state.heat - color_type(fixed_shr(state.heat, 4)); //cools down
 
   //write all outputs
   state.lose = fixed_is_negative(underground) && ((-int16_t(underground) >> 10) != 0); //underground < -2048.
 
-  state.diffuse_color = color_select(state.heat, state.lava_color, state.gold_color);
-  state.reflect_color = state.gold_reflect_color*(color_type(1.) - fixed_shr(state.heat, 2));
+  state.diffuse_color = state.gold_color;
+  state.reflect_color = state.gold_reflect_color;
 
   state.scorebar = state.won ? 0 : state.score;
 
@@ -455,6 +479,7 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
 }
 
 inline pixel_t render_pixel(uint16_t i, uint16_t j
+, pixel_t pix_in
 )
 {
   IN(scene_t) scene = get_scene();
@@ -480,13 +505,16 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
   }
   else
   {
-	color c = render_pixel_internal(x, y);
-    uint16_t r = (uint16_t)fixed_asshort(c.r, 8);
-    uint16_t g = (uint16_t)fixed_asshort(c.g, 8);
-    uint16_t b = (uint16_t)fixed_asshort(c.b, 8);
-    pix.r = (r >= 256) ? uint8_t(255):uint8_t(r);
-    pix.g = (g >= 256) ? uint8_t(255):uint8_t(g);
-    pix.b = (b >= 256) ? uint8_t(255):uint8_t(b);
+    pix = pix_in;
+    color_type c = render_pixel_internal(x, y);
+    uint16_t c9 = (uint16_t)fixed_asshort(c, 8);
+    uint8_t c8 = (uint8_t) ((c9 & ~0xFF) ? (uint8_t)0xFF:(uint8_t)c9);
+    if(scene.current_color_channel == 0)
+      pix.r = c8;
+    else if(scene.current_color_channel == 1)
+      pix.g = c8;
+    else
+      pix.b = c8;
   }
 
   return pix;

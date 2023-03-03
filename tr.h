@@ -82,7 +82,7 @@ struct material_t {
 };
 
 #ifndef SHADER
-//#define COLOR_DECOMP
+//#define COLOR_DECOMP 1 //1 for grayscale, 3 for colors, (leave not defined for no decomposition)
 #endif
 
 #ifdef COLOR_DECOMP

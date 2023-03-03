@@ -259,11 +259,17 @@ int main()
           pixel_t c = render_pixel(x, y);
 #else
           pixel_t c;
+#if COLOR_DECOMP == 1
+          state.scene.current_color_channel = 1; //use green channel
+          c = render_pixel(x, y, c);
+          c.r = c.b = c.g;
+#else
           for(int ch = 0; ch < 3; ++ch)
           {
             state.scene.current_color_channel = ch;
             c = render_pixel(x, y, c);
           }
+#endif
 #endif
       perf_render_dump();
 
