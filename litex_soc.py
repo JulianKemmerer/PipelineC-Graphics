@@ -374,6 +374,7 @@ class HadBadge_LCDPHY(Module):
         self.comb += l.g.eq(sink.g)
         self.comb += l.b.eq(sink.b)
 
+
 def build_hadbadge2019(args, timings):
 	from litex_boards.platforms import hackaday_hadbadge as board
 	toolchain="trellis"
@@ -388,7 +389,7 @@ def build_hadbadge2019(args, timings):
 	soc = SoCCore(platform, sys_clk_freq, **kwargs)
 
 	soc.submodules.crg = _CRG_HadBadge2019(platform, sys_clk_freq, video_clock)
-	soc.button = Signal() #~platform.usr_btn
+	soc.button = platform.request("keypad", loose=True).up
 
 	lcd_clk = "sys" #"video"
 	soc.submodules.videophy = HadBadge_LCDPHY(platform.request("lcd"), clock_domain=lcd_clk, ref_freq=video_clock)
