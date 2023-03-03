@@ -124,7 +124,6 @@ inline scene_colors_t scene_colors(IN(scene_t) scene)
 #else
 inline scene_colors_t scene_colors(IN(scene_t) scene)
 {
-  //IN(scene_t) scene = state.scene;
   uint2_t channel = scene.current_color_channel;
 
   scene_colors_t r;
@@ -943,7 +942,7 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
 #ifndef SHADER
 inline pixel_t render_pixel(uint16_t i, uint16_t j
 #ifdef COLOR_DECOMP
-, uint2_t channel, pixel_t pix_in
+, pixel_t pix_in
 #endif
 )
 {
@@ -993,14 +992,14 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
     pix.r = (r >= 256) ? uint8_t(255):uint8_t(r);
     pix.g = (g >= 256) ? uint8_t(255):uint8_t(g);
     pix.b = (b >= 256) ? uint8_t(255):uint8_t(b);
-#else //not COLOR_DECOMP
+#else //COLOR_DECOMP
     pix = pix_in;
     color_type c = render_pixel_internal(x, y);
     uint16_t c9 = (uint16_t)fixed_asshort(c, 8);
     uint8_t c8 = (uint8_t) ((c9 & ~0xFF) ? (uint8_t)0xFF:(uint8_t)c9);
-    if(channel == 0)
+    if(scene.current_color_channel == 0)
       pix.r = c8;
-    else if(channel == 1)
+    else if(scene.current_color_channel == 1)
       pix.g = c8;
     else
       pix.b = c8;

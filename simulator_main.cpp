@@ -243,7 +243,7 @@ int main()
       /*if(frame == 25)
       --frame;
       else*/
-#ifndef FP_DEBUG
+#if !defined(FP_DEBUG) && !defined(COLOR_DECOMP)
       #pragma omp parallel for
 #endif
       for(int y = 0; y < FRAME_HEIGHT; ++y)
@@ -259,9 +259,11 @@ int main()
           pixel_t c = render_pixel(x, y);
 #else
           pixel_t c;
-          c = render_pixel(x, y, 0, c);
-          c = render_pixel(x, y, 1, c);
-          c = render_pixel(x, y, 2, c);
+          for(int ch = 0; ch < 3; ++ch)
+          {
+            state.scene.current_color_channel = ch;
+            c = render_pixel(x, y, c);
+          }
 #endif
       perf_render_dump();
 
@@ -502,7 +504,7 @@ bool fb_init(unsigned width, unsigned height)
       SDL_SetWindowFullscreen(win, SDL_WINDOW_FULLSCREEN);
 
     SDL_ShowCursor(SDL_DISABLE);
-    fullscreen = true; //unncoment to limit FPS 
+    //fullscreen = true; //unncoment to limit FPS 
     renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE | (fullscreen ? SDL_RENDERER_PRESENTVSYNC: 0));
     if (!renderer)
       return false;
