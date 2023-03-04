@@ -18,7 +18,7 @@ HOW TO PLAY:
 //ALTERNATE_UI=2 640x480: synths in Arty35T @27.43 MHz, 3479/33280 cells, 0 latency)
 //ALTERNATE_UI=3 640x480: synths in Arty35T @25.74 MHz, 7651/33280 cells, 5 latency)
 
-//#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702 board=???)
+#define RT_SMALL_UI //enable to reduce raytracing complexity (without RT, 31619(comb only) / 20800 max, with RT ~23702 board=???)
 //RT_SMALL_UI 640x480: synths in Arty35T @27.63 MHz, about 27000/33280 cells, 28 latency)
 
 //#define DITHER

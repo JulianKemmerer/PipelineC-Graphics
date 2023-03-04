@@ -194,10 +194,20 @@ void pixel_logic()
 
   // Use VGA timing to derive frame clock
   frame_clock_logic(vga_signals.pos.x, vga_signals.pos.y, vga_signals.active);
+#define COLOR_DECOMP 1 //FIXME: find a single place to do this, since now it's also on tr.h
 
+#ifndef COLOR_DECOMP
   // Render the pixel at x,y pos 
   // Scene is wired in from frame logic domain
   pixel_t color = render_pixel(vga_signals.pos.x, vga_signals.pos.y);
+#else
+#if COLOR_DECOMP == 1
+  pixel_t color;
+  color = render_pixel(vga_signals.pos.x, vga_signals.pos.y, color);
+  color.r = color.g;
+  color.b = color.g;
+#endif
+#endif //COLOR_DECOMP
 
   // Drive output signals/registers
   pmod_register_outputs(vga_signals, color);
