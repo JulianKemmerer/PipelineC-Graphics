@@ -260,9 +260,10 @@ int main()
 #else
           pixel_t c;
 #if COLOR_DECOMP == 1
-          state.scene.current_color_channel = 1; //use green channel
+          state.scene.current_color_channel = 0; //use red channel
           c = render_pixel(x, y, c);
-          c.r = c.b = c.g;
+          c.g = c.r;
+          c.b = c.r;
 #else
           for(int ch = 0; ch < 3; ++ch)
           {

@@ -204,8 +204,8 @@ void pixel_logic()
 #if COLOR_DECOMP == 1
   pixel_t color;
   color = render_pixel(vga_signals.pos.x, vga_signals.pos.y, color);
-  color.r = color.g;
-  color.b = color.g;
+  color.g = color.r;
+  color.b = color.r;
 #endif
 #endif //COLOR_DECOMP
 

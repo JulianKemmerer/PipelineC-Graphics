@@ -23,7 +23,8 @@ HOW TO PLAY:
 
 //#define DITHER
 //#define ANTIALIAS 6 //default 6, smooth 4
-#define SCREEN_ASPECT 16./9. //or for example 10./9. 
+//#define SCREEN_ASPECT 16./9. //or for example 10./9. 
+#define SCREEN_ASPECT 3./2. //or for example 10./9. 
 
 #include "tr.h"
 
