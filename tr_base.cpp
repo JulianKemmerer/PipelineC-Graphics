@@ -996,8 +996,9 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
 #else //COLOR_DECOMP
     pix = pix_in;
     color_type c = render_pixel_internal(x, y);
-    uint16_t c9 = (uint16_t)fixed_asshort(c, 8);
-    uint8_t c8 = (uint8_t) ((c9 & ~0xFF) ? (uint8_t)0xFF:(uint8_t)c9);
+    uint9_t c9 = (uint9_t)fixed_asshort(c, 8);
+    //uint8_t c8 = (uint8_t) ((c9 & ~0xFF) ? (uint8_t)0xFF:(uint8_t)c9); //opt version, works?
+    uint8_t c8 = c9 >= 0x100 ? (uint8_t)0xFF:(uint8_t)c9);
     if(scene.current_color_channel == 0)
       pix.r = c8;
     else if(scene.current_color_channel == 1)
