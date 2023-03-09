@@ -303,15 +303,16 @@ def build_orangecrab(args, timings):
 		#https://github.com/machdyne/ddmi/"
 		#(PMPOD UP 1-4) D2- D1- D0- C- G +V"
         #               D2+ D1+ D0+ C+ G +V"
-		platform.add_extension([("hdmi_out", 0, #can use GND and just 4 more wires
+		platform.add_extension([("hdmi_out", 0, #can use GND and just 4 more wires (CK+/- recommended)
 			Subsignal("data2_p", Pins("R17"), IOStandard("LVCMOS33")), #SCK
-			#Subsignal("data2_n", Pins("??"), IOStandard("LVCMOS33")),
+			Subsignal("data2_n", Pins("N4"), IOStandard("LVCMOS33")), #A2
 			Subsignal("data1_p", Pins("N16"), IOStandard("LVCMOS33")), #MOSI
-			#Subsignal("data1_n", Pins("??"), IOStandard("LVCMOS33")),
+			Subsignal("data1_n", Pins("H4"), IOStandard("LVCMOS33")), #A3
 			Subsignal("data0_p", Pins("N15"), IOStandard("LVCMOS33")), #MISO
-			#Subsignal("data0_n", Pins("??"), IOStandard("LVCMOS33")),
+			Subsignal("data0_n", Pins("G4"), IOStandard("LVCMOS33")), #A4
 			Subsignal("clk_p",   Pins("C10"), IOStandard("LVCMOS33")), #SDA
-			#Subsignal("clk_n",   Pins("??"), IOStandard("LVCMOS33"))
+			Subsignal("clk_n",   Pins("C9"), IOStandard("LVCMOS33")), #SCL
+			Misc("SLEWRATE=FAST")
 			)])
 		soc.submodules.videophy = VideoHDMIPHY(platform.request("hdmi_out"), clock_domain="hdmi")
 		add_video_custom_generator(soc, phy=soc.videophy, timings=timings, clock_domain="hdmi")
