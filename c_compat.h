@@ -34,11 +34,16 @@ inline /*constexpr*/ float3 float3_make_from_float(float_type a) { float3 r = { 
 inline /*constexpr*/ float3 float3_make_from_double(double a) { return float3_make_from_float(a); }
 inline /*constexpr*/ float3 float3_make(float_type x, float_type y, float_type z) { float3 r = {x, y, z }; return r; } //constructor
 
-inline float3 float3_add(float3 left, float3 right) { float3 r = { left.x + right.x, left.y + right.y, left.z + right.z }; return r; }
-inline float3 float3_sub(float3 left, float3 right) { float3 r = { left.x - right.x, left.y - right.y, left.z - right.z }; return r; }
-inline float3 float3_mul(float3 left, float3 right) { float3 r = { left.x * right.x, left.y * right.y, left.z * right.z }; return r; }
-inline float3 float3_mul_float(float3 left, float_type right) { float3 r = { left.x * right, left.y * right, left.z * right }; return r; }
-inline float3 float3_sub_float(float3 left, float_type right) { float3 r = { left.x - right, left.y - right, left.z - right }; return r; }
+#define float3_op(op) \
+inline float3 float3_##op(float3 left, float3 right) { float3 r = { float_##op(left.x, right.x), float_##op(left.y, right.y), float_##op(left.z, right.z) }; return r; }
+#define float3_op_float(op) \
+inline float3 float3_##op##_float(float3 left, float_type right) { float3 r = { float_##op(left.x, right), float_##op(left.y, right), float_##op(left.z, right) }; return r; }
+float3_op(add)
+float3_op(sub)
+float3_op(mul)
+float3_op_float(add)
+float3_op_float(sub)
+float3_op_float(mul)
 
 #else // CCOMPILE = false
 
