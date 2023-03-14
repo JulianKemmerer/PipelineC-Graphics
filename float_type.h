@@ -19,7 +19,8 @@ inline float float_shift(float x, int shift) { return shift > 0 ? x * (1<<shift)
 #define float_add(a,b) ((a)+(b))
 #define float_sub(a,b) ((a)-(b))
 #define float_div(a,b) ((a)/(b))
-
+#else
+#include "pipelinec_float_type.h"
 #endif
 #endif
 
