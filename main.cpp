@@ -16,7 +16,7 @@ $ clang++ -DCCOMPILE -O3 -I. -I/media/1TB/Programs/Linux/oss-cad-suite/share/ver
 # Run
 $ ./sim
 */
-#define FRAME_FASTFORWARD 100 //how much frames to advance prior to the first rendered
+//#define FRAME_FASTFORWARD 100 //how much frames to advance prior to the first rendered
 
 #if !defined(FRAME_WIDTH) || !defined(FRAME_HEIGHT) 
 #error FRAME_WIDTH and FRAME_HEIGHT should be set (defaults are not recommended)
@@ -28,7 +28,6 @@ $ ./sim
 #include <unistd.h>
 
 // VGA timing logic, frame size const, etc
-#include "wire.h"
 #include "uintN_t.h"
 #include "vga/vga_timing.h"
 
@@ -69,8 +68,8 @@ inline void fb_setpixel(unsigned x, unsigned y, uint8_t r, uint8_t g, uint8_t b)
 inline uint64_t higres_ticks();
 inline uint64_t higres_ticks_freq();
 // VGA/DVI outputs (pmod when on physical fpga, verilator in sim)
-//#include "vga/vga_pmod.c"
-#include "dvi/dvi_pmod.c"
+#include "vga/vga_pmod.c"
+//#include "dvi/dvi_pmod.c"
 
 // Code adapted from https://projectf.io/posts/verilog-sim-verilator-sdl/
 #ifdef USE_VERILATOR
@@ -197,22 +196,22 @@ int main()
     {
       // Verilator clock loop iter?
       #ifdef USE_VERILATOR
-      if(g_top->dvi_x == 0 /*&& g_top->dvi_y == 0*/)
+      /*if(g_top->dvi_x == 0)// && g_top->dvi_y == 0)
       {
          if(fb_should_quit()) exit(1);
          //printf("frame %d, y %d\n", frame, g_top->dvi_y);
 		 fb_update(); //once by line
-		 if((g_top->dvi_y /*% (FRAME_HEIGHT/8)*/) == 0)
+		 if(g_top->dvi_y == 0) // % (FRAME_HEIGHT/8)) )
 		 {
 		   fb_save_texture(frame);
 		   if(++frame == 1000)
 		     break;
 		 }
-      }
+      }*/
       verilator_output(g_top);
-      g_top->pixel_clock = 0;
+      g_top->clk = 0;
       g_top->eval();
-      g_top->pixel_clock = 1;
+      g_top->clk = 1;
       g_top->eval();
       
       // Or raw C code running?
