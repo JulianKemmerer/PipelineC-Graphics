@@ -169,7 +169,7 @@ hackaday_hadbadge: $(GATEWAREDIR)/hackaday_hadbadge.bit
 
 mandelbrot_verilator: ./main.cpp
 	#rm -Rf ./build
-	$(PIPELINEC) mandelbrot_pipelinec_app.c --out_dir ./build --comb --sim --verilator
+	$(PIPELINEC) mandelbrot_pipelinec_app.c --out_dir ./build --comb --sim --verilator --run -1
 	$(VERILATOR) -Mdir ./obj_dir -Wno-UNOPTFLAT -Wno-WIDTH -Wno-CASEOVERLAP --top-module top -cc ./build/top/top.v -O3 --exe main.cpp -I./build/verilator $(VERILATOR_CFLAGS)
 	cp ./main.cpp ./obj_dir
 	make CXXFLAGS="-DUSE_VERILATOR -I../../PipelineC/ -I../../PipelineC/pipelinec/include -I../build/verilator -I.." -C ./obj_dir -f Vtop.mk
