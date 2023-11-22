@@ -59,7 +59,7 @@ tr_gen: tr_pipelinec.gen.c simulator_main.cpp
 	#clang $(INCLUDE) -E -D__PIPELINEC__ $(PIPELINEC_MAIN) > $(PIPELINEC_MAIN).gen
 	$(PIPELINEC) $(PIPELINEC_MAIN) --out_dir ./build --comb --sim --verilator
 
-./synth/top/top.v: pipelinec_app.c tr_pipelinec.gen.c #FIXME: this verilog generation is duplicated
+./synth/top/top.v: pipelinec_app_config.h pipelinec_app.c tr_pipelinec.gen.c #FIXME: this verilog generation is duplicated
 	#rm -Rf ./synth
 	$(PIPELINEC) ./pipelinec_app.c --out_dir ./synth --comb #delete --comb for full pipelining (~10% more resources and slower)
 	@echo FLOAT USAGE:

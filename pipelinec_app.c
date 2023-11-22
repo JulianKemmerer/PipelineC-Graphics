@@ -1,5 +1,7 @@
 // Set the target FPGA part
-#define LITEX_INTEGRATION
+//#define LITEX_INTEGRATION
+#define POCKET_INTEGRATION // Sim not using CLK_MHZ stuff since Quartus is broken
+#pragma PART "5CEBA4F23C8" // Sim using Quartus IEEE proposed libs is broken
 
 // CflexHDL compile setting
 #define CCOMPILE
@@ -194,7 +196,7 @@ void pixel_logic()
 
   // Use VGA timing to derive frame clock
   frame_clock_logic(vga_signals.pos.x, vga_signals.pos.y, vga_signals.active);
-#define COLOR_DECOMP 1 //FIXME: find a single place to do this, since now it's also on tr.h
+//#define COLOR_DECOMP 1 //FIXME: find a single place to do this, since now it's also on tr.h
 
 #ifndef COLOR_DECOMP
   // Render the pixel at x,y pos 
