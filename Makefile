@@ -90,7 +90,7 @@ synth: ./synth/top/top.v
 verilator: obj_dir/Vtop
 	./obj_dir/Vtop
 
-obj_dir/Vtop: ./main.cpp compile
+obj_dir/Vtop: pipelinec_app_config.h ./main.cpp compile
 	$(VERILATOR) -Mdir ./obj_dir -Wno-UNOPTFLAT -Wno-WIDTH -Wno-CASEOVERLAP --top-module top -cc ./build/top/top.v -O3 --exe main.cpp -I./build/verilator $(VERILATOR_CFLAGS)
 	cp ./main.cpp ./obj_dir
 	make CXXFLAGS="-DUSE_VERILATOR -I../../PipelineC/ -I../../PipelineC/pipelinec/include -I../build/verilator -I.." -C ./obj_dir -f Vtop.mk

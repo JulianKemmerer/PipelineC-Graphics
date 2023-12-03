@@ -210,9 +210,9 @@ int main()
 		 }
       }
       verilator_output(g_top);
-      g_top->clk_22p5 = 0;
+      g_top->clk_34p75 = 0;
       g_top->eval();
-      g_top->clk_22p5 = 1;
+      g_top->clk_34p75 = 1;
       g_top->eval();
       
       // Or raw C code running?

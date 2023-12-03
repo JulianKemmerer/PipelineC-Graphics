@@ -23,7 +23,8 @@ HOW TO PLAY:
 
 //#define DITHER
 //#define ANTIALIAS 6 //default 6, smooth 4
-#define SCREEN_ASPECT 16./9. //or for example 10./9. 
+//#define SCREEN_ASPECT 16./9. //or for example 10./9. 
+#define SCREEN_ASPECT 10./9. 
 
 #include "tr.h"
 
@@ -276,7 +277,7 @@ color_basic_t cast_ray_nested(IN(point_and_dir) hitin)
 
   color_basic_t rcolor = color_basic_t(0.);
 //#warning solve need to initialize
-  if (hitout.dist >= float_shift(1., DIST_SHIFT))
+  if (!(hitout.dist < float_shift(1., DIST_SHIFT)))
     rcolor = background_color(hitin.dir.y); //has other direction
   else
     rcolor = hit_material.diffuse_color*light_intensity(hitout.hit.orig);
@@ -507,8 +508,9 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
   {
     pix = pix_in;
     color_type c = render_pixel_internal(x, y);
-    uint16_t c9 = (uint16_t)fixed_asshort(c, 8);
-    uint8_t c8 = (uint8_t) ((c9 & ~0xFF) ? (uint8_t)0xFF:(uint8_t)c9);
+    uint9_t c9 = (uint9_t)fixed_asshort(c, 8);
+    //uint8_t c8 = (uint8_t) ((c9 & ~0xFF) ? (uint8_t)0xFF:(uint8_t)c9); //opt version, works?
+    uint8_t c8 = c9 >= 0x100 ? (uint8_t)0xFF:(uint8_t)c9;
     if(scene.current_color_channel == 0)
       pix.r = c8;
     else if(scene.current_color_channel == 1)
