@@ -16,7 +16,7 @@ $ clang++ -DCCOMPILE -O3 -I. -I/media/1TB/Programs/Linux/oss-cad-suite/share/ver
 # Run
 $ ./sim
 */
-#define FRAME_FASTFORWARD 100 //how much frames to advance prior to the first rendered
+#define FRAME_FASTFORWARD 10 //how much frames to advance prior to the first rendered
 
 #if !defined(FRAME_WIDTH) || !defined(FRAME_HEIGHT) 
 #error FRAME_WIDTH and FRAME_HEIGHT should be set (defaults are not recommended)
@@ -184,9 +184,9 @@ int main()
     for(int f=0; f < FRAME_FASTFORWARD; ++f)
     {
 
-      g_top->clk_60p0hz_out = 0;
+      g_top->clk_60p0hz = 0;
       g_top->eval();
-      g_top->clk_60p0hz_out = 1;
+      g_top->clk_60p0hz = 1;
       g_top->eval();
       ++frame;
     }
@@ -210,9 +210,9 @@ int main()
 		 }
       }
       verilator_output(g_top);
-      g_top->pixel_clock = 0;
+      g_top->clk_22p5 = 0;
       g_top->eval();
-      g_top->pixel_clock = 1;
+      g_top->clk_22p5 = 1;
       g_top->eval();
       
       // Or raw C code running?
