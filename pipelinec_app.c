@@ -191,12 +191,18 @@ void frame_logic()
 MAIN_MHZ(pixel_logic, PIXEL_CLK_MHZ)
 void pixel_logic()
 {
+#define COLOR_DECOMP 1 //FIXME: find a single place to do this, since now it's also on tr.h
+
+#if COLOR_DECOMP == 3
+  uint1_t pixel_valid = (state.scene.current_color_channel == 2);
+  vga_signals_t vga_signals = vga_timing(pixel_valid);
+#else
   // VGA timing for fixed resolution
   vga_signals_t vga_signals = vga_timing();
+#endif
 
   // Use VGA timing to derive frame clock
   frame_clock_logic(vga_signals.pos.x, vga_signals.pos.y, vga_signals.active);
-#define COLOR_DECOMP 1 //FIXME: find a single place to do this, since now it's also on tr.h
 
 #ifndef COLOR_DECOMP
   // Render the pixel at x,y pos 
@@ -208,6 +214,14 @@ void pixel_logic()
   color = render_pixel(vga_signals.pos.x, vga_signals.pos.y, color);
   color.g = color.r;
   color.b = color.r;
+#else
+  static pixel_t color;
+  color = render_pixel(vga_signals.pos.x, vga_signals.pos.y, color);
+
+  if(state.scene.current_color_channel != 2)
+    state.scene.current_color_channel = state.scene.current_color_channel + 1;
+  else
+    state.scene.current_color_channel = 0;
 #endif
 #endif //COLOR_DECOMP
 
