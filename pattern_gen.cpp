@@ -36,6 +36,11 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
   pix.b = b;
 #else
   pix = pix_in;
+  #if COLOR_DECOMP == 1
+  r = (r + (g<<1) + b)>>2;
+  g = r;
+  b = r;
+  #endif
   if(state.scene.current_color_channel == 0)
     pix.r = r;
   else if(state.scene.current_color_channel == 1)
