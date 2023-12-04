@@ -943,6 +943,8 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
 #ifndef SHADER
 inline pixel_t render_pixel(uint16_t i, uint16_t j
 #ifdef COLOR_DECOMP
+// TODO START CHANGES HERE 
+// uint8_t current_color_channel passed as arg
 , pixel_t pix_in
 #endif
 )
