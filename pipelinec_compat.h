@@ -3,6 +3,10 @@
 
 #include "c_compat.h"
 
+#ifndef SHADER
+#define COLOR_DECOMP 3 //1 for grayscale, 3 for colors, (leave not defined for no decomposition)
+#endif
+
 #ifdef __PIPELINEC__
 
 #define float_type float

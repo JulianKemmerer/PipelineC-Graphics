@@ -81,10 +81,6 @@ struct material_t {
     color reflect_color;
 };
 
-#ifndef SHADER
-#define COLOR_DECOMP 1 //1 for grayscale, 3 for colors, (leave not defined for no decomposition)
-#endif
-
 #ifdef COLOR_DECOMP
 #define color_basic_t color_type
 inline color_type colorbasic_select(color_type x, color_type a, color_type b) { return b+(a-b)*x; }
@@ -120,9 +116,6 @@ struct scene_t
   color fog;
   uint16_t frame;
   uint16_t scorebar;
-#ifdef COLOR_DECOMP
-  uint2_t current_color_channel;
-#endif
 };
 
 struct scene_colors_t

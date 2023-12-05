@@ -26,6 +26,7 @@ HOW TO PLAY:
 //#define SCREEN_ASPECT 16./9. //or for example 10./9. 
 #define SCREEN_ASPECT 10./9. 
 
+#include "pipelinec_compat.h"
 #include "tr.h"
 
 #ifndef SHADER
@@ -111,7 +112,7 @@ hole_t plane_has_hole(hole_t x, hole_t z)
 
 
 #ifndef COLOR_DECOMP
-inline scene_colors_t scene_colors(IN(scene_t) scene)
+inline scene_colors_t scene_colors(IN(scene_t) scene, uint2_t color_channel)
 {
   scene_colors_t r;
   r.sphere = scene.sphere.material;
@@ -123,9 +124,8 @@ inline scene_colors_t scene_colors(IN(scene_t) scene)
 }
 
 #else
-inline scene_colors_t scene_colors(IN(scene_t) scene)
+inline scene_colors_t scene_colors(IN(scene_t) scene, uint2_t channel)
 {
-  uint2_t channel = scene.current_color_channel;
 
   scene_colors_t r;
   if(channel == 0)
@@ -173,6 +173,9 @@ struct point_and_dir
 #ifdef ANTIALIAS
   float dist; //FIXME: move appropiately
 #endif
+#if 1 //def COLOR_DECOMP
+ uint2_t color_channel; //FIXME: not always used
+#endif
 };
 
 struct hit_out
@@ -197,6 +200,9 @@ float calc_accdist(IN(point_and_dir) hitin, IN(hit_out) hitout)
 hit_out sphere_hit(bool hit, IN(vec3) center, IN(point_and_dir) hitin, float t, float diff)
 {
   hit_out hitout;
+#ifdef COLOR_DECOMP
+  hitout.hit.color_channel = hitin.color_channel;
+#endif  
   hitout.dist = hit ? t : RAY_NOINT;
   //if(hit) //always calculated to save hardware muxes
   {
@@ -284,6 +290,9 @@ hit_out ray_plane_intersect(IN(plane_t) plane, IN(point_and_dir) hitin)
   hit_out hitout;
   hitout.dist = RAY_NOINT;
   hitout.borderdist = 0.;
+#ifdef COLOR_DECOMP
+  hitout.hit.color_channel = hitin.color_channel;
+#endif  
   vec3 plane_center = object_coord_to_float3(plane.center);
   float d;
   vec3 pt;
@@ -323,7 +332,7 @@ color_basic_t sphere_effect(IN(hit_out) hit, IN(render_material_t) hit_material)
   color_basic_t rcolor = hit_material.diffuse_color;
 #ifdef BLINKY
   IN(scene_t) scene = get_scene();
-  IN(scene_colors_t) colors = scene_colors(scene);
+  IN(scene_colors_t) colors = scene_colors(scene, hit.hit.color_channel);
   IN(sphere_t) s = scene.sphere;
   uint16_t frame = scene.frame;
 
@@ -386,8 +395,8 @@ color_type sphere_shadow(float x, float y, float z)
 color_basic_t plane_effect(IN(hit_out) hit)
 {
   IN(scene_t) scene = get_scene();
-  IN(scene_colors_t) colors = scene_colors(scene);
-  IN(plane_t) plane = scene.plane; 
+  IN(scene_colors_t) colors = scene_colors(scene, hit.hit.color_channel);
+  IN(plane_t) plane = scene.plane;
 
   color_basic_t rcolor = colors.plane.diffuse_color;
   vec3 plane_center = object_coord_to_float3(plane.center);
@@ -494,7 +503,7 @@ color_basic_t light_intensity(IN(vec3) hit)
 color_basic_t cast_ray_nested(IN(point_and_dir) hitin)
 {
   IN(scene_t) scene = get_scene();
-  IN(scene_colors_t) colors = scene_colors(scene);
+  IN(scene_colors_t) colors = scene_colors(scene, hitin.color_channel);
 
 #ifdef RT_SMALL_UI
   return background_color(hitin.dir.y);
@@ -538,7 +547,7 @@ color_basic_t cast_ray_nested(IN(point_and_dir) hitin)
 color_basic_t shade(IN(color_basic_t) background, IN(vec3) dir, IN(hit_out) hit, IN(render_material_t) hit_material, color_type minfog)
 {
   IN(scene_t) scene = get_scene();
-  IN(scene_colors_t) colors = scene_colors(scene);
+  IN(scene_colors_t) colors = scene_colors(scene, hit.hit.color_channel);
   color_basic_t rcolor = background;
 
   float fogmix = float_shift(hit.dist, -DIST_SHIFT); //no need to accumulated dist
@@ -547,6 +556,9 @@ color_basic_t shade(IN(color_basic_t) background, IN(vec3) dir, IN(hit_out) hit,
     point_and_dir hitreflect;
     hitreflect.orig = hit.hit.orig;
     hitreflect.dir = reflect(dir, hit.hit.dir);
+#ifdef COLOR_DECOMP    
+    hitreflect.color_channel = hit.hit.color_channel;
+#endif
 #ifdef ANTIALIAS
     hitreflect.dist = hit.dist; //to accumulate distance
 #endif
@@ -558,7 +570,7 @@ color_basic_t shade(IN(color_basic_t) background, IN(vec3) dir, IN(hit_out) hit,
     float sz = hit.hit.orig.z - SPHERE_Z;
     li = li*sphere_shadow(sx, sy, sz);
 #endif
-    color_basic_t diffuse_color = hit_material.diffuse_color * (li + AMBIENT_INTENSITY);
+    color_basic_t diffuse_color = hit_material.diffuse_color * (li + color_type(AMBIENT_INTENSITY));
     color_basic_t comb_color = diffuse_color + reflect_color*hit_material.reflect_color;
     rcolor = color_select(color_max(color_type(fogmix), minfog), colors.fog, comb_color);
   }
@@ -574,7 +586,7 @@ bool is_star(float x, float y)
 color_basic_t cast_ray(IN(point_and_dir) hitin)
 {
   IN(scene_t) scene = get_scene();
-  IN(scene_colors_t) colors = scene_colors(scene);
+  IN(scene_colors_t) colors = scene_colors(scene, hitin.color_channel);
   
   float ys = float_abs(float_shift(hitin.dir.y, 1));
 #ifndef RT_SMALL_UI
@@ -650,12 +662,15 @@ color_basic_t cast_ray(IN(point_and_dir) hitin)
 }
 
 
-color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y)
+color_basic_t render_pixel_internal(screen_coord_t x, screen_coord_t y, uint2_t color_channel)
 {
   IN(scene_t) scene = get_scene();
-  IN(scene_colors_t) colors = scene_colors(scene);
+  IN(scene_colors_t) colors = scene_colors(scene, color_channel);
 
   point_and_dir hitin;
+#ifdef COLOR_DECOMP
+  hitin.color_channel = color_channel;
+#endif
   hitin.orig = object_coord_to_float3(scene.camera);
   vec3 camera_dir = {float(x), float(y), float(-1.)};
   hitin.dir = normalize(camera_dir);
@@ -736,10 +751,10 @@ color_basic_t render_floor_alt(screen_coord_t x, screen_coord_t y, coord_type px
   return c;
 }
 
-color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y)
+color_basic_t render_pixel_internal_alt(screen_coord_t x, screen_coord_t y, uint2_t color_channel)
 {
   IN(scene_t) scene = get_scene();
-  IN(scene_colors_t) colors = scene_colors(scene);
+  IN(scene_colors_t) colors = scene_colors(scene, color_channel);
 
     coord_type dz = coord_type(scene.camera.z-SPHERE_Z);
 	coord_type dx = coord_type(x*dz - (scene.sphere.center.x)); //-scene.camera.x
@@ -941,11 +956,7 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
 }
 
 #ifndef SHADER
-inline pixel_t render_pixel(uint16_t i, uint16_t j
-#ifdef COLOR_DECOMP
-, pixel_t pix_in
-#endif
-)
+inline pixel_t render_pixel(uint16_t i, uint16_t j, uint2_t color_channel)
 {
   IN(scene_t) scene = get_scene();
 
@@ -971,16 +982,24 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
   uint16_t scorebar = score_factor*scene.scorebar >> 11;
   if(i >= SCORE_MARGINS && i < SCORE_MARGINS + scorebar && j > SCORE_MARGINS && j < 2*SCORE_MARGINS)
   {
+#ifndef COLOR_DECOMP
     pix.r = 0; pix.g = 200; pix.b = 0; //    pix = color(0., 200./255., 0.);
+#else
+#if COLOR_DECOMP != 1
+    pix.r = (color_channel == 1) ? 200 : 0;
+#else
+    pix.r = 128;
+#endif
+#endif
   }
   else
   {
 #ifndef COLOR_DECOMP
 #ifdef ALTERNATE_UI
-	color c = render_pixel_internal_alt(x, y);
+	color c = render_pixel_internal_alt(x, y, color_channel);
 	///*if((i ^ j) & (1<<7))*/ if(cx>0) c = render_pixel_internal(x, y, scene, scene_colors(scene)); //uncomment for checkerboard
 #else
-	color c = render_pixel_internal(x, y);
+	color c = render_pixel_internal(x, y, color_channel);
 #endif
     uint16_t r = (uint16_t)fixed_asshort(c.r, 8);
     uint16_t g = (uint16_t)fixed_asshort(c.g, 8);
@@ -994,17 +1013,12 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
     pix.g = (g >= 256) ? uint8_t(255):uint8_t(g);
     pix.b = (b >= 256) ? uint8_t(255):uint8_t(b);
 #else //COLOR_DECOMP
-    pix = pix_in;
-    color_type c = render_pixel_internal(x, y);
+    color_type c = render_pixel_internal(x, y, color_channel);
     uint9_t c9 = (uint9_t)fixed_asshort(c, 8);
     //uint8_t c8 = (uint8_t) ((c9 & ~0xFF) ? (uint8_t)0xFF:(uint8_t)c9); //opt version, works?
-    uint8_t c8 = c9 >= 0x100 ? (uint8_t)0xFF:(uint8_t)c9;
-    if(scene.current_color_channel == 0)
-      pix.r = c8;
-    else if(scene.current_color_channel == 1)
-      pix.g = c8;
-    else
-      pix.b = c8;
+    pix.r = c9 >= 0x100 ? (uint8_t)0xFF:(uint8_t)c9;
+    pix.g = pix.r; //not used
+    pix.b = pix.r; //not used
 #endif //COLOR_DECOMP
   }
 

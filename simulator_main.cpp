@@ -254,22 +254,21 @@ int main()
 #ifdef MOTION_BLUR
          current_blur_x=x; current_blur_y=y;
 #endif
-
 #ifndef COLOR_DECOMP
-          pixel_t c = render_pixel(x, y);
+          pixel_t c = render_pixel(x, y, 0);
 #else
           pixel_t c;
-#if COLOR_DECOMP == 1
-          state.scene.current_color_channel = 0; //use red channel
-          c = render_pixel(x, y, c);
-          c.g = c.r;
-          c.b = c.r;
+#if COLOR_DECOMP != 3
+          c = render_pixel(x, y, 0);
+          c.g = c.b = c.r;
 #else
+          uint8_t rch[3];
           for(int ch = 0; ch < 3; ++ch)
           {
-            state.scene.current_color_channel = ch;
-            c = render_pixel(x, y, c);
+            pixel_t rp = render_pixel(x, y, ch);
+            rch[ch] = rp.r;
           }
+          c.r = rch[0]; c.g = rch[1]; c.b = rch[2];
 #endif
 #endif
       perf_render_dump();
