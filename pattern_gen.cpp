@@ -16,7 +16,7 @@ full_state_t full_update(INOUT(full_state_t) state, bool reset, bool button_stat
 
 inline pixel_t render_pixel(uint16_t i, uint16_t j
 #ifdef COLOR_DECOMP
-, pixel_t pix_in
+, uint8_t current_color_channel
 #endif
 )
 {
@@ -26,6 +26,10 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
   pixel_t pix;
   uint8_t r, g, b;
 
+  // TODO:
+  // like https://github.com/JulianKemmerer/PipelineC/issues/77
+  //  Instead of calculating R,G, AND B then selecting one of them
+  //  select inputs to operate on with fewer resources.
   r = button ? i + j : i - j;
   g = i ^ (j + frame);
   b = frame;
@@ -35,18 +39,19 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
   pix.g = g;
   pix.b = b;
 #else
-  pix = pix_in;
   #if COLOR_DECOMP == 1
   r = (r + (g<<1) + b)>>2;
   g = r;
   b = r;
   #endif
-  if(state.scene.current_color_channel == 0)
+  #if COLOR_DECOMP == 3
+  if(current_color_channel == 0)
     pix.r = r;
-  else if(state.scene.current_color_channel == 1)
-    pix.g = g;
+  else if(current_color_channel == 1)
+    pix.r = g;
   else
-    pix.b = b;
+    pix.r = b;
+  #endif
 #endif
 
   return pix;
