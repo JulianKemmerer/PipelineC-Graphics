@@ -1,7 +1,7 @@
 // Set the target FPGA part
 //#define LITEX_INTEGRATION
-#define POCKET_INTEGRATION // Sim not using CLK_MHZ stuff since Quartus is broken
-#pragma PART "5CEBA4F23C8" // Sim using Quartus IEEE proposed libs is broken
+//#define POCKET_INTEGRATION // Sim not using CLK_MHZ stuff since Quartus is broken
+//#pragma PART "5CEBA4F23C8" // Sim using Quartus IEEE proposed libs is broken
 
 // CflexHDL compile setting
 #define CCOMPILE
@@ -237,7 +237,7 @@ void pixel_logic()
 #ifndef COLOR_DECOMP
   // Render the pixel at x,y pos 
   // Scene is wired in from frame logic domain
-  pixel_t color = render_pixel(vga_signals.pos.x, vga_signals.pos.y, 0);
+  pixel_t color = render_pixel(vga_signals.pos.x, vga_signals.pos.y);
 #else
 #if COLOR_DECOMP == 1
   pixel_t color;
