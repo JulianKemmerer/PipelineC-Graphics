@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef uint32_t uint18_t, uint19_t, uint20_t, uint27_t, uint23_t;
+typedef uint32_t uint17_t, uint18_t, uint19_t, uint20_t, uint23_t, uint27_t;
 typedef uint16_t uint9_t, uint10_t, uint15_t;
 typedef uint8_t uint1_t;
 #endif
@@ -169,8 +169,11 @@ uint16_t mult15x15_upper16_alt(uint15_t x, uint15_t y)
   y &= (1<<15)-1;
 #endif
   //return mult18x18_upper27(x, y)>>(14-9);
-  return mult18x18_upper27_k(x, y)>>(14-9);
+  //return mult18x18_upper27_k(x, y)>>(14-9);
   //return mult18x18_upper27_trunc(x, y)>>(14-9);
+  uint16_t xx = LSHIFT(uint16_t, x, 1);
+  uint16_t yy = LSHIFT(uint16_t, y, 1);
+  return mult18x18_upper27_trunc(xx, yy)>>7;
 }
 
 #ifndef __PIPELINEC__
