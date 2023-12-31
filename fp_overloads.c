@@ -48,10 +48,11 @@ float_8_14_t BIN_OP_INFERRED_MULT_float_8_14_t_float_8_14_t(float_8_14_t left, f
     uint7_t BIAS;
     BIAS = 127;
     
-    aux2_x = uint1_uint14(1, x_mantissa);
-    aux2_y = uint1_uint14(1, y_mantissa);
+    //aux2_x = uint1_uint14(1, x_mantissa);
+    //aux2_y = uint1_uint14(1, y_mantissa);
     //uint16_t upper16 = mult15x15_upper16(aux2_x, aux2_y);
-    uint16_t upper16 = mult15x15_upper16_alt(aux2_x, aux2_y);
+    //uint16_t upper16 = mult15x15_upper16_alt(aux2_x, aux2_y);
+    uint16_t upper16 = mult14x14_upper14_alt(x_mantissa, y_mantissa) + x_mantissa + y_mantissa + 0x4000;
     aux = uint16_15_15(upper16);
     if(aux)
     { 

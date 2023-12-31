@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 typedef uint32_t uint17_t, uint18_t, uint19_t, uint20_t, uint23_t, uint27_t;
-typedef uint16_t uint9_t, uint10_t, uint15_t;
+typedef uint16_t uint9_t, uint10_t, uint14_t, uint15_t;
 typedef uint8_t uint1_t;
 #endif
 
@@ -176,6 +176,23 @@ uint16_t mult15x15_upper16_alt(uint15_t x, uint15_t y)
   return mult18x18_upper27_trunc(xx, yy)>>7;
 }
 
+uint14_t mult14x14_upper14(uint14_t x, uint14_t y)
+{
+  return (x*y)>>14;
+}
+
+uint16_t mult14x14_upper14_alt(uint14_t x, uint14_t y)
+{
+
+#ifndef __PIPELINEC__
+  x &= (1<<14)-1;
+  y &= (1<<14)-1;
+#endif
+  uint16_t xx = LSHIFT(uint16_t, x, 2);
+  uint16_t yy = LSHIFT(uint16_t, y, 2);
+  return mult18x18_upper27_trunc(xx, yy)>>9;
+}
+
 #ifndef __PIPELINEC__
 
 int main()
@@ -184,13 +201,13 @@ int main()
   int maxerr = 0;
   while(--count)
   {
-    uint18_t x = rand() & ((1<<15)-1);
-    uint18_t y = rand() & ((1<<15)-1);
+    uint18_t x = rand() & ((1<<14)-1);
+    uint18_t y = rand() & ((1<<14)-1);
 
     //uint27_t r1 = mult18x18_upper27(x, y);
     //uint27_t r2 = mult18x18_upper27_k(x, y);
-    uint16_t r1 = mult15x15_upper16(x, y);
-    uint16_t r2 = mult15x15_upper16_alt(x, y);
+    uint16_t r1 = mult14x14_upper14(x, y);
+    uint16_t r2 = mult14x14_upper14_alt(x, y);
     
   
     if(r1 != r2)
