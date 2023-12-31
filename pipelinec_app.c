@@ -14,6 +14,9 @@
 // https://github.com/JulianKemmerer/PipelineC/issues/56
 #include "pipelinec_app_config.h"
 
+#include "pipelinec_compat.h"
+#include "fixed_type.h"
+
 // Reset state func needs special marker to not be synthesized alone
 // ~sorta PipelineC constexpr/const marker
 #pragma FUNC_WIRES reset_state 
@@ -21,6 +24,11 @@
 
 // Access to board buttons
 #include "buttons/buttons.c"
+
+// RGB color decomp requires a 3x pixel clock
+#if COLOR_DECOMP == 3
+#define PIXEL_OVER_CLK_RATIO 3 /*Default is 1 (no overclock)*/
+#endif
 
 // Litex provides its own external VGA timing
 // and uses generic external VGA output
@@ -38,8 +46,6 @@
 #endif
 
 // Include the code for ray tracer
-#include "pipelinec_compat.h"
-#include "fixed_type.h"
 #define get_scene() state.scene
 #include "tr_pipelinec.gen.c"
 
@@ -185,30 +191,74 @@ void frame_logic()
   power_on_reset = 0;
 }
 
+// Helper to isolate static pixel_t buffer register from pixel_logic stateless pipeline
+typedef struct color_decomp_rgb_buffer_t{
+  vga_signals_t vga_signals;
+  pixel_t pixel;
+}color_decomp_rgb_buffer_t;
+color_decomp_rgb_buffer_t color_decomp_rgb_buffer(
+  uint8_t current_color_channel, uint8_t color_value,
+  vga_signals_t vga_signals
+){
+  color_decomp_rgb_buffer_t o;
+  static pixel_t pixel_reg;
+  o.pixel = pixel_reg;
+  static vga_signals_t vga_signals_reg;
+  o.vga_signals = vga_signals_reg;
+
+  // Register VGA signals
+  vga_signals_reg = vga_signals;
+  // vga_signals.valid is true when channel=2
+  // Register one color of pixel at a time
+  if(current_color_channel==0){
+    pixel_reg.r = color_value;
+  }else if(current_color_channel==1){
+    pixel_reg.g = color_value;
+  }else{
+    pixel_reg.b = color_value;
+  }
+
+  return o;
+}
+
 // Logic running on pixel clock, mostly render_pixel pipeline
 MAIN_MHZ(pixel_logic, PIXEL_CLK_MHZ)
 void pixel_logic()
 {
-  // VGA timing for fixed resolution
+  // VGA timing for fixed resolution (maybe overclocked)
   vga_signals_t vga_signals = vga_timing();
 
   // Use VGA timing to derive frame clock
-  frame_clock_logic(vga_signals.pos.x, vga_signals.pos.y, vga_signals.active);
-#define COLOR_DECOMP 1 //FIXME: find a single place to do this, since now it's also on tr.h
+  frame_clock_logic(vga_signals.pos.x, vga_signals.pos.y, vga_signals.active & vga_signals.valid);
 
 #ifndef COLOR_DECOMP
   // Render the pixel at x,y pos 
   // Scene is wired in from frame logic domain
-  pixel_t color = render_pixel(vga_signals.pos.x, vga_signals.pos.y);
+  pixel_t color = render_pixel(vga_signals.pos.x, vga_signals.pos.y, 0);
 #else
 #if COLOR_DECOMP == 1
   pixel_t color;
-  color = render_pixel(vga_signals.pos.x, vga_signals.pos.y, color);
+  color = render_pixel(vga_signals.pos.x, vga_signals.pos.y, 0);
   color.g = color.r;
   color.b = color.r;
+#else
+  // R,G,B for this X,Y position serially into in pipeline
+  uint8_t current_color_channel = vga_signals.overclock_counter; // 0,1,2 repeating PIXEL_OVER_CLK_RATIO
+  pixel_t color = render_pixel(vga_signals.pos.x, vga_signals.pos.y, current_color_channel);
+  // Buffer serial R,G,B output from pipeline
+  color_decomp_rgb_buffer_t rgb_buf = color_decomp_rgb_buffer(
+    current_color_channel, color.r, // r channel has selected color value
+    vga_signals
+  );
+  vga_signals = rgb_buf.vga_signals;
+  color = rgb_buf.pixel;
 #endif
 #endif //COLOR_DECOMP
 
   // Drive output signals/registers
   pmod_register_outputs(vga_signals, color);
 }
+
+#include "opt_primitives.c"
+#include "fp_overloads.c"
+
