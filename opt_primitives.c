@@ -92,7 +92,7 @@ uint27_t mult18x18_upper27_alt(uint18_t x, uint18_t y)
 
   uint18_t ad = LPM_MULT9X9(a, d);
   //ad &= (1<<18)-1; //mask bits (not needed)
-  uint23_t r = LSHIFT(uint27_t, ad, 9) + (ae_bd + be); //see note below	
+  uint23_t r = LSHIFT(uint27_t, ad, 9) + ae_bd + be; //see note below	
 #ifndef __PIPELINEC__
   r &= ((1<<23)-1); //NOTE: only 23 upper bits are significative, and only 21 needed for 15x15->16
 #endif
@@ -130,6 +130,38 @@ uint27_t mult18x18_upper27_trunc(uint18_t x, uint18_t y)
 #endif
   return r;
 }
+
+uint27_t mult18x18_upper27_round(uint18_t x, uint18_t y)
+{
+  //extract 9 bit fields
+  uint9_t a = x >> 9;
+  uint9_t b = x;
+  uint9_t d = y >> 9;
+  uint9_t e = y;
+  
+
+  //mask bits for CPU execution
+#ifndef __PIPELINEC__
+  a &= (1<<9)-1;
+  b &= (1<<9)-1;
+  d &= (1<<9)-1;
+  e &= (1<<9)-1;
+#endif
+
+  uint18_t bd = LPM_MULT9X9(b, d);
+  //bd &= (1<<18)-1; //mask bits (not needed)
+  uint19_t ae_bd = bd + LPM_MULT9X9(a, e);
+  //ae_bd &= (1<<19)-1; //mask bits (not needed)
+
+  uint18_t ad = LPM_MULT9X9(a, d);
+  //ad &= (1<<18)-1; //mask bits (not needed)
+  uint23_t r = LSHIFT(uint27_t, ad, 9) + ae_bd + 0x80; //better rounding is 0x60 
+#ifndef __PIPELINEC__
+  r &= ((1<<23)-1); //NOTE: only 23 upper bits are significative, and only 21 needed for 15x15->16
+#endif
+  return r;
+}
+
 
 //karatsuba multiplication
 //r=LSB l=MSB
@@ -188,18 +220,18 @@ uint16_t mult14x14_upper14_alt(uint14_t x, uint14_t y)
   x &= (1<<14)-1;
   y &= (1<<14)-1;
 #endif
-  uint16_t xx = LSHIFT(uint16_t, x, 2);
+  uint16_t xx = LSHIFT(uint16_t, x, 2); 
   uint16_t yy = LSHIFT(uint16_t, y, 2);
-  return mult18x18_upper27_trunc(xx, yy)>>9;
+  return mult18x18_upper27_round(xx, yy)>>9; //round improves 24.5% 1-LSB errors down to 18.12% 
 }
 
 #ifndef __PIPELINEC__
 
 int main()
 {
-  int count = 100*1000*1000;
-  int maxerr = 0;
-  while(--count)
+  int count = 1000*1000*1000;
+  int maxerr = 0, errcount=0;
+  for(int c = 0; c < count; ++c)
   {
     uint18_t x = rand() & ((1<<14)-1);
     uint18_t y = rand() & ((1<<14)-1);
@@ -215,9 +247,10 @@ int main()
       int16_t err = abs(r2 - r1);
       if(err > maxerr)
       {
+        fprintf(stderr, "x 0x%08X, y 0x%08X, r1 0x%08X, r2 0x%08X, err %d: FAILED\n", x, y, r1, r2, err);
         maxerr = err;
-        fprintf(stderr, "x 0x%08X, y 0x%08X, r1 0x%08X, r2 0x%08X, err %d: FAILED\n", x, y, r1, r2, maxerr);
       }
+      ++errcount;
     }
   }
 
@@ -226,6 +259,8 @@ int main()
     printf("PASSED\n");
     return 0;
   }
+
+  printf("Errors: %d (%.2f%%)\n", errcount, 100.0*errcount/count);
     
   return 1;
 }
