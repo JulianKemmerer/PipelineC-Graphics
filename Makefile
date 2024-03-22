@@ -34,11 +34,11 @@ run: tr_sim
 	./tr_sim
 
 tr_pipelinec.gen.c: $(RTCODE) tr_pipelinec.cpp
-	clang -DPARSING -E -DRTCODE=\"$(RTCODE)\" tr_pipelinec.cpp > tr_pipelinec.E.cpp
+	$(CLANGXX) -DPARSING -E -DRTCODE=\"$(RTCODE)\" tr_pipelinec.cpp > tr_pipelinec.E.cpp
 	$(CFLEX_C) tr_pipelinec.E.cpp > tr_pipelinec.gen.c
 
 metrics.c: tr_pipelinec.gen.c
-	clang -E -include float_type.h -include fixed_type.h tr_pipelinec.gen.c > metrics.c
+	$(CLANGXX) -E -include float_type.h -include fixed_type.h tr_pipelinec.gen.c > metrics.c
 	$(CFLEX_C) metrics.c
 
 gen: tr_gen
@@ -50,13 +50,13 @@ pipelinec_app_config.h:
 	echo "#define FRAME_FPS" $(FRAME_FPS) >> pipelinec_app_config.h
 
 tr_gen: tr_pipelinec.gen.c simulator_main.cpp
-	clang $(INCLUDE) -x c++ -Dget_scene=scene_t -DCCOMPILE -DFRAME_WIDTH=$(FRAME_WIDTH) -DFRAME_HEIGHT=$(FRAME_HEIGHT) -include pipelinec_compat.h -include float_type.h -include fixed_type.h -c tr_pipelinec.gen.c -o tr_pipelinec.gen.o
+	$(CLANGXX) $(INCLUDE) -x c++ -Dget_scene=scene_t -DCCOMPILE -DFRAME_WIDTH=$(FRAME_WIDTH) -DFRAME_HEIGHT=$(FRAME_HEIGHT) -include pipelinec_compat.h -include float_type.h -include fixed_type.h -c tr_pipelinec.gen.c -o tr_pipelinec.gen.o
 	$(CLANGXX) -DCCOMPILE -D_FRAME_WIDTH=$(FRAME_WIDTH) -D_FRAME_HEIGHT=$(FRAME_HEIGHT) $(INCLUDE) -O3 $(OMP_FLAGS) -ffast-math `sdl2-config --cflags --libs` simulator_main.cpp -o tr_gen
 
 ./build/top/top.v: $(PIPELINEC_MAIN) pipelinec_app.c tr_pipelinec.gen.c
 	rm -Rf ./build
 	echo "#define USE_VERILATOR" >> pipelinec_app_config.h
-	#clang $(INCLUDE) -E -D__PIPELINEC__ $(PIPELINEC_MAIN) > $(PIPELINEC_MAIN).gen
+	#$(CLANGXX) $(INCLUDE) -E -D__PIPELINEC__ $(PIPELINEC_MAIN) > $(PIPELINEC_MAIN).gen
 	$(PIPELINEC) $(PIPELINEC_MAIN) --out_dir ./build --comb --sim --verilator
 
 ./synth/top/top.v: pipelinec_app.c tr_pipelinec.gen.c #FIXME: this verilog generation is duplicated
