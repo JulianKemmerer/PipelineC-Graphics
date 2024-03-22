@@ -13,6 +13,43 @@ A fully working interactive raytraced game written in C and translated to a circ
 
 A detailed article describing this work is [here](https://github.com/JulianKemmerer/PipelineC-Graphics/blob/main/doc/Sphery-vs-Shapes.pdf)
 
+# Install
+
+* Install clang 14
+  ```
+  wget https://apt.llvm.org/llvm.sh
+  chmod +x llvm.sh
+  sudo ./llvm.sh 14
+  # Copy/link specific .so file to generic .so to avoid missing .so file error
+  sudo cp /usr/lib/x86_64-linux-gnu/libclang-14.so.14.0.6 /usr/lib/x86_64-linux-gnu/libclang-14.so
+  ```
+* Install sdl2 lib, OpenMP, Un-If-Def Tool
+  ```
+  sudo apt install libsdl2-dev
+  sudo apt install libomp-dev
+  sudo apt install unifdef
+  ```
+* Clone repos adjacent to each other in one dir
+  ```
+  git clone https://github.com/JulianKemmerer/PipelineC-Graphics
+  git clone https://github.com/suarezvictor/CflexHDL
+  git clone https://github.com/JulianKemmerer/PipelineC
+  ```
+* Install open source EDA tools
+  * https://github.com/YosysHQ/oss-cad-suite-build/releases
+  ```
+  export PATH="<extracted_location>/oss-cad-suite/bin:$PATH"
+  ```
+* Make CFlexHDL cflexparser
+  ```
+  cd CflexHDL/cflexparser
+  make
+  # may need to add '-fno-lto' to makefile to avoid
+  #   fatal error: bytecode stream in file libpython3.8.a generated with LTO version 6.0 instead of the expected 8.1
+  ```
+* Install [Litex](https://github.com/enjoy-digital/litex/wiki/Installation)
+  * `TODO` more info...
+
 
 # Building
 
@@ -25,13 +62,14 @@ You need to select `DVI=True` or `DVI=False` in [litex_soc.py](https://github.co
 Full pipelining can take some hours, for faster processing you can try simulation options like `make sim`, `make gen`, or `make verilator`
 # Contact
 
-Twitter: 
-[@pipelinec_hdl](https://twitter.com/pipelinec_hdl) 
+Social Media: 
+[@pipelinec_hdl](https://fosstodon.org/@pipelinec) 
 [@suarezvictor](https://twitter.com/suarezvictor)
 
-Talk on Discord: 
+Talk on Discord:
+* [Sphery vs. Shapes](https://discord.gg/cGfAt4HpJW)
+* [PipelineC](https://discord.gg/Aupm3DDrK2)
 * [Digital Design HQ](https://discord.gg/pY2wJvnCMY)
   * `#hdl-other`
   * `#project-chat`
   * `#fpga`
-* [PipelineC](https://discord.gg/Aupm3DDrK2)
