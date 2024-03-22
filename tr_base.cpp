@@ -558,7 +558,7 @@ color_basic_t shade(IN(color_basic_t) background, IN(vec3) dir, IN(hit_out) hit,
     float sz = hit.hit.orig.z - SPHERE_Z;
     li = li*sphere_shadow(sx, sy, sz);
 #endif
-    color_basic_t diffuse_color = hit_material.diffuse_color * (li + AMBIENT_INTENSITY);
+    color_basic_t diffuse_color = hit_material.diffuse_color * (li + color_type(AMBIENT_INTENSITY));
     color_basic_t comb_color = diffuse_color + reflect_color*hit_material.reflect_color;
     rcolor = color_select(color_max(color_type(fogmix), minfog), colors.fog, comb_color);
   }
@@ -998,7 +998,7 @@ inline pixel_t render_pixel(uint16_t i, uint16_t j
     color_type c = render_pixel_internal(x, y);
     uint9_t c9 = (uint9_t)fixed_asshort(c, 8);
     //uint8_t c8 = (uint8_t) ((c9 & ~0xFF) ? (uint8_t)0xFF:(uint8_t)c9); //opt version, works?
-    uint8_t c8 = c9 >= 0x100 ? (uint8_t)0xFF:(uint8_t)c9);
+    uint8_t c8 = c9 >= 0x100 ? (uint8_t)0xFF:(uint8_t)c9;
     if(scene.current_color_channel == 0)
       pix.r = c8;
     else if(scene.current_color_channel == 1)
